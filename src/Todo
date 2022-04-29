@@ -1,0 +1,45 @@
+
+1. Build two navbars - done
+2. Create startup block - done
+  attempt to get club list
+  success - open loggedInNavBar
+  fail - open loggedOutNavBar
+3. Get this working and debugged - done
+==========================================================
+
+4. Look at simplified axios request - single generic request - done
+
+5. Identify how to provide crud operations with a single page.
+ie List all items in table
+    Make each cell active (allowing editable cells to be changed
+    add save and delete icons on right hand side.
+Add + (form add) at end for new records.
+6.  - replicate this across each entity.
+    - remove fetch in favour of axios calls
+    - edit form added for each entity
+Todo
+    - add Initial Value to form
+    - add validation to forms (both Add and Edit)
+    - get Add/Edit/Delete working
+    - Change relationship between player and firstname/lastname. (Remove Irish fields from player entity)
+    7 - General Crud operations
+    ===========================
+        a) - Update
+            - Update - use form with populated data
+            - On submit - demonstrate updaing record and showing new updated records
+        b) - Add - add dummy record
+        c) - Delete -  delete this dummy record
+    8 - Specific CRUD Operations
+    =============================
+    a) - Add/Update operations
+        Replace ID fields with drop down named fields
+        eg Competition ID with Competition names
+        hometeamid with home team name, etc
+    b) - List - Replace ID fields with named entry values
+    9 - Add additional tables to Backend DB
+        1. Positions - id - num - full name - short name
+        eg x - 1 - Goal Keeper - GK
+        2. Stats
+        3. Teamsheets
+        4.
+    10. How to perform testing in Postman
