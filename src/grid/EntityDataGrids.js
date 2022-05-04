@@ -4,17 +4,17 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 import './MyDataGrid.css'
 import MyDataGrid from "./MyDataGrid";
-import { copyFormColDefs, copyGridColDefs } from "../generic/helper";
+import { copyFormColDefs, copyGridColDefs } from "../common/helper";
 
-import { Club, Competition, Firstname, Fixture, Lastname, Player, Event, Teamsheet } from "../globals";
-import { competitionData } from "../Competitions/competitions";
-import { fixtureData } from "../Fixtures/fixtures";
-import { firstnameData } from "../Firstnames/firstnames";
-import { lastnameData } from "../Lastnames/lastnames";
-import { playerData } from "../Players/players";
-import { eventData } from "../Events/events";
-import { teamsheetData} from "../Teamsheets/teamsheets";
-import { clubData } from "../Clubs/clubs";
+import { Club, Competition, Firstname, Fixture, Lastname, Player, Event, Teamsheet } from "../common/globals";
+import { competitionData } from "../entities/Competitions/competitions";
+import { fixtureData } from "../entities/Fixtures/fixtures";
+import { firstnameData } from "../entities/Firstnames/firstnames";
+import { lastnameData } from "../entities/Lastnames/lastnames";
+import { playerData } from "../entities/Players/players";
+import { eventData } from "../entities/Events/events";
+import { teamsheetData} from "../entities/Teamsheets/teamsheets";
+import { clubData } from "../entities/Clubs/clubs";
 
 export const EntityDataGrid = (props) => {
     let data = {}

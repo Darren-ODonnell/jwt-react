@@ -1,5 +1,7 @@
 import React from 'react';
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { ENDPOINT } from "../common/globals";
+
 
 export const LoggedInNavbar = (props) =>{
     return (

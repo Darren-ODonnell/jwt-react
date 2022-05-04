@@ -1,6 +1,6 @@
-import { LASTNAMES, Lastname } from '../globals'
-import { addLastname, deleteLastnameById, getLastnames, updateLastname } from "../services/LastnameService";
-import { addMessage } from "../generic/helper";
+import { LASTNAMES, Lastname } from '../../common/globals'
+import { addLastname, deleteLastnameById, getLastnames, updateLastname } from "../../services/LastnameService";
+import { addMessage } from "../../common/helper";
 
 export const lastnameColumnDefs = [
     { headerName: 'Lastname',       field: 'lastname',     type: 'String', min:3, max:45, required: true  },

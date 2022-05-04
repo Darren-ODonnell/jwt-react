@@ -6,7 +6,7 @@ import {    COMPETITION_FINDBYID,
             COMPETITION_UPDATE,
             COMPETITION_ADD,
             COMPETITION_DELETEBYID,
-        } from "../globals";
+        } from "../common/globals";
 
 export function getCompetitions()           {  return GetRequest(COMPETITION_LIST)                  }
 export function getCompetitionById(id)      {  return GetRequestTwo(COMPETITION_FINDBYID, id)       }

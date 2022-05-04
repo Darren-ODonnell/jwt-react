@@ -1,6 +1,6 @@
-import {  FIXTURES, Fixture } from '../globals'
-import { addFixture, deleteFixtureById, getFixtures, updateFixture } from "../services/FixtureService";
-import { addMessage } from "../generic/helper";
+import {  FIXTURES, Fixture } from '../../common/globals'
+import { addFixture, deleteFixtureById, getFixtures, updateFixture } from "../../services/FixtureService";
+import { addMessage } from "../../common/helper";
 
 export const fixtureColumnDefs = [
     { headerName: 'Competition ID', field: 'competitionId',type: 'Integer',  min:1,  max:100000,  required: true },

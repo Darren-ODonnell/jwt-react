@@ -8,7 +8,7 @@ import {    LASTNAME_FINDBYID,
             LASTNAME_DELETEBYID,
             LASTNAME_FINDIRISH,
             LASTNAME_FINDENGLISH,
-        } from "../globals";
+        } from "../common/globals";
 
 export function getLastnames()                  {  return GetRequest(LASTNAME_LIST)                     }
 export function getLastnameById(id)             {  return GetRequestTwo(LASTNAME_FINDBYID, id)          }

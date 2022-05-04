@@ -3,7 +3,7 @@ import ClubListItem from "./ClubListItem";
 import NewClubForm from "./NewClubForm";
 import './ClubList.css';
 
-import {getClubs} from '../services/ClubService';
+import {getClubs} from '../../services/ClubService';
 
 const ClubList = () =>  {
     const { data, error, isLoaded } = getClubs();

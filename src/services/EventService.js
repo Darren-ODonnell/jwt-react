@@ -2,7 +2,7 @@ import { GetRequest, GetRequestTwo, PostRequest, PutRequest, DeleteRequest } fro
 
 import {    EVENT_FINDBYID,          EVENT_LIST,
             EVENT_UPDATE,            EVENT_ADD,            EVENT_DELETEBYID,
-        } from "../globals";
+        } from "../common/globals";
 
 export function getEvents()          {  return GetRequest(EVENT_LIST)                 }
 export function getEventById(id)     {  return GetRequestTwo(EVENT_FINDBYID, id)      }

@@ -1,6 +1,6 @@
-import { addTeamsheet, deleteTeamsheetById, getTeamsheets, updateTeamsheet } from "../services/TeamsheetService";
-import { TEAMSHEETS, Teamsheet } from "../globals";
-import { addMessage } from "../generic/helper";
+import { addTeamsheet, deleteTeamsheetById, getTeamsheets, updateTeamsheet } from "../../services/TeamsheetService";
+import { TEAMSHEETS, Teamsheet } from "../../common/globals";
+import { addMessage } from "../../common/helper";
 
 export const teamsheetColumnDefs = [
 

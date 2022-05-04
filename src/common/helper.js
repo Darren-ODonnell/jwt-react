@@ -53,3 +53,7 @@ export const defaultColDef = {
     },
     cellEditor: 'agLargeTextCellEditor'
 };
+
+export function isEmptyObject(obj){
+    return JSON.stringify(obj) === '{}';
+}

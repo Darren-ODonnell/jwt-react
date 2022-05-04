@@ -3,7 +3,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import { club } from './Clubs/reducer'
+import { club } from './entities/Clubs/reducer'
 
 
 import { persistReducer } from 'redux-persist';

@@ -1,6 +1,6 @@
-import { CLUBS, Club } from '../globals'
-import { addClub, deleteClubById, getClubs, updateClub } from "../services/ClubService";
-import { addMessage } from "../generic/helper";
+import { CLUBS, Club } from '../../common/globals'
+import { addClub, deleteClubById, getClubs, updateClub } from "../../services/ClubService";
+import { addMessage } from "../../common/helper";
 
 export const clubColumnDefs = [
     // { headerName: 'ID',             field: 'id',            type: 'Number', min:3, max:10, required: true   },

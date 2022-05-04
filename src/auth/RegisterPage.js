@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { useToken } from "../auth/useToken";
+import { useToken } from "./useToken";
 import axios from 'axios'
 
 

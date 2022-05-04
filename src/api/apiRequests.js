@@ -1,7 +1,9 @@
 import  { useEffect, useState } from 'react';
-import instance from './axios';
-import { API_AUTH_LOGIN, HOME_PAGE} from "../globals";
-import authHeader from "../auth/authHeader";
+import instance,  { authHeader } from './axios';
+import { API_AUTH_LOGIN, HOME_PAGE} from "../common/globals";
+
+
+
 
 export const GetRequest = (url) => {
     const [data, setData] = useState([]);

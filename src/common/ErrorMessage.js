@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import { Alert, Button } from "react-bootstrap";
-import {BrowserRouter, useHistory, withRouter} from "react-router-dom";
+import {BrowserRouter,  withRouter} from "react-router-dom";
 
 
 export const ErrorMessage = (props) => {
     const [show, setShow] = useState(true);
-    let history = useHistory();
 
-    function onClick(history) {
+
+    function onClick() {
         setShow(false);
-        history.push("/");
+        window.location = "/"
     }
 
 
@@ -20,7 +20,7 @@ export const ErrorMessage = (props) => {
                 {props.message}
                 <hr />
                 <div className="d-flex justify-content-end">
-                    <Button onClick={()=>onClick(history)} variant="outline-success">
+                    <Button onClick={onClick} variant="outline-success">
                         Click to try again!
                     </Button>
                 </div>

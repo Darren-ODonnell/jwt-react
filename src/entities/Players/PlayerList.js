@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PlayerListItem from "./PlayerListItem";
 import './PlayerList.css';
-import { getPlayers } from "../services/PlayerService";
+import { getPlayers } from "../../services/PlayerService";
 
 
 

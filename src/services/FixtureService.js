@@ -10,7 +10,7 @@ import {    FIXTURE_FINDBYID,
             FIXTURE_FINDBYCOMPETITIONHOMETEAMAWAYTEAMFIXTUREDATESEASON,
             FIXTURE_FINDBYHOMEBYCLUB,
             FIXTURE_FINDNEXTBYCLUB,
-        } from "../globals";
+        } from "../common/globals";
 
 export function getFixtures()               {  return GetRequest(FIXTURE_LIST)             }
 export function getFixtureById(id)          {  return GetRequestTwo(FIXTURE_FINDBYID, id)     }

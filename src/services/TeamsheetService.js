@@ -1,6 +1,6 @@
 import { GetRequest, GetRequestTwo, PostRequest, PutRequest, DeleteRequest } from "../api/apiRequests";
 
-import {TEAMSHEET_FINDBYID, TEAMSHEET_LIST,TEAMSHEET_UPDATE, TEAMSHEET_ADD,  TEAMSHEET_DELETEBYID } from "../globals";
+import {TEAMSHEET_FINDBYID, TEAMSHEET_LIST,TEAMSHEET_UPDATE, TEAMSHEET_ADD,  TEAMSHEET_DELETEBYID } from "../common/globals";
 
 export function getTeamsheets()          {  return GetRequest(TEAMSHEET_LIST)                 }
 export function getTeamsheetById(id)     {  return GetRequestTwo(TEAMSHEET_FINDBYID, id)      }

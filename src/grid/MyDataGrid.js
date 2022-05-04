@@ -5,9 +5,9 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 import './MyDataGrid.css'
 import { Button, Grid } from "@mui/material";
-import { ErrorMessage } from "../ErrorMessage";
+import { ErrorMessage } from "../common/ErrorMessage";
 import { FormDialog} from "./FormDialog";
-import { defaultColDef } from "../generic/helper";
+import { defaultColDef } from "../common/helper";
 
 
 const MyDataGrid = (props) => {

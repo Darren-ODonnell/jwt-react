@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import instance , { setAuthToken }  from '../api/axios'
-import { API_AUTH_LOGIN, CLUB_LIST } from "../globals";
+import { API_AUTH_LOGIN, CLUB_LIST } from "../common/globals";
 
 export const LoginPage = () => {
 

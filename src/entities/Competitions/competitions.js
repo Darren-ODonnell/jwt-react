@@ -1,7 +1,7 @@
 import React from 'react'
-import { COMPETITIONS, Competition } from '../globals'
-import { addCompetition, deleteCompetitionById, getCompetitions, updateCompetition } from "../services/CompetitionService";
-import { addMessage } from "../generic/helper";
+import { COMPETITIONS, Competition } from '../../common/globals'
+import { addCompetition, deleteCompetitionById, getCompetitions, updateCompetition } from "../../services/CompetitionService";
+import { addMessage } from "../../common/helper";
 
 export const competitionColumnDefs = [
     { headerName: 'Competition Name',   field: 'name',   type: 'String',  min:5, max:45, required: true},

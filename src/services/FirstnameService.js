@@ -8,7 +8,7 @@ import {    FIRSTNAME_FINDBYID,
             FIRSTNAME_DELETEBYID,
             FIRSTNAME_FINDIRISH,
             FIRSTNAME_FINDENGLISH,
-        } from "../globals";
+        } from "../common/globals";
 
 export function getFirstnames()                 {  return GetRequest(FIRSTNAME_LIST)                   }
 export function getFirstnameById(id)            {  return GetRequestTwo(FIRSTNAME_FINDBYID, id)           }

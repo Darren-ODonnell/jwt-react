@@ -1,6 +1,6 @@
-import { addEvent, deleteEventById, getEvents, updateEvent } from "../services/EventService";
-import { EVENTS, Event } from "../globals";
-import { addMessage } from "../generic/helper";
+import { addEvent, deleteEventById, getEvents, updateEvent } from "../../services/EventService";
+import { EVENTS, Event } from "../../common/globals";
+import { addMessage } from "../../common/helper";
 
 export const eventColumnDefs = [
 

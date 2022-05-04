@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CLUB_LIST } from "../globals";
+import { CLUB_LIST } from "../common/globals";
 import { AgGridReact } from "ag-grid-react";
 import React from "react";
 

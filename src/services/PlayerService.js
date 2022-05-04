@@ -5,7 +5,7 @@ import {PLAYER_FINDBYID,
         PLAYER_UPDATE,
         PLAYER_ADD,
         PLAYER_DELETEBYID,
-} from "../globals";
+} from "../common/globals";
 
 export function getPlayers()          {  return GetRequest(PLAYER_LIST)                 }
 export function getPlayerById(id)     {  return GetRequestTwo(PLAYER_FINDBYID, id)      }

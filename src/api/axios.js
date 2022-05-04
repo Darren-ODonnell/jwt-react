@@ -1,15 +1,6 @@
 import axios from 'axios';
 
-// backend
-const HOME = "http://192.168.100.151:8080";
-const WORK = "http://147.252.81.3:8080";
-const SAME_MACHINE = "http://localhost:8080";
-
-// frontend
-const WORK_LAPTOP = "http://147.252.81.42:3000"
-const HOME_LAPTOP = "http://192.168.100.152:3000"
-
-const ENDPOINT = WORK;
+import { ENDPOINT } from "../common/globals";
 
 // Next we make an 'instance' of it
 const instance = axios.create({
@@ -22,8 +13,23 @@ const instance = axios.create({
     }
 });
 
+export const getUser = () => {
+    return JSON.parse( localStorage.getItem( 'user' ) );
+}
 
-export const setAuthToken = token => {
+
+export const authHeader = () => {
+    // check if user exists in localstorage before checking the token
+    if ( localStorage.getItem( 'user' ) !== null ) {
+        const user = JSON.parse( localStorage.getItem( 'user' ) );
+        if ( user && user.accessToken ) {
+            return { Authorization: 'Bearer ' + user.accessToken };
+        }
+    }
+    return {};
+}
+
+export const setAuthToken = (token) => {
     if (token) {
         //applying token
         instance.defaults.headers.common['Authorization'] = "Bearer " + token;
@@ -58,5 +64,9 @@ instance.interceptors.response.use(
     (response) => responseHandler(response),
     (error) => errorHandler(error)
 );
+
+
+
+
 
 export default instance;

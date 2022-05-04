@@ -1,6 +1,6 @@
-import { Player, PLAYERS } from '../globals'
-import { addPlayer, deletePlayerById, getPlayers, updatePlayer } from "../services/PlayerService";
-import { addMessage } from "../generic/helper";
+import { Player, PLAYERS } from '../../common/globals'
+import { addPlayer, deletePlayerById, getPlayers, updatePlayer } from "../../services/PlayerService";
+import { addMessage } from "../../common/helper";
 
 export const playerColumnDefs = [
     { headerName: 'Firstname',      field: 'firstname',   type: 'String',  min:5, max:45, required: true },

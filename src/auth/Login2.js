@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import instance, {setAuthToken} from "../api/axios";
-import { API_AUTH_LOGIN, CLUB_LIST } from "../globals";
+import { API_AUTH_LOGIN, CLUB_LIST } from "../common/globals";
 import '../styles.css';
-import {render} from "react-dom";
-import {LoginRequest} from "../api/apiRequests";
+
+import { LoginRequest } from "../api/apiRequests";
 
 export const Login2 = () => {
     const [usernameValue, setUsernameValue] = useState('');
@@ -13,7 +12,8 @@ export const Login2 = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     console.log("Inside Login2")
-    let history = useHistory();
+    // window.location = '/login';
+
 
     let loginModel = {
         username: '',
@@ -44,7 +44,7 @@ export const Login2 = () => {
                 console.log( "Response: " + response.data )
                 updateState( response.data )
                 setIsSubmitted( true );
-                history.push( CLUB_LIST );
+                window.location = CLUB_LIST;
             }, error => {
                 console.log( "Error:-- " + error )
                 const message = "Login Failed: Username or Password Incorrect - Please try again";
@@ -118,6 +118,9 @@ export const Login2 = () => {
 
     );
 
+    useEffect(() => {
+        const timer = setTimeout(() => console.log('Initial timeout!'), 5000);
+    }, []);
     return (
         <div className="app">
             <div className="login-form">
@@ -126,6 +129,4 @@ export const Login2 = () => {
             </div>
         </div>
     );
-
-
 }

@@ -1,6 +1,6 @@
-import { FIRSTNAMES, Firstname } from '../globals'
-import { addFirstname, deleteFirstnameById, getFirstnames, updateFirstname } from "../services/FirstnameService";
-import { addMessage } from "../generic/helper";
+import { FIRSTNAMES, Firstname } from '../../common/globals'
+import { addFirstname, deleteFirstnameById, getFirstnames, updateFirstname } from "../../services/FirstnameService";
+import { addMessage } from "../../common/helper";
 
 export const firstnameColumnDefs = [
     { headerName: 'Firstname',       field: 'firstname',      type: 'String', min:3, max:45, required: true  },
