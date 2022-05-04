@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { ENDPOINT } from "../common/globals";
+import {isEmptyObject} from "../common/helper";
 
 // Next we make an 'instance' of it
 const instance = axios.create({
@@ -13,8 +14,15 @@ const instance = axios.create({
     }
 });
 
+
+
 export const getUser = () => {
-    return JSON.parse( localStorage.getItem( 'user' ) );
+    const user = JSON.parse( localStorage.getItem( 'user' ) );
+    if (isEmptyObject(user)) {
+        return {}
+    } else {
+        return user;
+    }
 }
 
 

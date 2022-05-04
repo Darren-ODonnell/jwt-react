@@ -11,35 +11,28 @@ export const NavbarSelect = () => {
     const [isLoading, setIsLoading] = useState(false);
     const countRef = useRef(0); // testing only = how many times this code is hit
     let navBarSelect = <LoggedOutNavbar/>; // default loggedOut unless token is available
-    let auth = authHeader();
-    const { error, isLoaded, data } = getClubs()
 
-    if(isEmptyObject(auth) ) {
-        navBarSelect = <LoggedOutNavbar/>;
-    } else {
-        navBarSelect = <LoggedInNavbar/>;
+    let user = getUser();
 
+    if( isEmptyObject( user ) ) { return <LoggedOutNavbar/>; }
+
+    countRef.current++;
+    console.log(countRef.current)
+
+    const {error, isLoaded, data} = getClubs()
+
+    if (!isLoaded) {
         countRef.current++;
-        console.log( countRef.current )
-        //
-        //
-         const { error, isLoaded, data } = getClubs()
-        //
-        //
-        //     if ( !isLoaded ) {
-        //         countRef.current++;
-        //         console.log( countRef.current )
-        //
-        //         if ( error !== null ) {
-        //             return <ErrorMessage message="Database Unavailable"/>;
-        //         } else {
-        //             if ( !isLoaded ) return "Loading...";
-        //             setIsLoading( true );
-        //         }
-        //         navBarSelect = ( isLoading ) ? !!data ? <LoggedInNavbar user={ getUser() }/> :
-        //             <LoggedOutNavbar/> : "Loading...";
-        //     }
+        console.log(countRef.current)
 
+        if (error !== null) {
+            return <ErrorMessage message="Database Unavailable"/>;
+        } else {
+            if (!isLoaded) return "Loading...";
+            setIsLoading(true);
+        }
+        navBarSelect = (isLoading) ? !!data ? <LoggedInNavbar user={user}/> :
+            <LoggedOutNavbar/> : "Loading...";
     }
 
     return (
