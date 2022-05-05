@@ -16,7 +16,7 @@ export const HOME_LAPTOP    = "http://192.168.100.152:3000"
 export const AWS_REACT      = ""
 
 
-export const ENDPOINT       = WORK;
+export const ENDPOINT       = HOME;
 
 
 // for Form/Grid columns

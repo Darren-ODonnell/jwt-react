@@ -10,6 +10,28 @@ As elements are finished - move below Completed
     E4. Add Entity not working for any entity - add api code to achieve same
     E6: Delete does not work on any entity
     E10: Foreign key details not display on any entity
+        All the data has been captured from the server.
+        Redo the columns for these tables
+        Re
+        Fixtures
+            CompetitionID -> name
+            HomeTeamID -> name
+            AwayTeamID -> name
+            Change headers names accordingly
+
+        Events
+            FixtureID -> Competition and Opposition
+            PlayerID -> Player Surname, Firstname
+            EventNamesID -> name
+            PitchGridID -> name
+            
+
+        Teamsheets
+            FixtureID -> Competition and Opposition
+            PlayerID -> Player Surname, Firstname
+            PositionID -> name
+
+
     E11: 
     E12: 
     E13: 
@@ -70,4 +92,9 @@ As elements are finished - move below Completed
         call to getClubs removed from NavBarSelect. (unclear how this caused the fault!)
     I5: getClubs causes FormDialog to be called 4 times - NOt a problem
         it re-renders each time state is changed, once data is changed it returns.
-    U4: auth/LoginSuccess, auth/LoginFailure - deleted - files were empty anyway
+    U4: auth/LoginSuccess, auth/LoginFailure 
+        - deleted - files were empty anyway
+
+
+
+
