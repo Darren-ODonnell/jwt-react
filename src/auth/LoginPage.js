@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import instance , { setAuthToken }  from '../api/axios'
+import instance   from '../api/axios'
 import { API_AUTH_LOGIN, CLUB_LIST } from "../common/globals";
+import AuthService from "./AuthService";
 
 export const LoginPage = () => {
 
@@ -14,17 +15,12 @@ export const LoginPage = () => {
 
     let loginModel = {username:'', password:''};
 
-    const createHeader = (token) => {
-        return { headers: { Authorization: "Bearer " + token, } }
-    }
 
     function updateState(userObj) {
-        const header = createHeader(userObj.accessToken);
-        setAuthToken(userObj.accessToken);
-        localStorage.setItem("user", JSON.stringify(userObj));
-        instance.defaults.headers.common['Authorization'] = userObj.accessToken;
-        localStorage.setItem('headers', JSON.stringify(header));
-
+        const header = AuthService.createHeader(userObj.accessToken);
+        AuthService.setAuthToken(userObj.accessToken);
+        AuthService.saveCurrentUser(userObj)
+        AuthService.saveHeader(header);
     }
 
     const onLoginClicked = () => {

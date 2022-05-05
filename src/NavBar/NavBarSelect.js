@@ -3,39 +3,24 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { getClubs } from "../services/ClubService";
 import React, { useRef, useState, useEffect } from "react";
 import { ErrorMessage } from "../common/ErrorMessage";
-import { authHeader, getUser } from '../api/axios';
 import { isEmptyObject } from "../common/helper";
+
+import AuthService from "../auth/AuthService";
 
 
 export const NavbarSelect = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const countRef = useRef(0); // testing only = how many times this code is hit
-    let navBarSelect = <LoggedOutNavbar/>; // default loggedOut unless token is available
+    const countRef = useRef( 0 ); // testing only = how many times this code is hit
 
-    let user = getUser();
+    let user = AuthService.getUser();
 
-    if( isEmptyObject( user ) ) { return <LoggedOutNavbar/>; }
-
-    countRef.current++;
-    console.log(countRef.current)
-
-    const {error, isLoaded, data} = getClubs()
-
-    if (!isLoaded) {
-        countRef.current++;
-        console.log(countRef.current)
-
-        if (error !== null) {
-            return <ErrorMessage message="Database Unavailable"/>;
-        } else {
-            if (!isLoaded) return "Loading...";
-            setIsLoading(true);
-        }
-        navBarSelect = (isLoading) ? !!data ? <LoggedInNavbar user={user}/> :
-            <LoggedOutNavbar/> : "Loading...";
+    if ( isEmptyObject( user ) ) {
+        return <LoggedOutNavbar/>;
     }
 
-    return (
-        <div className="App">   { (isLoaded) ? navBarSelect :"Loading..."}  </div>
-    )
+    // checking how often this code runs
+    countRef.current++;
+    console.log( countRef.current )
+
+    return ( <div className="App">   <LoggedInNavbar user={ user }/>  </div>  )
 }
+

@@ -55,5 +55,7 @@ export const defaultColDef = {
 };
 
 export function isEmptyObject(obj){
-    return JSON.stringify(obj) === '{}';
+    const array = JSON.stringify(obj);
+    const state = (array === '{}') || (array === "null");
+    return state;
 }

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import ENDPOINT from '../App.js';
+import AuthService from "../auth/AuthService";
 
 
 // stats
@@ -12,7 +13,7 @@ const STAT_FINDBYNAME = ENDPOINT + "/stat/findByName/";
 const STAT_LIST = ENDPOINT + "/stat/list";
 const STAT_UPDATE = ENDPOINT + "/stat/update";
 
-const headers = JSON.parse(localStorage.getItem('headers'))
+const headers = AuthService.authHeader();
 
 class StatService {
 

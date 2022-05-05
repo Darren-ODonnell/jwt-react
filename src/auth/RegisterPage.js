@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { useToken } from "./useToken";
 import axios from 'axios'
+import AuthService from "./AuthService";
 
 
 export const RegisterPage = () => {
@@ -30,7 +31,7 @@ export const RegisterPage = () => {
             // res.setHeader('Access-Control-Allow-Origin', '*');
             response = await axios.post( registerUrl, registerData );
             const { token } = response.data;
-            setToken( token );
+            AuthService.setAuthToken( token );
             history.push( '/' );
         } catch ( e ) {
             setErrorMessage( e )

@@ -1,8 +1,9 @@
-import { GetRequest, GetRequestTwo, PostRequest, PutRequest, DeleteRequest } from "../api/apiRequests";
+import { GetRequest, GetRequestTwo, PostRequest, PutRequest, DeleteRequest, GetRequestNew } from "../api/apiRequests";
 
 import {    CLUB_FINDBYID,          CLUB_LIST,           CLUB_FINDBYNAME,
             CLUB_UPDATE,            CLUB_ADD,            CLUB_DELETEBYID,
         } from "../common/globals";
+import { GetRequest2 } from "../api/UseAxiosApi";
 
 export const getClubs = ( ) =>          {  return GetRequest( CLUB_LIST )                 }
 export const getClubById= ( id ) =>     {  return GetRequestTwo( CLUB_FINDBYID, id )      }

@@ -14,39 +14,6 @@ const instance = axios.create({
     }
 });
 
-
-
-export const getUser = () => {
-    const user = JSON.parse( localStorage.getItem( 'user' ) );
-    if (isEmptyObject(user)) {
-        return {}
-    } else {
-        return user;
-    }
-}
-
-
-export const authHeader = () => {
-    // check if user exists in localstorage before checking the token
-    if ( localStorage.getItem( 'user' ) !== null ) {
-        const user = JSON.parse( localStorage.getItem( 'user' ) );
-        if ( user && user.accessToken ) {
-            return { Authorization: 'Bearer ' + user.accessToken };
-        }
-    }
-    return {};
-}
-
-export const setAuthToken = (token) => {
-    if (token) {
-        //applying token
-        instance.defaults.headers.common['Authorization'] = "Bearer " + token;
-    } else {
-        //deleting the token from header
-        delete instance.defaults.headers.common['Authorization'];
-    }
-}
-
 const responseHandler = response => {
     switch (response.status ) {
         case 401:
@@ -72,9 +39,5 @@ instance.interceptors.response.use(
     (response) => responseHandler(response),
     (error) => errorHandler(error)
 );
-
-
-
-
 
 export default instance;
