@@ -8,6 +8,7 @@ import { Button, Grid } from "@mui/material";
 import { ErrorMessage } from "../common/ErrorMessage";
 import { FormDialog} from "./FormDialog";
 import { defaultColDef } from "../common/helper";
+import { FormEditDialog } from "./FormEditDialog";
 
 
 const MyDataGrid = (props) => {
@@ -33,9 +34,20 @@ const MyDataGrid = (props) => {
     };
 
     const handleEdit = (props) => {
-        setOpen(true);
-        setFormData(props.data);
-        setRowData(props.data)
+        setOpen( true );
+        setFormData( props.data );
+        setRowData( props.data );
+        return <FormEditDialog
+            open={ open } handleClose={ handleClose }
+            setOpen={ setOpen }
+            data={ rowData } onChange={ onChange }
+            actions={ props.actions }
+            // handleFormSubmit={()=>handleFormSubmit(formData, actions )}
+            colDefs={ props.formColDefs }
+            messages={ props.messages }
+            addButton={ addEntityButton }
+        />
+
     }
     const handleDelete = (id) => {
         const confirm = window.confirm("Are you sure, you want to delete this row", id)
