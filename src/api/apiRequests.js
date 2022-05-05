@@ -1,6 +1,6 @@
 import  { useEffect, useState } from 'react';
 import instance  from './axios';
-import { API_AUTH_LOGIN, HOME_PAGE} from "../common/globals";
+import { API_AUTH_LOGIN } from "../common/globals";
 import AuthService from "../auth/AuthService";
 import useAxios from "axios-hooks";
 
@@ -55,7 +55,7 @@ export const GetRequestTwo = (url, param) => {
                 });
         };
         fetchData();
-    }, []);
+    }, [url, param]);
 
     return { error, isLoaded, data };
 };

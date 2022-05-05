@@ -1,8 +1,6 @@
 import { LoggedInNavbar, LoggedOutNavbar } from "./navbar";
 import 'bootstrap/dist/css/bootstrap.css';
-import { getClubs } from "../services/ClubService";
-import React, { useRef, useState, useEffect } from "react";
-import { ErrorMessage } from "../common/ErrorMessage";
+import React, { useRef } from "react";
 import { isEmptyObject } from "../common/helper";
 
 import AuthService from "../auth/AuthService";
