@@ -9,32 +9,6 @@ As elements are finished - move below Completed
 # Errors
     E4. Add Entity not working for any entity - add api code to achieve same
     E6: Delete does not work on any entity
-    E10: Foreign key details not display on any entity
-        All the data has been captured from the server.
-        Redo the columns for these tables
-        ...
-Fixtures
-    CompetitionID -> name
-    HomeTeamID -> name
-    AwayTeamID -> name
-    Change headers names accordingly
-
-        Events
-            FixtureID -> Competition and HomeTeam and AwayTeam
-            PlayerID -> Player Surname, Firstname
-            EventNamesID -> name
-            PitchGridID -> name
-
-            Add extra grid columns
-
-        Teamsheets
-            FixtureID -> Competition and Opposition
-            PlayerID -> Player Surname, Firstname
-            PositionID -> name
-
-            Add extra grid columns
-        ...
-
     E11: 
     E12: 
     E13: 
@@ -58,7 +32,7 @@ Fixtures
     C1: Add Plug and PLay Teamsheet selection
     C2: Add pictures for players
     C3: Add club logos to tables and teamsheets
-    C5: 
+    C5: Some sample Event data required to test report displays 
     C6:
     C7:
 
@@ -66,7 +40,7 @@ Fixtures
     U1: auth/useUser
     U2: auth/PrivateRoute
     U3: auth/user.service
-    U6: 
+    U6: StatService
     U7: 
     U8: 
 
@@ -98,6 +72,9 @@ Fixtures
     U4: auth/LoginSuccess, auth/LoginFailure 
         - deleted - files were empty anyway
 
-
+    E10: Foreign key details not display on any entity
+        All the data has been captured from the server.
+        Redo the columns for these tables
+        data2 created - could not change the stgate variable data.
 
 
