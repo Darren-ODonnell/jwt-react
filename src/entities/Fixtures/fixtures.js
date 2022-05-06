@@ -1,5 +1,5 @@
 import {  FIXTURES, Fixture } from '../../common/globals'
-import { addFixture, deleteFixtureById, getFixtures, updateFixture } from "../../services/FixtureService";
+import {addFixture, deleteFixtureById, getFixtures, updateFixture} from "../../services/FixtureService";
 import { addMessage } from "../../common/helper";
 
 export const fixtureColumnDefs = [

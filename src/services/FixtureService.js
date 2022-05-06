@@ -11,9 +11,10 @@ import {    FIXTURE_FINDBYID,
             FIXTURE_FINDBYHOMEBYCLUB,
             FIXTURE_FINDNEXTBYCLUB,
         } from "../common/globals";
+import {useEffect} from "react";
 
 export function getFixtures()               {
-    const {data, error, isLoaded } = GetRequest(FIXTURE_LIST)
+    const {data, error, isLoaded, setData } = GetRequest(FIXTURE_LIST)
     return {data2: buildData(data), data, error, isLoaded};
 }
 
