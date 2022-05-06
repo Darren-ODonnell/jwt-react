@@ -3,27 +3,27 @@ import { addFirstname, deleteFirstnameById, getFirstnames, updateFirstname } fro
 import { addMessage } from "../../common/helper";
 
 export const firstnameColumnDefs = [
-    { headerName: 'Firstname',       field: 'firstname',      type: 'String', min:3, max:45, required: true  },
-    { headerName: 'Irish Firstname', field: 'firstnameIrish', type: 'String', min:3, max:45, required: true  },
+    { headerName: 'Firstname'      , field: 'firstname'     , type: 'String', min: 3, max: 45, required: true  },
+    { headerName: 'Irish Firstname', field: 'firstnameIrish', type: 'String', min: 3, max: 45, required: true  },
 ];
 
 export const firstnameInitialValue = {
-    firstname:"",
-    firstnameIrish:""
+    firstname     : "",
+    firstnameIrish: ""
 };
 
 const actions = {
-    add: addFirstname,
-    update : updateFirstname,
+    add       : addFirstname,
+    update    : updateFirstname,
     deleteById: deleteFirstnameById,
-    list: getFirstnames
+    list      : getFirstnames
 };
 
 export const firstnameData = {
-    messages: addMessage(Firstname),
-    type: Firstname,
-    actions: actions,
-    entity: FIRSTNAMES,
+    messages    : addMessage(Firstname),
+    type        : Firstname,
+    actions     : actions,
+    entity      : FIRSTNAMES,
     initialValue: firstnameInitialValue,
-    columnDefs: firstnameColumnDefs
+    columnDefs  : firstnameColumnDefs
 };

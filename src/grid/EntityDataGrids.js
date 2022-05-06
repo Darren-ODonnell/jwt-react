@@ -19,14 +19,14 @@ import { clubData } from "../entities/Clubs/clubs";
 export const EntityDataGrid = (props) => {
     let data = {}
     switch (props.entity) {
-        case Club:          data = clubData; break;
-        case Player:        data = playerData; break;
-        case Competition:   data = competitionData; break;
-        case Fixture:       data = fixtureData; break;
-        case Event:         data = eventData; break;
-        case Firstname:     data = firstnameData; break;
-        case Lastname:      data = lastnameData; break;
-        case Teamsheet:     data = teamsheetData; break;
+        case Club       : data = clubData; break;
+        case Player     : data = playerData; break;
+        case Competition: data = competitionData; break;
+        case Fixture    : data = fixtureData; break;
+        case Event      : data = eventData; break;
+        case Firstname  : data = firstnameData; break;
+        case Lastname   : data = lastnameData; break;
+        case Teamsheet  : data = teamsheetData; break;
         default:
             break;
     }
@@ -36,11 +36,11 @@ export const MainDataGrid = (props) => {
     return (
         <>
             <MyDataGrid
-                formColDefs={ copyFormColDefs( props.columnDefs )} // form column definitions
-                gridColDefs={ copyGridColDefs( props.columnDefs )} // Grid column definitions
-                initialValue={ props.initialValue } // empty values
-                actions={ props.actions } // endpoint calls
-                messages={ props.messages }
+                formColDefs  = { copyFormColDefs( props.columnDefs )} // form column definitions
+                gridColDefs  = { copyGridColDefs( props.columnDefs )} // Grid column definitions
+                initialValue = { props.initialValue }                 // empty values
+                actions      = { props.actions }                      // endpoint calls
+                messages     = { props.messages }
             />
         </>
     )

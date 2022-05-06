@@ -29,7 +29,7 @@ export const GetRequest = (url) => {
         fetchData();
     },[url]);
 
-    return { error, isLoaded, data };
+    return { error, isLoaded, data, setData };
 };
 export const GetRequestTwo = (url, param) => {
     const [data, setData] = useState([]);
@@ -56,7 +56,7 @@ export const GetRequestTwo = (url, param) => {
         fetchData();
     }, [url, param]);
 
-    return { error, isLoaded, data };
+    return { error, isLoaded, data, setData };
 };
 export const PostRequest = (url, param) => {}
 export const PutRequest = (url, param) => {}

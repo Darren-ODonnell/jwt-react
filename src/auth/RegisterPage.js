@@ -21,9 +21,9 @@ export const RegisterPage = () => {
         const registerUrl = 'http://localhost:8080/api/auth/register/';
 
         const registerData = {
-            username: usernameValue,
-            email: emailValue,
-            password: passwordValue,
+            username       : usernameValue,
+            email          : emailValue,
+            password       : passwordValue,
             confirmPassword: confirmPasswordValue,
         }
 

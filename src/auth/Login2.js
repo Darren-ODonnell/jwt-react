@@ -6,11 +6,11 @@ import '../styles.css';
 import { LoginRequest } from "../api/apiRequests";
 import AuthService from "./AuthService";
 
-export const Login2 = () => {
+export const Login2      = () => {
     const [usernameValue, setUsernameValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [errorMessage , setErrorMessage]  = useState('');
+    const [isSubmitted  , setIsSubmitted]   = useState(false);
 
     let loginModel = {
         username: '',
@@ -58,19 +58,19 @@ export const Login2 = () => {
                 <div className="input-container">
                     <label>Username </label>
                     <input
-                        autoComplete="current-username"
-                        type="text" name="uname" required
-                        value={usernameValue}
-                        onChange={e => setUsernameValue(e.target.value)}
+                        autoComplete = "current-username"
+                        type         = "text" name                             = "uname" required
+                        value        = {usernameValue}
+                        onChange     = {e => setUsernameValue(e.target.value)}
                     />
                 </div>
                 <div className="input-container">
                     <label>Password </label>
                     <input
-                        autoComplete="current-password"
-                        type="password" name="pass" required
-                        value={passwordValue}
-                        onChange={e => setPasswordValue(e.target.value)}
+                        autoComplete = "current-password"
+                        type         = "password" name                         = "pass" required
+                        value        = {passwordValue}
+                        onChange     = {e => setPasswordValue(e.target.value)}
                     />
                 </div>
                 <div className="button-container">

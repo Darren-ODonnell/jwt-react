@@ -6,12 +6,12 @@ import AuthService from "./AuthService";
 
 export const LoginPage = () => {
 
-    const [ , setLoginSuccess ] = useState();
-    const [ loading, setLoading] = useState(true);
+    const [              , setLoginSuccess ]  = useState();
+    const [ loading      , setLoading]        = useState(true);
     const [ usernameValue, setUsernameValue ] = useState( '' );
     const [ passwordValue, setPasswordValue ] = useState( '' );
-    const [ errorMessage, setErrorMessage ]   = useState( '' );
-    const history = useHistory();
+    const [ errorMessage , setErrorMessage ]  = useState( '' );
+    const history         = useHistory();
 
     let loginModel = {username:'', password:''};
 
@@ -63,14 +63,14 @@ export const LoginPage = () => {
                 <h1> Log In</h1>
                 { errorMessage && <div className = "fail">{ errorMessage }</div> }
                 <input
-                    type = "text" autoComplete="on"
-                    value = { usernameValue }
-                    onChange = { e => setUsernameValue( e.target.value ) }
+                    type        = "text" autoComplete                         = "on"
+                    value       = { usernameValue }
+                    onChange    = { e => setUsernameValue( e.target.value ) }
                     placeholder = "username"/>
                 <input
-                    type = "password" autoComplete="on"
-                    value = { passwordValue }
-                    onChange = { e => setPasswordValue( e.target.value ) }
+                    type        = "password" autoComplete                     = "on"
+                    value       = { passwordValue }
+                    onChange    = { e => setPasswordValue( e.target.value ) }
                     placeholder = "password"/>
                 <hr/>
                 <input type="submit" value="Submit" />

@@ -12,25 +12,28 @@ As elements are finished - move below Completed
     E10: Foreign key details not display on any entity
         All the data has been captured from the server.
         Redo the columns for these tables
-        Re
-        Fixtures
-            CompetitionID -> name
-            HomeTeamID -> name
-            AwayTeamID -> name
-            Change headers names accordingly
+        ...
+Fixtures
+    CompetitionID -> name
+    HomeTeamID -> name
+    AwayTeamID -> name
+    Change headers names accordingly
 
         Events
-            FixtureID -> Competition and Opposition
+            FixtureID -> Competition and HomeTeam and AwayTeam
             PlayerID -> Player Surname, Firstname
             EventNamesID -> name
             PitchGridID -> name
-            
+
+            Add extra grid columns
 
         Teamsheets
             FixtureID -> Competition and Opposition
             PlayerID -> Player Surname, Firstname
             PositionID -> name
 
+            Add extra grid columns
+        ...
 
     E11: 
     E12: 
@@ -69,9 +72,9 @@ As elements are finished - move below Completed
 
 
 # In Progress
-    E3. Update form not populated with row data
     E5: Tables with foreign key data are not displayed correctly - events, teamsheets, fixtures etc
-
+    E3. Update form not populated with row data
+    
 # Completed
 
     R3: Build up AuthService to include login/logout/register etc
@@ -90,7 +93,7 @@ As elements are finished - move below Completed
         string passed rather than an object
     E9: After login - systens repeatedly attempts to login - spring continuous streams - browser 
         call to getClubs removed from NavBarSelect. (unclear how this caused the fault!)
-    I5: getClubs causes FormDialog to be called 4 times - NOt a problem
+    I5: getClubs causes FormDialog to be called 4 times - Not a problem
         it re-renders each time state is changed, once data is changed it returns.
     U4: auth/LoginSuccess, auth/LoginFailure 
         - deleted - files were empty anyway

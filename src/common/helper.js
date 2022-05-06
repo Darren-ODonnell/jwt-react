@@ -30,26 +30,26 @@ export const copyFormColDefs = ( columnDefs ) => {
     return columnDefs.map( ( prop ) => {
         return {
             headerName: prop.headerName,
-            type: prop.type,
-            min: prop.min,
-            max: prop.max,
-            required: prop.required
+            type      : prop.type,
+            min       : prop.min,
+            max       : prop.max,
+            required  : prop.required
         }
     } );
 }
 
 export const defaultColDef = {
-    sortable:true,
-    editable: true,
-    filter: true,
+    sortable       : true,
+    editable       : true,
+    filter         : true,
     cellEditorPopup: true,
-    floatingFilter: true,
-    resizable: true,
+    floatingFilter : true,
+    resizable      : true,
     // flex: 1,
     cellEditorParams: {
-        maxLength: 128,
-        rows: 2,
-        cols: 50
+        maxLength   : 128,
+        rows        : 2,
+        cols        : 50
     },
     cellEditor: 'agLargeTextCellEditor'
 };

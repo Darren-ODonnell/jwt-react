@@ -11,17 +11,17 @@ export const teamsheetInitialValue = {
 };
 
 const actions = {
-    add: addTeamsheet,
-    update : updateTeamsheet,
+    add       : addTeamsheet,
+    update    : updateTeamsheet,
     deleteById: deleteTeamsheetById,
-    list: getTeamsheets
+    list      : getTeamsheets
 }
 
 export const teamsheetData = {
-    messages: addMessage(Teamsheet),
-    type: Teamsheet,
-    actions: actions,
-    entity: TEAMSHEETS,
+    messages    : addMessage(Teamsheet),
+    type        : Teamsheet,
+    actions     : actions,
+    entity      : TEAMSHEETS,
     initialValue: teamsheetInitialValue,
-    columnDefs: teamsheetColumnDefs
+    columnDefs  : teamsheetColumnDefs
 };
