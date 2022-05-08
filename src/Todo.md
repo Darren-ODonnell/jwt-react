@@ -9,7 +9,7 @@ As elements are finished - move below Completed
 # Errors
     E4. Add Entity not working for any entity - add api code to achieve same
     E6: Delete does not work on any entity
-    E11: 
+    E11: Update does not work for any entity
     E12: 
     E13: 
 
@@ -17,8 +17,8 @@ As elements are finished - move below Completed
 # Refactoring
     R1: change to using useAxios and standardise api code layouts
     R2: simplify Grid/form to extract form
-    R5:
-    R6:
+    R5: Dont export getRequests from ApiRequests, use as conmst and refer by ApiRequest.getRequest...  
+    R6: Reduce the number of export const objects ... like R5
     R7: 
 
 # Investigations
@@ -33,7 +33,7 @@ As elements are finished - move below Completed
     C2: Add pictures for players
     C3: Add club logos to tables and teamsheets
     C5: Some sample Event data required to test report displays 
-    C6:
+    C6: 
     C7:
 
 # Unused Files
@@ -46,7 +46,9 @@ As elements are finished - move below Completed
 
 
 # In Progress
-    E5: Tables with foreign key data are not displayed correctly - events, teamsheets, fixtures etc
+    E5: Tables with foreign key data are not displayed correctly - events
+        Need some sample data to test!!!
+
     E3. Update form not populated with row data
     
 # Completed
