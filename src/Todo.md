@@ -26,7 +26,7 @@ As elements are finished - move below Completed
     I2: How to implement - forgotPassword
     I3: Use of Charts ?
     I4: Check if useToken is necessary / if so, can it be included in AuthService?
-    I6:
+    I6: nCheck useForm (from react-hook-form) for form handling ratherv than grid
 
 # New Code Additions
     C1: Add Plug and PLay Teamsheet selection
@@ -48,9 +48,55 @@ As elements are finished - move below Completed
 # In Progress
     E5: Tables with foreign key data are not displayed correctly - events
         Need some sample data to test!!!
-
     E3. Update form not populated with row data
+    I6: Check useForm (from react-hook-form) for form handling ratherv than grid
     
+    import React from "react";
+    import { useForm } from "react-hook-form";
+    
+    export default function App() {
+    const { register, handleSubmit } = useForm();
+    const onSubmit = (data, e) => console.log(data, e);
+    const onError = (errors, e) => console.log(errors, e);
+    
+    return (
+    <form onSubmit={handleSubmit(onSubmit, onError)}>
+    <input {...register("firstName")} />
+    <input {...register("lastName")} />
+    <button type="submit">Submit</button>
+    </form>
+    );
+    }
+    >useForm
+
+    </> register
+    </> unregister
+    </> formState
+    </> watch
+    </> handleSubmit
+    </> reset
+    </> resetField
+    </> setError
+    </> clearErrors
+    </> setValue
+    </> setFocus
+    </> getValues
+    </> getFieldState
+    </> trigger
+    </> control
+
+    </>useController
+    
+        </> Controller
+    
+    </>useFormContext
+    </>useWatch
+    </>useFormState
+    
+        </> ErrorMessage
+    
+    </>useFieldArray
+
 # Completed
 
     R3: Build up AuthService to include login/logout/register etc
