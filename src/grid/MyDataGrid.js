@@ -1,5 +1,5 @@
-import React, { useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import React, {  useState } from 'react';
+import {  AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
@@ -13,7 +13,7 @@ import { FormEditDialog } from "./FormEditDialog";
 
 const MyDataGrid = (props) => {
 
-    const [ gridApi , setGridApi ]  = useState(null);
+    const [ , setGridApi ]  = useState(null);
     const [ rowData , setRowData ]  = useState(props.initialValue);
     const [ formData, setFormData ] = useState(props.initialValue)
     const [ open    , setOpen ]     = useState(false);
@@ -134,9 +134,6 @@ const MyDataGrid = (props) => {
 
     };
 
-
-
-
     const addEntityButton = () => {
         return (
             <Grid align="right">
@@ -185,11 +182,7 @@ const MyDataGrid = (props) => {
         </div>
     )
 };
-const checkFormData = (data, props) => {
-    console.log(data.toString());
-    return true;
 
-}
 export default MyDataGrid;
 
 
