@@ -84,7 +84,7 @@ export const FormDialog2 = (props) => {
          <div>
             { props.addButton() }
             <Dialog
-                open             = { !props.open }
+                open             = { props.open }
                 onClose          = { props.handleClose }
                 aria-labelledby  = "alert-dialog-title"
                 aria-describedby = "alert-dialog-description" >
