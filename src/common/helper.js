@@ -1,4 +1,11 @@
-
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { KeyboardTimePicker } from "@material-ui/pickers";
+import DateFnsUtils from '@date-io/date-fns';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { TextField } from "@mui/material";
+import React, { useState } from "react";
 
 export const addMessage = (  entityName ) => {
     return {
@@ -58,4 +65,57 @@ export function isEmptyObject(obj){
     const array = JSON.stringify(obj);
     const state = (array === '{}') || (array === "null");
     return state;
+}
+
+
+
+export function datePicker ()  {
+    const [value, setValue] = React.useState<Date | null>(null);
+    return (
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+                fullWidth
+                format="MM/dd/yyyy"
+                margin="normal"
+                id="date-picker-dialog"
+                label="Date picker dialog"
+                value={value}
+                onChange={(newValue) => {
+                    setValue(newValue)
+                }}
+                KeyboardButtonProps = {{
+                    'aria-label': 'change date',
+                }}
+                renderInput={(params) => <TextField {...params} />}
+            />
+        </MuiPickersUtilsProvider>
+    )
+}
+
+export function timePicker() {
+    const [value, setValue] = useState<Date | null>(null);
+    return (
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <TimePicker
+                label="Time"
+                value={value}
+                onChange={(newValue) => {
+                    setValue(newValue);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+            />
+        </LocalizationProvider>
+    )
+}
+
+export function selectSeason () {
+    const year = Date.year;
+    const seasons = [year, year+1, year+2];
+
+    // select one from these 3 years
+}
+export function selectRound () {
+    const seasons = [1,2,3,4,5,6,7,8,9,10,11,12];
+
+    // select one from these 12 rounds
 }

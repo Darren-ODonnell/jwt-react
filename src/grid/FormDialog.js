@@ -59,20 +59,64 @@ export const FormDialog = ({ open, setOpen, data, onChange, colDefs, messages, a
                              variant     = "outlined"
                              margin      = "dense"
                              fullWidth  />
-                                })
+                             })
                       }
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={()=>setOpen(false)}
+                    <Button onClick={ () => setOpen(false) }
                             color   = "secondary"
                             variant = "outlined"
                     > Cancel </Button>
                     <Button  color   = "primary"
                              onClick = {handleFormSubmit}
                              variant = "contained"
-                    > {data.id?"Update":"Submit"} </Button>
+                    > { data.id ? "Update" : "Submit" } </Button>
                 </DialogActions>
             </Dialog>
         </div>
+    );
+}
+// { open, setOpen, data, onChange, colDefs, messages, addButton, editForm, addForm}
+export const FormDialog2 = (props) => {
+    // console.log(data)
+
+    return (
+         <div>
+            { props.addButton() }
+            <Dialog
+                open             = { !props.open }
+                onClose          = { props.handleClose }
+                aria-labelledby  = "alert-dialog-title"
+                aria-describedby = "alert-dialog-description" >
+                <DialogTitle id  = "alert-dialog-title"> { props.data.id ? props.messages.update: props.messages.create } </DialogTitle>
+                <DialogContent >
+                    { props.colDefs.map( ( prop, index ) => {
+                        return <TextField
+                            key         = { index }
+                            id          = { prop.field }
+                            value       = { props.data.field }
+                            onChange    = { e => props.onChange(e) }
+                            data        = { props.data }
+                            placeholder = { "Enter " + prop.headerName }
+                            label       = { prop.headerName }
+                            variant     = "outlined"
+                            margin      = "dense"
+                            fullWidth  />
+                    })
+                    }
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={ () => props.setOpen(false) }
+                            color   = "secondary"
+                            variant = "outlined"
+                    > Cancel </Button>
+                    <Button  color   = "primary"
+                             onClick = { handleFormSubmit }
+                             variant = "contained"
+                    > {props.data.id ? "Update" : "Submit" } </Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+
     );
 }
