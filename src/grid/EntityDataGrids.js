@@ -13,7 +13,7 @@ import { firstnameData } from "../entities/Firstnames/firstnames";
 import { lastnameData } from "../entities/Lastnames/lastnames";
 import { playerData } from "../entities/Players/players";
 import { eventData } from "../entities/Events/events";
-import { teamsheetData} from "../entities/Teamsheets/teamsheets";
+import { teamsheetData } from "../entities/Teamsheets/teamsheets";
 import { clubData } from "../entities/Clubs/clubs";
 
 export const EntityDataGrid = (props) => {
@@ -41,10 +41,24 @@ export const MainDataGrid = (props) => {
                 initialValue = { props.initialValue }                 // empty values
                 actions      = { props.actions }                      // endpoint calls
                 messages     = { props.messages }
+                editForm     = { props.editForm }
+                addForm      = { props.addForm }
             />
         </>
     )
 }
 
 
-
+export const MainDataGrid2 = (props) => {
+    return (
+        <>
+            <MyDataGrid
+                formColDefs  = { copyFormColDefs( props.columnDefs )} // form column definitions
+                gridColDefs  = { copyGridColDefs( props.columnDefs )} // Grid column definitions
+                initialValue = { props.initialValue }                 // empty values
+                actions      = { props.actions }                      // endpoint calls
+                messages     = { props.messages }
+            />
+        </>
+    )
+}

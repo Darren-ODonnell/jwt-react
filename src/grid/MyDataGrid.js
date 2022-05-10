@@ -6,7 +6,7 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 import './MyDataGrid.css'
 import { Button, Grid } from "@mui/material";
 import { ErrorMessage } from "../common/ErrorMessage";
-import { FormDialog} from "./FormDialog";
+import { FormDialog, FormDialog2 } from "./FormDialog";
 import { defaultColDef } from "../common/helper";
 import { FormEditDialog } from "./FormEditDialog";
 
@@ -145,20 +145,35 @@ const MyDataGrid = (props) => {
     }
     // debugger;
 
+    const addEntityButton2 = () => {
+        return (
+            <Grid align="right">
+                <Button onClick={ () => <props.editForm /> }
+                        variant = "contained"
+                        color   = "primary"
+                >{ props.messages.add }</Button>
+            </Grid>
+        )
+    }
+    // debugger;
+
     console.log(rowData)
 
     return (
         <div >
 
-            <FormDialog
-                open      = {open} handleClose  = {handleClose}
-                setOpen   = {setOpen}
-                data      = {rowData} onChange  = {onChange}
-                actions   = {props.actions}
+            <FormDialog2
+                open        = {open}
+                handleClose = {handleClose}
+                setOpen     = {setOpen}
+                data        = {rowData} onChange = {onChange}
+                actions     = {props.actions}
                 // handleFormSubmit={()=>handleFormSubmit(formData, actions )}
-                colDefs   = {props.formColDefs}
-                messages  = {props.messages}
-                addButton = {addEntityButton}
+                colDefs  = {props.formColDefs}
+                messages = {props.messages}
+                addButton = {addEntityButton2}
+                editForm = {props.editForm}
+                addForm = {props.addForm}
             />
 
             {/*<Grid align="right">*/}
