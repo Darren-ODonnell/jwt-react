@@ -9,15 +9,27 @@ const handleClose =         (setOpen) => {
 };
 
 // , formData, actions, setOpen, formColDefs
-const handleFormSubmit = (data) => {
-    data.preventDefault();
-    console.log('data',data)
+const handleFormSubmit = (formData) => {
+    let data = {...formData}
+    // formData.preventDefault();
+    console.log('Event',formData)
+
+
+
+
+    console.log('CompetitionName',data.competitionName)
+    console.log('FixtureDate',data.fixtureDate)
+    console.log('Season',data.season)
+    console.log('Round',data.round)
+    console.log('Mui-1',data.mui-1)
+    console.log('FormData',formData)
+
     // if (formData.id) { // updating a user
     //     const confirm = window.confirm("Are you sure, you want to update this row ?")
     //     confirm && actions.update(formData.id)
     //         .then( resp => {
     //             handleClose(setOpen);
-    //             actions.list();
+    //             actions.update();
     //         } )
     // } else { // adding new user
     //     const valid = checkFormData(formData, formColDefs)
@@ -25,7 +37,7 @@ const handleFormSubmit = (data) => {
     //     actions.add(formData)
     //         .then(resp => {
     //             handleClose(setOpen);
-    //             actions.list();
+    //             actions.add();
     //         })
     // }
 }
@@ -34,8 +46,6 @@ const handleFormSubmit = (data) => {
 
 export const FormDialog = ({ open, setOpen, data, onChange, colDefs, messages, addButton}) => {
     // console.log(data)
-
-
 
     return (
         <div>
@@ -52,7 +62,7 @@ export const FormDialog = ({ open, setOpen, data, onChange, colDefs, messages, a
                              key         = { index }
                              id          = { prop.field }
                              value       = { data.field }
-                             onChange    = { e => onChange(e) }
+                             onChange    = { ( e ) => onChange(e) }
                              data        = { data }
                              placeholder = { "Enter " + prop.headerName }
                              label       = { prop.headerName }
@@ -67,10 +77,11 @@ export const FormDialog = ({ open, setOpen, data, onChange, colDefs, messages, a
                             color   = "secondary"
                             variant = "outlined"
                     > Cancel </Button>
-                    <Button  color   = "primary"
-                             onClick = {handleFormSubmit}
+                    <Button  type="submit"
+                             color   = "primary"
+                             onClick = { handleFormSubmit }
                              variant = "contained"
-                    > { data.id ? "Update" : "Submit" } </Button>
+                    > {data.id ? "Update" : "Submit" } </Button>
                 </DialogActions>
             </Dialog>
         </div>
@@ -110,10 +121,13 @@ export const FormDialog2 = (props) => {
                             color   = "secondary"
                             variant = "outlined"
                     > Cancel </Button>
-                    <Button  color   = "primary"
-                             onClick = { handleFormSubmit }
-                             variant = "contained"
-                    > {props.data.id ? "Update" : "Submit" } </Button>
+
+                    <Button type="submit" onClick={() => handleFormSubmit(props.formData)}>Submit</Button>
+                    {/*<Button  type="submit"*/}
+                    {/*         color   = "primary"*/}
+                    {/*         onClick = { handleFormSubmit }*/}
+                    {/*         variant = "contained"*/}
+                    {/*> {props.data.id ? "Update" : "Submit" } </Button>*/}
                 </DialogActions>
             </Dialog>
         </div>

@@ -2,36 +2,41 @@ import React from "react";
 import { Button, Dialog, TextField } from "@mui/material";
 import {  DialogActions, DialogContent, DialogTitle } from "@mui/material";
 
-export const FormEditDialog = ({open, handleClose, data, onChange, handleFormSubmit, colDefs, messages}) => {
+export const FormEditDialog = props => {
+    // export const FormEditDialog = ({open, handleClose, data, onChange, handleFormSubmit, colDefs, messages}) => {
+
+    console.log("Data: "+props.data)
 
     return (
         <div>
             <Dialog
-                open             = {open}
-                onClose          = {handleClose}
+                open             = {props.open}
+                onClose          = {props.handleClose}
                 aria-labelledby  = "alert-dialog-title"
                 aria-describedby = "alert-dialog-description" >
-                <DialogTitle id  = "alert-dialog-title"> { data.id ? messages.update: messages.create } </DialogTitle>
+                <DialogTitle id  = "alert-dialog-title"> { props.data.id ? props.messages.update: props.messages.create } </DialogTitle>
                 <DialogContent >
-                    { colDefs.map( ( prop, index ) => {
+                    { props.colDefs.map( ( prop, index ) => {
                         return <TextField
-                             key         = { index }
-                             id          = { prop.field }
-                             value       = { data.field }
-                             onChange    = { e => onChange(e) }
-                             placeholder = { "Enter " + prop.headerName }
-                             label       = { prop.headerName }
-                             variant     = "outlined"
-                             margin      = "dense"
+                             key          = { index }
+                             id           = { prop.field }
+                             value        = { props.data.field }
+                             onChange     = { e => props.onChange(e) }
+                             defaultValue = { props.data.field}
+                             placeholder  = { "Enter " + prop.headerName }
+                             label        = { prop.headerName }
+                             variant      = "outlined"
+                             margin       = "dense"
                              fullWidth  />
                                 })
                       }
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick = {handleClose} color = "secondary" variant              = "outlined"> Cancel </Button>
-                    <Button  color  = "primary" onClick   = {()=>handleFormSubmit()} variant = "contained"> { data.id?"Update": "Submit"} </Button>
+                    <Button onClick = {props.handleClose} color = "secondary" variant              = "outlined"> Cancel </Button>
+                    <Button  color  = "primary" onClick={props.handleFormSubmit} variant = "contained"> { props.data.id?"Update": "Submit"} </Button>
                 </DialogActions>
             </Dialog>
         </div>
     );
 }
+export default FormEditDialog;

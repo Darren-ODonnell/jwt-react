@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {  AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
@@ -8,10 +8,10 @@ import { Button, Grid } from "@mui/material";
 import { ErrorMessage } from "../common/ErrorMessage";
 import { FormDialog, FormDialog2 } from "./FormDialog";
 import { defaultColDef } from "../common/helper";
-import { FormEditDialog } from "./FormEditDialog";
+import FormEditDialog from "./FormEditDialog";
 
 const MyDataGrid = (props) => {
-
+    const gridRef = useRef(); // Optional - for accessing Grid's API
     const [ , setGridApi ]  = useState(null);
     const [ rowData , setRowData ]  = useState(props.initialValue);
     const [ formData, setFormData ] = useState(props.initialValue)
@@ -37,10 +37,14 @@ const MyDataGrid = (props) => {
         setFormData( props.data );
         setRowData( props.data );
         return <FormEditDialog
-            open      = { open } handleClose  = { handleClose }
-            setOpen   = { setOpen }
-            data      = { rowData } onChange  = { onChange }
-            actions   = { props.actions }
+            open        = { open }
+            handleClose = { handleClose }
+            setOpen     = { setOpen }
+            data        = { props.data }
+            onChange    = { onChange }
+            formData    = { formData }
+            setFormData = { setFormData }
+            actions     = { props.actions }
             // handleFormSubmit={()=>handleFormSubmit(formData, actions )}
             colDefs   = { props.formColDefs }
             messages  = { props.messages }
@@ -81,10 +85,12 @@ const MyDataGrid = (props) => {
 
     const onChange = (e) => {
         const { value, id } = e.target
+        // update field with data from user
+        // data updated here first, then screen is updated
         setFormData({ ...formData, [id]: value })
-
     }
     console.log(data2);
+
     if (error !== null) {   return <ErrorMessage message={error.message}/>;   }
 
     const loading = <>Loading...</>;
@@ -143,19 +149,6 @@ const MyDataGrid = (props) => {
             </Grid>
         )
     }
-    // debugger;
-
-    const addEntityButton2 = () => {
-        return (
-            <Grid align="right">
-                <Button onClick={ () => <props.editForm /> }
-                        variant = "contained"
-                        color   = "primary"
-                >{ props.messages.add }</Button>
-            </Grid>
-        )
-    }
-    // debugger;
 
     console.log(rowData)
 
@@ -163,17 +156,20 @@ const MyDataGrid = (props) => {
         <div >
 
             <FormDialog2
-                open        = {open}
-                handleClose = {handleClose}
-                setOpen     = {setOpen}
-                data        = {rowData} onChange = {onChange}
-                actions     = {props.actions}
-                // handleFormSubmit={()=>handleFormSubmit(formData, actions )}
-                colDefs  = {props.formColDefs}
-                messages = {props.messages}
-                addButton = {addEntityButton2}
-                editForm = {props.editForm}
-                addForm = {props.addForm}
+                open        = { open }
+                handleClose = { handleClose }
+                setOpen     = { setOpen }
+                data        = { rowData }
+                onChange    = { onChange }
+                actions     = { props.actions }
+                //handleFormSubmit={()=>handleFormSubmit(formData, actions )}
+                colDefs     = { props.formColDefs }
+                messages    = { props.messages }
+                formData    = { formData }
+                setFormData = { setFormData }
+                addButton   = { addEntityButton }
+                // editForm = {props.editForm}
+                // addForm = {props.addForm}
             />
 
             {/*<Grid align="right">*/}
@@ -181,10 +177,11 @@ const MyDataGrid = (props) => {
             {/*</Grid>*/}
             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input"  >
                 <AgGridReact
-                    defaultColDef              = {defaultColDef}
-                    pagination                 = {true}
-                    rowData                    = {data2}
-                    animateRows                = {true}
+                    ref           = { gridRef }
+                    defaultColDef = { defaultColDef }
+                    pagination    = { true }
+                    rowData       = { data2 }
+                    animateRows   = { true }
                     // editType="fullRow" - one cell at a time
                     alwaysShowHorizontalScroll = {true}
                     suppressHorizontalScroll   = {false}

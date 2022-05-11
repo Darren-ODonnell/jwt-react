@@ -18,10 +18,10 @@ export const addMessage = (  entityName ) => {
 const id = { headerName: 'id',  field: 'id',  width:80,  editable: false, filter: false, };
 
 export const copyGridColDefs = ( columnDefs ) => {
-    const newColDefs = columnDefs.map( ( prop ) => {
+    const newColDefs = columnDefs.map( ({ headerName, field }) => {
         return {
-            headerName: prop.headerName,
-            field: prop.field,
+            headerName: headerName,
+            field: field,
             width: 150,
         }
     } );
@@ -29,7 +29,6 @@ export const copyGridColDefs = ( columnDefs ) => {
     // add grid actions update and delete to end of row and id defs to start of row
     // return [id,...newColDefs, actions];
     return [id,...newColDefs];
-
 }
 
 // move to FormDialog
@@ -37,6 +36,7 @@ export const copyFormColDefs = ( columnDefs ) => {
     return columnDefs.map( ( prop ) => {
         return {
             headerName: prop.headerName,
+            field     : prop.field,
             type      : prop.type,
             min       : prop.min,
             max       : prop.max,

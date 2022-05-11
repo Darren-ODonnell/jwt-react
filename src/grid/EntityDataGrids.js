@@ -16,9 +16,9 @@ import { eventData } from "../entities/Events/events";
 import { teamsheetData } from "../entities/Teamsheets/teamsheets";
 import { clubData } from "../entities/Clubs/clubs";
 
-export const EntityDataGrid = (props) => {
+export const EntityDataGrid = ({entity}) => {
     let data = {}
-    switch (props.entity) {
+    switch (entity) {
         case Club       : data = clubData; break;
         case Player     : data = playerData; break;
         case Competition: data = competitionData; break;
@@ -32,32 +32,33 @@ export const EntityDataGrid = (props) => {
     }
     return MainDataGrid(data);
 }
-export const MainDataGrid = (props) => {
+
+export const MainDataGrid = ({columnDefs, initialValue, actions, messages, editForm, addForm}) => {
     return (
         <>
             <MyDataGrid
-                formColDefs  = { copyFormColDefs( props.columnDefs )} // form column definitions
-                gridColDefs  = { copyGridColDefs( props.columnDefs )} // Grid column definitions
-                initialValue = { props.initialValue }                 // empty values
-                actions      = { props.actions }                      // endpoint calls
-                messages     = { props.messages }
-                editForm     = { props.editForm }
-                addForm      = { props.addForm }
+                formColDefs  = { copyFormColDefs( columnDefs )} // form column definitions
+                gridColDefs  = { copyGridColDefs( columnDefs )} // Grid column definitions
+                initialValue = { initialValue }                 // empty values
+                actions      = { actions }                      // endpoint calls
+                messages     = { messages }
+                editForm     = { editForm }
+                addForm      = { addForm }
             />
         </>
     )
 }
 
-
-export const MainDataGrid2 = (props) => {
+// export const MainDataGrid2 = (props) => {
+export const MainDataGrid2 = ({columnDefs, initialValue, actions, messages}) => {
     return (
         <>
             <MyDataGrid
-                formColDefs  = { copyFormColDefs( props.columnDefs )} // form column definitions
-                gridColDefs  = { copyGridColDefs( props.columnDefs )} // Grid column definitions
-                initialValue = { props.initialValue }                 // empty values
-                actions      = { props.actions }                      // endpoint calls
-                messages     = { props.messages }
+                formColDefs  = { copyFormColDefs( columnDefs )} // form column definitions
+                gridColDefs  = { copyGridColDefs( columnDefs )} // Grid column definitions
+                initialValue = { initialValue }                 // empty values
+                actions      = { actions }                      // endpoint calls
+                messages     = { messages }
             />
         </>
     )
