@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import instance, {setAuthToken} from "../api/axios";
-import { API_AUTH_LOGIN, CLUB_LIST } from "../common/globals";
 import '../styles.css';
 
-import { LoginRequest } from "../api/apiRequests";
+import { LoginRequest } from "../api/ApiService";
 import AuthService from "./AuthService";
 
 export const Login2      = () => {

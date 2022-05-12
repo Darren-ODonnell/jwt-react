@@ -1,13 +1,4 @@
-import React from 'react'
-import {
-    GetRequest,
-    GetRequestTwo,
-    PostRequest,
-    PutRequest,
-    DeleteRequest,
-    anotherRequest,
-    AnotherRequest
-} from "../api/apiRequests";
+import ApiService from "../api/ApiService";
 
 import {
     COMPETITION_FINDBYID,
@@ -19,24 +10,24 @@ import {
 } from "../common/globals";
 
 export function GetCompetitions( )           {
-    const {data, error, isLoaded } = GetRequest(COMPETITION_LIST)
+    const {data, error, isLoaded } = ApiService.GetRequest(COMPETITION_LIST)
     return {data2:data, data, error, isLoaded }
  }
 export function GetCompetitionById( id )      {
-    const {data, error, isLoaded } = GetRequestTwo(COMPETITION_FINDBYID, id)
+    const {data, error, isLoaded } = ApiService.GetRequestTwo(COMPETITION_FINDBYID, id)
     return { data2:data, data, error, isLoaded }
  }
 export function GetCompetitionByName( name )  {
-    const {data, error, isLoaded } = GetRequestTwo(COMPETITION_FINDBYNAME, name)
+    const {data, error, isLoaded } = ApiService.GetRequestTwo(COMPETITION_FINDBYNAME, name)
     return { data2:data, data, error, isLoaded }
 }
 
 export function UpdateCompetition( competition ) {
     const props = { url: COMPETITION_UPDATE, record: competition }
-    const { data, error, isLoaded } = AnotherRequest( props )
+    const { data, error, isLoaded } = ApiService.AnotherRequest( props )
     return { data2:data, data, error, isLoaded }
 }
 
-export function AddCompetition(competition) {  return PutRequest(COMPETITION_ADD, competition)      }
-export function DeleteCompetitionById(id)   {  return DeleteRequest(COMPETITION_DELETEBYID, id)     }
+export function AddCompetition(competition) {  return ApiService.PutRequest(COMPETITION_ADD, competition)      }
+export function DeleteCompetitionById(id)   {  return ApiService.DeleteRequest(COMPETITION_DELETEBYID, id)     }
 

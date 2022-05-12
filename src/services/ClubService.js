@@ -1,4 +1,4 @@
-import { GetRequest, GetRequestTwo, PostRequest, PutRequest, DeleteRequest } from "../api/apiRequests";
+import ApiService from "../api/ApiService";
 
 import {
     CLUB_FINDBYID,
@@ -11,25 +11,25 @@ import {
 
 
 export const getClubs = ( ) =>          {
-    const {data, error, isLoaded } = GetRequest( CLUB_LIST )
+    const {data, error, isLoaded } = ApiService.GetRequest( CLUB_LIST )
     return {data2:data, data, error, isLoaded }
 }
 
 export const getClubById= ( id ) =>     {
-    const {data, error, isLoaded } = GetRequestTwo( CLUB_FINDBYID, id )
+    const {data, error, isLoaded } = ApiService.GetRequestTwo( CLUB_FINDBYID, id )
     return {data2:data, data, error, isLoaded }
 }
 export const getClubByName = ( name ) =>{
-    const {data, error, isLoaded } = GetRequestTwo( CLUB_FINDBYNAME, name )
+    const {data, error, isLoaded } = ApiService.GetRequestTwo( CLUB_FINDBYNAME, name )
     return {data2:data, data, error, isLoaded }
 }
 
 export const updateClub = ( club ) =>   {
-    return PostRequest( CLUB_UPDATE, club )
+    return ApiService.PostRequest( CLUB_UPDATE, club )
 }
 export const addClub = ( club )    =>   {
-    return PutRequest( CLUB_ADD, club )
+    return ApiService.PutRequest( CLUB_ADD, club )
 }
 export const deleteClubById = ( id ) => {
-    return DeleteRequest( CLUB_DELETEBYID, id )
+    return ApiService.DeleteRequest( CLUB_DELETEBYID, id )
 }

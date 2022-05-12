@@ -3,7 +3,7 @@ import instance  from './axios';
 import { API_AUTH_LOGIN } from "../common/globals";
 import AuthService from "../auth/AuthService";
 
-export const AnotherRequest = (props) => {
+const AnotherRequest = (props) => {
     const [isLoaded, setIsLoaded] = useState(false);
     // const [error, setError] = useState(null);
     // const [data, setData] = useState([]);
@@ -100,4 +100,14 @@ export let LoginRequest = ( loginModel) => {
 
 }
 
-
+const ApiService = {
+    AnotherRequest,
+    PostRequest,
+    GetRequest,
+    GetRequestTwo,
+    DeleteRequest,
+    PutRequest,
+    GetRequestFive,
+    LoginRequest,
+};
+export default ApiService;

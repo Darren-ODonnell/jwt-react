@@ -1,4 +1,4 @@
-import { GetRequest, GetRequestTwo, PostRequest, PutRequest, DeleteRequest } from "../api/apiRequests";
+import ApiService from "../api/ApiService";
 
 import {
     FIRSTNAME_FINDBYID,
@@ -12,28 +12,28 @@ import {
 } from "../common/globals";
 
 export function getFirstnames()                 {
-    const {data, error, isLoaded } = GetRequest(FIRSTNAME_LIST)
+    const {data, error, isLoaded } = ApiService.GetRequest(FIRSTNAME_LIST)
     return { data2:data, data, error, isLoaded }
 }
 export function getFirstnameById(id)            {
-    const {data, error, isLoaded } =  GetRequestTwo(FIRSTNAME_FINDBYID, id)
+    const {data, error, isLoaded } =  ApiService.GetRequestTwo(FIRSTNAME_FINDBYID, id)
     return { data2:data, data, error, isLoaded }
  }
 export function getFirstnameIrish(firstname)    {
-    const {data, error, isLoaded } =  GetRequestTwo(FIRSTNAME_FINDIRISH, firstname)
+    const {data, error, isLoaded } =  ApiService.GetRequestTwo(FIRSTNAME_FINDIRISH, firstname)
     return { data2:data, data, error, isLoaded }
  }
 export function getFirstnameEnglish(firstname)  {
-    const {data, error, isLoaded } =  GetRequestTwo(FIRSTNAME_FINDENGLISH, firstname)
+    const {data, error, isLoaded } =  ApiService.GetRequestTwo(FIRSTNAME_FINDENGLISH, firstname)
     return { data2:data, data, error, isLoaded }
 }
 export function getFirstnameByFirstname(firstname) {
-    const {data, error, isLoaded } =  GetRequestTwo(FIRSTNAME_FINDBYFIRSTNAME, firstname)
+    const {data, error, isLoaded } =  ApiService.GetRequestTwo(FIRSTNAME_FINDBYFIRSTNAME, firstname)
     return { data2:data, data, error, isLoaded }
  }
 
-export function updateFirstname(firstname)      {  return PostRequest(FIRSTNAME_UPDATE, firstname)        }
-export function addFirstname(firstname)         {  return PutRequest(FIRSTNAME_ADD, firstname)            }
-export function deleteFirstnameById(id)         {  return DeleteRequest(FIRSTNAME_DELETEBYID, id)         }
+export function updateFirstname(firstname)      {  return ApiService.PostRequest(FIRSTNAME_UPDATE, firstname)        }
+export function addFirstname(firstname)         {  return ApiService.PutRequest(FIRSTNAME_ADD, firstname)            }
+export function deleteFirstnameById(id)         {  return ApiService.DeleteRequest(FIRSTNAME_DELETEBYID, id)         }
 
 
