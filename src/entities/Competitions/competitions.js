@@ -1,6 +1,12 @@
 import React from 'react'
 import { COMPETITIONS, Competition } from '../../common/globals'
-import { addCompetition, deleteCompetitionById, getCompetitions, updateCompetition } from "../../services/CompetitionService";
+import {
+    AddCompetition,
+    addCompetition, DeleteCompetitionById,
+    deleteCompetitionById, GetCompetitions,
+    getCompetitions, UpdateCompetition,
+    updateCompetition
+} from "../../services/CompetitionService";
 import { addMessage } from "../../common/helper";
 import { useForm } from "react-hook-form";
 import {Input} from "@material-ui/core";
@@ -16,10 +22,10 @@ export const competitionInitialValue = {
 };
 
 const actions = {
-    add       : addCompetition,
-    update    : updateCompetition,
-    deleteById: deleteCompetitionById,
-    list      : getCompetitions
+    add       : AddCompetition,
+    update    : UpdateCompetition,
+    deleteById: DeleteCompetitionById,
+    list      : GetCompetitions
 };
 
 export const competitionData = {
@@ -30,22 +36,3 @@ export const competitionData = {
     initialValue: competitionInitialValue,
     columnDefs  : competitionColumnDefs
 };
-
-export const CompetitionEditForm = (row) => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
-
-    return (
-        <form className="list-wrapper new-club-form new-club-input" onSubmit={handleSubmit(onSubmit)}>
-            {/* register your input into the hook by invoking the "register" function */}
-
-            <Input  disabled defaultValue = { row.id } placeholder = "Competition ID"     {...register("id") } />
-            <Input  defaultValue = { row.name } placeholder = "Competition Name"     {...register("name", { required: true })} />
-
-            {/* errors will return when field validation fails  */}
-            {errors.name && <span>Competition Name field is required</span>}
-
-            <Input type="submit"/>
-        </form>
-    )
-}

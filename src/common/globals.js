@@ -4,7 +4,7 @@
 // backend
 export const HOME         = "http://192.168.100.151:8080";
 export const WORK         = "http://147.252.81.3:8080";
-export const WORK_LAPTOP  = "http://147.252.81.119:8080"
+export const WORK_LAPTOP  = "http://147.252.81.31:8080"
 export const SAME_MACHINE = "http://localhost:8080";
 // note: every time AWS EC2 instance is restarted - this host name will need to be changed
 export const AWS_BACKEND  = "";
@@ -50,6 +50,7 @@ export const API_AUTH_REGISTER        = "/api/auth/register/";
 export const API_AUTH_UPDATE          = "/api/auth/update";
 
 // clubs
+
 export const CLUB            = "/club/";
 export const CLUB_ADD        = "/club/add";
 export const CLUB_DELETEBYID = "/club/deleteById/";

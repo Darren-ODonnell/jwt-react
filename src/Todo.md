@@ -7,11 +7,11 @@ Ux: Files not currently used - (possible to remove? - left for now)
 As elements are finished - move below Completed
 
 # Errors
-
-
     E11: Update does not work for any entity
     E12: Test additional of new Data to all entities (use in conjuntion with delete to remove additional test entries
-    E13: 
+    E14: Attempting to call update causes a hook call violation (PostRequest())
+    E15: 
+    E16: 
 
     
 # Refactoring
@@ -26,7 +26,6 @@ As elements are finished - move below Completed
     I2: How to implement - forgotPassword
     I3: Use of Charts ?
     I4: Check if useToken is necessary / if so, can it be included in AuthService?
-    
 
 # New Code Additions
     C1: Add Plug and PLay Teamsheet selection
@@ -44,15 +43,21 @@ As elements are finished - move below Completed
     U7: 
     U8: 
 
-
 # In Progress
     E5: Tables with foreign key data are not displayed correctly 
         - Teamsheets and Fixtures are ok - event form needs data to test.
-
-    E3. Update form not populated with row data
-   
+     
     E6: Delete does not work on any entity
+
+    E14: Attempting to call update causes a hook call violation (PostRequest())
+         Although I cannot see what the issue is with the call. (error below)
+Uncaught Error: Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM) - NO
+2. You might be breaking the Rules of Hooks - not as far as I know
+3. You might have more than one copy of React in the same app - NO
    
+delete package.json.lock and node_modules - npm i - did not fix
+
 
 # Completed
 
@@ -86,3 +91,7 @@ As elements are finished - move below Completed
         When adding a colDef, the ettribute field was omitted
     I6: Check useForm (from react-hook-form) for form handling ratherv than grid
         Abandoned - found fault with existing grid/form
+    E3. Update form not populated with row data
+        used props.data.field to access field name  
+        s/b props.data[props.field]
+    E13: After fixing E3 - Add New record now shows row data.

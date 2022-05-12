@@ -35,7 +35,6 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "5.2.0",
     "react-scripts": "5.0.0",
-    "react-validation": "^3.0.7",
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0",
@@ -55,7 +54,8 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:react-hooks/recommended"
     ]
   },
   "browserslist": {
@@ -72,9 +72,16 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.17.0",
-    "eslint-plugin-react-hooks": "^4.4.0"
+    "eslint-plugin-react-hooks": "^4.5.0"
   },
   "peerDependencies": {
     "@mui/material": "^5.0.0"
+  },
+  "plugins": [
+    "react-hooks"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }

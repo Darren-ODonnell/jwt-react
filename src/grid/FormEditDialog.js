@@ -3,9 +3,6 @@ import { Button, Dialog, TextField } from "@mui/material";
 import {  DialogActions, DialogContent, DialogTitle } from "@mui/material";
 
 export const FormEditDialog = props => {
-    // export const FormEditDialog = ({open, handleClose, data, onChange, handleFormSubmit, colDefs, messages}) => {
-
-    console.log("Data: "+props.data)
 
     return (
         <div>

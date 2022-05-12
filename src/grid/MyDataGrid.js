@@ -13,7 +13,6 @@ import FormEditDialog from "./FormEditDialog";
 const MyDataGrid = (props) => {
     const gridRef = useRef(); // Optional - for accessing Grid's API
     const [ , setGridApi ]  = useState(null);
-    const [ rowData , setRowData ]  = useState(props.initialValue);
     const [ formData, setFormData ] = useState(props.initialValue)
     const [ open    , setOpen ]     = useState(false);
 
@@ -27,32 +26,26 @@ const MyDataGrid = (props) => {
     //     setOpen(true);
     //
     // };
-    const handleClose =         () => {
+    const handleClose = () => {
         setOpen(false);
         // setFormData(props.initialValue);
     };
-
+    const onChange = (e) => {
+        const { value, id } = e.target
+        // update field with data from user
+        // data updated here first, then screen is updated
+        setFormData({ ...formData, [id]: value })
+    }
+    const onGridReady = (params)  => {  setGridApi(params)      }
     const handleEdit = (props) => {
         setOpen( true );
-        setFormData( props.data );
-        setRowData( props.data );
-        return <FormEditDialog
-            open        = { open }
-            handleClose = { handleClose }
-            setOpen     = { setOpen }
-            data        = { props.data }
-            onChange    = { onChange }
-            formData    = { formData }
-            setFormData = { setFormData }
-            actions     = { props.actions }
-            // handleFormSubmit={()=>handleFormSubmit(formData, actions )}
-            colDefs   = { props.formColDefs }
-            messages  = { props.messages }
-            addButton = { addEntityButton }
-        />
+        setFormData( {...props.data} );
+        console.log("Data:", props.data)
+        console.log("formData:", props.formData)
 
     }
     const handleDelete = (id) => {
+        setOpen(false);
         const confirm = window.confirm("Are you sure, you want to delete this row", id)
         if (confirm) {
             props.actions.delete(id)
@@ -81,16 +74,6 @@ const MyDataGrid = (props) => {
 
     const { data2, data, error, isLoaded } = props.actions.list()
 
-    const onGridReady =  (params)  => {  setGridApi(params)      }
-
-    const onChange = (e) => {
-        const { value, id } = e.target
-        // update field with data from user
-        // data updated here first, then screen is updated
-        setFormData({ ...formData, [id]: value })
-    }
-    console.log(data2);
-
     if (error !== null) {   return <ErrorMessage message={error.message}/>;   }
 
     const loading = <>Loading...</>;
@@ -104,30 +87,23 @@ const MyDataGrid = (props) => {
     // }
 
 
-    // const formEditDialog = () => {
-    //     return (
-    //         <FormDialog
-    //             open = { open }
-    //             handleClose = { handleClose }
-    //             data = { formData }
-    //             onChange = { onChange }
-    //             handleFormSubmit = { handleFormSubmit }
-    //             colDefs = { props.formColDefs }
-    //             messages = { props.messages }
-    //         />
-    //     );
-    // }
-
-    const myButtons = (params) => {
-        return  (
-            <div>
-                <Button variant = "outlined" color = "primary"   onClick = {()=>handleEdit( params )}> Edit </Button>
-                <Button variant = "outlined" color = "secondary" onClick = {()=>handleDelete( params )}> Delete </Button>
-            </div>
+    const editButton = (params) => {
+        return (
+            <Button  onClick = {()=>handleEdit( params )}
+                     variant = "outlined"
+                     color = "primary"
+            > Edit </Button>
         )
     }
-
-   let actions  = {
+    const deleteButton = (params) => {
+        return (
+            <Button  onClick = {()=>handleDelete( params )}
+                     variant = "outlined"
+                     color = "secondary"
+            > Delete </Button>
+        )
+    }
+    const actions  = {
         headerName: 'Actions',
         field     : 'id',
         width     : 200,
@@ -135,11 +111,17 @@ const MyDataGrid = (props) => {
         pinned    : 'right',
         filter    : false,
         sortable  : false,
-        cellRenderer:  (params) => myButtons(params)
+        cellRenderer:  (params) => {
+            return (
+                <>
+                { editButton( params ) }
+                { deleteButton( params ) }
+                </>
+            )
+        }
 
     };
-
-    const addEntityButton = () => {
+    const addButton = () => {
         return (
             <Grid align="right">
                 <Button onClick={ () => setOpen(true) }
@@ -150,31 +132,10 @@ const MyDataGrid = (props) => {
         )
     }
 
-    console.log(rowData)
-
     return (
         <div >
+            { addButton() }
 
-            <FormDialog2
-                open        = { open }
-                handleClose = { handleClose }
-                setOpen     = { setOpen }
-                data        = { rowData }
-                onChange    = { onChange }
-                actions     = { props.actions }
-                //handleFormSubmit={()=>handleFormSubmit(formData, actions )}
-                colDefs     = { props.formColDefs }
-                messages    = { props.messages }
-                formData    = { formData }
-                setFormData = { setFormData }
-                addButton   = { addEntityButton }
-                // editForm = {props.editForm}
-                // addForm = {props.addForm}
-            />
-
-            {/*<Grid align="right">*/}
-            {/*    <Button variant="contained" color="primary" onClick={()=>handleClickOpen(setOpen)}>{props.messages.add}</Button>*/}
-            {/*</Grid>*/}
             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input"  >
                 <AgGridReact
                     ref           = { gridRef }
@@ -183,13 +144,31 @@ const MyDataGrid = (props) => {
                     rowData       = { data2 }
                     animateRows   = { true }
                     // editType="fullRow" - one cell at a time
-                    alwaysShowHorizontalScroll = {true}
-                    suppressHorizontalScroll   = {false}
-                    suppressClickEdit          = {false}
-                    columnDefs                 = {[...props.gridColDefs, actions]}
-                    onGridReady                = {onGridReady} >
-                </AgGridReact >
+                    alwaysShowHorizontalScroll = { true }
+                    suppressHorizontalScroll   = { false }
+                    suppressClickEdit          = { false }
+                    columnDefs                 = { [...props.gridColDefs, actions] }
+                    onGridReady                = { onGridReady } />
+
             </div>
+
+            <FormDialog2
+                open        = { open }
+                handleClose = { handleClose }
+                setOpen     = { setOpen }
+                data        = { formData }
+                onChange    = { onChange }
+                actions     = { props.actions }
+                //handleFormSubmit={()=>handleFormSubmit(formData, actions )}
+                colDefs     = { props.formColDefs }
+                messages    = { props.messages }
+                formData    = { formData }
+                setFormData = { setFormData }
+                initialValue = {props.initialValue}
+
+            />
+
+
         </div>
     )
 };

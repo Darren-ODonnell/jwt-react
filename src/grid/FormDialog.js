@@ -9,61 +9,98 @@ const handleClose =         (setOpen) => {
 };
 
 // , formData, actions, setOpen, formColDefs
-const handleFormSubmit = (formData) => {
+const handleFormSubmit = ({ setOpen, formData, actions, initialValue, setFormData }) => {
     let data = {...formData}
-    // formData.preventDefault();
-    console.log('Event',formData)
+    console.log('FormData: ',data)
 
+    if (formData.id) { // updating a record
+        // const confirm = window.confirm("Are you sure, you want to update this row ?")
+        // confirm && actions.update(formData.id, formData)
+        actions.update(formData)
+            .then( resp => {
+                // close form
+                setOpen( false );
+                // clear form data
+                setFormData( initialValue );
+                console.log( resp );
+                }
+            );
 
+    } else { // adding new record
+        // const valid = checkFormData(formData, formColDefs)
 
+        actions.add(formData)
+            .then(resp => {
+                handleClose(setOpen);
+                setOpen(false)
+                actions.add();
+                setFormData(initialValue);
+                console.log(resp)
+            })
+    }
 
-    console.log('CompetitionName',data.competitionName)
-    console.log('FixtureDate',data.fixtureDate)
-    console.log('Season',data.season)
-    console.log('Round',data.round)
-    console.log('Mui-1',data.mui-1)
-    console.log('FormData',formData)
+}
+// form elements
+const onCancel = (props) => {
+    props.setFormData(props.initialValue);
+    props.setOpen(false)
+}
+const cancelButton = (props) => {
 
-    // if (formData.id) { // updating a user
-    //     const confirm = window.confirm("Are you sure, you want to update this row ?")
-    //     confirm && actions.update(formData.id)
-    //         .then( resp => {
-    //             handleClose(setOpen);
-    //             actions.update();
-    //         } )
-    // } else { // adding new user
-    //     const valid = checkFormData(formData, formColDefs)
-    //
-    //     actions.add(formData)
-    //         .then(resp => {
-    //             handleClose(setOpen);
-    //             actions.add();
-    //         })
-    // }
+    return (
+        <Button onClick={ () => onCancel(props) }
+                color   = "secondary"
+                variant = "outlined"
+        > Cancel </Button>
+    )
+}
+const submitButton = (props) => {
+    return (
+        <Button onClick={() => handleFormSubmit(props)}
+                type="submit"
+                color   = "primary"
+                variant = "outlined"
+        >Submit</Button>
+    )
+}
+const textField = (props, index, prop) => {
+
+    return (
+        <TextField
+        key         = { index }
+        id          = { prop.field }
+        value       = { props.data[prop.field] }
+        onChange    = { e => props.onChange(e) }
+        data        = { props.data }
+        placeholder = { "Enter " + prop.headerName }
+        label       = { prop.headerName }
+        variant     = "outlined"
+        margin      = "dense"
+        fullWidth  />
+    )
 }
 
-
-
-export const FormDialog = ({ open, setOpen, data, onChange, colDefs, messages, addButton}) => {
-    // console.log(data)
+export const FormDialog = (props) =>  {
+    // export const FormDialog = ({ open, setOpen, data, onChange, colDefs, messages, addButton}) => {
+    console.log(props.data)
 
     return (
         <div>
-            { addButton() }
+            { props.addButton() }
             <Dialog
-                open             = { open }
-                onClose          = {handleClose}
+                open             = { props.open }
+                onClose          = { handleClose }
                 aria-labelledby  = "alert-dialog-title"
                 aria-describedby = "alert-dialog-description" >
-                <DialogTitle id  = "alert-dialog-title"> { data.id ? messages.update: messages.create } </DialogTitle>
+                <DialogTitle id  = "alert-dialog-title"> { props.data.id ? props.messages.update: props.messages.create } </DialogTitle>
                 <DialogContent >
-                    { colDefs.map( ( prop, index ) => {
+                    { props.colDefs.map( ( prop, index ) => {
                         return <TextField
                              key         = { index }
                              id          = { prop.field }
-                             value       = { data.field }
-                             onChange    = { ( e ) => onChange(e) }
-                             data        = { data }
+                             value       = { props.data.field }
+                             onChange    = { ( e ) => props.onChange(e) }
+                             data        = { props.data }
                              placeholder = { "Enter " + prop.headerName }
                              label       = { prop.headerName }
                              variant     = "outlined"
@@ -73,7 +110,7 @@ export const FormDialog = ({ open, setOpen, data, onChange, colDefs, messages, a
                       }
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={ () => setOpen(false) }
+                    <Button onClick={ () => props.setOpen(false) }
                             color   = "secondary"
                             variant = "outlined"
                     > Cancel </Button>
@@ -81,19 +118,18 @@ export const FormDialog = ({ open, setOpen, data, onChange, colDefs, messages, a
                              color   = "primary"
                              onClick = { handleFormSubmit }
                              variant = "contained"
-                    > {data.id ? "Update" : "Submit" } </Button>
+                    > {props.data.id ? "Update" : "Submit" } </Button>
                 </DialogActions>
             </Dialog>
         </div>
     );
 }
-// { open, setOpen, data, onChange, colDefs, messages, addButton, editForm, addForm}
+// { open, setOpen, data, onChange, colDefs, messages}
 export const FormDialog2 = (props) => {
     // console.log(data)
 
     return (
          <div>
-            { props.addButton() }
             <Dialog
                 open             = { props.open }
                 onClose          = { props.handleClose }
@@ -102,32 +138,13 @@ export const FormDialog2 = (props) => {
                 <DialogTitle id  = "alert-dialog-title"> { props.data.id ? props.messages.update: props.messages.create } </DialogTitle>
                 <DialogContent >
                     { props.colDefs.map( ( prop, index ) => {
-                        return <TextField
-                            key         = { index }
-                            id          = { prop.field }
-                            value       = { props.data.field }
-                            onChange    = { e => props.onChange(e) }
-                            data        = { props.data }
-                            placeholder = { "Enter " + prop.headerName }
-                            label       = { prop.headerName }
-                            variant     = "outlined"
-                            margin      = "dense"
-                            fullWidth  />
-                    })
+                        return textField(props, index, prop)
+                        })
                     }
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={ () => props.setOpen(false) }
-                            color   = "secondary"
-                            variant = "outlined"
-                    > Cancel </Button>
-
-                    <Button type="submit" onClick={() => handleFormSubmit(props.formData)}>Submit</Button>
-                    {/*<Button  type="submit"*/}
-                    {/*         color   = "primary"*/}
-                    {/*         onClick = { handleFormSubmit }*/}
-                    {/*         variant = "contained"*/}
-                    {/*> {props.data.id ? "Update" : "Submit" } </Button>*/}
+                    { cancelButton(props) }
+                    { submitButton(props) }
                 </DialogActions>
             </Dialog>
         </div>
