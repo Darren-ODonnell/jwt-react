@@ -1,31 +1,25 @@
 import ApiService from "../api/ApiService";
 
-import {
-    TEAMSHEET_FINDBYID,
-    TEAMSHEET_LIST,
-    TEAMSHEET_UPDATE,
-    TEAMSHEET_ADD,
-    TEAMSHEET_DELETEBYID,
-} from "../common/globals";
+import { TEAMSHEET_URLS } from "../common/globals";
 
 export function getTeamsheets()           {
-    const {data, error, isLoaded } = ApiService.GetRequest(TEAMSHEET_LIST)
+    const {data, error, isLoaded } = ApiService.GetRequest(TEAMSHEET_URLS.list)
     return {data2: buildData(data), data, error, isLoaded};
 }
 export function getTeamsheetById(id)      {
-    const {data, error, isLoaded} = ApiService.GetRequestTwo(TEAMSHEET_FINDBYID, id)
+    const {data, error, isLoaded} = ApiService.GetRequestTwo(TEAMSHEET_URLS.findById, id)
     return {data2: buildData(data), data, error, isLoaded};
 }
 export function updateTeamsheet(teamsheet){
-    const {data, error, isLoaded} = ApiService.PostRequest(TEAMSHEET_UPDATE, teamsheet)
+    const {data, error, isLoaded} = ApiService.PostRequest(TEAMSHEET_URLS.update, teamsheet)
     return {data2: buildData(data), data, error, isLoaded};
 }
 export function addTeamsheet(teamsheet)   {
-    const {data, error, isLoaded} = ApiService.PutRequest(TEAMSHEET_ADD, teamsheet)
+    const {data, error, isLoaded} = ApiService.PutRequest(TEAMSHEET_URLS.add, teamsheet)
     return {data2: buildData(data), data, error, isLoaded};
 }
 export function deleteTeamsheetById(id)   {
-    const {data, error, isLoaded} = ApiService.DeleteRequest(TEAMSHEET_DELETEBYID, id)
+    const {data, error, isLoaded} = ApiService.DeleteRequest(TEAMSHEET_URLS.deleteById, id)
     return {data2: buildData(data), data, error, isLoaded};
 }
 

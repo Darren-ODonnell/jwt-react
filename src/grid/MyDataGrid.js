@@ -6,9 +6,9 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 import './MyDataGrid.css'
 import { Button, Grid } from "@mui/material";
 import { ErrorMessage } from "../common/ErrorMessage";
-import { FormDialog, FormDialog2 } from "./FormDialog";
+import { FormDialog2 } from "./FormDialog";
 import { defaultColDef } from "../common/helper";
-import FormEditDialog from "./FormEditDialog";
+
 
 const MyDataGrid = (props) => {
     const gridRef = useRef(); // Optional - for accessing Grid's API
@@ -16,16 +16,6 @@ const MyDataGrid = (props) => {
     const [ formData, setFormData ] = useState(props.initialValue)
     const [ open    , setOpen ]     = useState(false);
 
-    // const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
-    // const gridStyle = useMemo(() => ({ height: '600', width: '1200' }), []);
-
-    // const handleClickOpen =     (setOpen) => {
-    //     // setRowData(props.data);
-    //     // setFormData(props.data);
-    //
-    //     setOpen(true);
-    //
-    // };
     const handleClose = () => {
         setOpen(false);
         // setFormData(props.initialValue);
@@ -53,39 +43,28 @@ const MyDataGrid = (props) => {
         }
     }
 
-    const buildNewRows = data => {
-        let newRow = {}
-
-        data.map(row => {
-            return newRow = {
-                fixtureId      : row.fixtureId,
-                competitionName: row.competition.name,
-                homeTeamName   : row.awayTeam.name,
-                awayTeamName   : row.homeTeam.name,
-                fixtureDate    : row.fixtureDate,
-                fixtureTime    : row.fixtureTime,
-                season         : row.season,
-                round          : row.round
-            }
-
-        })
-        return data;
-    }
-
-    const { data2, data, error, isLoaded } = props.actions.list()
-
-    if (error !== null) {   return <ErrorMessage message={error.message}/>;   }
-
-    const loading = <>Loading...</>;
-
-    // if(isLoaded)
-    //     setRowData( buildNewRows( data ));
-
-    // debugger;
-    // if(isLoaded) {
-    //     setRowData (props.actions.build(data));
+    // const buildNewRows = data => {
+    //     let newRow = {}
+    //
+    //     data.map(row => {
+    //         return newRow = {
+    //             fixtureId      : row.fixtureId,
+    //             competitionName: row.competition.name,
+    //             homeTeamName   : row.awayTeam.name,
+    //             awayTeamName   : row.homeTeam.name,
+    //             fixtureDate    : row.fixtureDate,
+    //             fixtureTime    : row.fixtureTime,
+    //             season         : row.season,
+    //             round          : row.round
+    //         }
+    //
+    //     })
+    //     return data;
     // }
 
+    const { data2, data, error, isLoaded } = props.actions.list()
+    if (error !== null) {   return <ErrorMessage message={error.message}/>;   }
+    const loading = <>Loading...</>;
 
     const editButton = (params) => {
         return (

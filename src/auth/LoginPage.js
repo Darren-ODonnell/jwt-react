@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import instance   from '../api/axios'
-import { API_AUTH_LOGIN, CLUB_LIST } from "../common/globals";
+import { API_AUTH_LOGIN, CLUB_URLS } from "../common/globals";
 import AuthService from "./AuthService";
 
 export const LoginPage = () => {
@@ -42,7 +42,7 @@ export const LoginPage = () => {
             promise.then( response => {
                 setLoading( false );
                 updateState( response.data )
-                history.push( CLUB_LIST );
+                history.push( CLUB_URLS.list );
             }, error => {
                 setLoading( false );
                 setLoginSuccess(false);

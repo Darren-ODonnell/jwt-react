@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Dialog, TextField } from "@mui/material";
 import {  DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { ErrorMessage } from "../common/ErrorMessage";
 
 // close popup window
 const handleClose =         (setOpen) => {
@@ -16,27 +17,26 @@ const handleFormSubmit = ({ setOpen, formData, actions, initialValue, setFormDat
     if (formData.id) { // updating a record
         // const confirm = window.confirm("Are you sure, you want to update this row ?")
         // confirm && actions.update(formData.id, formData)
-        actions.update(formData)
-            .then( resp => {
-                // close form
-                setOpen( false );
-                // clear form data
-                setFormData( initialValue );
-                console.log( resp );
-                }
-            );
+        setOpen( false );
+
+        const {  data, error, isLoaded } = actions.list(formData).then (resp => {
+            setFormData(initialValue);
+        })
+        if (error !== null) {   return <ErrorMessage message={error.message}/>;   }
+        const isloading = <>Loading...</>;
+
 
     } else { // adding new record
         // const valid = checkFormData(formData, formColDefs)
+        setOpen(false)
 
-        actions.add(formData)
-            .then(resp => {
-                handleClose(setOpen);
-                setOpen(false)
-                actions.add();
-                setFormData(initialValue);
-                console.log(resp)
-            })
+        const {  data, error, isLoaded } = actions.list(formData).then (resp => {
+            setFormData(initialValue);
+        })
+
+        if (error !== null) {   return <ErrorMessage message={error.message}/>;   }
+        const loading = <>Loading...</>;
+
     }
 
 }

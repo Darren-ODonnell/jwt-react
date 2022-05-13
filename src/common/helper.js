@@ -115,7 +115,7 @@ export function selectSeason () {
     // select one from these 3 years
 }
 export function selectRound () {
-    const seasons = [1,2,3,4,5,6,7,8,9,10,11,12];
+    const rounds = [1,2,3,4,5,6,7,8,9,10,11,12];
 
     // select one from these 12 rounds
 }

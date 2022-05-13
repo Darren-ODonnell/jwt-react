@@ -1,53 +1,43 @@
 import ApiService from "../api/ApiService";
 
-import {    FIXTURE_FINDBYID,
-            FIXTURE_LIST,
-            FIXTURE_UPDATE,
-            FIXTURE_ADD,
-            FIXTURE_DELETEBYID,
-            FIXTURE_FINDBYAWAYBYCLUB,
-            FIXTURE_FINDBYCLUB,
-            FIXTURE_FINDBYCOMPETITIONHOMETEAMAWAYTEAMFIXTUREDATESEASON,
-            FIXTURE_FINDBYHOMEBYCLUB,
-            FIXTURE_FINDNEXTBYCLUB,
-        } from "../common/globals";
-import {useEffect} from "react";
+import { FIXTURE_URLS } from "../common/globals";
+
 
 export function getFixtures()               {
-    const {data, error, isLoaded } = ApiService.GetRequest(FIXTURE_LIST)
+    const {data, error, isLoaded } = ApiService.GetRequest(FIXTURE_URLS.list)
     return {data2: buildData(data), data, error, isLoaded};
 }
 
 export function getFixtureById(id)          {
-    const {data, error, isLoaded } = ApiService.GetRequestTwo(FIXTURE_FINDBYID, id)
+    const {data, error, isLoaded } = ApiService.GetRequestTwo(FIXTURE_URLS.findById, id)
     return {data2: buildData(data), data, error, isLoaded};
  }
 export function getFixtureByClub(name)      {
-    const {data, error, isLoaded } = ApiService.GetRequestTwo(FIXTURE_FINDBYCLUB, name)
+    const {data, error, isLoaded } = ApiService.GetRequestTwo(FIXTURE_URLS.findByClub, name)
     return {data2: buildData(data), data, error, isLoaded};
  }
 
 export function getFixtureNextByClub(name)  {
-    const {data, error, isLoaded } = ApiService.GetRequestTwo(FIXTURE_FINDNEXTBYCLUB, name)
+    const {data, error, isLoaded } = ApiService.GetRequestTwo(FIXTURE_URLS.nextByClub, name)
     return {data2: buildData(data), data, error, isLoaded};
   }
 export function getFixtureByHomeClub(name)  {
-    const {data, error, isLoaded } = ApiService.GetRequestTwo(FIXTURE_FINDBYHOMEBYCLUB, name)
+    const {data, error, isLoaded } = ApiService.GetRequestTwo(FIXTURE_URLS.findByHomeClub, name)
     return {data2: buildData(data), data, error, isLoaded};
  }
 export function getFixtureByAwayClub(name)  {
-    const {data, error, isLoaded } = ApiService.GetRequestTwo(FIXTURE_FINDBYAWAYBYCLUB, name)
+    const {data, error, isLoaded } = ApiService.GetRequestTwo(FIXTURE_URLS.findByAwayClub, name)
     return {data2: buildData(data), data, error, isLoaded};
  }
 
 export function getFixtureByCompetitionHomeTeamAwayTeamFixtureDateSeason(competition, homeTeam, awayTeam, FixtureDate, Season) {
-    const {data, error, isLoaded } = ApiService.GetRequestFive(FIXTURE_FINDBYCOMPETITIONHOMETEAMAWAYTEAMFIXTUREDATESEASON, competition, homeTeam, awayTeam, FixtureDate, Season)
+    const {data, error, isLoaded } = ApiService.GetRequestFive(FIXTURE_URLS.findByCompetitionHomeTeamAwayTeamFixtureDateSeason, competition, homeTeam, awayTeam, FixtureDate, Season)
     return {data2: buildData(data), data, error, isLoaded};
 }
 
-export function updateFixture(fixture)      {  return ApiService.PostRequest(FIXTURE_UPDATE, fixture)  }
-export function addFixture(fixture)         {  return ApiService.PutRequest(FIXTURE_ADD, fixture)     }
-export function deleteFixtureById(id)       {  return ApiService.DeleteRequest(FIXTURE_DELETEBYID, id)   }
+export function updateFixture(fixture)      {  return ApiService.PostRequest(FIXTURE_URLS.update, fixture)  }
+export function addFixture(fixture)         {  return ApiService.PutRequest(FIXTURE_URLS.add, fixture)     }
+export function deleteFixtureById(id)       {  return ApiService.DeleteRequest(FIXTURE_URLS.deleteById, id)   }
 
 
 

@@ -10,22 +10,33 @@ As elements are finished - move below Completed
     E11: Update does not work for any entity
     E12: Test additional of new Data to all entities (use in conjuntion with delete to remove additional test entries
     E14: Attempting to call update causes a hook call violation (PostRequest())
-    E15: 
-    E16: 
+    E15: Error saving new record
+Uncaught TypeError: Cannot read properties of undefined (reading 'then')
+at handleFormSubmit (FormDialog.js:32:1)
+
+    E16: Empty teamsheet submitted - 
+TeamsheetService.js:18 Uncaught TypeError: Cannot destructure property 'data' of '_api_ApiService__WEBPACK_IMPORTED_MODULE_0__.default.PutRequest(...)' as it is undefined.
+at Object.addTeamsheet [as add] (TeamsheetService.js:18:1)
+
+    E17: 
 
     
 # Refactoring
     R1: change to using useAxios and standardise api code layouts
     R2: simplify Grid/form to extract form
-    R5: Dont export getRequests from ApiRequests, use as conmst and refer by ApiRequest.getRequest...  
-    R6: Reduce the number of export const objects ... like R5
     R7: 
+    R8: 
+    R9: 
+
 
 # Investigations
     I1: Can grid be changed to a hook - useGrid? and similarly useForm?
     I2: How to implement - forgotPassword
     I3: Use of Charts ?
     I4: Check if useToken is necessary / if so, can it be included in AuthService?
+    I5: 
+    I6: 
+    I7: 
 
 # New Code Additions
     C1: Add Plug and PLay Teamsheet selection
@@ -34,18 +45,29 @@ As elements are finished - move below Completed
     C5: Some sample Event data required to test report displays 
     C6: 
     C7:
+    C8:
 
 # Unused Files
     U1: auth/useUser
     U2: auth/PrivateRoute
     U3: auth/user.service
-    U6: StatService
-    U7: 
-    U8: 
+    U7: entities/Players/ClubListItem, NewClubForm, js/css
+    U8: entities/Players/CompetitionListItem, NewCompetitionForm
+    U9: entities/Players/FirstnameListItem, NewFirstnameForm
+    Ù10: entities/Players/LastnameListItem, NewLastnameForm
+    Ù11: entities/Players/FixtureListItem, NewFixtureForm
+    Ù12: entities/Players/PlayerListItem, NewPlayerForm
+    Ù13: grid/FormEditDialog
+    Ù14: NavBar/menuItems
+    U15:
+    U16:
+    U17:
 
 # In Progress
     E5: Tables with foreign key data are not displayed correctly 
-        - Teamsheets and Fixtures are ok - event form needs data to test.
+        - Teamsheets -Done
+        - Fixtures - Done 
+        - Events - incomplete - need data to test.
      
     E6: Delete does not work on any entity
 
@@ -85,7 +107,7 @@ delete package.json.lock and node_modules - npm i - did not fix
     E10: Foreign key details not display on any entity
         All the data has been captured from the server.
         Redo the columns for these tables
-        data2 created - could not change the stgate variable data.
+        data2 created - could not change the state variable data.
 
     E4. Add Entity not working for any entity - add api code to achieve same
         When adding a colDef, the ettribute field was omitted
@@ -95,3 +117,26 @@ delete package.json.lock and node_modules - npm i - did not fix
         used props.data.field to access field name  
         s/b props.data[props.field]
     E13: After fixing E3 - Add New record now shows row data.
+    R6: Reduce the number of export const objects ... like R5
+        Url constants now grouped by Entity eg CLUB_LIST -> CLUB_URLS.list
+        Only one import needed rather than multiple
+    R5: Dont export getRequests from ApiRequests, use as const and refer by ApiService.getRequest...
+    U6: StatService
+        Deleted
+
+
+===
+remove3d from packagejson
+,
+"peerDependencies": {
+"@mui/material": "^5.0.0",
+"react": "^17.0.2",
+"react-dom": "^17.0.2"
+},
+  "plugins": [
+    "react-hooks"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  }

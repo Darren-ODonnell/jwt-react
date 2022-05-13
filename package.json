@@ -73,15 +73,6 @@
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.17.0",
     "eslint-plugin-react-hooks": "^4.5.0"
-  },
-  "peerDependencies": {
-    "@mui/material": "^5.0.0"
-  },
-  "plugins": [
-    "react-hooks"
-  ],
-  "rules": {
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
   }
 }
+

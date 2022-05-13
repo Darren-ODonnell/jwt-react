@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import { ENDPOINT } from "../common/globals";
-import {isEmptyObject} from "../common/helper";
 
 // Next we make an 'instance' of it
 const instance = axios.create({
@@ -33,7 +32,7 @@ export function cancelInterceptor() {
     const cancelInterceptor = axios.interceptors.request.use(function () {/*...*/});
     instance.interceptors.request.reject(cancelInterceptor);
 }
-const myInterceptor = axios.interceptors.request.use(function () {/*...*/});
+// const myInterceptor = axios.interceptors.request.use(function () {/*...*/});
 
 instance.interceptors.response.use(
     (response) => responseHandler(response),
