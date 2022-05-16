@@ -67,14 +67,7 @@ cated.
     U1: auth/useUser
     U2: auth/PrivateRoute
     U3: auth/user.service
-    U7: entities/Players/ClubListItem, NewClubForm, js/css
-    U8: entities/Players/CompetitionListItem, NewCompetitionForm
-    U9: entities/Players/FirstnameListItem, NewFirstnameForm
-    Ù10: entities/Players/LastnameListItem, NewLastnameForm
-    Ù11: entities/Players/FixtureListItem, NewFixtureForm
-    Ù12: entities/Players/PlayerListItem, NewPlayerForm
     Ù13: grid/FormEditDialog
-    Ù14: NavBar/menuItems
     U15:
     U16:
     U17:
@@ -113,7 +106,7 @@ delete package.json.lock and node_modules - npm i - did not fix
         window.location was set to CLUB_LIST - changed to "/"
     E8: R4 caused errors
         string passed rather than an object
-    E9: After login - systens repeatedly attempts to login - spring continuous streams - browser 
+    E9: After login - system repeatedly attempts to login - spring continuous streams - browser 
         call to getClubs removed from NavBarSelect. (unclear how this caused the fault!)
     I5: getClubs causes FormDialog to be called 4 times - Not a problem
         it re-renders each time state is changed, once data is changed it returns.
@@ -142,3 +135,17 @@ delete package.json.lock and node_modules - npm i - did not fix
     R7: Removed all compile warnings
         Either commented out (in Helper) or deleted.
 
+    U7: entities/Players/ClubListItem, NewClubForm, js/css
+        Files deleted
+    U8: entities/Players/CompetitionListItem, NewCompetitionForm
+        Files deleted
+    U9: entities/Players/FirstnameListItem, NewFirstnameForm
+        Files deleted
+    Ù10: entities/Players/LastnameListItem, NewLastnameForm
+        Files deleted
+    Ù11: entities/Players/FixtureListItem, NewFixtureForm
+        Files deleted
+    Ù12: entities/Players/PlayerListItem, NewPlayerForm
+        Files deleted
+    Ù14: NavBar/menuItems
+        File deleted
