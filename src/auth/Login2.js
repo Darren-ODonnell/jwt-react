@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import '../styles.css';
 
 import { LoginRequest } from "../api/ApiService";
@@ -7,7 +7,7 @@ import AuthService from "./AuthService";
 export const Login2      = () => {
     const [usernameValue, setUsernameValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');
-    const [errorMessage , setErrorMessage]  = useState('');
+    const [, setErrorMessage]  = useState('');
     const [isSubmitted  , setIsSubmitted]   = useState(false);
 
     let loginModel = {
@@ -79,9 +79,9 @@ export const Login2      = () => {
 
     );
 
-    useEffect(() => {
-        const timer = setTimeout(() => console.log('Initial timeout!'), 5000);
-    }, []);
+    // useEffect(() => {
+    //     const timer = setTimeout(() => console.log('Initial timeout!'), 5000);
+    // }, []);
     return (
         <div className="app">
             <div className="login-form">

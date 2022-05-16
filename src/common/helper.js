@@ -1,5 +1,4 @@
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import { KeyboardTimePicker } from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -63,14 +62,15 @@ export const defaultColDef = {
 
 export function isEmptyObject(obj){
     const array = JSON.stringify(obj);
-    const state = (array === '{}') || (array === "null");
-    return state;
+    return  (array === '{}') || (array === "null");
+
 }
 
 
 
 export function datePicker ()  {
-    const [value, setValue] = React.useState<Date | null>(null);
+    // eslint-disable-next-line no-self-compare
+    const [value, setValue] = React.useState<Date | null>null;
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
@@ -93,7 +93,8 @@ export function datePicker ()  {
 }
 
 export function timePicker() {
-    const [value, setValue] = useState<Date | null>(null);
+    // eslint-disable-next-line no-self-compare
+    const [value, setValue] = useState<Date | null>null;
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <TimePicker
@@ -108,14 +109,14 @@ export function timePicker() {
     )
 }
 
-export function selectSeason () {
-    const year = Date.year;
-    const seasons = [year, year+1, year+2];
-
-    // select one from these 3 years
-}
-export function selectRound () {
-    const rounds = [1,2,3,4,5,6,7,8,9,10,11,12];
-
-    // select one from these 12 rounds
-}
+// export function selectSeason () {
+//     const year = Date.year;
+//     const seasons = [year, year+1, year+2];
+//
+//     // select one from these 3 years
+// }
+// export function selectRound () {
+//     const rounds = [1,2,3,4,5,6,7,8,9,10,11,12];
+//
+//     // select one from these 12 rounds
+// }

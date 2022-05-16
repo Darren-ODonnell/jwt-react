@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Dialog, TextField } from "@mui/material";
 import {  DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { ErrorMessage } from "../common/ErrorMessage";
@@ -19,23 +19,23 @@ const handleFormSubmit = ({ setOpen, formData, actions, initialValue, setFormDat
         // confirm && actions.update(formData.id, formData)
         setOpen( false );
 
-        const {  data, error, isLoaded } = actions.list(formData).then (resp => {
-            setFormData(initialValue);
-        })
+        const {   error } = actions.list(formData).then (
+            setFormData(initialValue)
+        )
         if (error !== null) {   return <ErrorMessage message={error.message}/>;   }
-        const isloading = <>Loading...</>;
+        // const isloading = <>Loading...</>;
 
 
     } else { // adding new record
         // const valid = checkFormData(formData, formColDefs)
         setOpen(false)
 
-        const {  data, error, isLoaded } = actions.list(formData).then (resp => {
-            setFormData(initialValue);
-        })
+        const {   error } = actions.list(formData).then (
+            setFormData(initialValue)
+        )
 
         if (error !== null) {   return <ErrorMessage message={error.message}/>;   }
-        const loading = <>Loading...</>;
+        // const loading = <>Loading...</>;
 
     }
 

@@ -1,12 +1,9 @@
 import { useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { useToken } from "./useToken";
 import axios from 'axios'
 import AuthService from "./AuthService";
 
-
 export const RegisterPage = () => {
-    const [ setToken ] = useToken();
     let { errorMessage, setErrorMessage } = useState( '' );
     const [ usernameValue, setUsernameValue ] = useState( '' );
     const [ emailValue, setEmailValue ] = useState( '' );

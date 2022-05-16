@@ -9,7 +9,7 @@ import AuthService from "../auth/AuthService";
 
 const PostRequest = (props) => {
     const [error, setError] = useState(null);
-    const [data, setData] = useState([]);
+    const [, setData] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
 
     const user = AuthService.getCurrentUser();
@@ -83,9 +83,9 @@ const GetRequestTwo = (url, param) => {
     return { error, isLoaded, data, setData };
 };
 
-const PutRequest = (url, param) => {}
-const DeleteRequest = (url, param) => {}
-const GetRequestFive = (url, param) => {}
+// const PutRequest = (url, param) => {}
+// const DeleteRequest = (url, param) => {}
+// const GetRequestFive = (url, param) => {}
 
 export let LoginRequest = ( loginModel) => {
     // token from get user object
@@ -93,7 +93,7 @@ export let LoginRequest = ( loginModel) => {
 
 }
 const AnotherRequest = (props) => {
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoaded, ] = useState(false);
     // const [error, setError] = useState(null);
     // const [data, setData] = useState([]);
     const error = null;
@@ -110,9 +110,9 @@ const ApiService = {
     PostRequest,
     GetRequest,
     GetRequestTwo,
-    DeleteRequest,
-    PutRequest,
-    GetRequestFive,
+    // DeleteRequest,
+    // PutRequest,
+    // GetRequestFive,
     LoginRequest,
 };
 export default ApiService;

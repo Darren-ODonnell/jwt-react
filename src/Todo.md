@@ -18,13 +18,29 @@ at handleFormSubmit (FormDialog.js:32:1)
 TeamsheetService.js:18 Uncaught TypeError: Cannot destructure property 'data' of '_api_ApiService__WEBPACK_IMPORTED_MODULE_0__.default.PutRequest(...)' as it is undefined.
 at Object.addTeamsheet [as add] (TeamsheetService.js:18:1)
 
-    E17: 
+    E17: after remving warnings - two still exist - not sure how to fix these.
+WARNING in ./node_modules/bootstrap/dist/css/bootstrap.css (./node_modules/css-loader/dist/cjs.js??ruleSet[1].ru
+les[1].oneOf[5].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[2]!./node_mod
+ules/source-map-loader/dist/cjs.js!./node_modules/bootstrap/dist/css/bootstrap.css)
+Module Warning (from ./node_modules/postcss-loader/dist/cjs.js):
+Warning
+
+(2482:3) autoprefixer: Replace color-adjust to print-color-adjust. The color-adjust shorthand is currently depre
+cated.
+@ ./node_modules/bootstrap/dist/css/bootstrap.css 8:6-245 22:17-24 26:7-21 58:25-39 59:36-47 59:50-64 61:4-74:5
+63:6-73:7 64:54-65 64:68-82 70:42-53 70:56-70 72:21-28 83:0-215 83:0-215 84:22-29 84:33-47 84:50-64
+@ ./src/NavBar/NavBarSelect.js 7:0-42
+@ ./src/App.js 7:0-53 17:38-50
+@ ./src/index.js 4:0-27 25:35-38
+
+
+    E18:
+    E19:
 
     
 # Refactoring
     R1: change to using useAxios and standardise api code layouts
     R2: simplify Grid/form to extract form
-    R7: 
     R8: 
     R9: 
 
@@ -123,20 +139,6 @@ delete package.json.lock and node_modules - npm i - did not fix
     R5: Dont export getRequests from ApiRequests, use as const and refer by ApiService.getRequest...
     U6: StatService
         Deleted
+    R7: Removed all compile warnings
+        Either commented out (in Helper) or deleted.
 
-
-===
-remove3d from packagejson
-,
-"peerDependencies": {
-"@mui/material": "^5.0.0",
-"react": "^17.0.2",
-"react-dom": "^17.0.2"
-},
-  "plugins": [
-    "react-hooks"
-  ],
-  "rules": {
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
-  }

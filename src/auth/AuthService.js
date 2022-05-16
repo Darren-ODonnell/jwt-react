@@ -1,6 +1,5 @@
 import React from "react";
 import instance from "../api/axios";
-import { CLUB_URLS } from "../common/globals";
 import { isEmptyObject } from "../common/helper";
 
 const API_URL = "http://localhost:8080/api/auth/";
@@ -19,12 +18,12 @@ const saveCurrentUser = (user) => { localStorage.setItem("user", JSON.stringify(
 
 
 // auth token related
-
-const checkToken = () => {
-    return instance.get(CLUB_URLS.list)
-    // .then(() => { return true  })
-    //  (() => { return false })
-}
+//
+// const checkToken = () => {
+//     return instance.get(CLUB_URLS.list)
+//     // .then(() => { return true  })
+//     //  (() => { return false })
+// }
 const setAuthToken = (token) => {
     if (token) {
         //applying token

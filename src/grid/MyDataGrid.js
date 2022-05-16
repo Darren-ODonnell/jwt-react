@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {  useRef, useState } from 'react';
 import {  AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
@@ -16,6 +16,10 @@ const MyDataGrid = (props) => {
     const [ formData, setFormData ] = useState(props.initialValue)
     const [ open    , setOpen ]     = useState(false);
 
+
+    const handleOpen = () => {
+        setOpen( true );
+    }
     const handleClose = () => {
         setOpen(false);
         // setFormData(props.initialValue);
@@ -28,7 +32,7 @@ const MyDataGrid = (props) => {
     }
     const onGridReady = (params)  => {  setGridApi(params)      }
     const handleEdit = (props) => {
-        setOpen( true );
+        handleOpen();
         setFormData( {...props.data} );
         console.log("Data:", props.data)
         console.log("formData:", props.formData)
@@ -39,33 +43,25 @@ const MyDataGrid = (props) => {
         const confirm = window.confirm("Are you sure, you want to delete this row", id)
         if (confirm) {
             props.actions.delete(id)
-                .then(resp => props.actions.list())
+                .then(props.actions.list())
         }
     }
 
-    // const buildNewRows = data => {
-    //     let newRow = {}
-    //
-    //     data.map(row => {
-    //         return newRow = {
-    //             fixtureId      : row.fixtureId,
-    //             competitionName: row.competition.name,
-    //             homeTeamName   : row.awayTeam.name,
-    //             awayTeamName   : row.homeTeam.name,
-    //             fixtureDate    : row.fixtureDate,
-    //             fixtureTime    : row.fixtureTime,
-    //             season         : row.season,
-    //             round          : row.round
-    //         }
-    //
-    //     })
-    //     return data;
-    // }
+    const { data2, error } = props.actions.list()
 
-    const { data2, data, error, isLoaded } = props.actions.list()
-    if (error !== null) {   return <ErrorMessage message={error.message}/>;   }
-    const loading = <>Loading...</>;
+    props.actions.list()
+    if( error !== null ) { return <ErrorMessage message={ error.message }/>; }
 
+    const addButton = () => {
+        return (
+            <Grid align="right">
+                <Button onClick={ () => handleOpen() }
+                        variant = "contained"
+                        color   = "primary"
+                >{ props.messages.add }</Button>
+            </Grid>
+        )
+    }
     const editButton = (params) => {
         return (
             <Button  onClick = {()=>handleEdit( params )}
@@ -100,16 +96,7 @@ const MyDataGrid = (props) => {
         }
 
     };
-    const addButton = () => {
-        return (
-            <Grid align="right">
-                <Button onClick={ () => setOpen(true) }
-                        variant = "contained"
-                        color   = "primary"
-                >{ props.messages.add }</Button>
-            </Grid>
-        )
-    }
+
 
     return (
         <div >
