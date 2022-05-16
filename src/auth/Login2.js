@@ -78,10 +78,6 @@ export const Login2      = () => {
         </div>
 
     );
-
-    // useEffect(() => {
-    //     const timer = setTimeout(() => console.log('Initial timeout!'), 5000);
-    // }, []);
     return (
         <div className="app">
             <div className="login-form">

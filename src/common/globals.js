@@ -2,6 +2,7 @@
 // import ENDPOINT from './App'
 
 // backend
+
 export const HOME         = "http://192.168.100.151:8080";
 export const WORK         = "http://147.252.81.3:8080";
 export const WORK_LAPTOP  = "http://147.252.81.31:8080"
@@ -36,15 +37,26 @@ export const Event       = 'Event';
 export const Teamsheet   = 'Teamsheet';
 
 // auth
-export const API_AUTH_FORGOT_PASSWORD = "/api/auth/forgot_password";
-export const API_AUTH_CHANGE_PASSWORD = "/api/auth/change_password";
-export const API_AUTH                 = "/api/auth/";
-export const API_AUTH_DELETEBYID      = "/api/auth/deleteById/";
-export const API_AUTH_FINDBYID        = "/api/auth/findById/";
-export const API_AUTH_LIST            = "/api/auth/list";
-export const API_AUTH_LOGIN           = "/api/auth/login";
-export const API_AUTH_REGISTER        = "/api/auth/register/";
-export const API_AUTH_UPDATE          = "/api/auth/update";
+const API_AUTH_FORGOT_PASSWORD = "/api/auth/forgot_password";
+const API_AUTH_CHANGE_PASSWORD = "/api/auth/change_password";
+const API_AUTH_DELETEBYID      = "/api/auth/deleteById/";
+const API_AUTH_FINDBYID        = "/api/auth/findById/";
+const API_AUTH_LIST            = "/api/auth/list";
+const API_AUTH_LOGIN           = "/api/auth/login";
+const API_AUTH_REGISTER        = "/api/auth/register/";
+const API_AUTH_UPDATE          = "/api/auth/update";
+
+export const API_AUTH_URLS =  {
+    forgotPassword: API_AUTH_FORGOT_PASSWORD,
+    changePassword: API_AUTH_CHANGE_PASSWORD,
+    userDeleteById: API_AUTH_DELETEBYID,
+    userFindById  : API_AUTH_FINDBYID,
+    userList      : API_AUTH_LIST,
+    login         : API_AUTH_LOGIN,
+    register      : API_AUTH_REGISTER,
+    userUpdate    : API_AUTH_UPDATE
+}
+
 
 // clubs
 const CLUB_ADD         = "/club/add";

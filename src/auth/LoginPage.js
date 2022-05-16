@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import instance   from '../api/axios'
-import { API_AUTH_LOGIN, CLUB_URLS } from "../common/globals";
+import {API_AUTH_URLS, CLUB_URLS} from "../common/globals";
 import AuthService from "./AuthService";
 
 export const LoginPage = () => {
@@ -37,7 +37,7 @@ export const LoginPage = () => {
         function getData() {
             loginModel.username = usernameValue;
             loginModel.password = passwordValue
-            const promise = instance.post( API_AUTH_LOGIN, loginModel );
+            const promise = instance.post( API_AUTH_URLS.login, loginModel );
 
             promise.then( response => {
                 setLoading( false );

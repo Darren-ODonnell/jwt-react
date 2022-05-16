@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import instance  from './axios';
-import { API_AUTH_LOGIN } from "../common/globals";
+import { API_AUTH_URLS } from "../common/globals";
 import AuthService from "../auth/AuthService";
 
 // token from get user object
@@ -89,7 +89,7 @@ const GetRequestTwo = (url, param) => {
 
 export let LoginRequest = ( loginModel) => {
     // token from get user object
-    return instance.post( API_AUTH_LOGIN, loginModel )
+    return instance.post( API_AUTH_URLS.login, loginModel )
 
 }
 const AnotherRequest = (props) => {
