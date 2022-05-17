@@ -6,23 +6,22 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 import './MyDataGrid.css'
 import { Button, Grid } from "@mui/material";
 import { ErrorMessage } from "../common/ErrorMessage";
-import { FormDialog2 } from "./FormDialog";
+import { FormDialog } from "./FormDialog";
 import { defaultColDef } from "../common/helper";
 
 
-const MyDataGrid = (props) => {
+const MyDataGrid = ({props}) => {
     const gridRef = useRef(); // Optional - for accessing Grid's API
     const [ , setGridApi ]  = useState(null);
-    const [ formData, setFormData ] = useState(props.initialValue)
+    const [ formData, setFormData ] = useState( props.initialValue)
     const [ open    , setOpen ]     = useState(false);
-
 
     const handleOpen = () => {
         setOpen( true );
     }
     const handleClose = () => {
         setOpen(false);
-        // setFormData(props.initialValue);
+        // setFormData(data.initialValue);
     };
     const onChange = (e) => {
         const { value, id } = e.target
@@ -36,7 +35,6 @@ const MyDataGrid = (props) => {
         setFormData( {...props.data} );
         console.log("Data:", props.data)
         console.log("formData:", props.formData)
-
     }
     const handleDelete = (id) => {
         setOpen(false);
@@ -47,15 +45,17 @@ const MyDataGrid = (props) => {
         }
     }
 
-    const { data2, error } = props.actions.list()
 
-    props.actions.list()
+    const { data2, error, isLoaded, setData } = props.actions.list()
+
+    props.actions.list();
+
     if( error !== null ) { return <ErrorMessage message={ error.message }/>; }
 
-    const addButton = () => {
+    const addButton = (params) => {
         return (
             <Grid align="right">
-                <Button onClick={ () => handleOpen() }
+                <Button onClick={() => handleOpen(params)}
                         variant = "contained"
                         color   = "primary"
                 >{ props.messages.add }</Button>
@@ -78,7 +78,7 @@ const MyDataGrid = (props) => {
             > Delete </Button>
         )
     }
-    const actions  = {
+    const formActions  = {
         headerName: 'Actions',
         field     : 'id',
         width     : 200,
@@ -94,47 +94,40 @@ const MyDataGrid = (props) => {
                 </>
             )
         }
-
     };
-
 
     return (
         <div >
             { addButton() }
-
             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input"  >
                 <AgGridReact
                     ref           = { gridRef }
                     defaultColDef = { defaultColDef }
                     pagination    = { true }
                     rowData       = { data2 }
-                    animateRows   = { true }
-                    // editType="fullRow" - one cell at a time
-                    alwaysShowHorizontalScroll = { true }
-                    suppressHorizontalScroll   = { false }
-                    suppressClickEdit          = { false }
-                    columnDefs                 = { [...props.gridColDefs, actions] }
-                    onGridReady                = { onGridReady } />
+                    suppressHows  = { true }
+                    columnDefs    = { [...props.gridColDefs, formActions] }
+                    onGridReady   = { onGridReady }
+                    animateRoowHorizontalScroll = { true }
+                    alwaysShrizontalScroll      = { false }
+                    suppressClickEdit           = { false }
+                />
 
             </div>
-
-            <FormDialog2
+            <FormDialog
+                setData     = { setFormData }
+                data        = { formData }
                 open        = { open }
                 handleClose = { handleClose }
                 setOpen     = { setOpen }
-                data        = { formData }
                 onChange    = { onChange }
                 actions     = { props.actions }
-                //handleFormSubmit={()=>handleFormSubmit(formData, actions )}
                 colDefs     = { props.formColDefs }
                 messages    = { props.messages }
                 formData    = { formData }
                 setFormData = { setFormData }
-                initialValue = {props.initialValue}
-
+                initialValue = { props.initialValue }
             />
-
-
         </div>
     )
 };

@@ -5,7 +5,8 @@ import {
     GetCompetitions,
     UpdateCompetition,
 } from "../../services/CompetitionService";
-import { addMessage } from "../../common/helper";
+import { addMessage, copyFormColDefs, copyGridColDefs } from "../../common/helper";
+
 
 export const competitionColumnDefs = [
     { headerName: 'Competition Name', field: 'name'  , type: 'String' , min: 5, max: 45, required: true},
@@ -30,5 +31,7 @@ export const competitionData = {
     actions     : actions,
     entity      : COMPETITIONS,
     initialValue: competitionInitialValue,
-    columnDefs  : competitionColumnDefs
+    columnDefs  : competitionColumnDefs,
+    formColDefs : copyFormColDefs( competitionColumnDefs ), // form column definitions
+    gridColDefs : copyGridColDefs( competitionColumnDefs ), // Grid column definitions
 };

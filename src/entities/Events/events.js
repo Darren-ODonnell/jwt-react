@@ -1,6 +1,7 @@
 import { addEvent, deleteEventById, getEvents, updateEvent } from "../../services/EventService";
 import { EVENTS, Event } from "../../common/globals";
-import { addMessage } from "../../common/helper";
+import { addMessage, copyFormColDefs, copyGridColDefs } from "../../common/helper";
+
 
 export const eventColumnDefs = [
     { headerName: 'Competition Name', field: 'competitionName', type: 'String' , min: 8, max: 60, required: true },
@@ -33,5 +34,7 @@ export const eventData = {
     actions     : actions,
     entity      : EVENTS,
     initialValue: eventInitialValue,
-    columnDefs  : eventColumnDefs
+    columnDefs  : eventColumnDefs,
+    formColDefs : copyFormColDefs( eventColumnDefs ), // form column definitions
+    gridColDefs : copyGridColDefs( eventColumnDefs ), // Grid column definitions
 };

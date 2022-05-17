@@ -1,22 +1,20 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import instance  from './axios';
 import { API_AUTH_URLS } from "../common/globals";
 import AuthService from "../auth/AuthService";
 
-// token from get user object
-// const user = AuthService.getCurrentUser();
-// AuthService.setAuthToken(user.accessToken);
 
 const PostRequest = (props) => {
     const [error, setError] = useState(null);
     const [, setData] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    const user = AuthService.getCurrentUser();
-    AuthService.setAuthToken(user.accessToken);
+
 
     useEffect(() => {
         const postData = () => {
+            const user = AuthService.getCurrentUser();
+            AuthService.setAuthToken(user.accessToken);
             instance.post(props.url , props.record)
                 .then(response => {
                     setIsLoaded(true);
@@ -27,7 +25,6 @@ const PostRequest = (props) => {
                     setError(error);
                 });
         };
-
         postData();
     }, [props.url, props.record]);
 
@@ -39,11 +36,12 @@ const GetRequest = (url) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [error, setError] = useState(null);
 
-    const user = AuthService.getCurrentUser();
-    AuthService.setAuthToken(user.accessToken);
+
 
     useEffect(() => {
         const fetchData = () => {
+            const user = AuthService.getCurrentUser();
+            AuthService.setAuthToken(user.accessToken);
             instance.get(url )
                 .then(response => {
                     setIsLoaded(true);
@@ -74,7 +72,6 @@ const GetRequestTwo = (url, param) => {
                 .catch(error => {
                     setIsLoaded(true);
                     setError(error);
-
                 });
         };
         fetchData();
@@ -83,8 +80,39 @@ const GetRequestTwo = (url, param) => {
     return { error, isLoaded, data, setData };
 };
 
-// const PutRequest = (url, param) => {}
-// const DeleteRequest = (url, param) => {}
+const PutRequest = (url, props) => {
+    // const [error, setError] = useState(null);
+    // const [, setData] = useState([]);
+    // const [isLoaded, setIsLoaded] = useState(false);
+    let isLoaded = false;
+    let error = "";
+
+
+    // useEffect(() => {
+        const putData = () => {
+            const user = AuthService.getCurrentUser();
+            AuthService.setAuthToken(user.accessToken);
+            instance.put(props.url , props.record)
+                .then(response => {
+                    isLoaded = true;
+                    error = error;
+                    // isLoaded = true
+                    // setData(response.data);
+                })
+                .catch(error => {
+                    isLoaded = true;
+                    error = error;
+                    // setIsLoaded(true);
+                    // setError(error);
+                });
+        };
+
+        putData();
+    // }, []);
+
+    return { error, isLoaded };
+}
+const DeleteRequest = (url, param) => {}
 // const GetRequestFive = (url, param) => {}
 
 export let LoginRequest = ( loginModel) => {
@@ -99,9 +127,7 @@ const AnotherRequest = (props) => {
     const error = null;
     // const isLoaded = false;
     const data = [];
-
     console.log("AnotherRequest: ",props)
-
     return { error, isLoaded, data };
 }
 
@@ -110,8 +136,8 @@ const ApiService = {
     PostRequest,
     GetRequest,
     GetRequestTwo,
-    // DeleteRequest,
-    // PutRequest,
+    DeleteRequest,
+    PutRequest,
     // GetRequestFive,
     LoginRequest,
 };

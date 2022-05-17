@@ -4,41 +4,34 @@ import {  DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { ErrorMessage } from "../common/ErrorMessage";
 
 // close popup window
-const handleClose =         (setOpen) => {
+const handleClose = ( setOpen ) => {
     setOpen(false);
     // setFormData(props.initialValue);
 };
+const handleError = ( message ) => {
+    return <ErrorMessage message={message}/>;
 
-// , formData, actions, setOpen, formColDefs
-const handleFormSubmit = ({ setOpen, formData, actions, initialValue, setFormData }) => {
-    let data = {...formData}
-    console.log('FormData: ',data)
+}
 
-    if (formData.id) { // updating a record
+const handleFormSubmit = (props) => {
+    console.log('FormData: ', props.formData)
+
+    if (props.formData.id) { // updating a record
         // const confirm = window.confirm("Are you sure, you want to update this row ?")
         // confirm && actions.update(formData.id, formData)
-        setOpen( false );
+        props.setOpen(false)
 
-        const {   error } = actions.list(formData).then (
-            setFormData(initialValue)
-        )
-        if (error !== null) {   return <ErrorMessage message={error.message}/>;   }
-        // const isloading = <>Loading...</>;
+        let { error } = props.actions.list(props.formData);
 
+        if (error !== null) {   return handleError(error.message); }
 
     } else { // adding new record
-        // const valid = checkFormData(formData, formColDefs)
-        setOpen(false)
+        props.setOpen(false)
 
-        const {   error } = actions.list(formData).then (
-            setFormData(initialValue)
-        )
+        const { error } = props.actions.add(props.formData);
 
-        if (error !== null) {   return <ErrorMessage message={error.message}/>;   }
-        // const loading = <>Loading...</>;
-
+        if (error !== null) {   return handleError(error.message); }
     }
-
 }
 // form elements
 const onCancel = (props) => {
@@ -46,7 +39,6 @@ const onCancel = (props) => {
     props.setOpen(false)
 }
 const cancelButton = (props) => {
-
     return (
         <Button onClick={ () => onCancel(props) }
                 color   = "secondary"
@@ -63,15 +55,15 @@ const submitButton = (props) => {
         >Submit</Button>
     )
 }
-const textField = (props, index, prop) => {
 
+const textField = (props, index, prop) => {
     return (
         <TextField
         key         = { index }
         id          = { prop.field }
-        value       = { props.data[prop.field] }
+        value       = { props.formData[prop.field] }
         onChange    = { e => props.onChange(e) }
-        data        = { props.data }
+        data        = { props.formData }
         placeholder = { "Enter " + prop.headerName }
         label       = { prop.headerName }
         variant     = "outlined"
@@ -80,53 +72,9 @@ const textField = (props, index, prop) => {
     )
 }
 
-export const FormDialog = (props) =>  {
-    // export const FormDialog = ({ open, setOpen, data, onChange, colDefs, messages, addButton}) => {
-    console.log(props.data)
-
-    return (
-        <div>
-            { props.addButton() }
-            <Dialog
-                open             = { props.open }
-                onClose          = { handleClose }
-                aria-labelledby  = "alert-dialog-title"
-                aria-describedby = "alert-dialog-description" >
-                <DialogTitle id  = "alert-dialog-title"> { props.data.id ? props.messages.update: props.messages.create } </DialogTitle>
-                <DialogContent >
-                    { props.colDefs.map( ( prop, index ) => {
-                        return <TextField
-                             key         = { index }
-                             id          = { prop.field }
-                             value       = { props.data.field }
-                             onChange    = { ( e ) => props.onChange(e) }
-                             data        = { props.data }
-                             placeholder = { "Enter " + prop.headerName }
-                             label       = { prop.headerName }
-                             variant     = "outlined"
-                             margin      = "dense"
-                             fullWidth  />
-                             })
-                      }
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={ () => props.setOpen(false) }
-                            color   = "secondary"
-                            variant = "outlined"
-                    > Cancel </Button>
-                    <Button  type="submit"
-                             color   = "primary"
-                             onClick = { handleFormSubmit }
-                             variant = "contained"
-                    > {props.data.id ? "Update" : "Submit" } </Button>
-                </DialogActions>
-            </Dialog>
-        </div>
-    );
-}
 // { open, setOpen, data, onChange, colDefs, messages}
-export const FormDialog2 = (props) => {
-    // console.log(data)
+export const FormDialog = (props) => {
+    // console.log(props.formData)
 
     return (
          <div>
@@ -135,7 +83,7 @@ export const FormDialog2 = (props) => {
                 onClose          = { props.handleClose }
                 aria-labelledby  = "alert-dialog-title"
                 aria-describedby = "alert-dialog-description" >
-                <DialogTitle id  = "alert-dialog-title"> { props.data.id ? props.messages.update: props.messages.create } </DialogTitle>
+                <DialogTitle id  = "alert-dialog-title"> { props.formData.id ? props.messages.update: props.messages.create } </DialogTitle>
                 <DialogContent >
                     { props.colDefs.map( ( prop, index ) => {
                         return textField(props, index, prop)
@@ -151,3 +99,4 @@ export const FormDialog2 = (props) => {
 
     );
 }
+// export default FormDialog;

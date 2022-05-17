@@ -33,15 +33,23 @@ cated.
 @ ./src/App.js 7:0-53 17:38-50
 @ ./src/index.js 4:0-27 25:35-38
 
+    E18: Access to XMLHttpRequest at 'http://147.252.81.86:8080/' from origin 'http://localhost:3000' has been blocked by CORS 
+policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the 
+requested resource.
 
-    E18:
-    E19:
+    E19: Refused to set unsafe header "Origin"
+    E20: 
+    E21:
+    E22:
+    E23:
+    E24:
 
-    
+
+
+
 # Refactoring
     R1: change to using useAxios and standardise api code layouts
     R2: simplify Grid/form to extract form
-    R8: 
     R9: 
 
 
@@ -68,11 +76,14 @@ cated.
     U2: auth/PrivateRoute
     U3: auth/user.service
     Ù13: grid/FormEditDialog
-    U15:
+
     U16:
     U17:
 
 # In Progress
+    R8: Simplify / re-organise  ---> Column def / EntityDataGrid / MyDataGrid and FormDialog
+        EntityDataGrids - refactored out of the project. (Routes now passes the formData object)
+
     E5: Tables with foreign key data are not displayed correctly 
         - Teamsheets -Done
         - Fixtures - Done 
@@ -148,4 +159,6 @@ delete package.json.lock and node_modules - npm i - did not fix
     Ù12: entities/Players/PlayerListItem, NewPlayerForm
         Files deleted
     Ù14: NavBar/menuItems
+        File deleted
+    U15: useAxios
         File deleted

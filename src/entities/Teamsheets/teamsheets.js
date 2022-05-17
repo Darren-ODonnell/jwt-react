@@ -1,8 +1,6 @@
 import { addTeamsheet, deleteTeamsheetById, getTeamsheets, updateTeamsheet } from "../../services/TeamsheetService";
 import { TEAMSHEETS, Teamsheet } from "../../common/globals";
-import { addMessage } from "../../common/helper";
-
-
+import { addMessage, copyFormColDefs, copyGridColDefs } from "../../common/helper";
 
 export const teamsheetColumnDefs = [
     { headerName: 'Competition Name', field: 'competitionName', type: 'String', min: 8 , max: 60, required: true },
@@ -36,5 +34,7 @@ export const teamsheetData = {
     actions     : actions,
     entity      : TEAMSHEETS,
     initialValue: teamsheetInitialValue,
-    columnDefs  : teamsheetColumnDefs
+    columnDefs  : teamsheetColumnDefs,
+    formColDefs : copyFormColDefs( teamsheetColumnDefs ), // form column definitions
+    gridColDefs : copyGridColDefs( teamsheetColumnDefs ), // Grid column definitions
 };

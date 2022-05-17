@@ -1,26 +1,33 @@
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { RegisterPage } from './RegisterPage'
 import { Login2 } from "./Login2";
-
-import { Club, Competition, Firstname, Fixture, Lastname, Player, Event, Teamsheet } from "../common/globals";
-import { EntityDataGrid } from "../grid/EntityDataGrids";
+import { clubData } from "../entities/Clubs/clubs";
+import { playerData } from "../entities/Players/players";
+import { competitionData } from "../entities/Competitions/competitions";
+import { fixtureData } from "../entities/Fixtures/fixtures";
+import { eventData } from "../entities/Events/events";
+import { firstnameData } from "../entities/Firstnames/firstnames";
+import { lastnameData } from "../entities/Lastnames/lastnames";
+import { teamsheetData } from "../entities/Teamsheets/teamsheets";
 
 import AuthService from "./AuthService";
 import Reports from "../reports/Reports"
+import MyDataGrid from "../grid/MyDataGrid";
 const Routes = () =>  {
     return (
         <div className="container">
             <Router>
                 <Switch>
-                    <Route path={["/lastnames","/lastname"]} exact>                            <EntityDataGrid entity={Lastname}/>     </Route>
-                    <Route path={["/firstnames","/firstname"]} exact>                          <EntityDataGrid entity={Firstname}/>    </Route>
-                    <Route path={["/fixture","/fixtures", "/fixture/list" ]} exact>            <EntityDataGrid entity={Fixture}/>      </Route>
-                    <Route path={["/club/list", "/club", "/clubs","/clubsGrid"]} exact>        <EntityDataGrid entity={Club}/>         </Route>
-                    <Route path={["/player/list", "/players", "/player"]} exact>               <EntityDataGrid entity={Player}/>       </Route>
-                    <Route path={["/event/list", "/events", "/event"]} exact>                  <EntityDataGrid entity={Event}/>        </Route>
-                    <Route path={["/teamsheet/list", "/teamsheets", "/teamsheet"]} exact>      <EntityDataGrid entity={Teamsheet}/>    </Route>
+                    <Route path={["/lastnames","/lastname"]} exact>                            <MyDataGrid props={ lastnameData }/>     </Route>
+                    <Route path={["/firstnames","/firstname"]} exact>                          <MyDataGrid props={ firstnameData }/>    </Route>
+                    <Route path={["/fixture","/fixtures", "/fixture/list" ]} exact>            <MyDataGrid props={ fixtureData }/>      </Route>
+                    <Route path={["/club/list", "/club", "/clubs","/clubsGrid"]} exact>        <MyDataGrid props={ clubData }/>         </Route>
+                    <Route path={["/player/list", "/players", "/player"]} exact>               <MyDataGrid props={ playerData }/>       </Route>
+                    <Route path={["/event/list", "/events", "/event"]} exact>                  <MyDataGrid props={ eventData }/>        </Route>
+                    <Route path={["/teamsheet/list", "/teamsheets", "/teamsheet"]} exact>      <MyDataGrid props={ teamsheetData }/>    </Route>
 
-                    <Route path={["/competition","/competitions", "competition/list"]} exact>  <EntityDataGrid entity={Competition}/>  </Route>
+                    <Route path={["/competition","/competitions", "competition/list"]} exact>  <MyDataGrid props={competitionData}/>  </Route>
+
                     <Route path="/playerStats" exact>                                          <Reports.PlayerStats/>                  </Route>
                     <Route path="/teamStats" exact>                                            <Reports.TeamStats/>                    </Route>
 
