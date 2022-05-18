@@ -15,7 +15,7 @@ export const HOME_LAPTOP    = "http://192.168.100.152:3000"
 // note: every time AWS EC2 instance is restarted - this host name will need to be changed
 export const AWS_REACT      = ""
 
-export const ENDPOINT       = SAME_MACHINE;
+export const ENDPOINT       = WORK_LAPTOP;
 
 // for Form/Grid columns
 export const CLUBS        = 'CLUBS';
@@ -215,4 +215,11 @@ export const TEAMSHEET_URLS = {
     findById  : TEAMSHEET_FINDBYID,
     list      : TEAMSHEET_LIST,
     update    : TEAMSHEET_UPDATE,
+}
+
+export const API_TYPE = {
+    GET        : "GET",
+    POST       : "POST",
+    PUT        : "PUT",
+    DELETE     : "DELETE"
 }

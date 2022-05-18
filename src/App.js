@@ -7,12 +7,12 @@ const App = () =>  {
     // enable for a single run of app if debugger no longer stops at breakpionts
     // window.location.reload(true);
     return (
-        // <React.StrictMode>
+        <React.StrictMode>
             <div>
                 <NavbarSelect/>
                 <Routes/>
             </div>
-        // </React.StrictMode>
+        </React.StrictMode>
     )
 }
 export default App;

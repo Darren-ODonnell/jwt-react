@@ -1,33 +1,30 @@
 import ApiService from "../api/ApiService";
-
-import {COMPETITION_URLS } from "../common/globals";
-
+import { API_TYPE, COMPETITION_URLS } from "../common/globals";
 
 
-export function UpdateCompetition( competition ) {
-    const props = { url: COMPETITION_URLS.update, record: competition }
-    const { data, error, isLoaded } = ApiService.PostRequest( props )
-    return { data2:data, data, error, isLoaded }
-}
 
 
 export function GetCompetitions( )           {
-    const {data, error, isLoaded } = ApiService.GetRequest(COMPETITION_URLS.list)
+    const {data, error, isLoaded } = ApiService.useApiRequest(COMPETITION_URLS.list, API_TYPE.GET)
     return {data2:data, data, error, isLoaded }
- }
+}
 export function GetCompetitionById( id )      {
-    const {data, error, isLoaded } = ApiService.GetRequestTwo(COMPETITION_URLS.findById, id)
-    return { data2:data, data, error, isLoaded }
- }
-export function GetCompetitionByName( name )  {
-    const {data, error, isLoaded } = ApiService.GetRequestTwo(COMPETITION_URLS.findByName, name)
+    const {data, error, isLoaded } = ApiService.useApiRequest(COMPETITION_URLS.findById, id, API_TYPE.GET)
     return { data2:data, data, error, isLoaded }
 }
-
+export function GetCompetitionByName( name )  {
+    const {data, error, isLoaded } = ApiService.useApiRequest(COMPETITION_URLS.findByName, name, API_TYPE.GET)
+    return { data2:data, data, error, isLoaded }
+}
+export function UpdateCompetition( competition ) {
+    const { data, error, isLoaded } = ApiService.useApiRequest(COMPETITION_URLS.update, competition, API_TYPE.POST )
+    return { data2:data, data, error, isLoaded }
+}
 export function AddCompetition(competition) {
-    const { error, isLoaded } =  ApiService.PutRequest(COMPETITION_URLS.add, competition)
-    return { error, isLoaded }
+    const {data, error, isLoaded } =  ApiService.useApiRequest(COMPETITION_URLS.add, competition, API_TYPE.PUT)
+    return { data2:data, data, error, isLoaded }
 }
 export function DeleteCompetitionById(id)   {
-    return ApiService.DeleteRequest(COMPETITION_URLS.deleteById, id)
+    const {data, error, isLoaded } =  ApiService.useApiRequest(COMPETITION_URLS.deleteById, id, API_TYPE.DELETE)
+    return { data2:data, data, error, isLoaded }
 }
