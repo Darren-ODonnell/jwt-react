@@ -1,4 +1,4 @@
-import {  FIXTURES, Fixture } from '../../common/globals'
+import { FIXTURES, Fixture, COMPETITION_URLS, METHODS, FIXTURE_URLS } from '../../common/globals'
 import {addFixture, deleteFixtureById, getFixtures, updateFixture} from "../../services/FixtureService";
 import { addMessage, copyFormColDefs, copyGridColDefs } from "../../common/helper";
 
@@ -23,12 +23,46 @@ export const fixtureInitialValue = {
     round          : ""
 };
 
+const apiRequests = {
+    list          : { method: METHODS.GET, url: FIXTURE_URLS.list},
+    findById      : { method: METHODS.GET, url: FIXTURE_URLS.findById},
+    findByClub    : { method: METHODS.GET, url: FIXTURE_URLS.findByClub},
+    findByHomeClub: { method: METHODS.GET, url: FIXTURE_URLS.findByHomeClub},
+    findByAwayClub: { method: METHODS.GET, url: FIXTURE_URLS.findByAwayClub},
+    nextByClub    : { method: METHODS.GET, url: FIXTURE_URLS.nextByClub},
+
+    findByCompetitionHomeTeamAwayTeamFixtureDateSeason: { method: METHODS.GET, url: FIXTURE_URLS.findByCompetitionHomeTeamAwayTeamFixtureDateSeason},
+
+    update    : { method: METHODS.POST  , url: FIXTURE_URLS.update},
+    add       : { method: METHODS.PUT   , url: FIXTURE_URLS.add},
+    deleteById: { method: METHODS.DELETE, url: FIXTURE_URLS.deleteById}
+}
 const actions = {
     add       : addFixture,
     update    : updateFixture,
     deleteById: deleteFixtureById,
     list      : getFixtures,
 };
+
+const gridLoader = (data) => {
+    let newData = [];
+
+    data.forEach(row => {
+        const newRow = {id:row.id,
+            competitionName:row.competition.name,
+            homeTeamName:row.homeTeam.name,
+            awayTeamName:row.awayTeam.name,
+            fixtureDate:row.fixtureDate,
+            fixtureTime:row.fixtureTime,
+            season:row.season,
+            round:row.round
+        }
+        newData.push(newRow)
+    })
+    return newData;
+}
+
+
 
 export const fixtureData = {
     messages    : addMessage(Fixture),
@@ -39,6 +73,8 @@ export const fixtureData = {
     columnDefs  : fixtureColumnDefs,
     formColDefs : copyFormColDefs( fixtureColumnDefs ), // form column definitions
     gridColDefs : copyGridColDefs( fixtureColumnDefs ), // Grid column definitions
+    methods     : apiRequests,
+    gridLoader  : gridLoader
 
 };
 

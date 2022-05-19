@@ -1,4 +1,4 @@
-import { CLUBS, Club } from '../../common/globals'
+import { CLUBS, Club, COMPETITION_URLS, METHODS, CLUB_URLS } from '../../common/globals'
 import { addClub, deleteClubById, getClubs, updateClub } from "../../services/ClubService";
 import { addMessage, copyFormColDefs, copyGridColDefs } from "../../common/helper";
 
@@ -22,6 +22,21 @@ export const clubInitialValue = {
     colours     : ""
 }
 
+const apiRequests = {
+    list      : { method: METHODS.GET   , url: CLUB_URLS.list},
+    findById  : { method: METHODS.GET   , url: CLUB_URLS.findById},
+    findByName: { method: METHODS.GET   , url: CLUB_URLS.findByName},
+    update    : { method: METHODS.POST  , url: CLUB_URLS.update},
+    add       : { method: METHODS.PUT   , url: CLUB_URLS.add},
+    deleteById: { method: METHODS.DELETE, url: CLUB_URLS.deleteById}
+}
+
+const gridLoader = (data) => {
+
+    return data;
+}
+
+
 const actions = {
     add       : addClub,
     update    : updateClub,
@@ -37,6 +52,8 @@ export const clubData = {
     initialValue: clubInitialValue,
     formColDefs : copyFormColDefs( clubColumnDefs ), // form column definitions
     gridColDefs : copyGridColDefs( clubColumnDefs ), // Grid column definitions
-    columnDefs  : clubColumnDefs
+    columnDefs  : clubColumnDefs,
+    methods     : apiRequests,
+    gridLoader : gridLoader
 };
 

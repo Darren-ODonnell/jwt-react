@@ -38,7 +38,7 @@ policy: Response to preflight request doesn't pass access control check: No 'Acc
 requested resource.
 
     E19: Refused to set unsafe header "Origin"
-    E20: 
+    E20: Foreign key data broken after axios call changes
     E21:
     E22:
     E23:
@@ -81,6 +81,12 @@ requested resource.
     U17:
 
 # In Progress
+    E15-E16-E17 attempting to fix a number of api errors
+    Refactoring axios methods into a hook - Creating a useAxios hook
+    changing entityData to include method and url to pass to axios hook.
+    entity service may not be required 
+    changing mydatagrid to use useAxios.
+
     R8: Simplify / re-organise  ---> Column def / EntityDataGrid / MyDataGrid and FormDialog
         EntityDataGrids - refactored out of the project. (Routes now passes the formData object)
 

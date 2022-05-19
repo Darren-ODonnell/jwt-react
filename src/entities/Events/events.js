@@ -1,5 +1,5 @@
 import { addEvent, deleteEventById, getEvents, updateEvent } from "../../services/EventService";
-import { EVENTS, Event } from "../../common/globals";
+import { EVENTS, Event, COMPETITION_URLS, METHODS, EVENT_URLS } from "../../common/globals";
 import { addMessage, copyFormColDefs, copyGridColDefs } from "../../common/helper";
 
 
@@ -21,6 +21,19 @@ export const eventInitialValue = {
     round        : ""
 };
 
+const apiRequests = {
+    list      : { method: METHODS.GET   , url: EVENT_URLS.list},
+    findById  : { method: METHODS.GET   , url: EVENT_URLS.findById},
+    update    : { method: METHODS.POST  , url: EVENT_URLS.update},
+    add       : { method: METHODS.PUT   , url: EVENT_URLS.add},
+    deleteById: { method: METHODS.DELETE, url: EVENT_URLS.deleteById}
+}
+
+const gridLoader = (data) => {
+
+    return data;
+}
+
 const actions = {
     add       : addEvent,
     update    : updateEvent,
@@ -37,4 +50,6 @@ export const eventData = {
     columnDefs  : eventColumnDefs,
     formColDefs : copyFormColDefs( eventColumnDefs ), // form column definitions
     gridColDefs : copyGridColDefs( eventColumnDefs ), // Grid column definitions
+    methods     : apiRequests,
+    gridLoader : gridLoader
 };

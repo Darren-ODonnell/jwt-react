@@ -223,3 +223,10 @@ export const API_TYPE = {
     PUT        : "PUT",
     DELETE     : "DELETE"
 }
+
+export const METHODS = {
+    GET: 'GET',
+    POST: 'POST',
+    PUT: 'PUT',
+    DELETE: 'DELETE'
+}

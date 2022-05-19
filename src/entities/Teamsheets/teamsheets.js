@@ -1,5 +1,5 @@
 import { addTeamsheet, deleteTeamsheetById, getTeamsheets, updateTeamsheet } from "../../services/TeamsheetService";
-import { TEAMSHEETS, Teamsheet } from "../../common/globals";
+import { TEAMSHEETS, Teamsheet, TEAMSHEET_URLS, METHODS } from "../../common/globals";
 import { addMessage, copyFormColDefs, copyGridColDefs } from "../../common/helper";
 
 export const teamsheetColumnDefs = [
@@ -20,12 +20,23 @@ export const teamsheetInitialValue = {
     lastname       : "",
     position       : "",
 };
+const gridLoader = (data) => {
 
+    return data;
+}
 const actions = {
     add       : addTeamsheet,
     update    : updateTeamsheet,
     deleteById: deleteTeamsheetById,
     list      : getTeamsheets
+}
+
+const apiRequests = {
+    list      : { method: METHODS.GET   , url: TEAMSHEET_URLS.list},
+    findById  : { method: METHODS.GET   , url: TEAMSHEET_URLS.findById},
+    update    : { method: METHODS.POST  , url: TEAMSHEET_URLS.update},
+    add       : { method: METHODS.PUT   , url: TEAMSHEET_URLS.add},
+    deleteById: { method: METHODS.DELETE, url: TEAMSHEET_URLS.deleteById}
 }
 
 export const teamsheetData = {
@@ -37,4 +48,6 @@ export const teamsheetData = {
     columnDefs  : teamsheetColumnDefs,
     formColDefs : copyFormColDefs( teamsheetColumnDefs ), // form column definitions
     gridColDefs : copyGridColDefs( teamsheetColumnDefs ), // Grid column definitions
+    methods     : apiRequests,
+    gridLoader : gridLoader
 };

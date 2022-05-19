@@ -11,7 +11,7 @@ export function getFirstnameById(id)            {
     return { data2:data, data, error, isLoaded }
  }
 export function getFirstnameIrish(firstname)    {
-    const {data, error, isLoaded } =  ApiService.GetRequestTwo(FIRSTNAME_URLS.findById, firstname)
+    const {data, error, isLoaded } =  ApiService.GetRequestTwo(FIRSTNAME_URLS.findIrish, firstname)
     return { data2:data, data, error, isLoaded }
  }
 export function getFirstnameEnglish(firstname)  {

@@ -1,4 +1,4 @@
-import React, {  useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {  AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
@@ -8,6 +8,9 @@ import { Button, Grid } from "@mui/material";
 import { ErrorMessage } from "../common/ErrorMessage";
 import { FormDialog } from "./FormDialog";
 import { defaultColDef } from "../common/helper";
+import { useAxios } from "../api/ApiService";
+import instance from "../api/axios";
+import AuthService from "../auth/AuthService";
 
 
 const MyDataGrid = ({props}) => {
@@ -15,6 +18,7 @@ const MyDataGrid = ({props}) => {
     const [ , setGridApi ]  = useState(null);
     const [ formData, setFormData ] = useState( props.initialValue)
     const [ open    , setOpen ]     = useState(false);
+    const [ data, error, loading, axiosFetch] = useAxios();
 
     const handleOpen = () => {
         setOpen( true );
@@ -46,11 +50,39 @@ const MyDataGrid = ({props}) => {
     }
 
 
-    const { data2, error, isLoaded, setData } = props.actions.list()
+    const getData = ( { method, url }) => {
+        const user = AuthService.getCurrentUser();
+        AuthService.setAuthToken( user.accessToken );
+        axiosFetch( {
+            axiosInstance: instance,
+            method: method,
+            url: url
+        } )
+        setFormData([...data]);
+    }
 
-    props.actions.list();
 
-    if( error !== null ) { return <ErrorMessage message={ error.message }/>; }
+
+
+    // const handleSubmit = (data) => {
+    //     axiosFetch({
+    //         axiosInstance: instance(),
+    //         method: 'post',
+    //         url: '/posts',
+    //         requestConfig: {
+    //             data: { data }
+    //         }
+    //     });
+    // }
+
+
+
+    useEffect(()=>{
+        getData(props.methods.list);
+        setFormData([...data]);
+    }, []);
+    let data2 = [...data]
+
 
     const addButton = (params) => {
         return (
@@ -97,35 +129,39 @@ const MyDataGrid = ({props}) => {
     };
 
     return (
+
         <div >
+            {console.log("RenderData: ",data)}
+            {console.log("RenderFormData: ",formData)}
+            {/*{error}  && <ErrorMessage message={ error.message }/>*/}
             { addButton() }
             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input"  >
                 <AgGridReact
-                    ref           = { gridRef }
-                    defaultColDef = { defaultColDef }
-                    pagination    = { true }
-                    rowData       = { data2 }
-                    suppressHows  = { true }
-                    columnDefs    = { [...props.gridColDefs, formActions] }
-                    onGridReady   = { onGridReady }
-                    animateRoowHorizontalScroll = { true }
-                    alwaysShrizontalScroll      = { false }
-                    suppressClickEdit           = { false }
+                    ref             = { gridRef }
+                    defaultColDef   = { defaultColDef }
+                    pagination      = { true }
+                    rowData         = { props.gridLoader(data) }
+                    suppressRowDrag = { true }
+                    columnDefs      = { [...props.gridColDefs, formActions] }
+                    onGridReady     = { onGridReady }
+                    animateRows     = { true }
+                    alwaysShowHorizontalScroll = { false }
+                    suppressClickEdit          = { false }
                 />
 
             </div>
             <FormDialog
-                setData     = { setFormData }
-                data        = { formData }
-                open        = { open }
-                handleClose = { handleClose }
-                setOpen     = { setOpen }
-                onChange    = { onChange }
-                actions     = { props.actions }
-                colDefs     = { props.formColDefs }
-                messages    = { props.messages }
-                formData    = { formData }
-                setFormData = { setFormData }
+                setData      = { setFormData }
+                data         = { formData }
+                open         = { open }
+                handleClose  = { handleClose }
+                setOpen      = { setOpen }
+                onChange     = { onChange }
+                // actions      = { props.actions }
+                colDefs      = { props.formColDefs }
+                messages     = { props.messages }
+                formData     = { formData }
+                setFormData  = { setFormData }
                 initialValue = { props.initialValue }
             />
         </div>
