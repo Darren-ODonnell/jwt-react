@@ -44,7 +44,7 @@ const MyDataGrid = ({props}) => {
         setOpen(false);
         const confirm = window.confirm("Are you sure, you want to delete this row", id)
         if (confirm) {
-            props.actions.delete(id)
+            props.actions.deleteById(id)
                 .then(props.actions.list())
         }
     }
