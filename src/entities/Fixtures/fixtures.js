@@ -1,9 +1,8 @@
-import { FIXTURES, Fixture, COMPETITION_URLS, METHODS, FIXTURE_URLS } from '../../common/globals'
+import { FIXTURES, Fixture, METHODS, FIXTURE_URLS } from '../../common/globals'
 import {addFixture, deleteFixtureById, getFixtures, updateFixture} from "../../services/FixtureService";
 import { addMessage, copyFormColDefs, copyGridColDefs } from "../../common/helper";
 
-
-export const fixtureColumnDefs = [
+const fixtureColumnDefs = [
     { headerName: 'Competition Name', field: 'competitionName',type: 'String' , min: 8 , max: 60, required: true },
     { headerName: 'Home Team Name'  , field: 'homeTeamName'   ,type: 'String' , min: 8 , max: 60, required: true  },
     { headerName: 'Away Team Name'  , field: 'awayTeamName'   ,type: 'String' , min: 8 , max: 60, required: true  },
@@ -13,7 +12,7 @@ export const fixtureColumnDefs = [
     { headerName: 'Round'           , field: 'round'          ,type: 'Integer', min: 1 , max: 20, required: true  },
 ];
 
-export const fixtureInitialValue = {
+const fixtureInitialValue = {
     competitionName: "",
     homeTeamName   : "",
     awayTeamName   : "",
@@ -37,16 +36,9 @@ const apiRequests = {
     add       : { method: METHODS.PUT   , url: FIXTURE_URLS.add},
     deleteById: { method: METHODS.DELETE, url: FIXTURE_URLS.deleteById}
 }
-const actions = {
-    add       : addFixture,
-    update    : updateFixture,
-    deleteById: deleteFixtureById,
-    list      : getFixtures,
-};
 
 const gridLoader = (data) => {
     let newData = [];
-
     data.forEach(row => {
         const newRow = {id:row.id,
             competitionName:row.competition.name,
@@ -62,7 +54,12 @@ const gridLoader = (data) => {
     return newData;
 }
 
-
+const actions = {
+    add       : addFixture,
+    update    : updateFixture,
+    deleteById: deleteFixtureById,
+    list      : getFixtures,
+};
 
 export const fixtureData = {
     messages    : addMessage(Fixture),
@@ -75,8 +72,4 @@ export const fixtureData = {
     gridColDefs : copyGridColDefs( fixtureColumnDefs ), // Grid column definitions
     methods     : apiRequests,
     gridLoader  : gridLoader
-
 };
-
-
-

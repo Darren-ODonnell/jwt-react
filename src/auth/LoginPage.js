@@ -49,7 +49,6 @@ export const LoginPage = () => {
                 const message = "Login Failed: Username or Password Incorrect - Please try again";
                 setErrorMessage( message )
                 alert( message );
-                console.log( "Login Failed: " + error );
                 return null;
             } );
         }

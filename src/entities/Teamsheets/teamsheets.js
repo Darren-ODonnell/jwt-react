@@ -20,15 +20,28 @@ export const teamsheetInitialValue = {
     lastname       : "",
     position       : "",
 };
-const gridLoader = (data) => {
 
-    return data;
-}
 const actions = {
     add       : addTeamsheet,
     update    : updateTeamsheet,
     deleteById: deleteTeamsheetById,
     list      : getTeamsheets
+}
+
+const gridLoader = (data) => {
+    let newData = [];
+    data.forEach(row => {
+        const newRow = {id:row.id,
+            competitionName:row.fixture.competition.name,
+            homeTeamName:row.fixture.homeTeam.name,
+            awayTeamName:row.fixture.awayTeam.name,
+            firstname:row.player.firstname,
+            lastname:row.player.lastname,
+            position:row.position.name,
+        }
+        newData.push(newRow)
+    })
+    return newData;
 }
 
 const apiRequests = {

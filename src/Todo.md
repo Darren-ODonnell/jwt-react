@@ -3,7 +3,7 @@ Cx: New Code additions (new features)
 Rx: Refactoring
 Ix: Investigations
 Ux: Files not currently used - (possible to remove? - left for now)
-
+Ig: Ignored for now
 As elements are finished - move below Completed
 
 # Errors
@@ -18,37 +18,20 @@ at handleFormSubmit (FormDialog.js:32:1)
 TeamsheetService.js:18 Uncaught TypeError: Cannot destructure property 'data' of '_api_ApiService__WEBPACK_IMPORTED_MODULE_0__.default.PutRequest(...)' as it is undefined.
 at Object.addTeamsheet [as add] (TeamsheetService.js:18:1)
 
-    E17: after remving warnings - two still exist - not sure how to fix these.
-WARNING in ./node_modules/bootstrap/dist/css/bootstrap.css (./node_modules/css-loader/dist/cjs.js??ruleSet[1].ru
-les[1].oneOf[5].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[2]!./node_mod
-ules/source-map-loader/dist/cjs.js!./node_modules/bootstrap/dist/css/bootstrap.css)
-Module Warning (from ./node_modules/postcss-loader/dist/cjs.js):
-Warning
-
-(2482:3) autoprefixer: Replace color-adjust to print-color-adjust. The color-adjust shorthand is currently depre
-cated.
-@ ./node_modules/bootstrap/dist/css/bootstrap.css 8:6-245 22:17-24 26:7-21 58:25-39 59:36-47 59:50-64 61:4-74:5
-63:6-73:7 64:54-65 64:68-82 70:42-53 70:56-70 72:21-28 83:0-215 83:0-215 84:22-29 84:33-47 84:50-64
-@ ./src/NavBar/NavBarSelect.js 7:0-42
-@ ./src/App.js 7:0-53 17:38-50
-@ ./src/index.js 4:0-27 25:35-38
-
     E18: Access to XMLHttpRequest at 'http://147.252.81.86:8080/' from origin 'http://localhost:3000' has been blocked by CORS 
 policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the 
 requested resource.
 
     E19: Refused to set unsafe header "Origin"
-    E20: Foreign key data broken after axios call changes
-    E21:
+
     E22:
     E23:
     E24:
 
-
-
-
 # Refactoring
     R1: change to using useAxios and standardise api code layouts
+        only set for list - look at how FormDialog can use this hook!
+
     R2: simplify Grid/form to extract form
     R9: 
 
@@ -67,7 +50,15 @@ requested resource.
     C2: Add pictures for players
     C3: Add club logos to tables and teamsheets
     C5: Some sample Event data required to test report displays 
-    C6: 
+    C6: FormDialog Add/Edit Changes
+        C6a: Club -> validation (club does not already exist)
+        C6b: Player -> validation (player does not already exist)
+        C6c: Competition -> validation (DNE)
+        C6d: Fixture -> Validation (DNE
+            -> Dropdown for Competition, season, and round
+            -> datetimePicker for Fixture date and time
+        C6e: Teamsheet -> Drop down for Fixture , Player and Position
+        C6f: Event -> dropdown for -> Fixture, Event, player and pitchposition
     C7:
     C8:
 
@@ -80,12 +71,39 @@ requested resource.
     U16:
     U17:
 
+# Ignore for now
+    E17: after remving warnings - two still exist - not sure how to fix these.
+        WARNING in ./node_modules/bootstrap/dist/css/bootstrap.css (./node_modules/css-loader/dist/cjs.js??ruleSet[1].ru
+        les[1].oneOf[5].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[2]!./node_mod
+        ules/source-map-loader/dist/cjs.js!./node_modules/bootstrap/dist/css/bootstrap.css)
+        Module Warning (from ./node_modules/postcss-loader/dist/cjs.js):
+        Warning
+        
+        (2482:3) autoprefixer: Replace color-adjust to print-color-adjust. The color-adjust shorthand is currently depre
+        cated.
+        @ ./node_modules/bootstrap/dist/css/bootstrap.css 8:6-245 22:17-24 26:7-21 58:25-39 59:36-47 59:50-64 61:4-74:5
+        63:6-73:7 64:54-65 64:68-82 70:42-53 70:56-70 72:21-28 83:0-215 83:0-215 84:22-29 84:33-47 84:50-64
+        @ ./src/NavBar/NavBarSelect.js 7:0-42
+        @ ./src/App.js 7:0-53 17:38-50
+        @ ./src/index.js 4:0-27 25:35-38
+
+
 # In Progress
     E15-E16-E17 attempting to fix a number of api errors
     Refactoring axios methods into a hook - Creating a useAxios hook
     changing entityData to include method and url to pass to axios hook.
     entity service may not be required 
     changing mydatagrid to use useAxios.
+
+    All EntityServices are no loonger required.
+    Remove the actions prop from in MyDataGRid for FormDialog
+    change handleFormSubmit to remove use of props.actions...
+    - replace with axiosFetch from useAxios - 
+
+        option: 1. Pass from MyDatagGrid
+        option: 2. setup useAxios inside FormDialog
+
+
 
     R8: Simplify / re-organise  ---> Column def / EntityDataGrid / MyDataGrid and FormDialog
         EntityDataGrids - refactored out of the project. (Routes now passes the formData object)
@@ -108,7 +126,6 @@ delete package.json.lock and node_modules - npm i - did not fix
 
 
 # Completed
-
     R3: Build up AuthService to include login/logout/register etc
         moved all the auth related functions into AuthService
     E7: Logout not working
@@ -151,7 +168,6 @@ delete package.json.lock and node_modules - npm i - did not fix
         Deleted
     R7: Removed all compile warnings
         Either commented out (in Helper) or deleted.
-
     U7: entities/Players/ClubListItem, NewClubForm, js/css
         Files deleted
     U8: entities/Players/CompetitionListItem, NewCompetitionForm
@@ -168,3 +184,11 @@ delete package.json.lock and node_modules - npm i - did not fix
         File deleted
     U15: useAxios
         File deleted
+    E20: Foreign key data broken after axios call changes Teamsheets
+        function called gridLoader added to teamsheets.js
+        additional variable called gridloader addered to teamsheetData object
+        buiddata removed from teamsheetservice. (no longer required) 
+    E21: 'No rows to show' appears instead on Loading - when calling for rows from server
+        Used thre loading state variable to controll what is rendered. loading ? <rendered stuff> : <loading message>;
+    E20: Foreign key data broken after axios call changes Events
+        created new method inside each of the entriry data files ( gridLoader() )

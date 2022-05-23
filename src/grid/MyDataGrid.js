@@ -49,20 +49,22 @@ const MyDataGrid = ({props}) => {
         }
     }
 
-
     const getData = ( { method, url }) => {
+        // clean up controller
+        let isSubscribed = true;
         const user = AuthService.getCurrentUser();
         AuthService.setAuthToken( user.accessToken );
         axiosFetch( {
             axiosInstance: instance,
             method: method,
             url: url
-        } )
-        setFormData([...data]);
+        }).then (()=> {
+            setFormData([...data]);
+        })
+        // cancel subscription to useEffect
+        return () => (isSubscribed = false)
+
     }
-
-
-
 
     // const handleSubmit = (data) => {
     //     axiosFetch({
@@ -75,14 +77,12 @@ const MyDataGrid = ({props}) => {
     //     });
     // }
 
-
-
     useEffect(()=>{
+
+
         getData(props.methods.list);
         setFormData([...data]);
     }, []);
-    let data2 = [...data]
-
 
     const addButton = (params) => {
         return (
@@ -130,10 +130,8 @@ const MyDataGrid = ({props}) => {
 
     return (
 
-        <div >
+        !loading  ? <div >
             {console.log("RenderData: ",data)}
-            {console.log("RenderFormData: ",formData)}
-            {/*{error}  && <ErrorMessage message={ error.message }/>*/}
             { addButton() }
             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input"  >
                 <AgGridReact
@@ -158,20 +156,23 @@ const MyDataGrid = ({props}) => {
                 setOpen      = { setOpen }
                 onChange     = { onChange }
                 // actions      = { props.actions }
+                methods      = { props.methods }
                 colDefs      = { props.formColDefs }
                 messages     = { props.messages }
                 formData     = { formData }
                 setFormData  = { setFormData }
                 initialValue = { props.initialValue }
+                axiosFetch   = { axiosFetch }
+
             />
-        </div>
+        </div> : <p> Loading...</p>
     )
 };
 
 export default MyDataGrid;
 
 
-
+//   const [ data, error, loading, axiosFetch] = useAxios();
 
 
 

@@ -32,12 +32,11 @@ export const Login2      = () => {
 
         LoginRequest(loginModel)
             .then( response => {
-                console.log( "Response: " + response.data )
+
                 updateState( response.data )
                 setIsSubmitted( true );
                 window.location = "/";
             }, error => {
-                console.log( "Error:-- " + error )
                 const message = "Login Failed: Username or Password Incorrect - Please try again";
                 setErrorMessage( message )
                 alert( message );

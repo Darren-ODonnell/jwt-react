@@ -2,6 +2,8 @@ import React from "react";
 import { Button, Dialog, TextField } from "@mui/material";
 import {  DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { ErrorMessage } from "../common/ErrorMessage";
+import AuthService from "../auth/AuthService";
+import instance from "../api/axios";
 
 // close popup window
 const handleClose = ( setOpen ) => {
@@ -13,6 +15,31 @@ const handleError = ( message ) => {
 
 }
 
+const updateData = (props) => {
+
+    const user = AuthService.getCurrentUser();
+    AuthService.setAuthToken( user.accessToken );
+
+    props.axiosFetch( {
+        axiosInstance: instance,
+        method: props.method,
+        url: props.url
+    }).then (()=> {
+        props.setFormData([...props.data]);
+    })
+
+
+
+}
+const addData = (props) => {
+
+}
+
+const cancelData = () => {
+
+}
+
+
 const handleFormSubmit = (props) => {
     console.log('FormData: ', props.formData)
 
@@ -21,14 +48,18 @@ const handleFormSubmit = (props) => {
         // confirm && actions.update(formData.id, formData)
         props.setOpen(false)
 
-        let { error } = props.actions.list(props.formData);
+        // let { error } = props.actions.list(props.formData);
+
+        let { error } = updateData(props.axiosFetch, props.methods.update, props.formData)
 
         if (error !== null) {   return handleError(error.message); }
 
     } else { // adding new record
         props.setOpen(false)
 
-        const { error } = props.actions.add(props.formData);
+        // const { error } = props.actions.add(props.formData);
+
+        let { error } = updateData(props.axiosFetch, props.methods.add, props.formData)
 
         if (error !== null) {   return handleError(error.message); }
     }

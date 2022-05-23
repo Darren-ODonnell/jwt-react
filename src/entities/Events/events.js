@@ -30,8 +30,18 @@ const apiRequests = {
 }
 
 const gridLoader = (data) => {
-
-    return data;
+    let newData = [];
+    data.forEach(row => {
+        const newRow = {id:row.id,
+            competitionName:row.fixture.competition.name,
+            homeTeamName:row.fixture.homeTeam.name,
+            awayTeamName:row.fixture.awayTeam.name,
+            round:row.fixture.round,
+            eventName:row.event.name
+        }
+        newData.push(newRow)
+    })
+    return newData;
 }
 
 const actions = {
