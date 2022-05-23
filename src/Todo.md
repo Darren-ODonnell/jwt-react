@@ -23,8 +23,6 @@ policy: Response to preflight request doesn't pass access control check: No 'Acc
 requested resource.
 
     E19: Refused to set unsafe header "Origin"
-
-    E22:
     E23:
     E24:
 
@@ -108,9 +106,7 @@ requested resource.
     R8: Simplify / re-organise  ---> Column def / EntityDataGrid / MyDataGrid and FormDialog
         EntityDataGrids - refactored out of the project. (Routes now passes the formData object)
 
-    E5: Tables with foreign key data are not displayed correctly 
-        - Teamsheets -Done
-        - Fixtures - Done 
+    E22: Tables with foreign key data are not displayed correctly
         - Events - incomplete - need data to test.
      
     E6: Delete does not work on any entity
@@ -192,3 +188,6 @@ delete package.json.lock and node_modules - npm i - did not fix
         Used thre loading state variable to controll what is rendered. loading ? <rendered stuff> : <loading message>;
     E20: Foreign key data broken after axios call changes Events
         created new method inside each of the entriry data files ( gridLoader() )
+    E5: Tables with foreign key data are not displayed correctly 
+        - Teamsheets -Done
+        - Fixtures - Done 

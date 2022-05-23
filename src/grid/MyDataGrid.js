@@ -5,13 +5,11 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 import './MyDataGrid.css'
 import { Button, Grid } from "@mui/material";
-import { ErrorMessage } from "../common/ErrorMessage";
 import { FormDialog } from "./FormDialog";
 import { defaultColDef } from "../common/helper";
 import { useAxios } from "../api/ApiService";
 import instance from "../api/axios";
 import AuthService from "../auth/AuthService";
-
 
 const MyDataGrid = ({props}) => {
     const gridRef = useRef(); // Optional - for accessing Grid's API
@@ -63,7 +61,6 @@ const MyDataGrid = ({props}) => {
         })
         // cancel subscription to useEffect
         return () => (isSubscribed = false)
-
     }
 
     // const handleSubmit = (data) => {
@@ -78,8 +75,6 @@ const MyDataGrid = ({props}) => {
     // }
 
     useEffect(()=>{
-
-
         getData(props.methods.list);
         setFormData([...data]);
     }, []);
