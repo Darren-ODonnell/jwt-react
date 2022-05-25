@@ -9,7 +9,7 @@ export const useAxios = () => {
     const [loading   , setLoading]    = useState(false); //different!
     const [controller, setController] = useState(null);
 
-    const axiosFetch = async (configObj) => {
+    const axiosCrud = async (configObj) => {
         const {
             axiosInstance,
             method,
@@ -39,7 +39,7 @@ export const useAxios = () => {
         return () => controller && controller.abort();
     }, [controller]);
 
-    return [data, error, loading, axiosFetch];
+    return [data, error, loading, axiosCrud ];
 }
 
 
