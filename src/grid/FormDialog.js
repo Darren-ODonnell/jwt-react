@@ -1,13 +1,13 @@
-import React, {useState} from "react";
+import React from "react";
 import { Button, Dialog, TextField } from "@mui/material";
 import {  DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { ErrorMessage } from "../common/ErrorMessage";
 import AuthService from "../auth/AuthService";
 import instance from "../api/axios";
-import {useAxios} from "../api/ApiService";
+import { useAxios } from "../api/ApiService";
 
 
-export const FormDialog = (props) => {
+const FormDialog = (props) => {
     let [ data, error, loading, axiosFetch] = useAxios();
 
     // close popup window
@@ -79,7 +79,6 @@ export const FormDialog = (props) => {
             props.setOpen(false)
             const request = props.methods.add;
 
-
             // const { error } = props.actions.add(props.formData);
 
             addData( {...props, request});
@@ -89,10 +88,11 @@ export const FormDialog = (props) => {
     }
     // form elements
     const onCancel = () => {
+        handleClose(props.setOpen)
         props.setFormData(props.initialValue);
         props.setOpen(false)
     }
-    const cancelButton = (props) => {
+    const CancelButton = (props) => {
         return (
             <Button onClick={ () => onCancel(props) }
                     color   = "secondary"
@@ -100,7 +100,7 @@ export const FormDialog = (props) => {
             > Cancel </Button>
         )
     }
-    const submitButton = () => {
+    const SubmitButton = (props) => {
         return (
             <Button onClick={() => handleFormSubmit(props)}
                     type="submit"
@@ -110,47 +110,45 @@ export const FormDialog = (props) => {
         )
     }
 
-    const textField = ( index, prop) => {
+    const textField = ( { index, field, formData, onChange, headerName }) => {
         return (
             <TextField
-            key         = { index }
-            id          = { prop.field }
-            value       = { props.formData[prop.field] }
-            onChange    = { e => props.onChange(e) }
-            data        = { props.formData }
-            placeholder = { "Enter " + prop.headerName }
-            label       = { prop.headerName }
-            variant     = "outlined"
-            margin      = "dense"
-            fullWidth  />
+                key         = { index }
+                id          = { field }
+                value       = { formData[field] }
+                onChange    = { e => onChange(e) }
+                data        = { formData }
+                placeholder = { "Enter " + headerName }
+                label       = { headerName }
+                variant     = "outlined"
+                margin      = "dense"
+                fullWidth
+            />
         )
     }
 
-// { open, setOpen, data, onChange, colDefs, messages}
-
-    // console.log(props.formData)
-
-    return loading ? (
-         <div>
+    return  !loading ? (
+          <div>
             <Dialog
-                open             = { props.open }
+                open             = { props.open}
                 onClose          = { props.handleClose }
                 aria-labelledby  = "alert-dialog-title"
-                aria-describedby = "alert-dialog-description" >
-                <DialogTitle id  = "alert-dialog-title"> { props.formData.id ? props.messages.update: props.messages.create } </DialogTitle>
+                aria-describedby = "alert-dialog-description"
+            >
+                <DialogTitle id  = "alert-dialog-title"> { props.formData.id ? props.messages.update: props.messages.create }</DialogTitle>
                 <DialogContent >
-                    { props.colDefs.map( ( prop, index ) => {
-                        return textField(props, index, prop)
+                    {
+                        props.colDefs.map( ( prop, index ) => {
+                            return textField( { ...props, ...prop, index })
                         })
                     }
                 </DialogContent>
                 <DialogActions>
-                    { cancelButton(props) }
-                    { submitButton(props) }
+                    <CancelButton {...props} />
+                    <SubmitButton {...props} />
                 </DialogActions>
             </Dialog>
         </div>
-
-    ):<p> Loading...</p>
+    ): <p>Loading...</p>
 }
-// export default FormDialog;
+export default FormDialog;

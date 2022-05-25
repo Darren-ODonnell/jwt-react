@@ -1,6 +1,5 @@
-import { LASTNAMES, Lastname, COMPETITION_URLS, METHODS, FIRSTNAME_URLS, LASTNAME_URLS } from '../../common/globals'
-import { addLastname, deleteLastnameById, getLastnames, updateLastname } from "../../services/LastnameService";
-import { addMessage, copyFormColDefs, copyGridColDefs } from "../../common/helper";
+import { Lastname, METHODS, LASTNAME_URLS } from '../common/globals'
+import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
 
 
 
@@ -30,18 +29,10 @@ const gridLoader = (data) => {
     return data;
 }
 
-const actions = {
-    add       : addLastname,
-    update    : updateLastname,
-    deleteById: deleteLastnameById,
-    list      : getLastnames
-};
 
 export const lastnameData = {
     messages    : addMessage(Lastname),
     type        : Lastname,
-    actions     : actions,
-    entity      : LASTNAMES,
     initialValue: lastnameInitialValue,
     columnDefs  : lastnameColumnDefs,
     formColDefs : copyFormColDefs( lastnameColumnDefs ), // form column definitions

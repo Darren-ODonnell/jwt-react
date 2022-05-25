@@ -2,8 +2,9 @@ Ex: indicate problems found.
 Cx: New Code additions (new features)
 Rx: Refactoring
 Ix: Investigations
-Ux: Files not currently used - (possible to remove? - left for now)
+Ux: Files currently UnUsed - 
 Ig: Ignored for now
+
 As elements are finished - move below Completed
 
 # Errors
@@ -66,7 +67,7 @@ requested resource.
     U3: auth/user.service
     Ù13: grid/FormEditDialog
 
-    U16:
+    U16: All <Entity>List.js/css components can be removed
     U17:
 
 # Ignore for now
@@ -90,18 +91,13 @@ requested resource.
     E15-E16-E17 attempting to fix a number of api errors
     Refactoring axios methods into a hook - Creating a useAxios hook
     changing entityData to include method and url to pass to axios hook.
-    entity service may not be required 
-    changing mydatagrid to use useAxios.
+    entity service may not be required - removed
+    changing mydatagrid to use useAxios. - done
 
-    All EntityServices are no loonger required.
-    Remove the actions prop from in MyDataGRid for FormDialog
-    change handleFormSubmit to remove use of props.actions...
-    - replace with axiosFetch from useAxios - 
-
-        option: 1. Pass from MyDatagGrid
-        option: 2. setup useAxios inside FormDialog
-
-
+    All EntityServices are no loonger required. - removed
+    Remove the actions prop from in MyDataGRid for FormDialog - done
+    change handleFormSubmit to remove use of props.actions... - done
+    - replace with axiosFetch from useAxios - done
 
     R8: Simplify / re-organise  ---> Column def / EntityDataGrid / MyDataGrid and FormDialog
         EntityDataGrids - refactored out of the project. (Routes now passes the formData object)
@@ -191,3 +187,11 @@ delete package.json.lock and node_modules - npm i - did not fix
     E5: Tables with foreign key data are not displayed correctly 
         - Teamsheets -Done
         - Fixtures - Done 
+    U16: All <Entity>List.js/css components removed...
+        ClubList.js/css
+        CompetitionList.js/css
+        FixtureList.js/css
+        FirstnameList.js/css
+        LastnameList.js/css
+        PlayersList.js/css
+        - folders tidied up

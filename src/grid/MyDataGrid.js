@@ -4,8 +4,8 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 import './MyDataGrid.css'
-import { Button, Grid } from "@mui/material";
-import { FormDialog } from "./FormDialog";
+import { Button, Grid} from "@mui/material";
+import  FormDialog  from "./FormDialog";
 import { defaultColDef } from "../common/helper";
 import { useAxios } from "../api/ApiService";
 import instance from "../api/axios";
@@ -63,23 +63,14 @@ const MyDataGrid = ({props}) => {
         return () => (isSubscribed = false)
     }
 
-    // const handleSubmit = (data) => {
-    //     axiosFetch({
-    //         axiosInstance: instance(),
-    //         method: 'post',
-    //         url: '/posts',
-    //         requestConfig: {
-    //             data: { data }
-    //         }
-    //     });
-    // }
 
     useEffect(()=>{
         getData(props.methods.list);
         setFormData([...data]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const addButton = (params) => {
+    const AddButton = (params) => {
         return (
             <Grid align="right">
                 <Button onClick={() => handleOpen(params)}
@@ -89,7 +80,7 @@ const MyDataGrid = ({props}) => {
             </Grid>
         )
     }
-    const editButton = (params) => {
+    const EditButton = (params) => {
         return (
             <Button  onClick = {()=>handleEdit( params )}
                      variant = "outlined"
@@ -97,7 +88,7 @@ const MyDataGrid = ({props}) => {
             > Edit </Button>
         )
     }
-    const deleteButton = (params) => {
+    const DeleteButton = (params) => {
         return (
             <Button  onClick = {()=>handleDelete( params )}
                      variant = "outlined"
@@ -116,19 +107,17 @@ const MyDataGrid = ({props}) => {
         cellRenderer:  (params) => {
             return (
                 <>
-                { editButton( params ) }
-                { deleteButton( params ) }
+                    <EditButton {...params} />
+                    <DeleteButton {...params}/>
                 </>
             )
         }
     };
 
     return (
-
         !loading  ? <div >
-            {console.log("RenderData: ",data)}
-            { addButton() }
-            <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input"  >
+             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input"  >
+                <AddButton {...props}/>
                 <AgGridReact
                     ref             = { gridRef }
                     defaultColDef   = { defaultColDef }
@@ -140,27 +129,27 @@ const MyDataGrid = ({props}) => {
                     animateRows     = { true }
                     alwaysShowHorizontalScroll = { false }
                     suppressClickEdit          = { false }
+                 />
+                <FormDialog
+                    setData      = { setFormData }
+                    data         = { formData }
+                    open         = { open }
+                    onClose      = { handleClose }
+                    handleClose  = { handleClose }
+                    setOpen      = { setOpen }
+                    onChange     = { onChange }
+                    // actions      = { props.actions }
+                    methods      = { props.methods }
+                    colDefs      = { props.formColDefs }
+                    messages     = { props.messages }
+                    formData     = { formData }
+                    setFormData  = { setFormData }
+                    initialValue = { props.initialValue }
+                    axiosFetch   = { axiosFetch }
                 />
-
             </div>
-            <FormDialog
-                setData      = { setFormData }
-                data         = { formData }
-                open         = { open }
-                handleClose  = { handleClose }
-                setOpen      = { setOpen }
-                onChange     = { onChange }
-                // actions      = { props.actions }
-                methods      = { props.methods }
-                colDefs      = { props.formColDefs }
-                messages     = { props.messages }
-                formData     = { formData }
-                setFormData  = { setFormData }
-                initialValue = { props.initialValue }
-                axiosFetch   = { axiosFetch }
-
-            />
         </div> : <p> Loading...</p>
+
     )
 };
 

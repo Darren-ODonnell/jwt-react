@@ -1,6 +1,5 @@
-import { COMPETITION_URLS, METHODS, Player, PLAYER_URLS, PLAYERS } from '../../common/globals'
-import { addPlayer, deletePlayerById, getPlayers, updatePlayer } from "../../services/PlayerService";
-import { addMessage, copyFormColDefs, copyGridColDefs } from "../../common/helper";
+import { METHODS, Player, PLAYER_URLS } from '../common/globals'
+import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
 
 
 
@@ -38,18 +37,9 @@ const gridLoader = (data) => {
     return data;
 }
 
-export const actions = {
-    add       : addPlayer,
-    update    : updatePlayer,
-    deleteById: deletePlayerById,
-    list      : getPlayers
-};
-
 export const playerData = {
     messages    : addMessage(Player),
     type        : Player,
-    actions     : actions,
-    entity      : PLAYERS,
     initialValue: playerInitialValue,
     columnDefs  : playerColumnDefs,
     formColDefs : copyFormColDefs( playerColumnDefs ), // form column definitions

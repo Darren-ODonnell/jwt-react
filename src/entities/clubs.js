@@ -1,7 +1,5 @@
-import { CLUBS, Club, COMPETITION_URLS, METHODS, CLUB_URLS } from '../../common/globals'
-import { addClub, deleteClubById, getClubs, updateClub } from "../../services/ClubService";
-import { addMessage, copyFormColDefs, copyGridColDefs } from "../../common/helper";
-
+import { Club, METHODS, CLUB_URLS } from '../common/globals'
+import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
 
 export const clubColumnDefs = [
     // { headerName: 'ID',             field: 'id',            type: 'Number', min:3, max:10, required: true   },
@@ -36,24 +34,15 @@ const gridLoader = (data) => {
     return data;
 }
 
-
-const actions = {
-    add       : addClub,
-    update    : updateClub,
-    deleteById: deleteClubById,
-    list      : getClubs
-};
-
 export const clubData = {
     messages    : addMessage(Club),
     type        : Club,
-    actions     : actions,
-    entity      : CLUBS,
     initialValue: clubInitialValue,
     formColDefs : copyFormColDefs( clubColumnDefs ), // form column definitions
     gridColDefs : copyGridColDefs( clubColumnDefs ), // Grid column definitions
     columnDefs  : clubColumnDefs,
     methods     : apiRequests,
-    gridLoader : gridLoader
+    gridLoader  : gridLoader
+
 };
 

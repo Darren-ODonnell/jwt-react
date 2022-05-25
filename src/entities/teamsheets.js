@@ -1,6 +1,5 @@
-import { addTeamsheet, deleteTeamsheetById, getTeamsheets, updateTeamsheet } from "../../services/TeamsheetService";
-import { TEAMSHEETS, Teamsheet, TEAMSHEET_URLS, METHODS } from "../../common/globals";
-import { addMessage, copyFormColDefs, copyGridColDefs } from "../../common/helper";
+import { Teamsheet, TEAMSHEET_URLS, METHODS } from "../common/globals";
+import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
 
 export const teamsheetColumnDefs = [
     { headerName: 'Competition Name', field: 'competitionName', type: 'String', min: 8 , max: 60, required: true },
@@ -20,13 +19,6 @@ export const teamsheetInitialValue = {
     lastname       : "",
     position       : "",
 };
-
-const actions = {
-    add       : addTeamsheet,
-    update    : updateTeamsheet,
-    deleteById: deleteTeamsheetById,
-    list      : getTeamsheets
-}
 
 const gridLoader = (data) => {
     let newData = [];
@@ -55,8 +47,6 @@ const apiRequests = {
 export const teamsheetData = {
     messages    : addMessage(Teamsheet),
     type        : Teamsheet,
-    actions     : actions,
-    entity      : TEAMSHEETS,
     initialValue: teamsheetInitialValue,
     columnDefs  : teamsheetColumnDefs,
     formColDefs : copyFormColDefs( teamsheetColumnDefs ), // form column definitions

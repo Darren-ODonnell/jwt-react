@@ -1,6 +1,5 @@
-import { addEvent, deleteEventById, getEvents, updateEvent } from "../../services/EventService";
-import { EVENTS, Event, COMPETITION_URLS, METHODS, EVENT_URLS } from "../../common/globals";
-import { addMessage, copyFormColDefs, copyGridColDefs } from "../../common/helper";
+import { Event, METHODS, EVENT_URLS } from "../common/globals";
+import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
 
 
 export const eventColumnDefs = [
@@ -44,18 +43,10 @@ const gridLoader = (data) => {
     return newData;
 }
 
-const actions = {
-    add       : addEvent,
-    update    : updateEvent,
-    deleteById: deleteEventById,
-    list      : getEvents
-};
 
 export const eventData = {
     messages    : addMessage(Event),
     type        : Event,
-    actions     : actions,
-    entity      : EVENTS,
     initialValue: eventInitialValue,
     columnDefs  : eventColumnDefs,
     formColDefs : copyFormColDefs( eventColumnDefs ), // form column definitions

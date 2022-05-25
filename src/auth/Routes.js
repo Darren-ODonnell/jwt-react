@@ -1,14 +1,14 @@
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { RegisterPage } from './RegisterPage'
 import { Login2 } from "./Login2";
-import { clubData } from "../entities/Clubs/clubs";
-import { playerData } from "../entities/Players/players";
-import { competitionData } from "../entities/Competitions/competitions";
-import { fixtureData } from "../entities/Fixtures/fixtures";
-import { eventData } from "../entities/Events/events";
-import { firstnameData } from "../entities/Firstnames/firstnames";
-import { lastnameData } from "../entities/Lastnames/lastnames";
-import { teamsheetData } from "../entities/Teamsheets/teamsheets";
+import { clubData } from "../entities/clubs";
+import { playerData } from "../entities/players";
+import { competitionData } from "../entities/competitions";
+import { fixtureData } from "../entities/fixtures";
+import { eventData } from "../entities/events";
+import { firstnameData } from "../entities/firstnames";
+import { lastnameData } from "../entities/lastnames";
+import { teamsheetData } from "../entities/teamsheets";
 
 import AuthService from "./AuthService";
 import Reports from "../reports/Reports"

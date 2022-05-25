@@ -1,6 +1,5 @@
-import { FIXTURES, Fixture, METHODS, FIXTURE_URLS } from '../../common/globals'
-import {addFixture, deleteFixtureById, getFixtures, updateFixture} from "../../services/FixtureService";
-import { addMessage, copyFormColDefs, copyGridColDefs } from "../../common/helper";
+import { Fixture, METHODS, FIXTURE_URLS } from '../common/globals'
+import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
 
 const fixtureColumnDefs = [
     { headerName: 'Competition Name', field: 'competitionName',type: 'String' , min: 8 , max: 60, required: true },
@@ -54,18 +53,10 @@ const gridLoader = (data) => {
     return newData;
 }
 
-const actions = {
-    add       : addFixture,
-    update    : updateFixture,
-    deleteById: deleteFixtureById,
-    list      : getFixtures,
-};
 
 export const fixtureData = {
     messages    : addMessage(Fixture),
     type        : Fixture,
-    actions     : actions,
-    entity      : FIXTURES,
     initialValue: fixtureInitialValue,
     columnDefs  : fixtureColumnDefs,
     formColDefs : copyFormColDefs( fixtureColumnDefs ), // form column definitions

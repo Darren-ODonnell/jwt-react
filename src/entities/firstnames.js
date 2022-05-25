@@ -1,6 +1,5 @@
-import { FIRSTNAMES, Firstname, COMPETITION_URLS, METHODS, FIRSTNAME_URLS } from '../../common/globals'
-import { addFirstname, deleteFirstnameById, getFirstnames, updateFirstname } from "../../services/FirstnameService";
-import { addMessage, copyFormColDefs, copyGridColDefs } from "../../common/helper";
+import { Firstname, METHODS, FIRSTNAME_URLS } from '../common/globals'
+import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
 
 export const firstnameColumnDefs = [
     { headerName: 'Firstname'      , field: 'firstname'     , type: 'String', min: 3, max: 45, required: true  },
@@ -23,13 +22,6 @@ const apiRequests = {
     deleteById     : { method: METHODS.DELETE, url: FIRSTNAME_URLS.deleteById}
 }
 
-const actions = {
-    add       : addFirstname,
-    update    : updateFirstname,
-    deleteById: deleteFirstnameById,
-    list      : getFirstnames
-};
-
 const gridLoader = (data) => {
 
     return data;
@@ -38,8 +30,6 @@ const gridLoader = (data) => {
 export const firstnameData = {
     messages    : addMessage(Firstname),
     type        : Firstname,
-    actions     : actions,
-    entity      : FIRSTNAMES,
     initialValue: firstnameInitialValue,
     columnDefs  : firstnameColumnDefs,
     formColDefs : copyFormColDefs( firstnameColumnDefs ), // form column definitions

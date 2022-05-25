@@ -2,7 +2,6 @@
 // import ENDPOINT from './App'
 
 // backend
-
 export const HOME         = "http://192.168.100.151:8080";
 export const WORK         = "http://147.252.81.3:8080";
 export const WORK_LAPTOP  = "http://147.252.81.83:8080"
@@ -15,18 +14,9 @@ export const HOME_LAPTOP    = "http://192.168.100.152:3000"
 // note: every time AWS EC2 instance is restarted - this host name will need to be changed
 export const AWS_REACT      = ""
 
-export const ENDPOINT       = SAME_MACHINE;
+export const ENDPOINT       = WORK_LAPTOP;
 
 // for Form/Grid columns
-export const CLUBS        = 'CLUBS';
-export const COMPETITIONS = 'COMPETITIONS';
-export const PLAYERS      = 'PLAYERS';
-export const LASTNAMES    = 'LASTNAMES';
-export const FIRSTNAMES   = 'FIRSTNAMES';
-export const FIXTURES     = 'FIXTURES';
-export const EVENTS       = 'EVENTS';
-export const TEAMSHEETS   = 'TEAMSHEETS';
-
 export const Club        = 'Club';
 export const Competition = 'Competition';
 export const Player      = 'Player';
