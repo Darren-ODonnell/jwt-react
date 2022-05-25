@@ -11,12 +11,13 @@ import { useAxios } from "../api/ApiService";
 import instance from "../api/axios";
 import AuthService from "../auth/AuthService";
 
+
 const MyDataGrid = ({props}) => {
     const gridRef = useRef(); // Optional - for accessing Grid's API
     const [ , setGridApi ]  = useState(null);
     const [ formData, setFormData ] = useState( props.initialValue)
-    const [ open    , setOpen ]     = useState(false);
-    const [ data, error, loading, axiosFetch] = useAxios();
+    const [open, setOpen] = useState(false);
+    const [data, error, loading, axiosApi] = useAxios();
 
     const handleOpen = () => {
         setOpen( true );
@@ -52,7 +53,7 @@ const MyDataGrid = ({props}) => {
         let isSubscribed = true;
         const user = AuthService.getCurrentUser();
         AuthService.setAuthToken( user.accessToken );
-        axiosFetch( {
+        axiosApi({
             axiosInstance: instance,
             method: method,
             url: url
@@ -144,8 +145,8 @@ const MyDataGrid = ({props}) => {
                     messages     = { props.messages }
                     formData     = { formData }
                     setFormData  = { setFormData }
-                    initialValue = { props.initialValue }
-                    axiosFetch   = { axiosFetch }
+                    initialValue={props.initialValue}
+                    axiosApi={axiosApi}
                 />
             </div>
         </div> : <p> Loading...</p>
@@ -155,8 +156,6 @@ const MyDataGrid = ({props}) => {
 
 export default MyDataGrid;
 
-
-//   const [ data, error, loading, axiosFetch] = useAxios();
 
 
 

@@ -8,7 +8,7 @@ import { useAxios } from "../api/ApiService";
 
 
 const FormDialog = (props) => {
-    let [ data, error, loading, axiosFetch] = useAxios();
+    let [data, error, loading, axiosApi] = useAxios();
 
     // close popup window
     const handleClose = ( setOpen ) => {
@@ -30,7 +30,7 @@ const FormDialog = (props) => {
             ...props.methods.update
         }
 
-        axiosFetch( configObj )
+        axiosApi(configObj)
             .then (response => {
                 data = response.data
                 props.setFormData(data)
@@ -49,7 +49,7 @@ const FormDialog = (props) => {
             ...props.methods.add
         }
 
-        axiosFetch( configObj )
+        axiosApi(configObj)
             .then (response => {
                 data = response.data
                 props.setFormData([...props.data])
@@ -61,6 +61,7 @@ const FormDialog = (props) => {
 
     const handleFormSubmit = () => {
         console.log('FormData: ', props.formData)
+        const request = {...props.methods.add, data: props.formData};
 
         if (props.formData.id)  {// updating a record
             // const confirm = window.confirm("Are you sure, you want to update this row ?")
@@ -77,7 +78,6 @@ const FormDialog = (props) => {
 
         } else { // adding new record
             props.setOpen(false)
-            const request = props.methods.add;
 
             // const { error } = props.actions.add(props.formData);
 

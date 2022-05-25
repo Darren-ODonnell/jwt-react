@@ -16,24 +16,29 @@ Uncaught TypeError: Cannot read properties of undefined (reading 'then')
 at handleFormSubmit (FormDialog.js:32:1)
 
     E16: Empty teamsheet submitted - 
-TeamsheetService.js:18 Uncaught TypeError: Cannot destructure property 'data' of '_api_ApiService__WEBPACK_IMPORTED_MODULE_0__.default.PutRequest(...)' as it is undefined.
+
+TeamsheetService.js:18 Uncaught TypeError: Cannot destructure property 'data' of '_
+api_ApiService__WEBPACK_IMPORTED_MODULE_0__.default.PutRequest(...)' as it is undefined.
 at Object.addTeamsheet [as add] (TeamsheetService.js:18:1)
 
     E18: Access to XMLHttpRequest at 'http://147.252.81.86:8080/' from origin 'http://localhost:3000' has been blocked by CORS 
-policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the 
+
+policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is
+present on the
 requested resource.
 
     E19: Refused to set unsafe header "Origin"
-    E23:
-    E24:
+    E24: 
+    E25: 
+    E27: 
 
 # Refactoring
+
     R1: change to using useAxios and standardise api code layouts
         only set for list - look at how FormDialog can use this hook!
 
     R2: simplify Grid/form to extract form
     R9: 
-
 
 # Investigations
     I1: Can grid be changed to a hook - useGrid? and similarly useForm?
@@ -195,3 +200,20 @@ delete package.json.lock and node_modules - npm i - did not fix
         LastnameList.js/css
         PlayersList.js/css
         - folders tidied up
+    E23: aria-query used by ag-grid using a tag which the linter/react does not know about 
+        Warning: Invalid aria prop `aria-description` on <div> tag. For details, see https://reactjs.org/link/invalid-aria-props
+        at div
+            This is caused by aria-query version being ahead of ag-grid - the linter does not know about 'aria-description'
+            fix All ag-grid imports set to exact version rather than at least (^) and not the latest which is 27.3.0
+        package.json before changes
+        "@ag-grid-community/client-side-row-model": "^27.2.1",
+        "@ag-grid-community/csv-export": "^27.2.1",
+        "@ag-grid-community/react": "^27.2.1",
+        "ag-grid-community": "^27.2.1",
+        "ag-grid-react": "^27.2.0",
+        after changes (npm i run after) 
+        "@ag-grid-community/client-side-row-model": "27.2.1",
+        "@ag-grid-community/csv-export": "27.2.1",
+        "@ag-grid-community/react": "27.2.1",
+        "ag-grid-community": "27.2.1",
+        "ag-grid-react": "27.2.1",
