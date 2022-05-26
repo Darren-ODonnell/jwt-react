@@ -2,7 +2,6 @@ import  { useEffect, useState } from 'react';
 import instance  from './axios';
 import { API_AUTH_URLS } from "../common/globals";
 
-
 export const useAxios = () => {
     const [data      , setData]       = useState([]);
     const [error     , setError]      = useState('');
@@ -22,8 +21,9 @@ export const useAxios = () => {
             const ctrl = new AbortController();
             setController(ctrl);
             const res = await axiosInstance[method.toLowerCase()](url, {
+                'Content-Type': 'multipart/form-data',
                 ...requestConfig,
-                signal: ctrl.signal
+                // signal: ctrl.signal
             });
 
             setData(res.data);
@@ -42,13 +42,11 @@ export const useAxios = () => {
     return [data, error, loading, axiosApi];
 }
 
-
 export let LoginRequest = ( loginModel) => {
     // token from get user object
     return instance.post( API_AUTH_URLS.login, loginModel )
 
 }
-
 
 const ApiService = {
     // AnotherRequest,

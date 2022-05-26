@@ -8,7 +8,7 @@ import { useAxios } from "../api/ApiService";
 
 
 const FormDialog = (props) => {
-    let [data, error, loading, axiosApi] = useAxios();
+    // let [data, error, loading, axiosApi] = useAxios();
 
     // close popup window
     const handleClose = ( setOpen ) => {
@@ -20,55 +20,81 @@ const FormDialog = (props) => {
 
     }
 
-    const updateData = (props) => {
+    const updateData = ({methods, axiosApi, data, error, setFormData}) => {
+
 
         const user = AuthService.getCurrentUser();
         AuthService.setAuthToken( user.accessToken );
 
         const configObj = {
             axiosInstance: instance,
-            ...props.methods.update
+            method: methods.update.method,
+            url: methods.update.url,
+            requestConfig: {
+                data: data
+            }
+
         }
 
         axiosApi(configObj)
             .then (response => {
                 data = response.data
-                props.setFormData(data)
+                setFormData(data)
             .catch(err=>{
                 error = err.message;
             })
         })
 
     }
-    const addData = () => {
+    const addData = ({methods, axiosApi, data, error, setFormData}) => {
         const user = AuthService.getCurrentUser();
         AuthService.setAuthToken( user.accessToken );
 
+
+        let formInfo = new FormData()
+        let data2 = {            name: 'new2',            season: '20232'        };
+
+        // formData.append(...data2);
+        formInfo.append('name','Test5');
+        formInfo.append('season','2025')
+
+        // formInfo.append(...data2)
+
+        const dataStr = JSON.stringify(data2)
+
         const configObj = {
             axiosInstance: instance,
-            ...props.methods.add
+                method: methods.add.method,
+                url: methods.add.url,
+                requestConfig: {
+                    data: data2
+            }
         }
+
+        console.log(configObj);
 
         axiosApi(configObj)
             .then (response => {
+
+                // console.log(response.data);
                 data = response.data
-                props.setFormData([...props.data])
+                setFormData([...data])
             .catch(err=>{
                 error = err.message;
                 })
             })
     }
 
-    const handleFormSubmit = () => {
-        console.log('FormData: ', props.formData)
-        const request = {...props.methods.add, data: props.formData};
+    const handleFormSubmit = ({formData, methods, setOpen, error }) => {
+        console.log('FormData: ', formData)
+        const request = {...methods.add, data: formData};
 
-        if (props.formData.id)  {// updating a record
+        if (formData.id)  {// updating a record
             // const confirm = window.confirm("Are you sure, you want to update this row ?")
             // confirm && actions.update(formData.id, formData)
-            props.setOpen(false)
+            setOpen(false)
 
-            const request = props.methods.update;
+            const request = methods.update;
 
             // let { error } = props.actions.list(props.formData);
 
@@ -77,7 +103,7 @@ const FormDialog = (props) => {
             if (error !== null) {   return handleError(error.message); }
 
         } else { // adding new record
-            props.setOpen(false)
+            setOpen(false)
 
             // const { error } = props.actions.add(props.formData);
 
@@ -87,10 +113,10 @@ const FormDialog = (props) => {
         }
     }
     // form elements
-    const onCancel = () => {
-        handleClose(props.setOpen)
-        props.setFormData(props.initialValue);
-        props.setOpen(false)
+    const onCancel = ({setOpen, initialValue, setFormData}) => {
+        handleClose(setOpen)
+        setFormData(initialValue);
+        setOpen(false)
     }
     const CancelButton = (props) => {
         return (
@@ -127,7 +153,7 @@ const FormDialog = (props) => {
         )
     }
 
-    return  !loading ? (
+    return  !props.loading ? (
           <div>
             <Dialog
                 open             = { props.open}

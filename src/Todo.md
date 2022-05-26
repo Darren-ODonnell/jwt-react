@@ -28,7 +28,6 @@ present on the
 requested resource.
 
     E19: Refused to set unsafe header "Origin"
-    E24: 
     E25: 
     E27: 
 
@@ -120,6 +119,15 @@ Uncaught Error: Invalid hook call. Hooks can only be called inside of the body o
 3. You might have more than one copy of React in the same app - NO
    
 delete package.json.lock and node_modules - npm i - did not fix
+
+    E24: Add is not working
+        Postman form-data works
+        Postman json does not
+
+        trying to convert javascript to same form-data format that postman uses.
+        use of FormData does not appear to work, and changes to data are not reflected in object!
+
+
 
 
 # Completed

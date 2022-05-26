@@ -133,9 +133,10 @@ const MyDataGrid = ({props}) => {
                  />
                 <FormDialog
                     setData      = { setFormData }
-                    data         = { formData }
+
                     open         = { open }
                     onClose      = { handleClose }
+                    data         = { formData }
                     handleClose  = { handleClose }
                     setOpen      = { setOpen }
                     onChange     = { onChange }
@@ -145,8 +146,12 @@ const MyDataGrid = ({props}) => {
                     messages     = { props.messages }
                     formData     = { formData }
                     setFormData  = { setFormData }
-                    initialValue={props.initialValue}
-                    axiosApi={axiosApi}
+                    initialValue = { props.initialValue }
+                    // useAxios params
+
+                    axiosApi     = { axiosApi }
+                    error        = { error }
+                    loading      = { loading }
                 />
             </div>
         </div> : <p> Loading...</p>
