@@ -46,18 +46,29 @@ const FormDialog = (props) => {
         })
 
     }
-    const addData = ({methods, axiosApi, data, error, setFormData, formData, setRowData, rowData}) => {
+    const addData = ({methods, axiosApi, data, error, setFormData}) => {
         const user = AuthService.getCurrentUser();
         AuthService.setAuthToken( user.accessToken );
 
+
+        let formInfo = new FormData()
+        let data2 = {            name: 'new2',            season: '20232'        };
+
+        // formData.append(...data2);
+        formInfo.append('name','Test5');
+        formInfo.append('season','2025')
+
+        // formInfo.append(...data2)
+
+        const dataStr = JSON.stringify(data2)
+
         const configObj = {
             axiosInstance: instance,
-                // method: methods.add.method,
-                // url: methods.add.url,
-                ...methods.add,
-                requestConfig : {
-                    data: data
-                }
+                method: methods.add.method,
+                url: methods.add.url,
+                requestConfig: {
+                    data: data2
+            }
         }
 
         console.log(configObj);
@@ -67,14 +78,11 @@ const FormDialog = (props) => {
 
                 // console.log(response.data);
                 data = response.data
-                console.log("Data: ",data)
-                setRowData([...data])
-                console.log("FormData: ",rowData)
-            })
+                setFormData([...data])
             .catch(err=>{
                 error = err.message;
                 })
-
+            })
     }
 
     const handleFormSubmit = ({formData, methods, setOpen, error }) => {
