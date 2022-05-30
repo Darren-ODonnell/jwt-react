@@ -10,9 +10,9 @@ export const SAME_MACHINE = "http://localhost:8080";
 export const AWS_BACKEND  = "";
 
 // frontend
-export const HOME_LAPTOP    = "http://192.168.100.152:3000"
+export const HOME_LAPTOP  = "http://192.168.100.152:3000"
 // note: every time AWS EC2 instance is restarted - this host name will need to be changed
-export const AWS_REACT      = ""
+export const AWS_REACT    = ""
 
 export const ENDPOINT = WORK_LAPTOP;
 

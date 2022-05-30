@@ -10,10 +10,6 @@ As elements are finished - move below Completed
 # Errors
     E11: Update does not work for any entity
     E12: Test additional of new Data to all entities (use in conjuntion with delete to remove additional test entries
-    E14: Attempting to call update causes a hook call violation (PostRequest())
-    E15: Error saving new record
-Uncaught TypeError: Cannot read properties of undefined (reading 'then')
-at handleFormSubmit (FormDialog.js:32:1)
 
     E16: Empty teamsheet submitted - 
 
@@ -21,23 +17,17 @@ TeamsheetService.js:18 Uncaught TypeError: Cannot destructure property 'data' of
 api_ApiService__WEBPACK_IMPORTED_MODULE_0__.default.PutRequest(...)' as it is undefined.
 at Object.addTeamsheet [as add] (TeamsheetService.js:18:1)
 
-    E18: Access to XMLHttpRequest at 'http://147.252.81.86:8080/' from origin 'http://localhost:3000' has been blocked by CORS 
-
-policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is
-present on the
-requested resource.
-
-    E19: Refused to set unsafe header "Origin"
-    E25: 
     E27: 
+    E28:
+    E29:
+    E30: 
 
 # Refactoring
 
-    R1: change to using useAxios and standardise api code layouts
-        only set for list - look at how FormDialog can use this hook!
-
-    R2: simplify Grid/form to extract form
     R9: 
+    R10:
+    R11:
+
 
 # Investigations
     I1: Can grid be changed to a hook - useGrid? and similarly useForm?
@@ -64,6 +54,7 @@ requested resource.
         C6f: Event -> dropdown for -> Fixture, Event, player and pitchposition
     C7:
     C8:
+    C9:
 
 # Unused Files
     U1: auth/useUser
@@ -73,6 +64,8 @@ requested resource.
 
     U16: All <Entity>List.js/css components can be removed
     U17:
+    U18:
+    U19:
 
 # Ignore for now
     E17: after remving warnings - two still exist - not sure how to fix these.
@@ -92,41 +85,13 @@ requested resource.
 
 
 # In Progress
-    E15-E16-E17 attempting to fix a number of api errors
-    Refactoring axios methods into a hook - Creating a useAxios hook
-    changing entityData to include method and url to pass to axios hook.
-    entity service may not be required - removed
-    changing mydatagrid to use useAxios. - done
-
-    All EntityServices are no loonger required. - removed
-    Remove the actions prop from in MyDataGRid for FormDialog - done
-    change handleFormSubmit to remove use of props.actions... - done
-    - replace with axiosFetch from useAxios - done
-
-    R8: Simplify / re-organise  ---> Column def / EntityDataGrid / MyDataGrid and FormDialog
-        EntityDataGrids - refactored out of the project. (Routes now passes the formData object)
 
     E22: Tables with foreign key data are not displayed correctly
         - Events - incomplete - need data to test.
      
     E6: Delete does not work on any entity
 
-    E14: Attempting to call update causes a hook call violation (PostRequest())
-         Although I cannot see what the issue is with the call. (error below)
-Uncaught Error: Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
-1. You might have mismatching versions of React and the renderer (such as React DOM) - NO
-2. You might be breaking the Rules of Hooks - not as far as I know
-3. You might have more than one copy of React in the same app - NO
-   
-delete package.json.lock and node_modules - npm i - did not fix
-
-    E24: Add is not working
-        Postman form-data works
-        Postman json does not
-
-        trying to convert javascript to same form-data format that postman uses.
-        use of FormData does not appear to work, and changes to data are not reflected in object!
-
+    E25: Although Record is added - grid is not updated, must be manually updated!
 
 
 
@@ -225,3 +190,58 @@ delete package.json.lock and node_modules - npm i - did not fix
         "@ag-grid-community/react": "27.2.1",
         "ag-grid-community": "27.2.1",
         "ag-grid-react": "27.2.1",
+
+    E24: Add is not working
+        Postman form-data works
+        Postman json does not
+        trying to convert javascript to same form-data format that postman uses.
+        use of FormData does not appear to work, and changes to data are not reflected in object!
+        Fix: Changed spring controller to accept and Object, I was able to see what was coming in. An object within and object was 
+        received. In React I changed the (in useAxios in ApiService) ...requestConfig to ...requestConfig.data, this fixed the mapping of the json data to the java object.
+        Need tp go back now and fix the form-data and verify it will work.
+        Record is added 
+    E18: Access to XMLHttpRequest at 'http://147.252.81.86:8080/' from origin 'http://localhost:3000' has been blocked by CORS 
+
+        policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is
+        present on the requested resource.
+        No longer an issues after change to useAxios code (E24 Fix)
+    E15: Error saving new record
+        Uncaught TypeError: Cannot read properties of undefined (reading 'then')
+        at handleFormSubmit (FormDialog.js:32:1)
+        No longer an issues after change to useAxios code (E24 fix)
+
+    E14: Attempting to call update causes a hook call violation (PostRequest())
+        Although I cannot see what the issue is with the call. (error below)
+        1. Uncaught Error: Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:1. You might have mismatching versions of React and the renderer (such as React DOM) - NO
+        2. You might be breaking the Rules of Hooks - not as far as I know
+        3. You might have more than one copy of React in the same app - NO
+        delete package.json.lock and node_modules - npm i - did not fix
+        No longer an issues after change to useAxios code (E24 fix)
+
+    E19: Refused to set unsafe header "Origin"
+        No longer an issues after change to useAxios code (E24 fix)
+
+    E14: Attempting to call update causes a hook call violation (PostRequest())
+        No longer an issues after change to useAxios code (E24 fix)
+
+    E15-E16-E17 attempting to fix a number of api errors
+    Refactoring axios methods into a hook - Creating a useAxios hook
+    changing entityData to include method and url to pass to axios hook.
+    entity service may not be required - removed
+    changing mydatagrid to use useAxios. - done
+    All EntityServices are no loonger required. - removed
+    Remove the actions prop from in MyDataGRid for FormDialog - done
+    change handleFormSubmit to remove use of props.actions... - done
+    - replace with axiosFetch from useAxios - done
+    Complete
+
+    R1: change to using useAxios and standardise api code layouts
+        only set for list - look at how FormDialog can use this hook!
+        Done
+
+    R8: Simplify / re-organise  ---> Column def / EntityDataGrid / MyDataGrid and FormDialog
+        EntityDataGrids - refactored out of the project. (Routes now passes the formData object)    
+        Done
+
+    R2: simplify Grid/form to extract form
+        Done

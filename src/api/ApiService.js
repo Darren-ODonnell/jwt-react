@@ -21,9 +21,8 @@ export const useAxios = () => {
             const ctrl = new AbortController();
             setController(ctrl);
             const res = await axiosInstance[method.toLowerCase()](url, {
-                'Content-Type': 'multipart/form-data',
-                ...requestConfig,
-                // signal: ctrl.signal
+                ...requestConfig.data,
+                signal: ctrl.signal
             });
 
             setData(res.data);
