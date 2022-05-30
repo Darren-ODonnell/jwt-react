@@ -14,20 +14,28 @@ import AuthService from "../auth/AuthService";
 
 const MyDataGrid = ({props}) => {
     const gridRef = useRef(); // Optional - for accessing Grid's API
-    const [ , setGridApi ]  = useState(null);
-    const [ formData, setFormData ] = useState( props.initialValue)
+    const [, setGridApi] = useState(null);
+
+    // grid control
+    // const [rowData, setRowData] = useState();
+
+    const [changed, setChanged] = useState();
+
+    const [formData, setFormData] = useState(props.initialValue)
+    // form control
     const [open, setOpen] = useState(false);
+    // api control
     const [data, error, loading, axiosApi] = useAxios();
 
     const handleOpen = () => {
-        setOpen( true );
+        setOpen(true);
     }
     const handleClose = () => {
         setOpen(false);
         // setFormData(data.initialValue);
     };
     const onChange = (e) => {
-        const { value, id } = e.target
+        const {value, id} = e.target
         // update field with data from user
         // data updated here first, then screen is updated
         setFormData({ ...formData, [id]: value })
@@ -133,25 +141,26 @@ const MyDataGrid = ({props}) => {
                  />
                 <FormDialog
                     setData      = { setFormData }
-
                     open         = { open }
                     onClose      = { handleClose }
                     data         = { formData }
                     handleClose  = { handleClose }
                     setOpen      = { setOpen }
-                    onChange     = { onChange }
+                    onChange={onChange}
                     // actions      = { props.actions }
-                    methods      = { props.methods }
-                    colDefs      = { props.formColDefs }
-                    messages     = { props.messages }
-                    formData     = { formData }
-                    setFormData  = { setFormData }
-                    initialValue = { props.initialValue }
+                    methods={props.methods}
+                    colDefs={props.formColDefs}
+                    messages={props.messages}
+                    formData={formData}
+                    setFormData={setFormData}
+                    initialValue={props.initialValue}
                     // useAxios params
 
-                    axiosApi     = { axiosApi }
-                    error        = { error }
-                    loading      = { loading }
+                    axiosApi={axiosApi}
+                    error={error}
+                    loading={loading}
+                    setChanged={setChanged}
+                    changed={changed}
                 />
             </div>
         </div> : <p> Loading...</p>

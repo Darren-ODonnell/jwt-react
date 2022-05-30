@@ -4,8 +4,6 @@ import {  DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { ErrorMessage } from "../common/ErrorMessage";
 import AuthService from "../auth/AuthService";
 import instance from "../api/axios";
-import { useAxios } from "../api/ApiService";
-
 
 const FormDialog = (props) => {
     // let [data, error, loading, axiosApi] = useAxios();
@@ -19,9 +17,7 @@ const FormDialog = (props) => {
         return <ErrorMessage message={message}/>;
 
     }
-
     const updateData = ({methods, axiosApi, data, error, setFormData}) => {
-
 
         const user = AuthService.getCurrentUser();
         AuthService.setAuthToken( user.accessToken );
@@ -37,52 +33,42 @@ const FormDialog = (props) => {
         }
 
         axiosApi(configObj)
-            .then (response => {
+            .then(response => {
                 data = response.data
                 setFormData(data)
-            .catch(err=>{
-                error = err.message;
+                    .catch(err => {
+                        error = err.message;
+                    })
             })
-        })
 
     }
-    const addData = ({methods, axiosApi, data, error, setFormData}) => {
+    const addData = ({methods, axiosApi, data, error, setFormData, formData, changed, setChanged, setOpen}) => {
         const user = AuthService.getCurrentUser();
-        AuthService.setAuthToken( user.accessToken );
-
-
-        let formInfo = new FormData()
-        let data2 = {            name: 'new2',            season: '20232'        };
-
-        // formData.append(...data2);
-        formInfo.append('name','Test5');
-        formInfo.append('season','2025')
-
-        // formInfo.append(...data2)
-
-        const dataStr = JSON.stringify(data2)
+        AuthService.setAuthToken(user.accessToken);
 
         const configObj = {
             axiosInstance: instance,
-                method: methods.add.method,
-                url: methods.add.url,
-                requestConfig: {
-                    data: data2
+            ...methods.add,
+            requestConfig: {
+                data: formData
             }
         }
 
-        console.log(configObj);
-
         axiosApi(configObj)
-            .then (response => {
+            .then(response => {
 
                 // console.log(response.data);
                 data = response.data
-                setFormData([...data])
-            .catch(err=>{
-                error = err.message;
-                })
-            })
+                // setFormData([...data])
+                setChanged(!changed)
+                setOpen(false)
+
+            }).catch(err => {
+            error = err.message;
+            setOpen(false)
+
+        })
+
     }
 
     const handleFormSubmit = ({formData, methods, setOpen, error }) => {
