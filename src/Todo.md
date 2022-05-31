@@ -9,8 +9,6 @@ As elements are finished - move below Completed
 
 # Errors
 
-    E12: Test additional of new Data to all entities (use in conjuntion with delete to remove additional test entries
-
     E27: 
     E28:
     E29:
@@ -40,6 +38,11 @@ As elements are finished - move below Completed
     C7: EventName CRUD operations not provided
     C8: PitchGrid CRUD not provided
     C9: Positions CRUD nmot provided
+    C10: Current Season
+        C10a: Set default view to Current season
+        C10b: How to change current season?
+        C10c: where to save current season?
+        C10d: All api activity should use this season setting.
 
 # Unused Files
     U1: auth/useUser
@@ -68,7 +71,6 @@ As elements are finished - move below Completed
         @ ./src/App.js 7:0-53 17:38-50
         @ ./src/index.js 4:0-27 25:35-38
 
-
 # In Progress
 
     E22: Tables with foreign key data are not displayed correctly
@@ -81,7 +83,10 @@ As elements are finished - move below Completed
         C6d: Fixture -> Validation (DNE
             -> Dropdown for Competition, season, and round
             -> datetimePicker for Fixture date and time
-        C6e: Teamsheet -> Drop down for Fixture , Player and Position
+        C6e: Teamsheet -> Drop down for 
+            Fixture , (what fields necessary to uniquely id fixture 
+            Player and 
+            Position
         C6f: Event -> dropdown for -> Fixture, Event, player and pitchposition     
 
 # Completed
@@ -251,3 +256,5 @@ As elements are finished - move below Completed
     E11: Update does not work for any entity
         Although Record is updated - grid is not updated, must be manually updated!
         window.location.reload() used to refresh screen after update
+    E12: Test addition of new Data to all entities (use in conjuntion with delete to remove additional test entries
+        (E6, E11 and E25 Fix) 

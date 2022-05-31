@@ -1,13 +1,12 @@
-import { Form } from 'react-bootstrap'
-import { useState } from "react";
+import {Form} from 'react-bootstrap'
+import {useState} from "react";
 
 // general dropdown used by the entity dropdowns below
 
 // dummy selection constants
-const dates = []
-const  times = []
-
-const players = [
+export const dates = []
+export const times = []
+export const players = [
     "Aherne, Kate",
     "Barrett, Sophie ",
     "Barron, Emma",
@@ -65,8 +64,7 @@ const players = [
 
 
 ]
-
-const eventNames = [
+export const eventNames = [
     "Block",
     "CatchFail",
     "CatchSuccess",
@@ -98,8 +96,7 @@ const eventNames = [
     "Substitute On",
 
 ]
-
-const teams = [
+export const teams = [
     "Castleknock",
     "Ballinteer St Johns",
     "Ballyboden St Endas",
@@ -116,8 +113,7 @@ const teams = [
     "Erins Isle",
     "St Oliver Plunkett/Eoghan Ruadh",
 ]
-
-const positions = [
+export const positions = [
     "Goal Keeper",
     "Left Full Back",
     "Full Back",
@@ -135,7 +131,7 @@ const positions = [
     "Right Full Forward",
 
 ]
-const pitchgrids = [
+export const pitchgrids = [
     "A1",
     "A2",
     "A3",
@@ -153,30 +149,28 @@ const pitchgrids = [
     "E3",
 
 ]
-
-const competitions = [
+export const competitions = [
     "League Cup",
     "Summer Cup",
     "Championship",
 
 ]
-const years = [
+export const years = [
     "2021",
     "2022",
     "2023",
 ]
 
-const formSelect = (array, current, setVal, val) => {
+export const formSelect = (array, current, setVal, val) => {
     return (
         <Form.Select value={val} onChange={(e) => setVal(e.target.value)}>
             {array.map((o) => {
-                const { name, id } = o;
+                const {name, id} = o;
                 return <option value={id}>{name}</option>;
             })}
         </Form.Select>
     );
 }
-
 
 export const EventNameDropDown = (eventNames, current) => {
     const [val, setVal] = useState();
@@ -194,12 +188,15 @@ export const EventNameDropDown = (eventNames, current) => {
 export const PlayerDropdown = (players, current) => {
     const [val, setVal] = useState();
     console.log(val);
-// get Players
+
+    // get Players
+
+
     formSelect({
-        data   : [...players],
+        data: [...players],
         current: current,
         setCell: setVal,
-        cell   : val
+        cell: val
     })
 
 }
@@ -219,10 +216,10 @@ export const PositionDropdown = (positions, current) => {
     console.log(val);
 // get Positions
     formSelect({
-        data   : [...positions],
+        data: [...positions],
         current: current,
         setCell: setVal,
-        cell   : val
+        cell: val
     })
 }
 export const HomeTeamDropdown = (teams, current, homeTeam = {}, awayTeam = {}) => {
@@ -296,31 +293,31 @@ export const FixtureDropdown = (fixtures, current) => {
     console.log(val);
 // Get Fixtures
     formSelect({
-        data   : [...fixtures],
+        data: [...fixtures],
         current: current,
         setCell: setVal,
-        cell   : val
+        cell: val
     })
 
 }
-
-const filterNotEqualTo = (array, current) => {
-    const filtered = array.filter(function(value, index, arr) {
+export const filterNotEqualTo = (array, current) => {
+    const filtered = array.filter(function (value, index, arr) {
         return value != current;
     })
     return filtered
 }
-
-const filterLessThan = (array, current) => {
-    const filtered = array.filter(function(value, index, arr) {
+export const filterLessThan = (array, current) => {
+    const filtered = array.filter(function (value, index, arr) {
         return value < current;
     })
     return filtered
 }
-const filterGreaterThan = (array, current) => {
-    const filtered = array.filter(function(value, index, arr) {
+export const filterGreaterThan = (array, current) => {
+    const filtered = array.filter(function (value, index, arr) {
         return value > current;
     })
     return filtered
 }
+
+
 

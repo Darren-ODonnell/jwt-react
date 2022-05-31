@@ -9,7 +9,6 @@ import {DevSupport} from "@react-buddy/ide-toolbox";
 import {ComponentPreviews, useInitial} from "./dev";
 
 const store = configureStore();
-
 const persistor = persistStore(store)
 
 ReactDOM.render(
