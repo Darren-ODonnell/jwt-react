@@ -17,34 +17,35 @@ const FormDialog = (props) => {
         return <ErrorMessage message={message}/>;
 
     }
-    const updateData = ({methods, axiosApi, data, error, setFormData}) => {
+    const UpdateData = ({methods, axiosApi, data, error, setFormData, formData}) => {
 
         const user = AuthService.getCurrentUser();
         AuthService.setAuthToken( user.accessToken );
 
         const configObj = {
             axiosInstance: instance,
-            method: methods.update.method,
-            url: methods.update.url,
+            ...methods.update,
             requestConfig: {
-                data: data
+                data: formData
             }
-
         }
 
         axiosApi(configObj)
             .then(response => {
                 data = response.data
-                setFormData(data)
-                    .catch(err => {
-                        error = err.message;
-                    })
+                console.log( "Update: ", data )
+                setFormData( data )
+            })
+            .catch(err => {
+                error = err.message;
             })
 
+        window.location.reload()
+
     }
-    const addData = ({methods, axiosApi, data, error, setFormData, formData, changed, setChanged, setOpen}) => {
+    const AddData = ({methods, axiosApi, data, error, setFormData, formData, changed, setChanged, setOpen, setData}) => {
         const user = AuthService.getCurrentUser();
-        AuthService.setAuthToken(user.accessToken);
+        AuthService.setAuthToken( user.accessToken );
 
         const configObj = {
             axiosInstance: instance,
@@ -54,23 +55,24 @@ const FormDialog = (props) => {
             }
         }
 
-        axiosApi(configObj)
-            .then(response => {
 
+        axiosApi( configObj )
+            .then( response => {
+                setOpen( false )
                 // console.log(response.data);
                 data = response.data
+                console.log( "Add: ", response.data )
                 // setFormData([...data])
-                setChanged(!changed)
-                setOpen(false)
+                setData( data )
+                setChanged( !changed )
+            })
+            .catch( err => {
+                error = err.message;
+                setOpen( false )
 
-            }).catch(err => {
-            error = err.message;
-            setOpen(false)
-
-        })
-
+            })
+        window.location.reload()
     }
-
     const handleFormSubmit = ({formData, methods, setOpen, error }) => {
         console.log('FormData: ', formData)
         const request = {...methods.add, data: formData};
@@ -84,7 +86,7 @@ const FormDialog = (props) => {
 
             // let { error } = props.actions.list(props.formData);
 
-            updateData( {...props, request});
+            UpdateData( {...props, request});
 
             if (error !== null) {   return handleError(error.message); }
 
@@ -93,7 +95,7 @@ const FormDialog = (props) => {
 
             // const { error } = props.actions.add(props.formData);
 
-            addData( {...props, request});
+            AddData( {...props, request});
 
             if (error !== null) {   return handleError(error.message); }
         }
@@ -148,8 +150,7 @@ const FormDialog = (props) => {
                 aria-describedby = "alert-dialog-description"
             >
                 <DialogTitle id  = "alert-dialog-title"> { props.formData.id ? props.messages.update: props.messages.create }</DialogTitle>
-                <DialogContent >
-                    {
+                <DialogContent>  {
                         props.colDefs.map( ( prop, index ) => {
                             return textField( { ...props, ...prop, index })
                         })

@@ -14,7 +14,7 @@ export const HOME_LAPTOP  = "http://192.168.100.152:3000"
 // note: every time AWS EC2 instance is restarted - this host name will need to be changed
 export const AWS_REACT    = ""
 
-export const ENDPOINT = SAME_MACHINE;
+export const ENDPOINT = WORK_LAPTOP;
 
 // for Form/Grid columns
 export const Club        = 'Club';
@@ -119,7 +119,7 @@ export const FIXTURE_URLS = {
 
 // competitions
 const COMPETITION_ADD        = "/competition/add";
-const COMPETITION_DELETEBYID = "/competition/deleteById/";
+const COMPETITION_DELETEBYID = "/competition/deleteById";
 const COMPETITION_FINDBYID   = "/competition/findById/";
 const COMPETITION_FINDBYNAME = "/competition/findByName/";
 const COMPETITION_LIST       = "/competition/list";
@@ -215,8 +215,8 @@ export const API_TYPE = {
 }
 
 export const METHODS = {
-    GET: 'GET',
-    POST: 'POST',
-    PUT: 'PUT',
+    GET   : 'GET',
+    POST  : 'POST',
+    PUT   : 'PUT',
     DELETE: 'DELETE'
 }

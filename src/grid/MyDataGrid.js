@@ -51,9 +51,39 @@ const MyDataGrid = ({props}) => {
         setOpen(false);
         const confirm = window.confirm("Are you sure, you want to delete this row", id)
         if (confirm) {
-            props.actions.deleteById(id)
-                .then(props.actions.list())
+            deleteData(id)
         }
+    }
+
+    const deleteData = ({ data, error  }) => {
+        const user = AuthService.getCurrentUser();
+        AuthService.setAuthToken(user.accessToken);
+
+        const configObj = {
+            axiosInstance: instance,
+            ...props.methods.deleteById,
+            requestConfig: {
+                data: { data }
+            }
+        }
+
+        axiosApi(configObj)
+            .then(response => {
+
+                // console.log(response.data);
+                data = response.data
+                console.log("Delete: ",data)
+                setFormData([...data])
+                setChanged(!changed)
+                setOpen(false)
+
+            }).catch(err => {
+            error = err.message;
+            setOpen(false)
+
+        })
+        window.location.reload()
+
     }
 
     const getData = ( { method, url }) => {
@@ -155,7 +185,6 @@ const MyDataGrid = ({props}) => {
                     setFormData={setFormData}
                     initialValue={props.initialValue}
                     // useAxios params
-
                     axiosApi={axiosApi}
                     error={error}
                     loading={loading}

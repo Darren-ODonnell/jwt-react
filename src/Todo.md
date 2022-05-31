@@ -8,14 +8,8 @@ Ig: Ignored for now
 As elements are finished - move below Completed
 
 # Errors
-    E11: Update does not work for any entity
+
     E12: Test additional of new Data to all entities (use in conjuntion with delete to remove additional test entries
-
-    E16: Empty teamsheet submitted - 
-
-TeamsheetService.js:18 Uncaught TypeError: Cannot destructure property 'data' of '_
-api_ApiService__WEBPACK_IMPORTED_MODULE_0__.default.PutRequest(...)' as it is undefined.
-at Object.addTeamsheet [as add] (TeamsheetService.js:18:1)
 
     E27: 
     E28:
@@ -27,7 +21,6 @@ at Object.addTeamsheet [as add] (TeamsheetService.js:18:1)
     R9: 
     R10:
     R11:
-
 
 # Investigations
     I1: Can grid be changed to a hook - useGrid? and similarly useForm?
@@ -43,18 +36,10 @@ at Object.addTeamsheet [as add] (TeamsheetService.js:18:1)
     C2: Add pictures for players
     C3: Add club logos to tables and teamsheets
     C5: Some sample Event data required to test report displays 
-    C6: FormDialog Add/Edit Changes
-        C6a: Club -> validation (club does not already exist)
-        C6b: Player -> validation (player does not already exist)
-        C6c: Competition -> validation (DNE)
-        C6d: Fixture -> Validation (DNE
-            -> Dropdown for Competition, season, and round
-            -> datetimePicker for Fixture date and time
-        C6e: Teamsheet -> Drop down for Fixture , Player and Position
-        C6f: Event -> dropdown for -> Fixture, Event, player and pitchposition
-    C7:
-    C8:
-    C9:
+
+    C7: EventName CRUD operations not provided
+    C8: PitchGrid CRUD not provided
+    C9: Positions CRUD nmot provided
 
 # Unused Files
     U1: auth/useUser
@@ -88,12 +73,16 @@ at Object.addTeamsheet [as add] (TeamsheetService.js:18:1)
 
     E22: Tables with foreign key data are not displayed correctly
         - Events - incomplete - need data to test.
-     
-    E6: Delete does not work on any entity
 
-    E25: Although Record is added - grid is not updated, must be manually updated!
-
-
+    C6: FormDialog Add/Edit Changes
+        C6a: Club -> validation (club does not already exist)
+        C6b: Player -> validation (player does not already exist)
+        C6c: Competition -> validation (DNE)
+        C6d: Fixture -> Validation (DNE
+            -> Dropdown for Competition, season, and round
+            -> datetimePicker for Fixture date and time
+        C6e: Teamsheet -> Drop down for Fixture , Player and Position
+        C6f: Event -> dropdown for -> Fixture, Event, player and pitchposition     
 
 # Completed
     R3: Build up AuthService to include login/logout/register etc
@@ -200,6 +189,7 @@ at Object.addTeamsheet [as add] (TeamsheetService.js:18:1)
         received. In React I changed the (in useAxios in ApiService) ...requestConfig to ...requestConfig.data, this fixed the mapping of the json data to the java object.
         Need tp go back now and fix the form-data and verify it will work.
         Record is added 
+
     E18: Access to XMLHttpRequest at 'http://147.252.81.86:8080/' from origin 'http://localhost:3000' has been blocked by CORS 
 
         policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is
@@ -245,3 +235,19 @@ at Object.addTeamsheet [as add] (TeamsheetService.js:18:1)
 
     R2: simplify Grid/form to extract form
         Done
+
+    E16: Empty teamsheet submitted -
+        TeamsheetService.js:18 Uncaught TypeError: Cannot destructure property 'data' of '_
+        api_ApiService__WEBPACK_IMPORTED_MODULE_0__.default.PutRequest(...)' as it is undefined.
+        at Object.addTeamsheet [as add] (TeamsheetService.js:18:1)
+        (E24 Fix)
+    E6: Delete does not work on any entity
+        Delete from entity works but manual reload of grid is required to see updated data
+        window.location.reload() used to refresh screen after update
+
+    E25: Add Entity does not work on any entity
+        Although Record is added - grid is not updated, must be manually updated!
+        window.location.reload() used to refresh screen after update
+    E11: Update does not work for any entity
+        Although Record is updated - grid is not updated, must be manually updated!
+        window.location.reload() used to refresh screen after update

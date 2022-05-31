@@ -17,8 +17,8 @@ export const useAxios = () => {
         } = configObj;
 
         try {
-            setLoading(true);
             const ctrl = new AbortController();
+            setLoading(true);
             setController(ctrl);
             const res = await axiosInstance[method.toLowerCase()](url, {
                 ...requestConfig.data,
