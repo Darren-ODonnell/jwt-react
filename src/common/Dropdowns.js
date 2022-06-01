@@ -4,31 +4,9 @@ import { useState } from "react";
 // general dropdown used by the entity dropdowns below
 
 // dummy selection constants
-const  times = [
-    "09:00",
-    "09:30",
-    "10:00",
-    "10:30",
-    "11:00",
-    "11:30",
-    "12:00",
-    "12:30",
-    "13:00",
-    "13:30",
-    "14:00",
-    "14:30",
-    "15:00",
-    "15:30",
-    "16:00",
-    "16:30",
-    "17:00",
-    "17:30",
-    "18:00",
-    "18:30",
-    "19:00",
-    "19:30",
-]
-const players = [
+export const dates = []
+export const times = []
+export const players = [
     "Aherne, Kate",
     "Barrett, Sophie ",
     "Barron, Emma",
@@ -83,8 +61,10 @@ const players = [
     "Warren, Emily",
     "Woods, Róisín",
     "Young, Ellie",
+
+
 ]
-const eventNames = [
+export const eventNames = [
     "Block",
     "CatchFail",
     "CatchSuccess",
@@ -114,8 +94,9 @@ const eventNames = [
     "Stand up",
     "Substitute Off",
     "Substitute On",
+
 ]
-const teams = [
+export const teams = [
     "Castleknock",
     "Ballinteer St Johns",
     "Ballyboden St Endas",
@@ -132,7 +113,7 @@ const teams = [
     "Erins Isle",
     "St Oliver Plunkett/Eoghan Ruadh",
 ]
-const positions = [
+export const positions = [
     "Goal Keeper",
     "Left Full Back",
     "Full Back",
@@ -148,8 +129,9 @@ const positions = [
     "Left Full Forward",
     "Full Forward",
     "Right Full Forward",
+
 ]
-const pitchgrids = [
+export const pitchgrids = [
     "A1",
     "A2",
     "A3",
@@ -165,11 +147,13 @@ const pitchgrids = [
     "E1",
     "E2",
     "E3",
+
 ]
-const competitions = [
+export const competitions = [
     "League Cup",
     "Summer Cup",
     "Championship",
+
 ]
 const years = [
     "2021",
@@ -177,7 +161,7 @@ const years = [
     "2023",
 ]
 
-const formSelect = (array, current, setVal, val) => {
+export const formSelect = (array, current, setVal, val) => {
     return (
         <Form.Select value={val} onChange={(e) => setVal(e.target.value)}>
             {array.map((o) => {
@@ -187,7 +171,6 @@ const formSelect = (array, current, setVal, val) => {
         </Form.Select>
     );
 }
-
 
 export const EventNameDropDown = (eventNames, current) => {
     const [val, setVal] = useState();
@@ -199,6 +182,8 @@ export const EventNameDropDown = (eventNames, current) => {
         setCell: setVal,
         cell   : val
     })
+
+
 }
 export const PlayerDropdown = (players, current) => {
     const [val, setVal] = useState();
@@ -312,23 +297,24 @@ export const FixtureDropdown = (fixtures, current) => {
     })
 
 }
-
-const filterNotEqualTo = (array, current) => {
-    const filtered = array.filter(function(value, index, arr) {
+export const filterNotEqualTo = (array, current) => {
+    const filtered = array.filter(function (value, index, arr) {
         return value != current;
     })
     return filtered
 }
-const filterLessThan = (array, current) => {
-    const filtered = array.filter(function(value, index, arr) {
+export const filterLessThan = (array, current) => {
+    const filtered = array.filter(function (value, index, arr) {
         return value < current;
     })
     return filtered
 }
-const filterGreaterThan = (array, current) => {
-    const filtered = array.filter(function(value, index, arr) {
+export const filterGreaterThan = (array, current) => {
+    const filtered = array.filter(function (value, index, arr) {
         return value > current;
     })
     return filtered
 }
+
+
 
