@@ -3,9 +3,10 @@ import { useState } from "react";
 
 // general dropdown used by the entity dropdowns below
 
-// dummy selection constants
-export const dates = []
-export const times = []
+// sample data f
+// ]=-[por each dropdown
+export const dates  = []
+export const times  = []
 export const players = [
     "Aherne, Kate",
     "Barrett, Sophie ",
@@ -161,6 +162,7 @@ const years = [
     "2023",
 ]
 
+// used by the dropdown functions following
 export const formSelect = (array, current, setVal, val) => {
     return (
         <Form.Select value={val} onChange={(e) => setVal(e.target.value)}>
@@ -172,6 +174,7 @@ export const formSelect = (array, current, setVal, val) => {
     );
 }
 
+// dropdowns for each field
 export const EventNameDropDown = (eventNames, current) => {
     const [val, setVal] = useState();
     console.log(val);
@@ -285,6 +288,8 @@ export const TimeDropdown = (times, current) => {
         cell   : val
     })
 }
+
+// array filtering methods
 export const FixtureDropdown = (fixtures, current) => {
     const [val, setVal] = useState();
     console.log(val);
