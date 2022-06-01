@@ -4,9 +4,30 @@ import { useState } from "react";
 // general dropdown used by the entity dropdowns below
 
 // dummy selection constants
-const dates = []
-const  times = []
-
+const  times = [
+    "09:00",
+    "09:30",
+    "10:00",
+    "10:30",
+    "11:00",
+    "11:30",
+    "12:00",
+    "12:30",
+    "13:00",
+    "13:30",
+    "14:00",
+    "14:30",
+    "15:00",
+    "15:30",
+    "16:00",
+    "16:30",
+    "17:00",
+    "17:30",
+    "18:00",
+    "18:30",
+    "19:00",
+    "19:30",
+]
 const players = [
     "Aherne, Kate",
     "Barrett, Sophie ",
@@ -62,10 +83,7 @@ const players = [
     "Warren, Emily",
     "Woods, Róisín",
     "Young, Ellie",
-
-
 ]
-
 const eventNames = [
     "Block",
     "CatchFail",
@@ -96,9 +114,7 @@ const eventNames = [
     "Stand up",
     "Substitute Off",
     "Substitute On",
-
 ]
-
 const teams = [
     "Castleknock",
     "Ballinteer St Johns",
@@ -116,7 +132,6 @@ const teams = [
     "Erins Isle",
     "St Oliver Plunkett/Eoghan Ruadh",
 ]
-
 const positions = [
     "Goal Keeper",
     "Left Full Back",
@@ -133,7 +148,6 @@ const positions = [
     "Left Full Forward",
     "Full Forward",
     "Right Full Forward",
-
 ]
 const pitchgrids = [
     "A1",
@@ -151,14 +165,11 @@ const pitchgrids = [
     "E1",
     "E2",
     "E3",
-
 ]
-
 const competitions = [
     "League Cup",
     "Summer Cup",
     "Championship",
-
 ]
 const years = [
     "2021",
@@ -188,8 +199,6 @@ export const EventNameDropDown = (eventNames, current) => {
         setCell: setVal,
         cell   : val
     })
-
-
 }
 export const PlayerDropdown = (players, current) => {
     const [val, setVal] = useState();
@@ -310,7 +319,6 @@ const filterNotEqualTo = (array, current) => {
     })
     return filtered
 }
-
 const filterLessThan = (array, current) => {
     const filtered = array.filter(function(value, index, arr) {
         return value < current;
