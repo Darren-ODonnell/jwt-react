@@ -39,9 +39,8 @@ const FormDialog = (props) => {
             .catch(err => {
                 error = err.message;
             })
-
+        // refresh grid
         window.location.reload()
-
     }
     const AddData = ({methods, axiosApi, data, error, setFormData, formData, changed, setChanged, setOpen, setData}) => {
         const user = AuthService.getCurrentUser();
@@ -51,7 +50,7 @@ const FormDialog = (props) => {
             axiosInstance: instance,
             ...methods.add,
             requestConfig: {
-                data: formData
+                data: {...formData}
             }
         }
 
@@ -71,6 +70,7 @@ const FormDialog = (props) => {
                 setOpen( false )
 
             })
+        // refresh grid
         window.location.reload()
     }
     const handleFormSubmit = ({formData, methods, setOpen, error }) => {
