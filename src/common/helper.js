@@ -83,7 +83,7 @@ export function datePicker ()  {
                 onChange={(newValue) => {
                     setValue(newValue)
                 }}
-                KeyboardButtonProps = {{
+                KeyboardButtonProps={{
                     'aria-label': 'change date',
                 }}
                 renderInput={(params) => <TextField {...params} />}
@@ -109,6 +109,9 @@ export function timePicker() {
     )
 }
 
+export const refreshPage = () => {
+    window.location.reload();
+}
 // export function selectSeason () {
 //     const year = Date.year;
 //     const seasons = [year, year+1, year+2];

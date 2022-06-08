@@ -5,9 +5,9 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 import './MyDataGrid.css'
 import { Button, Grid} from "@mui/material";
-import  FormDialog  from "./FormDialog";
-import { defaultColDef } from "../common/helper";
-import { useAxios } from "../api/ApiService";
+import FormDialog from "./FormDialog";
+import {defaultColDef, refreshPage} from "../common/helper";
+import {useAxios} from "../api/ApiService";
 import instance from "../api/axios";
 import AuthService from "../auth/AuthService";
 
@@ -69,20 +69,15 @@ const MyDataGrid = ({props}) => {
 
         axiosApi(configObj)
             .then(response => {
-                // console.log(response.data);
                 data = response.data
-                console.log("Delete: ",data)
-                setFormData([...data])
-                setChanged(!changed)
                 setOpen(false)
-
-            }).catch(err => {
-            error = err.message;
-            setOpen(false)
-
-        })
-        window.location.reload()
-
+            })
+            .catch(err => {
+                error = err.message;
+                setOpen(false)
+            })
+        refreshPage()
+        // window.location.reload()
     }
 
     const getData = ( { method, url }) => {

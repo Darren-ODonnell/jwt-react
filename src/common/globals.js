@@ -1,5 +1,4 @@
 // server host ips
-// import ENDPOINT from './App'
 
 // backend
 export const HOME         = "http://192.168.100.151:8080";
@@ -19,22 +18,22 @@ export const ENDPOINT = HOME_LAPTOP;
 // for Form/Grid columns
 export const Club        = 'Club';
 export const Competition = 'Competition';
-export const Player      = 'Player';
-export const Lastname    = 'Lastname';
-export const Firstname   = 'Firstname';
-export const Fixture     = 'Fixture';
-export const Event       = 'Event';
-export const Teamsheet   = 'Teamsheet';
+export const Player = 'Player';
+export const Lastname = 'Lastname';
+export const Firstname = 'Firstname';
+export const Fixture = 'Fixture';
+export const Event = 'Event';
+export const Teamsheet = 'Teamsheet';
 
 // auth
 const API_AUTH_FORGOT_PASSWORD = "/api/auth/forgot_password";
 const API_AUTH_CHANGE_PASSWORD = "/api/auth/change_password";
 const API_AUTH_DELETE = "/api/auth/delete/";
 const API_AUTH_FINDBYID = "/api/auth/findById/";
-const API_AUTH_LIST            = "/api/auth/list";
-const API_AUTH_LOGIN           = "/api/auth/login";
-const API_AUTH_REGISTER        = "/api/auth/register/";
-const API_AUTH_UPDATE          = "/api/auth/update";
+const API_AUTH_LIST = "/api/auth/list";
+const API_AUTH_LOGIN = "/api/auth/login";
+const API_AUTH_REGISTER = "/api/auth/register/";
+const API_AUTH_UPDATE = "/api/auth/update";
 
 export const API_AUTH_URLS = {
     forgotPassword: API_AUTH_FORGOT_PASSWORD,
@@ -72,10 +71,10 @@ const PLAYER_ADD = "/player/add";
 const PLAYER_DELETE = "/player/delete/";
 const PLAYER_FINDBYFIRSTNAME = "/player/findByFirstname/";
 const PLAYER_FINDBYFIRSTNAMELASTNAME = "/player/findByFirstnameLastname/";
-const PLAYER_FINDBYID                = "/player/findById/";
-const PLAYER_FINDBYLASTNAME          = "/player/findByLastname/";
-const PLAYER_LIST                    = "/player/list";
-const PLAYER_UPDATE                  = "/player/update";
+const PLAYER_FINDBYID = "/player/findById/";
+const PLAYER_FINDBYLASTNAME = "/player/findByLastname/";
+const PLAYER_LIST = "/player/list";
+const PLAYER_UPDATE = "/player/update";
 
 export const PLAYER_URLS = {
     add: PLAYER_ADD,
@@ -89,17 +88,16 @@ export const PLAYER_URLS = {
 }
 
 
-
 // fixtures
 const FIXTURE_ADD = "/fixture/add";
 const FIXTURE_DELETE = "/fixture/delete/";
 const FIXTURE_FINDBYAWAYBYCLUB = "/fixture/findByAwayByClub/";
-const FIXTURE_FINDBYCLUB       = "/fixture/findByClub/";
+const FIXTURE_FINDBYCLUB = "/fixture/findByClub/";
 const FIXTURE_FINDBYHOMEBYCLUB = "/fixture/findByHomeByClub/";
-const FIXTURE_FINDBYID         = "/fixture/findById/";
-const FIXTURE_FINDNEXTBYCLUB   = "/fixture/findNextByClub/";
-const FIXTURE_LIST             = "/fixture/list";
-const FIXTURE_UPDATE           = "/fixture/update";
+const FIXTURE_FINDBYID = "/fixture/findById/";
+const FIXTURE_FINDNEXTBYCLUB = "/fixture/findNextByClub/";
+const FIXTURE_LIST = "/fixture/list";
+const FIXTURE_UPDATE = "/fixture/update";
 
 const FIXTURE_FINDBYCOMPETITIONHOMETEAMAWAYTEAMFIXTUREDATESEASON = "/fixture/findByCompetitionHomeTeamAwayTeamFixtureDateSeason";
 
@@ -122,8 +120,8 @@ const COMPETITION_ADD = "/competition/add";
 const COMPETITION_DELETE = "/competition/delete";
 const COMPETITION_FINDBYID = "/competition/findById/";
 const COMPETITION_FINDBYNAME = "/competition/findByName/";
-const COMPETITION_LIST       = "/competition/list";
-const COMPETITION_UPDATE     = "/competition/update";
+const COMPETITION_LIST = "/competition/list";
+const COMPETITION_UPDATE = "/competition/update";
 
 export const COMPETITION_URLS = {
     add: COMPETITION_ADD,
@@ -139,11 +137,11 @@ export const COMPETITION_URLS = {
 const FIRSTNAME_ADD = "/firstname/add";
 const FIRSTNAME_DELETE = "/firstname/delete/";
 const FIRSTNAME_FINDBYFIRSTNAME = "/firstname/findByFirstname/";
-const FIRSTNAME_FINDBYID        = "/firstname/findById/";
-const FIRSTNAME_FINDENGLISH     = "/firstname/findEnglish/";
-const FIRSTNAME_FINDIRISH       = "/firstname/findIrish/";
-const FIRSTNAME_LIST            = "/firstname/list";
-const FIRSTNAME_UPDATE          = "/firstname/update";
+const FIRSTNAME_FINDBYID = "/firstname/findById/";
+const FIRSTNAME_FINDENGLISH = "/firstname/findEnglish/";
+const FIRSTNAME_FINDIRISH = "/firstname/findIrish/";
+const FIRSTNAME_LIST = "/firstname/list";
+const FIRSTNAME_UPDATE = "/firstname/update";
 
 export const FIRSTNAME_URLS = {
     add: FIRSTNAME_ADD,
@@ -161,10 +159,10 @@ const LASTNAME_ADD = "/lastname/add";
 const LASTNAME_DELETE = "/lastname/delete/";
 const LASTNAME_FINDBYID = "/lastname/findById/";
 const LASTNAME_FINDBYLASTNAME = "/lastname/findByLastname";
-const LASTNAME_FINDENGLISH    = "/lastname/findEnglish/";
-const LASTNAME_FINDIRISH      = "/lastname/findIrish/";
-const LASTNAME_LIST           = "/lastname/list";
-const LASTNAME_UPDATE         = "/lastname/update";
+const LASTNAME_FINDENGLISH = "/lastname/findEnglish/";
+const LASTNAME_FINDIRISH = "/lastname/findIrish/";
+const LASTNAME_LIST = "/lastname/list";
+const LASTNAME_UPDATE = "/lastname/update";
 
 export const LASTNAME_URLS = {
     add: LASTNAME_ADD,

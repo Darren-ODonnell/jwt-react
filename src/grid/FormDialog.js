@@ -4,23 +4,22 @@ import {  DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { ErrorMessage } from "../common/ErrorMessage";
 import AuthService from "../auth/AuthService";
 import instance from "../api/axios";
+import {refreshPage} from "../common/helper";
 
 const FormDialog = (props) => {
-    // let [data, error, loading, axiosApi] = useAxios();
-
     // close popup window
     const handleClose = ( setOpen ) => {
         setOpen(false);
         // setFormData(props.initialValue);
     };
-    const handleError = ( message ) => {
+    const handleError = (message) => {
         return <ErrorMessage message={message}/>;
 
     }
-    const UpdateData = ({methods, axiosApi, data, error, setFormData, formData}) => {
+    const UpdateData = ({methods, axiosApi, data, error, formData}) => {
 
         const user = AuthService.getCurrentUser();
-        AuthService.setAuthToken( user.accessToken );
+        AuthService.setAuthToken(user.accessToken);
 
         const configObj = {
             axiosInstance: instance,
@@ -33,18 +32,18 @@ const FormDialog = (props) => {
         axiosApi(configObj)
             .then(response => {
                 data = response.data
-                console.log( "Update: ", data )
-                setFormData( data )
+                console.log("Update: ", data)
             })
             .catch(err => {
                 error = err.message;
             })
         // refresh grid
-        window.location.reload()
+        refreshPage()
+        // window.location.reload()
     }
-    const AddData = ({methods, axiosApi, data, error, setFormData, formData, changed, setChanged, setOpen, setData}) => {
+    const AddData = ({methods, axiosApi, data, error, formData, setOpen, setData}) => {
         const user = AuthService.getCurrentUser();
-        AuthService.setAuthToken( user.accessToken );
+        AuthService.setAuthToken(user.accessToken);
 
         const configObj = {
             axiosInstance: instance,
@@ -58,20 +57,18 @@ const FormDialog = (props) => {
         axiosApi( configObj )
             .then( response => {
                 setOpen( false )
-                // console.log(response.data);
                 data = response.data
-                console.log( "Add: ", response.data )
-                // setFormData([...data])
-                setData( data )
-                setChanged( !changed )
+                console.log("Add: ", response.data)
+                setData(data)
             })
-            .catch( err => {
+            .catch(err => {
                 error = err.message;
-                setOpen( false )
+                setOpen(false)
 
             })
         // refresh grid
-        window.location.reload()
+        refreshPage()
+        // window.location.reload()
     }
     const handleFormSubmit = ({formData, methods, setOpen, error }) => {
         console.log('FormData: ', formData)
