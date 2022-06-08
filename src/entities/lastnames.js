@@ -21,7 +21,7 @@ const apiRequests = {
     findByLastname: { method: METHODS.GET   , url: LASTNAME_URLS.findByLastname},
     update        : { method: METHODS.POST  , url: LASTNAME_URLS.update},
     add           : { method: METHODS.PUT   , url: LASTNAME_URLS.add},
-    deleteById    : { method: METHODS.DELETE, url: LASTNAME_URLS.deleteById}
+    delete: {method: METHODS.DELETE, url: LASTNAME_URLS.delete}
 }
 
 const gridLoader = (data) => {
@@ -38,6 +38,6 @@ export const lastnameData = {
     formColDefs : copyFormColDefs( lastnameColumnDefs ), // form column definitions
     gridColDefs : copyGridColDefs( lastnameColumnDefs ), // Grid column definitions
     methods     : apiRequests,
-    gridLoader : gridLoader
+    gridLoader: gridLoader
 };
 

@@ -22,18 +22,21 @@ const fixtureInitialValue = {
 };
 
 const apiRequests = {
-    list          : { method: METHODS.GET, url: FIXTURE_URLS.list},
-    findById      : { method: METHODS.GET, url: FIXTURE_URLS.findById},
-    findByClub    : { method: METHODS.GET, url: FIXTURE_URLS.findByClub},
-    findByHomeClub: { method: METHODS.GET, url: FIXTURE_URLS.findByHomeClub},
-    findByAwayClub: { method: METHODS.GET, url: FIXTURE_URLS.findByAwayClub},
-    nextByClub    : { method: METHODS.GET, url: FIXTURE_URLS.nextByClub},
+    list: {method: METHODS.GET, url: FIXTURE_URLS.list},
+    findById: {method: METHODS.GET, url: FIXTURE_URLS.findById},
+    findByClub: {method: METHODS.GET, url: FIXTURE_URLS.findByClub},
+    findByHomeClub: {method: METHODS.GET, url: FIXTURE_URLS.findByHomeClub},
+    findByAwayClub: {method: METHODS.GET, url: FIXTURE_URLS.findByAwayClub},
+    nextByClub: {method: METHODS.GET, url: FIXTURE_URLS.nextByClub},
 
-    findByCompetitionHomeTeamAwayTeamFixtureDateSeason: { method: METHODS.GET, url: FIXTURE_URLS.findByCompetitionHomeTeamAwayTeamFixtureDateSeason},
+    findByCompetitionHomeTeamAwayTeamFixtureDateSeason: {
+        method: METHODS.GET,
+        url: FIXTURE_URLS.findByCompetitionHomeTeamAwayTeamFixtureDateSeason
+    },
 
-    update    : { method: METHODS.POST  , url: FIXTURE_URLS.update},
-    add       : { method: METHODS.PUT   , url: FIXTURE_URLS.add},
-    deleteById: { method: METHODS.DELETE, url: FIXTURE_URLS.deleteById}
+    update: {method: METHODS.POST, url: FIXTURE_URLS.update},
+    add: {method: METHODS.PUT, url: FIXTURE_URLS.add},
+    delete: {method: METHODS.DELETE, url: FIXTURE_URLS.delete}
 }
 
 const gridLoader = (data) => {

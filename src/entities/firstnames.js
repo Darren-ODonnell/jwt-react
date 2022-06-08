@@ -19,7 +19,7 @@ const apiRequests = {
     findByFirstname: { method: METHODS.GET   , url: FIRSTNAME_URLS.findByFirstname},
     update         : { method: METHODS.POST  , url: FIRSTNAME_URLS.update},
     add            : { method: METHODS.PUT   , url: FIRSTNAME_URLS.add},
-    deleteById     : { method: METHODS.DELETE, url: FIRSTNAME_URLS.deleteById}
+    delete: {method: METHODS.DELETE, url: FIRSTNAME_URLS.delete}
 }
 
 const gridLoader = (data) => {
@@ -35,6 +35,6 @@ export const firstnameData = {
     formColDefs : copyFormColDefs( firstnameColumnDefs ), // form column definitions
     gridColDefs : copyGridColDefs( firstnameColumnDefs ), // Grid column definitions
     methods     : apiRequests,
-    gridLoader : gridLoader
+    gridLoader: gridLoader
 };
 

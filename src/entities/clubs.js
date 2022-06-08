@@ -26,7 +26,7 @@ const apiRequests = {
     findByName: { method: METHODS.GET   , url: CLUB_URLS.findByName},
     update    : { method: METHODS.POST  , url: CLUB_URLS.update},
     add       : { method: METHODS.PUT   , url: CLUB_URLS.add},
-    deleteById: { method: METHODS.DELETE, url: CLUB_URLS.deleteById}
+    delete: {method: METHODS.DELETE, url: CLUB_URLS.delete}
 }
 
 const gridLoader = (data) => {

@@ -8,17 +8,14 @@ Ig: Ignored for now
 As elements are finished - move below Completed
 
 # Errors
-
-    E27: 
     E28:
     E29:
     E30: 
 
 # Refactoring
-
-    R9: 
     R10:
     R11:
+    R12: 
 
 # Investigations
     I1: Can grid be changed to a hook - useGrid? and similarly useForm?
@@ -43,7 +40,9 @@ As elements are finished - move below Completed
         C10b: How to change current season?
         C10c: where to save current season?
         C10d: All api activity should use this season setting.
-
+    C11:
+    C12:
+    C13: 
 # Unused Files
     U1: auth/useUser
     U2: auth/PrivateRoute
@@ -257,4 +256,9 @@ As elements are finished - move below Completed
         Although Record is updated - grid is not updated, must be manually updated!
         window.location.reload() used to refresh screen after update
     E12: Test addition of new Data to all entities (use in conjuntion with delete to remove additional test entries
-        (E6, E11 and E25 Fix) 
+        (E6, E11 and E25 Fix)
+    R9: Change deleteById to simply delete, similarly for DELETEBYID to DELETE
+    E27: Cannot delete from Competition
+         After R9 complete, changed 'data: data' to 'data: {data}'.
+
+         

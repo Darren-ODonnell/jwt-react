@@ -21,11 +21,11 @@ export const eventInitialValue = {
 };
 
 const apiRequests = {
-    list      : { method: METHODS.GET   , url: EVENT_URLS.list},
-    findById  : { method: METHODS.GET   , url: EVENT_URLS.findById},
-    update    : { method: METHODS.POST  , url: EVENT_URLS.update},
-    add       : { method: METHODS.PUT   , url: EVENT_URLS.add},
-    deleteById: { method: METHODS.DELETE, url: EVENT_URLS.deleteById}
+    list: {method: METHODS.GET, url: EVENT_URLS.list},
+    findById: {method: METHODS.GET, url: EVENT_URLS.findById},
+    update: {method: METHODS.POST, url: EVENT_URLS.update},
+    add: {method: METHODS.PUT, url: EVENT_URLS.add},
+    delete: {method: METHODS.DELETE, url: EVENT_URLS.delete}
 }
 
 const gridLoader = (data) => {
@@ -52,7 +52,7 @@ export const eventData = {
     formColDefs : copyFormColDefs( eventColumnDefs ), // form column definitions
     gridColDefs : copyGridColDefs( eventColumnDefs ), // Grid column definitions
     methods     : apiRequests,
-    gridLoader : gridLoader
+    gridLoader: gridLoader
 };
 
 

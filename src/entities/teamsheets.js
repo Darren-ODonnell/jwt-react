@@ -37,11 +37,11 @@ const gridLoader = (data) => {
 }
 
 const apiRequests = {
-    list      : { method: METHODS.GET   , url: TEAMSHEET_URLS.list},
-    findById  : { method: METHODS.GET   , url: TEAMSHEET_URLS.findById},
-    update    : { method: METHODS.POST  , url: TEAMSHEET_URLS.update},
-    add       : { method: METHODS.PUT   , url: TEAMSHEET_URLS.add},
-    deleteById: { method: METHODS.DELETE, url: TEAMSHEET_URLS.deleteById}
+    list: {method: METHODS.GET, url: TEAMSHEET_URLS.list},
+    findById: {method: METHODS.GET, url: TEAMSHEET_URLS.findById},
+    update: {method: METHODS.POST, url: TEAMSHEET_URLS.update},
+    add: {method: METHODS.PUT, url: TEAMSHEET_URLS.add},
+    delete: {method: METHODS.DELETE, url: TEAMSHEET_URLS.delete}
 }
 
 export const teamsheetData = {
@@ -52,5 +52,5 @@ export const teamsheetData = {
     formColDefs : copyFormColDefs( teamsheetColumnDefs ), // form column definitions
     gridColDefs : copyGridColDefs( teamsheetColumnDefs ), // Grid column definitions
     methods     : apiRequests,
-    gridLoader : gridLoader
+    gridLoader: gridLoader
 };

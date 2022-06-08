@@ -26,11 +26,11 @@ export const playerInitialValue = {
 };
 
 export const apiRequests = {
-    list      : { method: METHODS.GET   , url: PLAYER_URLS.list},
-    findById  : { method: METHODS.GET   , url: PLAYER_URLS.findById},
-    update    : { method: METHODS.POST  , url: PLAYER_URLS.update},
-    add       : { method: METHODS.PUT   , url: PLAYER_URLS.add},
-    deleteById: { method: METHODS.DELETE, url: PLAYER_URLS.deleteById}
+    list: {method: METHODS.GET, url: PLAYER_URLS.list},
+    findById: {method: METHODS.GET, url: PLAYER_URLS.findById},
+    update: {method: METHODS.POST, url: PLAYER_URLS.update},
+    add: {method: METHODS.PUT, url: PLAYER_URLS.add},
+    delete: {method: METHODS.DELETE, url: PLAYER_URLS.delete}
 }
 const gridLoader = (data) => {
 
@@ -45,6 +45,6 @@ export const playerData = {
     formColDefs : copyFormColDefs( playerColumnDefs ), // form column definitions
     gridColDefs : copyGridColDefs( playerColumnDefs ), // Grid column definitions
     methods     : apiRequests,
-    gridLoader : gridLoader
+    gridLoader: gridLoader
 };
 

@@ -61,15 +61,14 @@ const MyDataGrid = ({props}) => {
 
         const configObj = {
             axiosInstance: instance,
-            ...props.methods.deleteById,
+            ...props.methods.delete,
             requestConfig: {
-                data: { data }
+                data: {data}
             }
         }
 
         axiosApi(configObj)
             .then(response => {
-
                 // console.log(response.data);
                 data = response.data
                 console.log("Delete: ",data)
