@@ -18,10 +18,11 @@
     "@mui/x-data-grid-generator": "^5.8.0",
     "@mui/x-date-pickers": "^5.0.0-alpha.2",
     "@react-buddy/ide-toolbox": "^2.1.2",
+    "@react-buddy/palette-mui": "^5.0.1",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
-    "ag-grid-community": "27.2.1",
+    "ag-grid-community": "^27.2.1",
     "ag-grid-react": "27.2.1",
     "axios": "^0.26.1",
     "axios-hooks": "^3.0.2",
@@ -46,8 +47,7 @@
     "validator": "^13.7.0",
     "web-vitals": "^2.1.4",
     "webpack": "^5.70.0",
-    "webpack-dev-server": "^4.8.1",
-    "@react-buddy/palette-mui": "^5.0.1"
+    "webpack-dev-server": "^4.8.1"
   },
   "scripts": {
     "start": "cross-env BROWSER=google-chrome-stable react-scripts start",

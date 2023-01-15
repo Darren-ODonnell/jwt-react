@@ -45,6 +45,7 @@ export const copyFormColDefs = ( columnDefs ) => {
 }
 
 export const defaultColDef = {
+    cellEditor: 'agSelectCellEditor',
     sortable: true,
     editable: true,
     filter: true,
@@ -52,12 +53,14 @@ export const defaultColDef = {
     floatingFilter: true,
     resizable: true,
     // flex: 1,
-    cellEditorParams: {
-        maxLength: 128,
-        rows: 2,
-        cols: 50
-    },
-    cellEditor: 'agLargeTextCellEditor'
+    // cellEditor: 'agSelectCellEditor',
+    // cellEditorParams: {
+    //     values : ['a','b','c'],
+    //     maxLength: 128,
+    //     rows: 2,
+    //     cols: 50
+    // },
+    // cellEditor: 'agLargeTextCellEditor'
 };
 
 export function isEmptyObject(obj){

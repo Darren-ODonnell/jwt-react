@@ -176,10 +176,10 @@ export const EventNameDropDown = (eventNames, current) => {
     console.log(val);
 
     formSelect({
-        data   : [...eventNames],
+        data: [...eventNames],
         current: current,
         setCell: setVal,
-        cell   : val
+        cell: val
     })
 
 
@@ -189,10 +189,10 @@ export const PlayerDropdown = (players, current) => {
     console.log(val);
 // get Players
     formSelect({
-        data   : [...players],
+        data: [...players],
         current: current,
         setCell: setVal,
-        cell   : val
+        cell: val
     })
 
 }
@@ -201,10 +201,10 @@ export const PitchgridDropdown = (pitchgrids, current) => {
     console.log(val);
 // get PitchGrids
     formSelect({
-        data   : [...pitchgrids],
+        data: [...pitchgrids],
         current: current,
         setCell: setVal,
-        cell   : val
+        cell: val
     })
 }
 export const PositionDropdown = (positions, current) => {
@@ -212,10 +212,10 @@ export const PositionDropdown = (positions, current) => {
     console.log(val);
 // get Positions
     formSelect({
-        data   : [...positions],
+        data: [...positions],
         current: current,
         setCell: setVal,
-        cell   : val
+        cell: val
     })
 }
 export const HomeTeamDropdown = (teams, current, homeTeam = {}, awayTeam = {}) => {
@@ -223,21 +223,21 @@ export const HomeTeamDropdown = (teams, current, homeTeam = {}, awayTeam = {}) =
     console.log(val);
 // get Teams
     formSelect({
-        data   : [...teams],
+        data: [...teams],
         current: current,
         setCell: setVal,
-        cell   : val
+        cell: val
     })
 }
-export const AwayTeamDropdown = (teams, current, homeTeam = {}, awayTeam = {})  => {
+export const AwayTeamDropdown = (teams, current, homeTeam = {}, awayTeam = {}) => {
     const [val, setVal] = useState();
     console.log(val);
 // get Teams
     formSelect({
-        data   : [...teams],
+        data: [...teams],
         current: current,
         setCell: setVal,
-        cell   : val
+        cell: val
     })
 }
 export const CompetitionDropdown = (competitions, current) => {
@@ -245,10 +245,10 @@ export const CompetitionDropdown = (competitions, current) => {
     console.log(val);
 // get Competitions
     formSelect({
-        data   : [...competitions],
+        data: [...competitions],
         current: current,
         setCell: setVal,
-        cell   : val
+        cell: val
     })
 }
 export const YearDropdown = (years, current) => {
@@ -256,10 +256,10 @@ export const YearDropdown = (years, current) => {
     console.log(val);
 // get Years
     formSelect({
-        data   : [...years],
+        data: [...years],
         current: current,
         setCell: setVal,
-        cell   : val
+        cell: val
     })
 }
 export const DateDropdown = (dates, current) => {
@@ -267,10 +267,10 @@ export const DateDropdown = (dates, current) => {
     console.log(val);
 // get Dates
     formSelect({
-        data   : [...dates],
+        data: [...dates],
         current: current,
         setCell: setVal,
-        cell   : val
+        cell: val
     })
 }
 export const TimeDropdown = (times, current) => {
@@ -278,10 +278,10 @@ export const TimeDropdown = (times, current) => {
     console.log(val);
 // Get Times
     formSelect({
-        data   : [...times],
+        data: [...times],
         current: current,
         setCell: setVal,
-        cell   : val
+        cell: val
     })
 }
 
@@ -291,10 +291,10 @@ export const FixtureDropdown = (fixtures, current) => {
     console.log(val);
 // Get Fixtures
     formSelect({
-        data   : [...fixtures],
+        data: [...fixtures],
         current: current,
         setCell: setVal,
-        cell   : val
+        cell: val
     })
 
 }

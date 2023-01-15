@@ -1,10 +1,37 @@
-import { Fixture, METHODS, FIXTURE_URLS } from '../common/globals'
-import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
+import {Fixture, METHODS, FIXTURE_URLS} from '../common/globals'
+import {addMessage, copyFormColDefs, copyGridColDefs} from "../common/helper";
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 const fixtureColumnDefs = [
-    {headerName: 'Competition Name', field: 'competitionName', type: 'String', min: 8, max: 60, required: true},
-    {headerName: 'Home Team Name', field: 'homeTeamName', type: 'String', min: 8, max: 60, required: true},
-    {headerName: 'Away Team Name', field: 'awayTeamName', type: 'String', min: 8, max: 60, required: true},
+    {
+        // cellEditor: 'agSelectCellEditor',
+        cellEditorParams: {
+            values: ['English', 'Spanish', 'French', 'Portuguese', '(other)'],
+        },
+        headerName: 'Competition Name', field: 'competitionName',
+        min: 8, max: 60, required: true,
+        // type: 'String',
+
+    },
+    {
+        headerName: 'Home Team Name',
+        field: 'homeTeamName',
+        type: 'String',
+        min: 8,
+        max: 60,
+        required: true,
+        editable: true,
+    },
+    {
+        headerName: 'Away Team Name',
+        field: 'awayTeamName',
+        type: 'String',
+        min: 8,
+        max: 60,
+        required: true,
+        editable: true,
+    },
     {headerName: 'Fixture Date', field: 'fixtureDate', type: 'Date', min: -1, max: 1, required: true},
     {headerName: 'Fixture Time', field: 'fixtureTime', type: 'Long', min: 0, max: 24, required: true},
     {headerName: 'Season', field: 'season', type: 'Integer', min: 4, max: 4, required: true},
