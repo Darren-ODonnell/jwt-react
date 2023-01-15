@@ -1,12 +1,13 @@
-import { Form } from 'react-bootstrap'
-import { useState } from "react";
+import {Form} from 'react-bootstrap'
+import {useState} from "react";
+import {Select, menuItem, FormControl, InputLabel} from '@material-ui/core'
 
 // general dropdown used by the entity dropdowns below
 
 // sample data f
 // ]=-[por each dropdown
-export const dates  = []
-export const times  = []
+export const dates = []
+export const times = []
 export const players = [
     "Aherne, Kate",
     "Barrett, Sophie ",
@@ -65,7 +66,7 @@ export const players = [
 
 
 ]
-export const eventNames = [
+export const statNames = [
     "Block",
     "CatchFail",
     "CatchSuccess",
@@ -148,7 +149,6 @@ export const pitchgrids = [
     "E1",
     "E2",
     "E3",
-
 ]
 export const competitions = [
     "League Cup",
@@ -156,11 +156,7 @@ export const competitions = [
     "Championship",
 
 ]
-const years = [
-    "2021",
-    "2022",
-    "2023",
-]
+
 
 // used by the dropdown functions following
 export const formSelect = (array, current, setVal, val) => {

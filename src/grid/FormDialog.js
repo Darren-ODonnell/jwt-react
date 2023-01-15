@@ -8,7 +8,7 @@ import {refreshPage} from "../common/helper";
 
 const FormDialog = (props) => {
     // close popup window
-    const handleClose = ( setOpen ) => {
+    const handleClose = (setOpen) => {
         setOpen(false);
         // setFormData(props.initialValue);
     };

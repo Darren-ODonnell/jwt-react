@@ -11,12 +11,12 @@ export const AWS_BACKEND  = "";
 // frontend
 export const HOME_LAPTOP = "http://192.168.100.152:8080"
 // note: every time AWS EC2 instance is restarted - this host name will need to be changed
-export const AWS_REACT    = ""
+export const AWS_REACT = ""
 
-export const ENDPOINT = HOME_LAPTOP;
+export const ENDPOINT = SAME_MACHINE;
 
 // for Form/Grid columns
-export const Club        = 'Club';
+export const Club = 'Club';
 export const Competition = 'Competition';
 export const Player = 'Player';
 export const Lastname = 'Lastname';
@@ -45,7 +45,6 @@ export const API_AUTH_URLS = {
     register: API_AUTH_REGISTER,
     userUpdate: API_AUTH_UPDATE
 }
-
 
 // clubs
 const CLUB_ADD = "/club/add";
@@ -86,7 +85,6 @@ export const PLAYER_URLS = {
     list: PLAYER_LIST,
     update: PLAYER_UPDATE
 }
-
 
 // fixtures
 const FIXTURE_ADD = "/fixture/add";
@@ -131,7 +129,6 @@ export const COMPETITION_URLS = {
     list: COMPETITION_LIST,
     update: COMPETITION_UPDATE,
 }
-
 
 // firstnames
 const FIRSTNAME_ADD = "/firstname/add";
@@ -218,3 +215,4 @@ export const METHODS = {
     PUT   : 'PUT',
     DELETE: 'DELETE'
 }
+

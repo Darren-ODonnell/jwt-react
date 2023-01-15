@@ -41,6 +41,7 @@ const MyDataGrid = ({props}) => {
         setFormData({ ...formData, [id]: value })
     }
     const onGridReady = (params)  => {  setGridApi(params)      }
+
     const handleEdit = (props) => {
         handleOpen();
         setFormData( {...props.data} );
@@ -149,27 +150,56 @@ const MyDataGrid = ({props}) => {
 
     return (
         !loading  ? <div >
-             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input"  >
+            <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
                 <AddButton {...props}/>
                 <AgGridReact
-                    ref             = { gridRef }
-                    defaultColDef   = { defaultColDef }
-                    pagination      = { true }
-                    rowData         = { props.gridLoader(data) }
-                    suppressRowDrag = { true }
-                    columnDefs      = { [...props.gridColDefs, formActions] }
-                    onGridReady     = { onGridReady }
-                    animateRows     = { true }
-                    alwaysShowHorizontalScroll = { false }
-                    suppressClickEdit          = { false }
-                 />
+                    ref={gridRef}
+                    defaultColDef={defaultColDef}
+                    pagination={true}
+                    rowData={props.gridLoader(data)}
+                    suppressRowDrag={true}
+                    columnDefs={[...props.gridColDefs, formActions]}
+                    onGridReady={onGridReady}
+                    animateRows={true}
+                    alwaysShowHorizontalScroll={false}
+                    suppressClickEdit={false}
+                />
+
+                {!props.gridLoader.dropDown} ?
+                {console.log("Test1")}
                 <FormDialog
-                    setData      = { setFormData }
-                    open         = { open }
-                    onClose      = { handleClose }
-                    data         = { formData }
-                    handleClose  = { handleClose }
-                    setOpen      = { setOpen }
+                    setData={setFormData}
+                    open={open}
+                    onClose={handleClose}
+                    data={formData}
+                    handleClose={handleClose}
+                    setOpen={setOpen}
+                    update={props.gridLoader.update}
+                    onChange={onChange}
+                    // actions      = { props.actions }
+                    methods={props.methods}
+                    colDefs={props.formColDefs}
+                    messages={props.messages}
+                    formData={formData}
+                    setFormData={setFormData}
+                    initialValue={props.initialValue}
+                    // useAxios params
+                    axiosApi={axiosApi}
+                    error={error}
+                    loading={loading}
+                    setChanged={setChanged}
+                    changed={changed}
+                />
+                :
+                {console.log("Test2")}
+                <FormDialog
+                    setData={setFormData}
+                    open={open}
+                    onClose={handleClose}
+                    data={formData}
+                    handleClose={handleClose}
+                    setOpen={setOpen}
+                    update={props.gridLoader.update}
                     onChange={onChange}
                     // actions      = { props.actions }
                     methods={props.methods}
@@ -187,7 +217,6 @@ const MyDataGrid = ({props}) => {
                 />
             </div>
         </div> : <p> Loading...</p>
-
     )
 };
 

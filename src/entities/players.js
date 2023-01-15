@@ -1,9 +1,6 @@
 import { METHODS, Player, PLAYER_URLS } from '../common/globals'
 import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
 
-
-
-
 export const playerColumnDefs = [
     { headerName: 'Firstname'      , field: 'firstname'   , type: 'String' , min: 5   , max: 45  , required: true },
     { headerName: 'Lastname'       , field: 'lastname'    , type: 'String' , min: 5   , max: 45  , required: true },
@@ -33,7 +30,6 @@ export const apiRequests = {
     delete: {method: METHODS.DELETE, url: PLAYER_URLS.delete}
 }
 const gridLoader = (data) => {
-
     return data;
 }
 

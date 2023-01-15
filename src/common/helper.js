@@ -45,17 +45,17 @@ export const copyFormColDefs = ( columnDefs ) => {
 }
 
 export const defaultColDef = {
-    sortable       : true,
-    editable       : true,
-    filter         : true,
+    sortable: true,
+    editable: true,
+    filter: true,
     cellEditorPopup: true,
-    floatingFilter : true,
-    resizable      : true,
+    floatingFilter: true,
+    resizable: true,
     // flex: 1,
     cellEditorParams: {
-        maxLength   : 128,
-        rows        : 2,
-        cols        : 50
+        maxLength: 128,
+        rows: 2,
+        cols: 50
     },
     cellEditor: 'agLargeTextCellEditor'
 };
@@ -65,8 +65,6 @@ export function isEmptyObject(obj){
     return  (array === '{}') || (array === "null");
 
 }
-
-
 
 export function datePicker ()  {
     // eslint-disable-next-line no-self-compare
@@ -112,6 +110,7 @@ export function timePicker() {
 export const refreshPage = () => {
     window.location.reload();
 }
+
 // export function selectSeason () {
 //     const year = Date.year;
 //     const seasons = [year, year+1, year+2];

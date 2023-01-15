@@ -12,14 +12,14 @@ export const competitionInitialValue = {
     season: ""
 };
 const apiRequests = {
-    list      : { method: METHODS.GET   , url: COMPETITION_URLS.list },
-    findById  : { method: METHODS.GET   , url: COMPETITION_URLS.findById },
-    findByName: { method: METHODS.GET   , url: COMPETITION_URLS.findByName },
-    update    : { method: METHODS.POST  , url: COMPETITION_URLS.update },
-    add       : { method: METHODS.PUT   , url: COMPETITION_URLS.add },
+    list: {method: METHODS.GET, url: COMPETITION_URLS.list},
+    findById: {method: METHODS.GET, url: COMPETITION_URLS.findById},
+    findByName: {method: METHODS.GET, url: COMPETITION_URLS.findByName},
+    update: {method: METHODS.POST, url: COMPETITION_URLS.update},
+    add: {method: METHODS.PUT, url: COMPETITION_URLS.add},
     delete: {method: METHODS.DELETE, url: COMPETITION_URLS.delete}
 }
-const gridLoader = ( data ) => {
+const gridLoader = (data) => {
     return data;
 }
 export const competitionData = {

@@ -23,13 +23,18 @@ export const teamsheetInitialValue = {
 const gridLoader = (data) => {
     let newData = [];
     data.forEach(row => {
-        const newRow = {id:row.id,
-            competitionName:row.fixture.competition.name,
-            homeTeamName:row.fixture.homeTeam.name,
-            awayTeamName:row.fixture.awayTeam.name,
-            firstname:row.player.firstname,
-            lastname:row.player.lastname,
-            position:row.position.name,
+        const newRow = {
+            id: row.id,
+            competitionName: row.fixture.competition.name,
+            homeTeamName: row.fixture.homeTeam.name,
+            awayTeamName: row.fixture.awayTeam.name,
+            firstname: row.player.firstname,
+            lastname: row.player.lastname,
+            position: row.position.name,
+            // not used in teamsheetColumnDefs so not displayed in grid but used later when updating changes in teamsheet.
+            competition: row.competition,
+            homeTeam: row.homeTeam,
+            awayTeam: row.awayTeam
         }
         newData.push(newRow)
     })
