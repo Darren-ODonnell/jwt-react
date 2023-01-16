@@ -1,6 +1,6 @@
 import App from './App.js';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import {Provider} from 'react-redux';
 import {configureStore} from './store';
 import {persistStore} from "redux-persist";
@@ -11,7 +11,10 @@ import {ComponentPreviews, useInitial} from "./dev";
 const store = configureStore();
 const persistor = persistStore(store)
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container)
+
+root.render(
     <Provider store={store}>
         <PersistGate
             loading={<div>Loading...</div>}
@@ -24,5 +27,5 @@ ReactDOM.render(
             </DevSupport>
         </PersistGate>
     </Provider>,
-    document.getElementById('root'),
+    // document.getElementById('root'),
 );

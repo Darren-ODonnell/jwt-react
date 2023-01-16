@@ -1,6 +1,6 @@
 import {Form} from 'react-bootstrap'
 import {useState} from "react";
-import {Select, menuItem, FormControl, InputLabel} from '@material-ui/core'
+// import {Select, menuItem, FormControl, InputLabel} from '@material-ui'
 
 // general dropdown used by the entity dropdowns below
 
@@ -154,9 +154,13 @@ export const competitions = [
     "League Cup",
     "Summer Cup",
     "Championship",
-
 ]
 
+export const seasons = [
+    new Date().getFullYear()-1,
+    new Date().getFullYear(),
+    new Date().getFullYear()+1
+]
 
 // used by the dropdown functions following
 export const formSelect = (array, current, setVal, val) => {
@@ -300,7 +304,7 @@ export const FixtureDropdown = (fixtures, current) => {
 }
 export const filterNotEqualTo = (array, current) => {
     const filtered = array.filter(function (value, index, arr) {
-        return value != current;
+        return value !== current;
     })
     return filtered
 }

@@ -234,7 +234,7 @@ As elements are finished - move below Completed
         Done
 
     R8: Simplify / re-organise  ---> Column def / EntityDataGrid / MyDataGrid and FormDialog
-        EntityDataGrids - refactored out of the project. (Routes now passes the formData object)    
+        EntityDataGrids - refactored out of the project. (Paths now passes the formData object)    
         Done
 
     R2: simplify Grid/form to extract form

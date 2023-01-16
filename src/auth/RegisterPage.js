@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useHistory } from "react-router-dom";
-import axios from 'axios'
+import { useNavigate } from "react-router-dom";
+import Axios from 'axios'
 import AuthService from "./AuthService";
 
 export const RegisterPage = () => {
@@ -9,7 +9,7 @@ export const RegisterPage = () => {
     const [ emailValue, setEmailValue ] = useState( '' );
     const [ passwordValue, setPasswordValue ] = useState( '' );
     const [ confirmPasswordValue, setConfirmPasswordValue ] = useState( '' );
-    const history = useHistory();
+    const navigate = useNavigate();
 
 
     let response = '';
@@ -26,10 +26,10 @@ export const RegisterPage = () => {
 
         try {
             // res.setHeader('Access-Control-Allow-Origin', '*');
-            response = await axios.post( registerUrl, registerData );
+            response = await Axios.post( registerUrl, registerData );
             const { token } = response.data;
             AuthService.setAuthToken( token );
-            history.push( '/' );
+            navigate( '/' );
         } catch ( e ) {
             setErrorMessage( e )
             errorMessage = e;
@@ -69,7 +69,7 @@ export const RegisterPage = () => {
             </button>
 
             <button
-                onClick={ () => history.push( '/login' ) }>Already have an account
+                onClick={ () => navigate( '/login' ) }>Already have an account
             </button>
         </div>
 

@@ -1,9 +1,9 @@
-import axios from 'axios';
+import Axios from 'axios';
 
 import { ENDPOINT } from "../common/globals";
 
 // Next we make an 'instance' of it
-const instance = axios.create({
+const instance = Axios.create({
 // .. where we make our configurations
     baseURL: ENDPOINT,
     timeout: 1000,
@@ -29,7 +29,7 @@ const responseHandler = response => {
 const errorHandler = error => {    return Promise.reject(error);};
 
 export function cancelInterceptor() {
-    const cancelInterceptor = axios.interceptors.request.use(function () {/*...*/});
+    const cancelInterceptor = Axios.interceptors.request.use(function () {/*...*/});
     instance.interceptors.request.reject(cancelInterceptor);
 }
 // const myInterceptor = axios.interceptors.request.use(function () {/*...*/});

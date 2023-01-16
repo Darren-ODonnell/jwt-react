@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {  AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
+import  { AgGridReact }  from 'ag-grid-react';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import 'ag-grid-community/styles/ag-theme-balham.css';
+import 'ag-grid-community/styles/ag-theme-material.css';
 import './MyDataGrid.css'
 import { Button, Grid} from "@mui/material";
 import FormDialog from "./FormDialog";
@@ -153,42 +154,44 @@ const MyDataGrid = ({props}) => {
             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
                 <AddButton {...props}/>
                 <AgGridReact
-                    ref={gridRef}
-                    defaultColDef={defaultColDef}
-                    pagination={true}
-                    rowData={props.gridLoader(data)}
-                    suppressRowDrag={true}
-                    columnDefs={[...props.gridColDefs, formActions]}
-                    onGridReady={onGridReady}
-                    animateRows={true}
-                    alwaysShowHorizontalScroll={false}
-                    suppressClickEdit={false}
+                    ref                        = {gridRef}
+                    defaultColDef              = {defaultColDef}
+                    pagination                 = {true}
+                    rowData                    = {props.gridLoader(data)}
+                    suppressRowDrag            = {true}
+                    // columnDefs                 = {[...props.gridColDefs  , formActions]}
+                    columnDefs                 = {props.gridColDefs}
+                    onGridReady                = {onGridReady}
+                    animateRows                = {true}
+                    alwaysShowHorizontalScroll = {false}
+                    suppressClickEdit          = {false}
+
                 />
 
                 {!props.gridLoader.dropDown} ?
                 {console.log("Test1")}
                 <FormDialog
-                    setData={setFormData}
-                    open={open}
-                    onClose={handleClose}
-                    data={formData}
-                    handleClose={handleClose}
-                    setOpen={setOpen}
-                    update={props.gridLoader.update}
-                    onChange={onChange}
+                    setData      = {setFormData}
+                    open         = {open}
+                    onClose      = {handleClose}
+                    data         = {formData}
+                    handleClose  = {handleClose}
+                    setOpen      = {setOpen}
+                    update       = {props.gridLoader.update}
+                    onChange     = {onChange}
                     // actions      = { props.actions }
-                    methods={props.methods}
-                    colDefs={props.formColDefs}
-                    messages={props.messages}
-                    formData={formData}
-                    setFormData={setFormData}
-                    initialValue={props.initialValue}
+                    methods      = {props.methods}
+                    colDefs      = {props.formColDefs}
+                    messages     = {props.messages}
+                    formData     = {formData}
+                    setFormData  = {setFormData}
+                    initialValue = {props.initialValue}
                     // useAxios params
-                    axiosApi={axiosApi}
-                    error={error}
-                    loading={loading}
-                    setChanged={setChanged}
-                    changed={changed}
+                    axiosApi     = {axiosApi}
+                    error        = {error}
+                    loading      = {loading}
+                    setChanged   = {setChanged}
+                    changed      = {changed}
                 />
                 :
                 {console.log("Test2")}

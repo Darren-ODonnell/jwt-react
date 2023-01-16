@@ -50,7 +50,6 @@ const textField = ({index, field, formData, onChange, headerName}) => {
     )
 }
 
-const formLayout = {}
 
 
 

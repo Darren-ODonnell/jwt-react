@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Alert, Button } from "react-bootstrap";
-import {BrowserRouter,  withRouter} from "react-router-dom";
+import {useLocation, useNavigate, useParams,  BrowserRouter } from "react-router-dom";
 
 
 export const ErrorMessage = (props) => {
@@ -11,7 +11,6 @@ export const ErrorMessage = (props) => {
         setShow(false);
         window.location = "/"
     }
-
 
     return (
         <BrowserRouter>
@@ -28,5 +27,20 @@ export const ErrorMessage = (props) => {
         </BrowserRouter>
     )
 }
+function withRouter(Component) {
+    function ComponentWithRouterProp(props) {
+        let location = useLocation();
+        let navigate = useNavigate();
+        let params = useParams();
+        return (
+            <Component
+                {...props}
+                router={{ location, navigate, params }}
+            />
+        );
+    }
+    return ComponentWithRouterProp;
+}
+
 
 export default withRouter(ErrorMessage)

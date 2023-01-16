@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from "react-router-dom";
+import useNavigate from "react-router-dom";
 import instance   from '../api/axios'
 import {API_AUTH_URLS, CLUB_URLS} from "../common/globals";
 import AuthService from "./AuthService";
@@ -11,7 +11,7 @@ export const LoginPage = () => {
     const [ usernameValue, setUsernameValue ] = useState( '' );
     const [ passwordValue, setPasswordValue ] = useState( '' );
     const [ errorMessage , setErrorMessage ]  = useState( '' );
-    const history         = useHistory();
+    const navigate         = useNavigate();
 
     let loginModel = {username:'', password:''};
 
@@ -42,7 +42,7 @@ export const LoginPage = () => {
             promise.then( response => {
                 setLoading( false );
                 updateState( response.data )
-                history.push( CLUB_URLS.list );
+                navigate( CLUB_URLS.list );
             }, error => {
                 setLoading( false );
                 setLoginSuccess(false);
@@ -75,11 +75,11 @@ export const LoginPage = () => {
                 <input type="submit" value="Submit" />
 
                 <button
-                    onClick = { () => history.push( '/forget-password' ) }
+                    onClick = { () => navigate( '/forget-password' ) }
                 >Forgot Password
                 </button>
                 <button
-                    onClick = { () => history.push( '/register' ) }
+                    onClick = { () => navigate( '/register' ) }
                 >Register
                 </button>
             </div>

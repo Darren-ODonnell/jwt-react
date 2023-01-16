@@ -1,11 +1,13 @@
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import DateFnsUtils from '@date-io/date-fns';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { TextField } from "@mui/material";
-import React, { useState } from "react";
+// import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@mui-ui/pickers";
+// import DateFnsUtils from '@date-io/date-fns';
+// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+// import { TextField } from "@mui/material";
+import React from "react";
 
+import {    useLocation,     useNavigate,     useParams } from "react-router-dom";
+import {teams, competitions} from '../common/Dropdowns'
 export const addMessage = (  entityName ) => {
     return {
         add: "Add " + entityName,
@@ -45,22 +47,12 @@ export const copyFormColDefs = ( columnDefs ) => {
 }
 
 export const defaultColDef = {
-    cellEditor: 'agSelectCellEditor',
     sortable: true,
     editable: true,
     filter: true,
     cellEditorPopup: true,
     floatingFilter: true,
     resizable: true,
-    // flex: 1,
-    // cellEditor: 'agSelectCellEditor',
-    // cellEditorParams: {
-    //     values : ['a','b','c'],
-    //     maxLength: 128,
-    //     rows: 2,
-    //     cols: 50
-    // },
-    // cellEditor: 'agLargeTextCellEditor'
 };
 
 export function isEmptyObject(obj){
@@ -69,46 +61,46 @@ export function isEmptyObject(obj){
 
 }
 
-export function datePicker ()  {
-    // eslint-disable-next-line no-self-compare
-    const [value, setValue] = React.useState<Date | null>null;
-    return (
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-                fullWidth
-                format="MM/dd/yyyy"
-                margin="normal"
-                id="date-picker-dialog"
-                label="Date picker dialog"
-                value={value}
-                onChange={(newValue) => {
-                    setValue(newValue)
-                }}
-                KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                }}
-                renderInput={(params) => <TextField {...params} />}
-            />
-        </MuiPickersUtilsProvider>
-    )
-}
+// export function datePicker ()  {
+//     // eslint-disable-next-line no-self-compare
+//     const [value, setValue] = React.useState<Date | null>null;
+//     return (
+//         <MuiPickersUtilsProvider utils={DateFnsUtils}>
+//             <KeyboardDatePicker
+//                 fullWidth
+//                 format="MM/dd/yyyy"
+//                 margin="normal"
+//                 id="date-picker-dialog"
+//                 label="Date picker dialog"
+//                 value={value}
+//                 onChange={(newValue) => {
+//                     setValue(newValue)
+//                 }}
+//                 KeyboardButtonProps={{
+//                     'aria-label': 'change date',
+//                 }}
+//                 renderInput={(params) => <TextField {...params} />}
+//             />
+//         </MuiPickersUtilsProvider>
+//     )
+// }
 
-export function timePicker() {
-    // eslint-disable-next-line no-self-compare
-    const [value, setValue] = useState<Date | null>null;
-    return (
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <TimePicker
-                label="Time"
-                value={value}
-                onChange={(newValue) => {
-                    setValue(newValue);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-            />
-        </LocalizationProvider>
-    )
-}
+// export function timePicker() {
+//     // eslint-disable-next-line no-self-compare
+//     const [value, setValue] = useState<Date | null>null;
+//     return (
+//         <LocalizationProvider dateAdapter={AdapterDateFns}>
+//             <TimePicker
+//                 label="Time"
+//                 value={value}
+//                 onChange={(newValue) => {
+//                     setValue(newValue);
+//                 }}
+//                 renderInput={(params) => <TextField {...params} />}
+//             />
+//         </LocalizationProvider>
+//     )
+// }
 
 export const refreshPage = () => {
     window.location.reload();
@@ -125,3 +117,21 @@ export const refreshPage = () => {
 //
 //     // select one from these 12 rounds
 // }
+
+
+
+export function withRouter(Component) {
+    function ComponentWithRouterProp(props) {
+        let location = useLocation();
+        let navigate = useNavigate();
+        let params = useParams();
+        return (
+            <Component
+                {...props}
+                router={{ location, navigate, params }}
+            />
+        );
+    }
+
+    return ComponentWithRouterProp;
+}
