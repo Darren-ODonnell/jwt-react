@@ -47,6 +47,7 @@ export const copyFormColDefs = ( columnDefs ) => {
 }
 
 export const defaultColDef = {
+    cellEditor: 'agSelectCellEditor',
     sortable: true,
     editable: true,
     filter: true,

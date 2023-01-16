@@ -154,17 +154,17 @@ const MyDataGrid = ({props}) => {
             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
                 <AddButton {...props}/>
                 <AgGridReact
-                    ref                        = {gridRef}
+                    // ref                        = {gridRef}
                     defaultColDef              = {defaultColDef}
-                    pagination                 = {true}
-                    rowData                    = {props.gridLoader(data)}
-                    suppressRowDrag            = {true}
-                    // columnDefs                 = {[...props.gridColDefs  , formActions]}
-                    columnDefs                 = {props.gridColDefs}
+                    // pagination                 = {true}
+                    // suppressRowDrag            = {true}
+                    columnDefs                 = {[...props.gridColDefs  , formActions]}
+                    // columnDefs                 = {props.gridColDefs}
                     onGridReady                = {onGridReady}
-                    animateRows                = {true}
-                    alwaysShowHorizontalScroll = {false}
-                    suppressClickEdit          = {false}
+                    rowData                    = {props.gridLoader(data)}
+                    // animateRows                = {true}
+                    // alwaysShowHorizontalScroll = {false}
+                    // suppressClickEdit          = {false}
 
                 />
 
