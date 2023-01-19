@@ -140,6 +140,7 @@ const FormDialog = (props) => {
 
     return  !props.loading ? (
           <div>
+              {console.log(props)}
             <Dialog
                 open             = { props.open}
                 onClose          = { props.handleClose }
@@ -148,7 +149,10 @@ const FormDialog = (props) => {
             >
                 <DialogTitle id  = "alert-dialog-title"> { props.formData.id ? props.messages.update: props.messages.create }</DialogTitle>
                 <DialogContent>  {
+
                         props.colDefs.map( ( prop, index ) => {
+                            console.log(index)
+                            console.log(prop.type)
                             return textField( { ...props, ...prop, index })
                         })
                     }
