@@ -1,4 +1,4 @@
-import {Fixture   , METHODS        , FIXTURE_URLS} from '../common/globals'
+import {Fixture, METHODS, FIXTURE_URLS, COMPETITION_URLS, CLUB_URLS} from '../common/globals'
 import {teams, competitions} from '../common/Dropdowns';
 import {addMessage, copyFormColDefs, copyGridColDefs} from "../common/helper";
 
@@ -109,21 +109,23 @@ const fixtureInitialValue = {
 };
 
 const apiRequests = {
-    list          : {method: METHODS.GET, url: FIXTURE_URLS.list},
-    findById      : {method: METHODS.GET, url: FIXTURE_URLS.findById},
-    findByClub    : {method: METHODS.GET, url: FIXTURE_URLS.findByClub},
+    list: {method: METHODS.GET, url: FIXTURE_URLS.list},
+    findById: {method: METHODS.GET, url: FIXTURE_URLS.findById},
+    findByClub: {method: METHODS.GET, url: FIXTURE_URLS.findByClub},
     findByHomeClub: {method: METHODS.GET, url: FIXTURE_URLS.findByHomeClub},
     findByAwayClub: {method: METHODS.GET, url: FIXTURE_URLS.findByAwayClub},
-    nextByClub    : {method: METHODS.GET, url: FIXTURE_URLS.nextByClub},
+    nextByClub: {method: METHODS.GET, url: FIXTURE_URLS.nextByClub},
 
     findByCompetitionHomeTeamAwayTeamFixtureDateSeason: {
         method: METHODS.GET,
-        url   : FIXTURE_URLS.findByCompetitionHomeTeamAwayTeamFixtureDateSeason
+        url: FIXTURE_URLS.findByCompetitionHomeTeamAwayTeamFixtureDateSeason
     },
 
-    update: {method: METHODS.POST  , url: FIXTURE_URLS.update},
-    add   : {method: METHODS.PUT   , url: FIXTURE_URLS.add},
+    update: {method: METHODS.POST, url: FIXTURE_URLS.update},
+    add: {method: METHODS.PUT, url: FIXTURE_URLS.add},
     delete: {method: METHODS.DELETE, url: FIXTURE_URLS.delete}
+    // getCompetitions: {method: METHODS.GET   , url: COMPETITION_URLS.list},
+    // getClubs       : {method: METHODS.GET   , url: CLUB_URLS.list}
 }
 
 const gridLoader = (data) => {

@@ -1,5 +1,5 @@
-import { Teamsheet, TEAMSHEET_URLS, METHODS } from "../common/globals";
-import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
+import {Teamsheet, TEAMSHEET_URLS, METHODS, COMPETITION_URLS, CLUB_URLS, PLAYER_URLS} from "../common/globals";
+import {addMessage, copyFormColDefs, copyGridColDefs} from "../common/helper";
 
 export const teamsheetColumnDefs = [
     { headerName: 'Competition Name', field: 'competitionName', type: 'String', min: 8 , max: 60, required: true },
@@ -46,7 +46,10 @@ const apiRequests = {
     findById: {method: METHODS.GET, url: TEAMSHEET_URLS.findById},
     update: {method: METHODS.POST, url: TEAMSHEET_URLS.update},
     add: {method: METHODS.PUT, url: TEAMSHEET_URLS.add},
-    delete: {method: METHODS.DELETE, url: TEAMSHEET_URLS.delete}
+    delete: {method: METHODS.DELETE, url: TEAMSHEET_URLS.delete},
+    getCompetitions: {method: METHODS.GET, url: COMPETITION_URLS.list},
+    getClubs: {method: METHODS.GET, url: CLUB_URLS.list},
+    getPlayers: {method: METHODS.GET, url: PLAYER_URLS.list},
 }
 
 export const teamsheetData = {

@@ -44,8 +44,8 @@ const Paths = () =>  {
                     <Route exact path = "/teamsheet"       element = {<MyDataGrid props = { teamsheetData }/>}  />
 
                     <Route exact path = "/competition"     element = {<MyDataGrid props = {competitionData}/>}  />
-                    <Route exact path = "/competitions"    element = {<MyDataGrid props = {competitionData}/>}  />
-                    <Route exact path = "competition/list" element = {<MyDataGrid props = {competitionData}/>}  />
+                    <Route exact path="/competitions" element={<MyDataGrid props={competitionData}/>}/>
+                    <Route exact path="/competition/list" element={<MyDataGrid props={competitionData}/>}/>
 
                     <Route exact path = "/playerStats"     element = {<Reports.PlayerStats/>       }            />
                     <Route exact path = "/teamStats"       element = {<Reports.TeamStats/>         }            />

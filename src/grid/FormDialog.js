@@ -1,29 +1,36 @@
-import React from "react";
-import { Button, Dialog, TextField } from "@mui/material";
-import {  DialogActions, DialogContent, DialogTitle } from "@mui/material";
-import { ErrorMessage } from "../common/ErrorMessage";
+import React, {useState} from "react";
+import {Button, Dialog, TextField} from "@mui/material";
+import {DialogActions, DialogContent, DialogTitle} from "@mui/material";
+import {ErrorMessage} from "../common/ErrorMessage";
 import AuthService from "../auth/AuthService";
 import instance from "../api/axios";
 import {refreshPage} from "../common/helper";
-// import { DatePicker } from "antd";
-// import { TimePicker } from 'antd';
-// import moment from 'moment';
-// import 'antd/dist/reset.css';
 
+// import { TimePicker, DatePicker,  TimePickerProps, DatePickerProps, Space } from "antd";
+import moment from "moment";
+import type from 'antd';
+import {ConfigProvider} from 'antd'
+// import ConfigProvider from 'antd/lib/config-provider'
 
+import {Dayjs} from 'dayjs';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {TimePicker, TimePickerProps} from '@mui/x-date-pickers/TimePicker';
+import {getTime} from "date-fns";
 
-import DateTimePicker from "react-datetime-picker";
+// import DateTimePicker from "react-datetime-picker";
 // import TimePicker from "react-timepicker";
-
 // import "react-datepicker/dist/react-datepicker.css";
 
 
 const FormDialog = (props) => {
     // close popup window
+    const [value, setValue] = useState();
     const handleClose = (setOpen) => {
         setOpen(false);
         // setFormData(props.initialValue);
     };
+
     const handleError = (message) => {
         return <ErrorMessage message={message}/>;
 
@@ -127,21 +134,27 @@ const FormDialog = (props) => {
         return (
             <Button onClick={() => handleFormSubmit(props)}
                     type="submit"
-                    color   = "primary"
-                    variant = "outlined"
+                    color="primary"
+                    variant="outlined"
             >Submit</Button>
         )
     }
 
-    const textField = ( { index, field, formData, onChange, headerName }) => {
+    function onChange(newValue) {
+        const newDate = new Date(newValue)
+        console.log("Time: " + value + " - " + newDate)
+        setValue(newValue);
+    }
+
+    const textField = ({index, field, formData, onChange, headerName}) => {
         console.log("default - textField")
         return (
             <TextField
-                key         = { index }
-                id          = { field }
-                value       = { formData[field] }
-                onChange    = { e => onChange(e) }
-                data        = { formData }
+                key={index}
+                id={field}
+                value={formData[field]}
+                onChange={e => onChange(e)}
+                data={formData}
                 placeholder = { "Enter " + headerName }
                 label       = { headerName }
                 variant     = "outlined"
@@ -158,26 +171,82 @@ const FormDialog = (props) => {
                 key         = { index }
                 id          = { field }
                 value       = { formData[field] }
-                onChange    = { e => onChange(e) }
-                data        = { formData }
-                placeholder = { "Enter " + headerName }
-                label       = { headerName }
-                variant     = "outlined"
-                margin      = "dense"
+                onChange={e => onChange(e)}
+                data={formData}
+                placeholder={"Enter " + headerName}
+                label={headerName}
+                variant="outlined"
+                margin="dense"
                 fullWidth
             />
         )
     }
-    const clubDropdown =  ( { index, field, formData, onChange, headerName }) => {
+
+    // function getCompetitions(props) {
+    //     const user = AuthService.getCurrentUser();
+    //     AuthService.setAuthToken(user.accessToken);
+    //
+    //     const configObj = {
+    //         axiosInstance: instance,
+    //          ...props.methods.getCompetitions,
+    //         requestConfig: {
+    //             data: {...props.formData}
+    //         }
+    //     }
+    //     props.axiosApi( configObj )
+    //         .then( response => {
+    //             props.setOpen( false )
+    //             props.data = response.data
+    //             console.log("Competitions: ", response.data)
+    //             props.setData(props.data)
+    //         })
+    //         .catch(err => {
+    //             props.error = err.message;
+    //             props.setOpen(false)
+    //
+    //         })
+    //     console.log(props.data)
+    //
+    //     return props.data;
+    //
+    // }
+    // function getClubs(props) {
+    //     const user = AuthService.getCurrentUser();
+    //     AuthService.setAuthToken(user.accessToken);
+    //
+    //     const configObj = {
+    //         axiosInstance: instance,
+    //         ...props.methods.getClubs,
+    //         requestConfig: {
+    //             data: {...props.formData}
+    //         }
+    //     }
+    //     props.axiosApi( configObj )
+    //         .then( response => {
+    //             props.setOpen( false )
+    //             props.data = response.data
+    //             console.log("Clubs: ", response.data)
+    //             props.setData(props.data)
+    //         })
+    //         .catch(err => {
+    //             props.error = err.message;
+    //             props.setOpen(false)
+    //
+    //         })
+    //     console.log(props.data)
+    //
+    //     return props.data;
+    // }
+
+    const clubDropdown = ({index, field, formData, onChange, headerName}) => {
         // get club data
         console.log("clubDropDown")
-
         return (
             <TextField
-                key         = { index }
-                id          = { field }
-                value       = { formData[field] }
-                onChange    = { e => onChange(e) }
+                key={index}
+                id={field}
+                value={formData[field]}
+                onChange={e => onChange(e)}
                 data        = { formData }
                 placeholder = { "Enter " + headerName }
                 label       = { headerName }
@@ -187,67 +256,100 @@ const FormDialog = (props) => {
             />
         )
     }
+
     const datePicker =  ( { index, field, formData, onChange, headerName }) => {
-        console.log("datePicker: -> "+ formData.field)
+        // console.log("datePicker: -> "+ formData.fixtureDate)
         // add min and max dates
         // add min and max time
 
 
         return (
-            <DateTimePicker
-                // getPopupContainer = {FormDialog}
-                // defaultValue = { moment(formData.field, 'dd:mm:yyyy') }
-                key          = { index }
-                disableClock = { true }
-                // autoFocus    = { true }
-                // closeWidget  = { true }
-                format       = {'dd/mm/yyyy'}
-                id           = { field }
-                value        = { formData[field] }
-                onChange     = { e => onChange(e) }
-                data         = { formData }
-                placeholder  = { "Enter " + headerName }
-                label        = { headerName }
-                variant      = "outlined"
-                margin       = "dense"
-                fullWidth
-            />
-        )
-    }
-    const timePicker =  ( { index, field, formData, onChange, headerName }) => {
-        console.log("timePicker:" + formData.fixtureTime)
-        return (
-            <DateTimePicker
-                // getPopupContainer = {FormDialog}
-                // defaultValue={moment(formData, 'HH:mm:ss')}
-                key             = { index }
-                id              = { field }
-                disableCalendar = {true}
-                format          = {'hh:mm:ss'}
-                value           = { formData[field] }
-                onChange        = { e => onChange(e) }
-                data            = { formData }
-                placeholder     = { "Enter " + headerName }
-                label           = { headerName }
-                variant         = "outlined"
-                margin          = "dense"
-                fullWidth
-            />
+            <div>
 
-            // <TextField
-            //     key         = { index }
-            //     id          = { field }
-            //     value       = { formData[field] }
-            //     onChange    = { e => onChange(e) }
-            //     data        = { formData }
-            //     placeholder = { "Enter " + headerName }
-            //     label       = { headerName }
-            //     variant     = "outlined"
-            //     margin      = "dense"
+            </div>
+            // <TimePicker onChange={this.onchange() } value={} renderInput={}
+            // <DatePicker
+            //
+            //     // getPopupContainer = {FormDialog}
+            //     style        = {{ position: 'absolute', width: "100%" }}
+            //     defaultValue = { new Date("2023-01-20 18:22:00") }
+            //     key          = { index }
+            //     disableClock = { true }
+            //     autoFocus    = { true }
+            //     closeWidget  = { true }
+            //     format       = { 'yyyy-mm-dd hh:mm:ss' }
+            //     id           = { field }
+            //     value        = { formData[field] }
+            //     onChange     = { e => this.onChange(e) }
+            //     data         = { formData }
+            //     placeholder  = { "Enter " + headerName }
+            //     label        = { headerName }
+            //     variant      = "outlined"
+            //     margin       = "dense"
             //     fullWidth
             // />
+
         )
     }
+    const timePicker = ({index, field, formData, headerName}) => {
+        // console.log("timePicker:" + formData.fixtureTime)
+        return (
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <TimePicker
+                    key={index}
+                    style={{position: 'absolute', width: "100%"}}
+                    // getPopupContainer = {FormDialog}
+                    // defaultValue = { moment("2023-01-20 18:22:00", "yyyy-mm-dd hh:mm:dd") }
+                    // defaultValue    = { moment(formData, 'HH:mm:ss')}
+
+                    // setValue        = { formData[field] }
+                    id={field}
+                    disableCalendar={true}
+                    format={'hh:mm:ss'}
+                    value={formData[field]}
+                    onChange={e => onChange(e)}
+                    openTo={["hours,minutes"]}
+                    data={formData}
+                    placeholder={"Enter " + headerName}
+                    label={headerName}
+                    minutesStep={15}
+                    variant="outlined"
+                    margin="dense"
+                    fullWidth
+
+                    renderInput={(props) =>
+                        <TextField {...props}
+                            // key         = { index }
+                            // id          = { field }
+                            // value       = { formData[field] }
+                                   minutesStep="15"
+                            // onChange    = { e => onChange(e) }
+                            // fullwidth = { true }
+                            // data        = { formData }
+                            // placeholder = { "Enter " + headerName }
+                            // label       = { headerName }
+                            // variant     = "outlined"
+                            // margin      = "dense"
+                            // fullWidth
+                        />}
+                />
+
+                {/*<TextField*/}
+                {/*    key         = { index }*/}
+                {/*    id          = { field }*/}
+                {/*    value       = { formData[field] }*/}
+                {/*    onChange    = { e => onChange(e) }*/}
+                {/*    data        = { formData }*/}
+                {/*    placeholder = { "Enter " + headerName }*/}
+                {/*    label       = { headerName }*/}
+                {/*    variant     = "outlined"*/}
+                {/*    margin      = "dense"*/}
+                {/*    fullWidth*/}
+                {/*/>*/}
+            </LocalizationProvider>
+        )
+    }
+
 
     return  !props.loading ? (
           <div>
@@ -263,10 +365,14 @@ const FormDialog = (props) => {
 
                         props.colDefs.map( ( prop, index ) => {
                             console.log(index)
+                            console.log(prop.field)
                             switch(prop.type) {
+
                                 case "Competition" :
+                                    // var competitions = getCompetitions(props);
                                     return competitionDropdown( { ...props, ...prop, index });
                                 case "Club" :
+                                    // var clubs = getClubs(props);
                                     return clubDropdown( { ...props, ...prop, index });
                                 case "Date":
                                     return datePicker( { ...props, ...prop, index });
@@ -274,10 +380,7 @@ const FormDialog = (props) => {
                                     return timePicker( { ...props, ...prop, index });
                                 default :
                                     return textField( { ...props, ...prop, index });
-
                             }
-
-
                             // return textField( { ...props, ...prop, index })
                         })
                     }
