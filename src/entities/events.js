@@ -1,7 +1,7 @@
 import { Event, METHODS, EVENT_URLS } from "../common/globals";
 import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
 
-
+const table = {name:Event}
 export const eventColumnDefs = [
     { headerName: 'Competition Name', field: 'competitionName', type: 'String' , min: 8, max: 60, required: true },
     { headerName: 'Home Team Name'  , field: 'homeTeamName'   , type: 'String' , min: 8, max: 60, required: true  },
@@ -50,7 +50,7 @@ export const eventData = {
     initialValue: eventInitialValue,
     columnDefs  : eventColumnDefs,
     formColDefs : copyFormColDefs( eventColumnDefs ), // form column definitions
-    gridColDefs : copyGridColDefs( eventColumnDefs ), // Grid column definitions
+    gridColDefs : copyGridColDefs( eventColumnDefs, table ), // Grid column definitions
     methods     : apiRequests,
     gridLoader: gridLoader
 };

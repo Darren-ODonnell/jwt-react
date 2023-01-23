@@ -16,9 +16,23 @@ export const addMessage = (  entityName ) => {
     };
 }
 
-const id = { headerName: 'id',  field: 'id',  width:80,  editable: false, filter: false, };
+// const id = { headerName: 'id',  field: 'id',  width:80,  editable: false, filter: false, };
 
-export const copyGridColDefs = ( columnDefs ) => {
+function getId(table) {
+    // return id;
+    switch (table.name) {
+        case "Position":
+            return { headerName: 'Number',  field: 'id',  width:120,  editable: false, filter: false, };
+        case "Pitchgrid":
+            return { headerName: 'Abbreviation',  field: 'abbrev',  width:120,  editable: false, filter: false, };
+        case "Statname":
+            return { headerName: 'Abbreviation',  field: 'abbrev',  width:120,  editable: false, filter: false, };
+        default:
+            return { headerName: 'id',  field: 'id',  width:80,  editable: false, filter: false, };
+    }
+}
+
+export const copyGridColDefs = ( columnDefs , table) => {
     const newColDefs = columnDefs.map( ({ headerName, field }) => {
         return {
             headerName: headerName,
@@ -29,7 +43,7 @@ export const copyGridColDefs = ( columnDefs ) => {
 
     // add grid actions update and delete to end of row and id defs to start of row
     // return [id,...newColDefs, actions];
-    return [id,...newColDefs];
+    return [getId(table),...newColDefs];
 }
 
 // move to FormDialog

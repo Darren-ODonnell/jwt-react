@@ -15,12 +15,14 @@ export const LoggedInNavbar = (props) =>{
                         <Nav.Link href             = "/players">Players</Nav.Link>
                         <Nav.Link href             = "/fixtures">Fixtures</Nav.Link>
                         <Nav.Link href             = "/teamsheets">Teamsheets</Nav.Link>
-                        <Nav.Link href             = "/events">Events</Nav.Link>
+                        <Nav.Link href             = "/statnames">Statnames</Nav.Link>
                         <NavDropdown title         = "Dropdown" id                                   = "basic-nav-dropdown">
                             <NavDropdown.Item href = "/competitions">Competitions</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href = "lastnames">Lastnames</NavDropdown.Item>
-                            <NavDropdown.Item href = "firstnames">Firstnames</NavDropdown.Item>
+                            <NavDropdown.Item href = "/positions">Positions</NavDropdown.Item>
+                            <NavDropdown.Item href = "/pitchgrids">Pitchgrids</NavDropdown.Item>
+                            <NavDropdown.Item href = "/lastnames">Lastnames</NavDropdown.Item>
+                            <NavDropdown.Item href = "/firstnames">Firstnames</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title         = "Reports" id                                    = "basic-nav-dropdown">
                             <NavDropdown.Item href = "/playerStats">Player Stats</NavDropdown.Item>

@@ -16,24 +16,26 @@ export const AWS_REACT = ""
 export const ENDPOINT = SAME_MACHINE;
 
 // for Form/Grid columns
-export const Club = 'Club';
+export const Club        = 'Club';
 export const Competition = 'Competition';
-export const Player = 'Player';
-export const Lastname = 'Lastname';
-export const Firstname = 'Firstname';
-export const Fixture = 'Fixture';
-export const Event = 'Event';
-export const Teamsheet = 'Teamsheet';
+export const Player      = 'Player';
+export const Lastname    = 'Lastname';
+export const Firstname   = 'Firstname';
+export const Fixture     = 'Fixture';
+export const Statname    = 'Statname';
+export const Pitchgrid   = 'Pitchgrid';
+export const Position   = 'Position';
+export const Teamsheet   = 'Teamsheet';
 
 // auth
 const API_AUTH_FORGOT_PASSWORD = "/api/auth/forgot_password";
 const API_AUTH_CHANGE_PASSWORD = "/api/auth/change_password";
-const API_AUTH_DELETE = "/api/auth/delete/";
-const API_AUTH_FINDBYID = "/api/auth/findById/";
-const API_AUTH_LIST = "/api/auth/list";
-const API_AUTH_LOGIN = "/api/auth/login";
-const API_AUTH_REGISTER = "/api/auth/register/";
-const API_AUTH_UPDATE = "/api/auth/update";
+const API_AUTH_DELETE          = "/api/auth/delete/";
+const API_AUTH_FINDBYID        = "/api/auth/findById/";
+const API_AUTH_LIST            = "/api/auth/list";
+const API_AUTH_LOGIN           = "/api/auth/login";
+const API_AUTH_REGISTER        = "/api/auth/register/";
+const API_AUTH_UPDATE          = "/api/auth/update";
 
 export const API_AUTH_URLS = {
     forgotPassword: API_AUTH_FORGOT_PASSWORD,
@@ -47,12 +49,12 @@ export const API_AUTH_URLS = {
 }
 
 // clubs
-const CLUB_ADD = "/club/add";
-const CLUB_DELETE = "/club/delete/";
-const CLUB_FINDBYID = "/club/findById/";
+const CLUB_ADD        = "/club/add";
+const CLUB_DELETE     = "/club/delete/";
+const CLUB_FINDBYID   = "/club/findById/";
 const CLUB_FINDBYNAME = "/club/findByName/";
-const CLUB_LIST = "/club/list";
-const CLUB_UPDATE = "/club/update";
+const CLUB_LIST       = "/club/list";
+const CLUB_UPDATE     = "/club/update";
 
 export const HOME_PAGE = CLUB_LIST;
 
@@ -66,140 +68,171 @@ export const CLUB_URLS = {
 }
 
 // players
-const PLAYER_ADD = "/player/add";
-const PLAYER_DELETE = "/player/delete/";
-const PLAYER_FINDBYFIRSTNAME = "/player/findByFirstname/";
+const PLAYER_ADD                     = "/player/add";
+const PLAYER_DELETE                  = "/player/delete/";
+const PLAYER_FINDBYFIRSTNAME         = "/player/findByFirstname/";
 const PLAYER_FINDBYFIRSTNAMELASTNAME = "/player/findByFirstnameLastname/";
-const PLAYER_FINDBYID = "/player/findById/";
-const PLAYER_FINDBYLASTNAME = "/player/findByLastname/";
-const PLAYER_LIST = "/player/list";
-const PLAYER_UPDATE = "/player/update";
+const PLAYER_FINDBYID                = "/player/findById/";
+const PLAYER_FINDBYLASTNAME          = "/player/findByLastname/";
+const PLAYER_LIST                    = "/player/list";
+const PLAYER_UPDATE                  = "/player/update";
 
 export const PLAYER_URLS = {
-    add: PLAYER_ADD,
-    delete: PLAYER_DELETE,
-    findByFirstname: PLAYER_FINDBYFIRSTNAME,
+    add                    : PLAYER_ADD,
+    delete                 : PLAYER_DELETE,
+    findByFirstname        : PLAYER_FINDBYFIRSTNAME,
     findByFirstnameLastname: PLAYER_FINDBYFIRSTNAMELASTNAME,
-    findById: PLAYER_FINDBYID,
-    findByLastname: PLAYER_FINDBYLASTNAME,
-    list: PLAYER_LIST,
-    update: PLAYER_UPDATE
+    findById               : PLAYER_FINDBYID,
+    findByLastname         : PLAYER_FINDBYLASTNAME,
+    list                   : PLAYER_LIST,
+    update                 : PLAYER_UPDATE
 }
 
 // fixtures
-const FIXTURE_ADD = "/fixture/add";
-const FIXTURE_DELETE = "/fixture/delete/";
+const FIXTURE_ADD              = "/fixture/add";
+const FIXTURE_DELETE           = "/fixture/delete/";
 const FIXTURE_FINDBYAWAYBYCLUB = "/fixture/findByAwayByClub/";
-const FIXTURE_FINDBYCLUB = "/fixture/findByClub/";
+const FIXTURE_FINDBYCLUB       = "/fixture/findByClub/";
 const FIXTURE_FINDBYHOMEBYCLUB = "/fixture/findByHomeByClub/";
-const FIXTURE_FINDBYID = "/fixture/findById/";
-const FIXTURE_FINDNEXTBYCLUB = "/fixture/findNextByClub/";
-const FIXTURE_LIST = "/fixture/list";
-const FIXTURE_UPDATE = "/fixture/update";
+const FIXTURE_FINDBYID         = "/fixture/findById/";
+const FIXTURE_FINDNEXTBYCLUB   = "/fixture/findNextByClub/";
+const FIXTURE_LIST             = "/fixture/list";
+const FIXTURE_UPDATE           = "/fixture/update";
 
 const FIXTURE_FINDBYCOMPETITIONHOMETEAMAWAYTEAMFIXTUREDATESEASON = "/fixture/findByCompetitionHomeTeamAwayTeamFixtureDateSeason";
 
 export const FIXTURE_URLS = {
-    add: FIXTURE_ADD,
-    delete: FIXTURE_DELETE,
+    add           : FIXTURE_ADD,
+    delete        : FIXTURE_DELETE,
     findByAwayClub: FIXTURE_FINDBYAWAYBYCLUB,
     findByHomeClub: FIXTURE_FINDBYHOMEBYCLUB,
-    findById: FIXTURE_FINDBYID,
-    findByClub: FIXTURE_FINDBYCLUB,
-    list: FIXTURE_LIST,
-    update: FIXTURE_UPDATE,
-    nextByClub: FIXTURE_FINDNEXTBYCLUB,
+    findById      : FIXTURE_FINDBYID,
+    findByClub    : FIXTURE_FINDBYCLUB,
+    list          : FIXTURE_LIST,
+    update        : FIXTURE_UPDATE,
+    nextByClub    : FIXTURE_FINDNEXTBYCLUB,
 
     findByCompetitionHomeTeamAwayTeamFixtureDateSeason: FIXTURE_FINDBYCOMPETITIONHOMETEAMAWAYTEAMFIXTUREDATESEASON,
 }
 
 // competitions
-const COMPETITION_ADD = "/competition/add";
-const COMPETITION_DELETE = "/competition/delete";
-const COMPETITION_FINDBYID = "/competition/findById/";
+const COMPETITION_ADD        = "/competition/add";
+const COMPETITION_DELETE     = "/competition/delete";
+const COMPETITION_FINDBYID   = "/competition/findById/";
 const COMPETITION_FINDBYNAME = "/competition/findByName/";
-const COMPETITION_LIST = "/competition/list";
-const COMPETITION_UPDATE = "/competition/update";
+const COMPETITION_LIST       = "/competition/list";
+const COMPETITION_UPDATE     = "/competition/update";
 
 export const COMPETITION_URLS = {
-    add: COMPETITION_ADD,
-    delete: COMPETITION_DELETE,
+    add       : COMPETITION_ADD,
+    delete    : COMPETITION_DELETE,
     findByName: COMPETITION_FINDBYNAME,
-    findById: COMPETITION_FINDBYID,
-    list: COMPETITION_LIST,
-    update: COMPETITION_UPDATE,
+    findById  : COMPETITION_FINDBYID,
+    list      : COMPETITION_LIST,
+    update    : COMPETITION_UPDATE,
 }
 
 // firstnames
-const FIRSTNAME_ADD = "/firstname/add";
-const FIRSTNAME_DELETE = "/firstname/delete/";
+const FIRSTNAME_ADD             = "/firstname/add";
+const FIRSTNAME_DELETE          = "/firstname/delete/";
 const FIRSTNAME_FINDBYFIRSTNAME = "/firstname/findByFirstname/";
-const FIRSTNAME_FINDBYID = "/firstname/findById/";
-const FIRSTNAME_FINDENGLISH = "/firstname/findEnglish/";
-const FIRSTNAME_FINDIRISH = "/firstname/findIrish/";
-const FIRSTNAME_LIST = "/firstname/list";
-const FIRSTNAME_UPDATE = "/firstname/update";
+const FIRSTNAME_FINDBYID        = "/firstname/findById/";
+const FIRSTNAME_FINDENGLISH     = "/firstname/findEnglish/";
+const FIRSTNAME_FINDIRISH       = "/firstname/findIrish/";
+const FIRSTNAME_LIST            = "/firstname/list";
+const FIRSTNAME_UPDATE          = "/firstname/update";
 
 export const FIRSTNAME_URLS = {
-    add: FIRSTNAME_ADD,
-    delete: FIRSTNAME_DELETE,
+    add            : FIRSTNAME_ADD,
+    delete         : FIRSTNAME_DELETE,
     findByFirstname: FIRSTNAME_FINDBYFIRSTNAME,
-    findById: FIRSTNAME_FINDBYID,
-    findEnglish: FIRSTNAME_FINDENGLISH,
-    findIrish: FIRSTNAME_FINDIRISH,
-    list: FIRSTNAME_LIST,
-    update: FIRSTNAME_UPDATE
+    findById       : FIRSTNAME_FINDBYID,
+    findEnglish    : FIRSTNAME_FINDENGLISH,
+    findIrish      : FIRSTNAME_FINDIRISH,
+    list           : FIRSTNAME_LIST,
+    update         : FIRSTNAME_UPDATE
 }
 
 // lastnames
-const LASTNAME_ADD = "/lastname/add";
-const LASTNAME_DELETE = "/lastname/delete/";
-const LASTNAME_FINDBYID = "/lastname/findById/";
+const LASTNAME_ADD            = "/lastname/add";
+const LASTNAME_DELETE         = "/lastname/delete/";
+const LASTNAME_FINDBYID       = "/lastname/findById/";
 const LASTNAME_FINDBYLASTNAME = "/lastname/findByLastname";
-const LASTNAME_FINDENGLISH = "/lastname/findEnglish/";
-const LASTNAME_FINDIRISH = "/lastname/findIrish/";
-const LASTNAME_LIST = "/lastname/list";
-const LASTNAME_UPDATE = "/lastname/update";
+const LASTNAME_FINDENGLISH    = "/lastname/findEnglish/";
+const LASTNAME_FINDIRISH      = "/lastname/findIrish/";
+const LASTNAME_LIST           = "/lastname/list";
+const LASTNAME_UPDATE         = "/lastname/update";
 
 export const LASTNAME_URLS = {
-    add: LASTNAME_ADD,
-    delete: LASTNAME_DELETE,
+    add           : LASTNAME_ADD,
+    delete        : LASTNAME_DELETE,
     findByLastname: LASTNAME_FINDBYLASTNAME,
-    findById: LASTNAME_FINDBYID,
-    findEnglish: LASTNAME_FINDENGLISH,
-    findIrish: LASTNAME_FINDIRISH,
-    list: LASTNAME_LIST,
-    update: LASTNAME_UPDATE,
+    findById      : LASTNAME_FINDBYID,
+    findEnglish   : LASTNAME_FINDENGLISH,
+    findIrish     : LASTNAME_FINDIRISH,
+    list          : LASTNAME_LIST,
+    update        : LASTNAME_UPDATE,
 }
 
-// events
-const EVENT_ADD = "/event/add";
-const EVENT_DELETE = "/event/delete/";
-const EVENT_FINDBYID = "/event/findById/";
-const EVENT_LIST = "/event/list";
-const EVENT_UPDATE = "/event/update";
+// statnames
+const STAT_NAME_ADD      = "/statname/add";
+const STAT_NAME_DELETE   = "/statname/delete/";
+const STAT_NAME_FINDBYID = "/statname/findById/";
+const STAT_NAME_LIST     = "/statname/list";
+const STAT_NAME_UPDATE   = "/statname/update";
 
-export const EVENT_URLS = {
-    add: EVENT_ADD,
-    delete: EVENT_DELETE,
-    findById: EVENT_FINDBYID,
-    list: EVENT_LIST,
-    update: EVENT_UPDATE,
+export const STAT_NAME_URLS = {
+    add     : STAT_NAME_ADD,
+    delete  : STAT_NAME_DELETE,
+    findById: STAT_NAME_FINDBYID,
+    list    : STAT_NAME_LIST,
+    update  : STAT_NAME_UPDATE,
 }
+
+// pitchgrid
+const PITCH_GRID_ADD      = "/pitchgrid/add";
+const PITCH_GRID_DELETE   = "/pitchgrid/delete/";
+const PITCH_GRID_FINDBYID = "/pitchgrid/findById/";
+const PITCH_GRID_LIST     = "/pitchgrid/list";
+const PITCH_GRID_UPDATE   = "/pitchgrid/update";
+
+export const PITCH_GRID_URLS = {
+    add     : PITCH_GRID_ADD,
+    delete  : PITCH_GRID_DELETE,
+    findById: PITCH_GRID_FINDBYID,
+    list    : PITCH_GRID_LIST,
+    update  : PITCH_GRID_UPDATE,
+}
+
+// positions
+const POSITION_ADD      = "/position/add";
+const POSITION_DELETE   = "/position/delete/";
+const POSITION_FINDBYID = "/position/findById/";
+const POSITION_LIST     = "/position/list";
+const POSITION_UPDATE   = "/position/update";
+
+export const POSITION_URLS = {
+    add     : POSITION_ADD,
+    delete  : POSITION_DELETE,
+    findById: POSITION_FINDBYID,
+    list    : POSITION_LIST,
+    update  : POSITION_UPDATE,
+}
+
 
 // teamsheets
-const TEAMSHEET_ADD = "/teamsheet/add";
-const TEAMSHEET_DELETE = "/teamsheet/delete/";
+const TEAMSHEET_ADD      = "/teamsheet/add";
+const TEAMSHEET_DELETE   = "/teamsheet/delete/";
 const TEAMSHEET_FINDBYID = "/teamsheet/findById/";
-const TEAMSHEET_LIST = "/teamsheet/list";
-const TEAMSHEET_UPDATE = "/teamsheet/update";
+const TEAMSHEET_LIST     = "/teamsheet/list";
+const TEAMSHEET_UPDATE   = "/teamsheet/update";
 
 export const TEAMSHEET_URLS = {
-    add: TEAMSHEET_ADD,
-    delete: TEAMSHEET_DELETE,
+    add     : TEAMSHEET_ADD,
+    delete  : TEAMSHEET_DELETE,
     findById: TEAMSHEET_FINDBYID,
-    list: TEAMSHEET_LIST,
-    update: TEAMSHEET_UPDATE,
+    list    : TEAMSHEET_LIST,
+    update  : TEAMSHEET_UPDATE,
 }
 
 export const API_TYPE = {

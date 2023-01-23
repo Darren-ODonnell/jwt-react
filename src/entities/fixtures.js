@@ -1,7 +1,8 @@
-import {Fixture, METHODS, FIXTURE_URLS, COMPETITION_URLS, CLUB_URLS} from '../common/globals'
+import { Fixture, METHODS, FIXTURE_URLS, COMPETITION_URLS, CLUB_URLS, Club } from '../common/globals'
 import {teams, competitions} from '../common/Dropdowns';
 import {addMessage, copyFormColDefs, copyGridColDefs} from "../common/helper";
 
+const table = {name:Fixture}
 const languages = ['English', 'Spanish', 'French', 'Portuguese', '(other)']
 
 // const gridOptions = {
@@ -156,7 +157,7 @@ export const fixtureData = {
     initialValue: fixtureInitialValue,
     columnDefs  : fixtureColumnDefs,
     formColDefs : copyFormColDefs(fixtureColumnDefs), // form column definitions
-    gridColDefs : copyGridColDefs(fixtureColumnDefs), // Grid column definitions
+    gridColDefs : copyGridColDefs(fixtureColumnDefs, table), // Grid column definitions
     methods     : apiRequests,
     dropDown    : fixtureDropDown,
     gridLoader  : gridLoader

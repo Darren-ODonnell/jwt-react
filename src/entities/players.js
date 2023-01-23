@@ -1,6 +1,9 @@
 import { METHODS, Player, PLAYER_URLS } from '../common/globals'
 import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
 
+
+const table = {name:Player}
+
 export const playerColumnDefs = [
     { headerName: 'Firstname'      , field: 'firstname'   , type: 'String' , min: 5   , max: 45  , required: true },
     { headerName: 'Lastname'       , field: 'lastname'    , type: 'String' , min: 5   , max: 45  , required: true },
@@ -39,7 +42,7 @@ export const playerData = {
     initialValue: playerInitialValue,
     columnDefs  : playerColumnDefs,
     formColDefs : copyFormColDefs( playerColumnDefs ), // form column definitions
-    gridColDefs : copyGridColDefs( playerColumnDefs ), // Grid column definitions
+    gridColDefs : copyGridColDefs( playerColumnDefs, table ), // Grid column definitions
     methods     : apiRequests,
     gridLoader: gridLoader
 };

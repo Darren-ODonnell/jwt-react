@@ -1,6 +1,7 @@
-import { Club, METHODS, CLUB_URLS } from '../common/globals'
+import { Club, METHODS, CLUB_URLS, Statname } from '../common/globals'
 import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
 
+const table = {name:Club}
 export const clubColumnDefs = [
     // { headerName: 'ID',             field: 'id',            type: 'Number', min:3, max:10, required: true   },
     {headerName: 'Club Name', field: 'name', type: 'String', min: 3, max: 45, required: true},
@@ -41,7 +42,7 @@ export const clubData = {
     type: Club,
     initialValue: clubInitialValue,
     formColDefs: copyFormColDefs(clubColumnDefs), // form column definitions
-    gridColDefs: copyGridColDefs(clubColumnDefs), // Grid column definitions
+    gridColDefs: copyGridColDefs(clubColumnDefs, table), // Grid column definitions
     columnDefs: clubColumnDefs,
     methods: apiRequests,
     dropDown: clubDropDown,

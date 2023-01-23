@@ -1,5 +1,6 @@
-import { Firstname, METHODS, FIRSTNAME_URLS } from '../common/globals'
+import { Firstname, METHODS, FIRSTNAME_URLS, Club } from '../common/globals'
 import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
+const table = {name:Firstname}
 
 export const firstnameColumnDefs = [
     { headerName: 'Firstname'      , field: 'firstname'     , type: 'String', min: 3, max: 45, required: true  },
@@ -33,7 +34,7 @@ export const firstnameData = {
     initialValue: firstnameInitialValue,
     columnDefs  : firstnameColumnDefs,
     formColDefs : copyFormColDefs( firstnameColumnDefs ), // form column definitions
-    gridColDefs : copyGridColDefs( firstnameColumnDefs ), // Grid column definitions
+    gridColDefs : copyGridColDefs( firstnameColumnDefs , table), // Grid column definitions
     methods     : apiRequests,
     gridLoader: gridLoader
 };

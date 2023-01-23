@@ -12,6 +12,8 @@ import {useAxios} from "../api/ApiService";
 import instance from "../api/axios";
 import AuthService from "../auth/AuthService";
 
+import {Position, Pitchgrid} from '../common/globals';
+
 import {} from './Forms';
 
 
@@ -23,7 +25,6 @@ const MyDataGrid = ({props}) => {
     // const [rowData, setRowData] = useState();
 
     const [changed, setChanged] = useState();
-
     const [formData, setFormData] = useState(props.initialValue)
     // form control
     const [open, setOpen] = useState(false);
@@ -41,6 +42,7 @@ const MyDataGrid = ({props}) => {
         const {value, id} = e.target
         // update field with data from user
         // data updated here first, then screen is updated
+        console.log(value +" - " + id)
         setFormData({ ...formData, [id]: value })
     }
     const onGridReady = (params)  => {  setGridApi(params)      }
@@ -100,6 +102,23 @@ const MyDataGrid = ({props}) => {
         return () => (isSubscribed = false)
     }
 
+    const button = {
+
+    }
+
+    const showAddButton = (type) => {
+        let b =(type===Position || type===Pitchgrid)
+        return !b;
+        // return (type!==Position || type!==Pitchgrid)
+    }
+    const showDeleteButton = (type) => {
+        let b =(type===Position || type===Pitchgrid)
+        return !b;
+
+        // return (type!==Position || type!==Pitchgrid)
+    }
+
+
 
     useEffect(()=>{
         getData(props.methods.list);
@@ -109,12 +128,23 @@ const MyDataGrid = ({props}) => {
 
     const AddButton = (params) => {
         return (
-            <Grid align="right">
-                <Button onClick={() => handleOpen(params)}
+            showAddButton(params.type) ?
+                <Grid align="right">
+                    <Button onClick={() => handleOpen(params)}
                         variant = "contained"
                         color   = "primary"
-                >{ props.messages.add }</Button>
-            </Grid>
+                    >{ props.messages.add }</Button>
+                    };
+                </Grid>
+                :
+                <Grid align="right">
+                    <Button disabled="true" onClick={() => handleOpen(params)}
+                        variant = "contained"
+                        color   = "primary"
+                    >NO ADDITION</Button>
+                    };
+                </Grid>
+
         )
     }
     const EditButton = (params) => {
@@ -127,10 +157,19 @@ const MyDataGrid = ({props}) => {
     }
     const DeleteButton = (params) => {
         return (
-            <Button  onClick = {()=>handleDelete( params )}
-                     variant = "outlined"
-                     color = "secondary"
-            > Delete </Button>
+            showDeleteButton(props.type) ?
+                <Button  onClick = {()=>handleDelete( params )}
+                         variant = "outlined"
+                         color = "secondary"
+                > Delete </Button>
+                :
+                <div>
+                <Button disabled="true" onClick = {()=>handleDelete( params )}
+                         variant = "outlined"
+                         color = "secondary"
+                >NO Delete </Button>
+                </div>
+
         )
     }
     const formActions  = {
@@ -156,22 +195,22 @@ const MyDataGrid = ({props}) => {
             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
                 <AddButton {...props}/>
                 <AgGridReact
-                    // ref                        = {gridRef}
+                    ref                        = {gridRef}
                     defaultColDef              = {defaultColDef}
-                    // pagination                 = {true}
-                    // suppressRowDrag            = {true}
+                    pagination                 = {true}
+                    suppressRowDrag            = {true}
                     columnDefs                 = {[...props.gridColDefs  , formActions]}
                     // columnDefs                 = {props.gridColDefs}
                     onGridReady                = {onGridReady}
                     rowData                    = {props.gridLoader(data)}
-                    // animateRows                = {true}
-                    // alwaysShowHorizontalScroll = {false}
-                    // suppressClickEdit          = {false}
+                    animateRows                = {true}
+                    alwaysShowHorizontalScroll = {false}
+                    suppressClickEdit          = {false}
 
                 />
 
                 {!props.gridLoader.dropDown} ?
-                {console.log("Test1")}
+
                 <FormDialog
                     setData      = {setFormData}
                     open         = {open}
@@ -196,7 +235,6 @@ const MyDataGrid = ({props}) => {
                     changed      = {changed}
                 />
                 :
-                {console.log("Test2")}
                 <FormDialog
                     setData={setFormData}
                     open={open}

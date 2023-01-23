@@ -30,7 +30,6 @@ const FormDialog = (props) => {
         setOpen(false);
         // setFormData(props.initialValue);
     };
-
     const handleError = (message) => {
         return <ErrorMessage message={message}/>;
 
@@ -143,11 +142,11 @@ const FormDialog = (props) => {
     function onChange(newValue) {
         const newDate = new Date(newValue)
         console.log("Time: " + value + " - " + newDate)
-        setValue(newValue);
+        setValue(value + newValue);
     }
 
     const textField = ({index, field, formData, onChange, headerName}) => {
-        console.log("default - textField")
+        // console.log("default - textField")
         return (
             <TextField
                 key={index}
@@ -165,7 +164,7 @@ const FormDialog = (props) => {
     }
     const competitionDropdown =  ( { index, field, formData, onChange, headerName }) => {
         // get competitions
-        console.log("competitionDropDown")
+        // console.log("competitionDropDown")
         return (
             <TextField
                 key         = { index }
@@ -181,7 +180,6 @@ const FormDialog = (props) => {
             />
         )
     }
-
     // function getCompetitions(props) {
     //     const user = AuthService.getCurrentUser();
     //     AuthService.setAuthToken(user.accessToken);
@@ -237,10 +235,9 @@ const FormDialog = (props) => {
     //
     //     return props.data;
     // }
-
     const clubDropdown = ({index, field, formData, onChange, headerName}) => {
         // get club data
-        console.log("clubDropDown")
+        // console.log("clubDropDown")
         return (
             <TextField
                 key={index}
@@ -256,7 +253,6 @@ const FormDialog = (props) => {
             />
         )
     }
-
     const datePicker =  ( { index, field, formData, onChange, headerName }) => {
         // console.log("datePicker: -> "+ formData.fixtureDate)
         // add min and max dates
@@ -291,6 +287,7 @@ const FormDialog = (props) => {
 
         )
     }
+
     const timePicker = ({index, field, formData, headerName}) => {
         // console.log("timePicker:" + formData.fixtureTime)
         return (
@@ -308,21 +305,22 @@ const FormDialog = (props) => {
                     format={'hh:mm:ss'}
                     value={formData[field]}
                     onChange={e => onChange(e)}
-                    openTo={["hours,minutes"]}
+                    openTo='hours, minutes'
                     data={formData}
                     placeholder={"Enter " + headerName}
                     label={headerName}
-                    minutesStep={15}
+                    // minutesstep={15}
                     variant="outlined"
                     margin="dense"
                     fullWidth
 
                     renderInput={(props) =>
                         <TextField {...props}
-                            // key         = { index }
-                            // id          = { field }
+                            key         = { index }
+                            id          = { field }
                             // value       = { formData[field] }
-                                   minutesStep="15"
+                            //        openTo="hours,minutes"
+                                   minutesstep="15"
                             // onChange    = { e => onChange(e) }
                             // fullwidth = { true }
                             // data        = { formData }
@@ -334,18 +332,6 @@ const FormDialog = (props) => {
                         />}
                 />
 
-                {/*<TextField*/}
-                {/*    key         = { index }*/}
-                {/*    id          = { field }*/}
-                {/*    value       = { formData[field] }*/}
-                {/*    onChange    = { e => onChange(e) }*/}
-                {/*    data        = { formData }*/}
-                {/*    placeholder = { "Enter " + headerName }*/}
-                {/*    label       = { headerName }*/}
-                {/*    variant     = "outlined"*/}
-                {/*    margin      = "dense"*/}
-                {/*    fullWidth*/}
-                {/*/>*/}
             </LocalizationProvider>
         )
     }
@@ -362,28 +348,20 @@ const FormDialog = (props) => {
             >
                 <DialogTitle id  = "alert-dialog-title"> { props.formData.id ? props.messages.update: props.messages.create }</DialogTitle>
                 <DialogContent>  {
-
-                        props.colDefs.map( ( prop, index ) => {
-                            console.log(index)
-                            console.log(prop.field)
-                            switch(prop.type) {
-
-                                case "Competition" :
-                                    // var competitions = getCompetitions(props);
-                                    return competitionDropdown( { ...props, ...prop, index });
-                                case "Club" :
-                                    // var clubs = getClubs(props);
-                                    return clubDropdown( { ...props, ...prop, index });
-                                case "Date":
-                                    return datePicker( { ...props, ...prop, index });
-                                case "Time":
-                                    return timePicker( { ...props, ...prop, index });
-                                default :
-                                    return textField( { ...props, ...prop, index });
-                            }
-                            // return textField( { ...props, ...prop, index })
-                        })
-                    }
+                    props.colDefs.map( ( prop, index ) => {
+                        switch(prop.type) {
+                            case "Competition" :
+                                return competitionDropdown( { ...props, ...prop, index });
+                            case "Club" :
+                                return clubDropdown( { ...props, ...prop, index });
+                            case "Date":
+                                return datePicker( { ...props, ...prop, index });
+                            case "Time":
+                                return timePicker( { ...props, ...prop, index });
+                        }
+                        return textField( { ...props, ...prop, index })
+                    })
+                }
                 </DialogContent>
                 <DialogActions>
                     <CancelButton {...props} />

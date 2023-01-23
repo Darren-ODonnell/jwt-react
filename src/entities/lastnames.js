@@ -1,8 +1,8 @@
-import { Lastname, METHODS, LASTNAME_URLS } from '../common/globals'
+import { Lastname, METHODS, LASTNAME_URLS, Club } from '../common/globals'
 import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
 
 
-
+const table = {name:Lastname}
 export const lastnameColumnDefs = [
     { headerName: 'Lastname'      , field: 'lastname'     , type: 'String', min: 3, max: 45, required: true  },
     { headerName: 'Irish Lastname', field: 'lastnameIrish', type: 'String', min: 3, max: 45, required: true  },
@@ -36,7 +36,7 @@ export const lastnameData = {
     initialValue: lastnameInitialValue,
     columnDefs  : lastnameColumnDefs,
     formColDefs : copyFormColDefs( lastnameColumnDefs ), // form column definitions
-    gridColDefs : copyGridColDefs( lastnameColumnDefs ), // Grid column definitions
+    gridColDefs : copyGridColDefs( lastnameColumnDefs, table ), // Grid column definitions
     methods     : apiRequests,
     gridLoader: gridLoader
 };

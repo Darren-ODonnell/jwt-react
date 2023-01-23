@@ -5,10 +5,14 @@ import { clubData } from "../entities/clubs";
 import { playerData } from "../entities/players";
 import { competitionData } from "../entities/competitions";
 import { fixtureData } from "../entities/fixtures";
-import { eventData } from "../entities/events";
+import { statnameData } from "../entities/statnames";
 import { firstnameData } from "../entities/firstnames";
 import { lastnameData } from "../entities/lastnames";
 import { teamsheetData } from "../entities/teamsheets";
+import { positionData } from "../entities/positions";
+import { pitchgridData } from "../entities/pitchgrids";
+
+
 
 import AuthService from "./AuthService";
 import Reports from "../reports/Reports"
@@ -36,9 +40,17 @@ const Paths = () =>  {
                     <Route exact path = "/players"         element = {<MyDataGrid props = { playerData }   />}  />
                     <Route exact path = "/player"          element = {<MyDataGrid props = { playerData }   />}  />
 
-                    <Route exact path = "/event/list"      element = {<MyDataGrid props = { eventData }    />}  />
-                    <Route exact path = "/events"          element = {<MyDataGrid props = { eventData }    />}  />
-                    <Route exact path = "/event"           element = {<MyDataGrid props = { eventData }    />}  />
+                    <Route exact path = "/position"        element = {<MyDataGrid props = { positionData }   />}  />
+                    <Route exact path = "/positions"       element = {<MyDataGrid props = { positionData }   />}  />
+                    <Route exact path = "/position/list"   element = {<MyDataGrid props = { positionData }   />}  />
+
+                    <Route exact path = "/pitchgrid"        element = {<MyDataGrid props = { pitchgridData }   />}  />
+                    <Route exact path = "/pitchgrids"       element = {<MyDataGrid props = { pitchgridData }   />}  />
+                    <Route exact path = "/pitchgrid/list"   element = {<MyDataGrid props = { pitchgridData }   />}  />
+
+                    <Route exact path = "/statname/list"   element = {<MyDataGrid props = { statnameData }    />}  />
+                    <Route exact path = "/statnames"       element = {<MyDataGrid props = { statnameData }    />}  />
+                    <Route exact path = "/statname"        element = {<MyDataGrid props = { statnameData }    />}  />
                     <Route exact path = "/teamsheet/list"  element = {<MyDataGrid props = { teamsheetData }/>}  />
                     <Route exact path = "/teamsheets"      element = {<MyDataGrid props = { teamsheetData }/>}  />
                     <Route exact path = "/teamsheet"       element = {<MyDataGrid props = { teamsheetData }/>}  />

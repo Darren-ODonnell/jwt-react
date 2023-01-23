@@ -8,9 +8,17 @@ Ig: Ignored for now
 As elements are finished - move below Completed
 
 # Errors
-    E28:
-    E29:
-    E30: 
+    E28: Form key for each row - error
+    E29: openTo error in Form popup
+    E33: Teamsheet id is object not id
+        its a composite key of fixture and player and hence an object is displayed.
+        not sure what to do with this!
+    E40: 
+    E41: 
+    E42: 
+    E43: 
+
+
 
 # Refactoring
     R10:
@@ -18,23 +26,17 @@ As elements are finished - move below Completed
     R12: 
 
 # Investigations
-    I1: Can grid be changed to a hook - useGrid? and similarly useForm?
-    I2: How to implement - forgotPassword
-    I3: Use of Charts ?
-    I4: Check if useToken is necessary / if so, can it be included in AuthService?
     I5: 
     I6: 
     I7: 
 
 # New Code Additions
-    C1: Add Plug and PLay Teamsheet selection
-    C2: Add pictures for players
+    C1: Add Plug and PLay Teamsheet selection - Cancel
+    C2: Add pictures for players 
     C3: Add club logos to tables and teamsheets
-    C5: Some sample Event data required to test report displays 
+    C5: Some sample Stats data required to test report displays 
 
-    C7: EventName CRUD operations not provided
-    C8: PitchGrid CRUD not provided
-    C9: Positions CRUD nmot provided
+
     C10: Current Season
         C10a: Set default view to Current season
         C10b: How to change current season?
@@ -55,23 +57,9 @@ As elements are finished - move below Completed
     U19:
 
 # Ignore for now
-    E17: after remving warnings - two still exist - not sure how to fix these.
-        WARNING in ./node_modules/bootstrap/dist/css/bootstrap.css (./node_modules/css-loader/dist/cjs.js??ruleSet[1].ru
-        les[1].oneOf[5].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[2]!./node_mod
-        ules/source-map-loader/dist/cjs.js!./node_modules/bootstrap/dist/css/bootstrap.css)
-        Module Warning (from ./node_modules/postcss-loader/dist/cjs.js):
-        Warning
-        
-        (2482:3) autoprefixer: Replace color-adjust to print-color-adjust. The color-adjust shorthand is currently depre
-        cated.
-        @ ./node_modules/bootstrap/dist/css/bootstrap.css 8:6-245 22:17-24 26:7-21 58:25-39 59:36-47 59:50-64 61:4-74:5
-        63:6-73:7 64:54-65 64:68-82 70:42-53 70:56-70 72:21-28 83:0-215 83:0-215 84:22-29 84:33-47 84:50-64
-        @ ./src/NavBar/NavBarSelect.js 7:0-42
-        @ ./src/App.js 7:0-53 17:38-50
-        @ ./src/index.js 4:0-27 25:35-38
+
 
 # In Progress
-
     E22: Tables with foreign key data are not displayed correctly
         - Events - incomplete - need data to test.
 
@@ -87,6 +75,7 @@ As elements are finished - move below Completed
             Player and 
             Position
         C6f: Event -> dropdown for -> Fixture, Event, player and pitchposition     
+    C7: StatName CRUD operations
 
 # Completed
     R3: Build up AuthService to include login/logout/register etc
@@ -261,4 +250,40 @@ As elements are finished - move below Completed
     E27: Cannot delete from Competition
          After R9 complete, changed 'data: data' to 'data: {data}'.
 
+    I1: Can grid be changed to a hook - useGrid? and similarly useForm? - Cancel
+    I2: How to implement - forgotPassword - Cancel
+    I3: Use of Charts ? - Cancel
+    E30: even names is empty - change to statnames 
+    I4: Check if useToken is necessary / if so, can it be included in AuthService? - cancel
+    E17: after remving warnings - two still exist - not sure how to fix these.
+        WARNING in ./node_modules/bootstrap/dist/css/bootstrap.css (./node_modules/css-loader/dist/cjs.js??ruleSet[1].ru
+        les[1].oneOf[5].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[2]!./node_mod
+        ules/source-map-loader/dist/cjs.js!./node_modules/bootstrap/dist/css/bootstrap.css)
+        Module Warning (from ./node_modules/postcss-loader/dist/cjs.js):
+        Warning
+        
+        (2482:3) autoprefixer: Replace color-adjust to print-color-adjust. The color-adjust shorthand is currently depre
+        cated.
+        @ ./node_modules/bootstrap/dist/css/bootstrap.css 8:6-245 22:17-24 26:7-21 58:25-39 59:36-47 59:50-64 61:4-74:5
+        63:6-73:7 64:54-65 64:68-82 70:42-53 70:56-70 72:21-28 83:0-215 83:0-215 84:22-29 84:33-47 84:50-64
+        @ ./src/NavBar/NavBarSelect.js 7:0-42
+        @ ./src/App.js 7:0-53 17:38-50
+        @ ./src/index.js 4:0-27 25:35-38
+        updates to react 18 appear to have resolved this! 
+    E31: Abbvev not appearing in grid display
+        abbrev is an id field - and this is added separately - removed line from ColumnsGrid
          
+    C8: PitchGrid CRUD operations added
+    C9: Positions CRUD operations added
+    E37: Add Statname s/n add Position
+        positionData updated
+    E38: Add Statname s/n add Pitchgrid
+        pitchgridData updated
+    E35: Position Number is empty - gridloader updated
+    E36: Pitchgrid abbrev (key field) is empty - gridloader updated
+    E34: Abbrev is empty - gridloader updated
+    E32: Position additing/deleting is not valid 
+        
+    E32a: Pitchgrid adding/removing is not valid
+    E39: statname - abbreviation not shown
+        gridloader updated
