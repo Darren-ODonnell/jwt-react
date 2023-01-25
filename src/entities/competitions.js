@@ -1,4 +1,4 @@
-import { Club, Competition, COMPETITION_URLS, METHODS } from '../common/globals'
+import {Competition, COMPETITION_URLS, METHODS} from '../common/globals'
 import {addMessage, copyFormColDefs, copyGridColDefs} from "../common/helper";
 import {TextField} from "@mui/material";
 import React from "react";

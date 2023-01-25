@@ -11,6 +11,7 @@ import {defaultColDef, refreshPage} from "../common/helper";
 import {useAxios} from "../api/ApiService";
 import instance from "../api/axios";
 import AuthService from "../auth/AuthService";
+import moment from "moment";
 
 import {Position, Pitchgrid} from '../common/globals';
 
@@ -42,14 +43,28 @@ const MyDataGrid = ({props}) => {
         const {value, id} = e.target
         // update field with data from user
         // data updated here first, then screen is updated
-        console.log(value +" - " + id)
-        setFormData({ ...formData, [id]: value })
+        console.log(value + " - " + id)
+        setFormData({...formData, [id]: value})
     }
-    const onGridReady = (params)  => {  setGridApi(params)      }
+    const onDateChange = (value, id) => {
+        // update field with data from user
+        // data updated here first, then screen is updated
+        console.log(moment(value, "YYYY-MM-DD") + " - " + id)
+        setFormData({...formData, [id]: moment(value, "YYYY-MM-DD")})
+    }
+    const onTimeChange = (value, id) => {
+        // update field with data from user
+        // data updated here first, then screen is updated
+        console.log(moment("Date: " + value, "hh:mm") + " - " + id)
+        setFormData({...formData, [id]: moment(value, "hh:mm")})
+    }
+    const onGridReady = (params) => {
+        setGridApi(params)
+    }
 
     const handleEdit = (props) => {
         handleOpen();
-        setFormData( {...props.data} );
+        setFormData({...props.data});
         console.log("Data:", props.data)
         console.log("formData:", props.formData)
     }
@@ -217,16 +232,18 @@ const MyDataGrid = ({props}) => {
                     // actions      = { props.actions }
                     methods      = {props.methods}
                     colDefs      = {props.formColDefs}
-                    messages     = {props.messages}
-                    formData     = {formData}
-                    setFormData  = {setFormData}
-                    initialValue = {props.initialValue}
+                    messages={props.messages}
+                    formData={formData}
+                    setFormData={setFormData}
+                    initialValue={props.initialValue}
                     // useAxios params
-                    axiosApi     = {axiosApi}
-                    error        = {error}
-                    loading      = {loading}
-                    setChanged   = {setChanged}
-                    changed      = {changed}
+                    axiosApi={axiosApi}
+                    error={error}
+                    loading={loading}
+                    setChanged={setChanged}
+                    changed={changed}
+                    onDateChange={onDateChange}
+                    onTimeChange={onTimeChange}
                 />
                 :
                 <FormDialog
@@ -251,6 +268,9 @@ const MyDataGrid = ({props}) => {
                     loading={loading}
                     setChanged={setChanged}
                     changed={changed}
+                    onDateChange={onDateChange}
+                    onTimeChange={onTimeChange}
+
                 />
             </div>
         </div> : <p> Loading...</p>

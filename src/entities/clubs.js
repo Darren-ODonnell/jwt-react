@@ -1,5 +1,5 @@
-import { Club, METHODS, CLUB_URLS, Statname } from '../common/globals'
-import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
+import {Club, METHODS, CLUB_URLS} from '../common/globals'
+import {addMessage, copyFormColDefs, copyGridColDefs} from "../common/helper";
 
 const table = {name:Club}
 export const clubColumnDefs = [

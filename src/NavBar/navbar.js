@@ -6,12 +6,12 @@ export const LoggedInNavbar = (props) =>{
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand href                 = "#home">St Judes GAA</Navbar.Brand>
-                <Navbar.Toggle aria-controls       = "basic-navbar-nav" />
+                <Navbar.Brand href="/home">St Judes GAA</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id                = "basic-navbar-nav">
                     <Nav className                 = "me-auto">
-                        <Nav.Link href             = "/">Home</Nav.Link>
-                        <Nav.Link href             = "/clubsGrid">Clubs</Nav.Link>
+                        <Nav.Link href="/home">Home</Nav.Link>
+                        <Nav.Link href="/clubsGrid">Clubs</Nav.Link>
                         <Nav.Link href             = "/players">Players</Nav.Link>
                         <Nav.Link href             = "/fixtures">Fixtures</Nav.Link>
                         <Nav.Link href             = "/teamsheets">Teamsheets</Nav.Link>
