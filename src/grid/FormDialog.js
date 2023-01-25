@@ -1,26 +1,16 @@
-import React, {useState} from "react";
-import {Button, Dialog, TextField} from "@mui/material";
-import {DialogActions, DialogContent, DialogTitle} from "@mui/material";
-import {ErrorMessage} from "../common/ErrorMessage";
+import React, { useState } from "react";
+import { Button, Dialog, TextField} from "@mui/material";
+import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { ErrorMessage } from "../common/ErrorMessage";
 import AuthService from "../auth/AuthService";
 import instance from "../api/axios";
-import {refreshPage} from "../common/helper";
+import { refreshPage } from "../common/helper";
 
-// import { TimePicker, DatePicker,  TimePickerProps, DatePickerProps, Space } from "antd";
-import moment from "moment";
-import type from 'antd';
-import {ConfigProvider} from 'antd'
-// import ConfigProvider from 'antd/lib/config-provider'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-import {Dayjs} from 'dayjs';
-import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
-import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
-import {TimePicker, TimePickerProps} from '@mui/x-date-pickers/TimePicker';
-import {getTime} from "date-fns";
-
-// import DateTimePicker from "react-datetime-picker";
-// import TimePicker from "react-timepicker";
-// import "react-datepicker/dist/react-datepicker.css";
 
 
 const FormDialog = (props) => {
@@ -180,6 +170,7 @@ const FormDialog = (props) => {
             />
         )
     }
+
     // function getCompetitions(props) {
     //     const user = AuthService.getCurrentUser();
     //     AuthService.setAuthToken(user.accessToken);
@@ -235,6 +226,7 @@ const FormDialog = (props) => {
     //
     //     return props.data;
     // }
+
     const clubDropdown = ({index, field, formData, onChange, headerName}) => {
         // get club data
         // console.log("clubDropDown")
@@ -254,73 +246,81 @@ const FormDialog = (props) => {
         )
     }
     const datePicker =  ( { index, field, formData, onChange, headerName }) => {
-        // console.log("datePicker: -> "+ formData.fixtureDate)
-        // add min and max dates
-        // add min and max time
-
-
         return (
-            <div>
+            <DatePicker
 
-            </div>
-            // <TimePicker onChange={this.onchange() } value={} renderInput={}
-            // <DatePicker
-            //
-            //     // getPopupContainer = {FormDialog}
-            //     style        = {{ position: 'absolute', width: "100%" }}
-            //     defaultValue = { new Date("2023-01-20 18:22:00") }
-            //     key          = { index }
-            //     disableClock = { true }
-            //     autoFocus    = { true }
-            //     closeWidget  = { true }
-            //     format       = { 'yyyy-mm-dd hh:mm:ss' }
-            //     id           = { field }
-            //     value        = { formData[field] }
-            //     onChange     = { e => this.onChange(e) }
-            //     data         = { formData }
-            //     placeholder  = { "Enter " + headerName }
-            //     label        = { headerName }
-            //     variant      = "outlined"
-            //     margin       = "dense"
-            //     fullWidth
-            // />
+                // getPopupContainer = {FormDialog}
+                style        = {{ position: 'absolute', width: "100%" }}
+                defaultValue = { new Date("2023-01-20 18:22:00") }
+                key          = { index }
+                disableClock = { true }
+                autoFocus    = { true }
+                closeWidget  = { true }
+                format       = { 'yyyy-mm-dd hh:mm:ss' }
+                id           = { field }
+                value        = { formData[field] }
+                onChange     = { e => this.onChange(e) }
+                data         = { formData }
+                placeholder  = { "Enter " + headerName }
+                label        = { headerName }
+                variant      = "outlined"
+                margin       = "dense"
+                fullWidth
+                renderInput={(props) =>
+                    <TextField {...props}
+                               // key         = { index }
+                               id          = { field }
+                        // value       = { formData[field] }
+                        //        openTo="hours,minutes"
+
+                        // onChange    = { e => onChange(e) }
+                        // fullwidth = { true }
+                        // data        = { formData }
+                        // placeholder = { "Enter " + headerName }
+                        // label       = { headerName }
+                        // variant     = "outlined"
+                        // margin      = "dense"
+                        // fullWidth
+                    />}
+            />
 
         )
     }
 
     const timePicker = ({index, field, formData, headerName}) => {
-        // console.log("timePicker:" + formData.fixtureTime)
+        console.log("timePicker:" + formData.fixtureTime)
         return (
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <LocalizationProvider key={index} dateAdapter={AdapterDayjs}>
                 <TimePicker
-                    key={index}
-                    style={{position: 'absolute', width: "100%"}}
-                    // getPopupContainer = {FormDialog}
-                    // defaultValue = { moment("2023-01-20 18:22:00", "yyyy-mm-dd hh:mm:dd") }
-                    // defaultValue    = { moment(formData, 'HH:mm:ss')}
+                    style = {{ position: 'absolute', width: "100%" }}
+                    defaultValue = { new Date("2023-01-20 18:22:00") }
 
-                    // setValue        = { formData[field] }
+                    // defaultValue = { moment("2023-01-20 18:22:00", "yyyy-mm-dd hh:mm:dd") }
+
+                    key          =  {index}
+
+                    setValue        = { formData[field] }
                     id={field}
                     disableCalendar={true}
                     format={'hh:mm:ss'}
                     value={formData[field]}
                     onChange={e => onChange(e)}
-                    openTo='hours, minutes'
+                    openTo='hours'
                     data={formData}
                     placeholder={"Enter " + headerName}
                     label={headerName}
-                    // minutesstep={15}
+                    minutesstep={15}
                     variant="outlined"
                     margin="dense"
                     fullWidth
 
                     renderInput={(props) =>
                         <TextField {...props}
-                            key         = { index }
                             id          = { field }
+                                   // onChange={e => onChange(e)}
                             // value       = { formData[field] }
                             //        openTo="hours,minutes"
-                                   minutesstep="15"
+                            //        minutesstep="15"
                             // onChange    = { e => onChange(e) }
                             // fullwidth = { true }
                             // data        = { formData }
@@ -341,6 +341,7 @@ const FormDialog = (props) => {
           <div>
               {console.log(props)}
             <Dialog
+
                 open             = { props.open}
                 onClose          = { props.handleClose }
                 aria-labelledby  = "alert-dialog-title"
@@ -348,18 +349,20 @@ const FormDialog = (props) => {
             >
                 <DialogTitle id  = "alert-dialog-title"> { props.formData.id ? props.messages.update: props.messages.create }</DialogTitle>
                 <DialogContent>  {
-                    props.colDefs.map( ( prop, index ) => {
+
+                    props.colDefs.map(( prop, index ) => {
                         switch(prop.type) {
-                            case "Competition" :
-                                return competitionDropdown( { ...props, ...prop, index });
-                            case "Club" :
-                                return clubDropdown( { ...props, ...prop, index });
-                            case "Date":
-                                return datePicker( { ...props, ...prop, index });
+                            // case "Competition" :
+                            //     return competitionDropdown( { ...props, ...prop, index });
+                            // case "Club" :
+                            //     return clubDropdown( { ...props, ...prop, index });
+                            // case "Date":
+                            //     return datePicker( { ...props, ...prop, index });
                             case "Time":
                                 return timePicker( { ...props, ...prop, index });
+                            default:
+                                return textField( { ...props, ...prop, index })
                         }
-                        return textField( { ...props, ...prop, index })
                     })
                 }
                 </DialogContent>

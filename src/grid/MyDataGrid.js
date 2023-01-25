@@ -102,10 +102,6 @@ const MyDataGrid = ({props}) => {
         return () => (isSubscribed = false)
     }
 
-    const button = {
-
-    }
-
     const showAddButton = (type) => {
         let b =(type===Position || type===Pitchgrid)
         return !b;
@@ -117,8 +113,6 @@ const MyDataGrid = ({props}) => {
 
         // return (type!==Position || type!==Pitchgrid)
     }
-
-
 
     useEffect(()=>{
         getData(props.methods.list);
@@ -172,6 +166,7 @@ const MyDataGrid = ({props}) => {
 
         )
     }
+
     const formActions  = {
         headerName: 'Actions',
         field     : 'id',
@@ -195,17 +190,16 @@ const MyDataGrid = ({props}) => {
             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
                 <AddButton {...props}/>
                 <AgGridReact
-                    ref                        = {gridRef}
-                    defaultColDef              = {defaultColDef}
-                    pagination                 = {true}
-                    suppressRowDrag            = {true}
-                    columnDefs                 = {[...props.gridColDefs  , formActions]}
-                    // columnDefs                 = {props.gridColDefs}
-                    onGridReady                = {onGridReady}
-                    rowData                    = {props.gridLoader(data)}
-                    animateRows                = {true}
-                    alwaysShowHorizontalScroll = {false}
-                    suppressClickEdit          = {false}
+                    ref                        = { gridRef }
+                    defaultColDef              = { defaultColDef }
+                    pagination                 = { true }
+                    suppressRowDrag            = { true }
+                    columnDefs                 = { [...props.gridColDefs   , formActions] }
+                    onGridReady                = { onGridReady }
+                    rowData                    = { props.gridLoader(data) }
+                    animateRows                = { true }
+                    alwaysShowHorizontalScroll = { false }
+                    suppressClickEdit          = { false }
 
                 />
 
