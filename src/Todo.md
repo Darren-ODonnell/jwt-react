@@ -66,15 +66,16 @@ As elements are finished - move below Completed
     C6: FormDialog Add/Edit Changes
         C6a: Club -> validation (club does not already exist)
         C6b: Player -> validation (player does not already exist)
-        C6c: Competition -> validation (DNE)
-        C6d: Fixture -> Validation (DNE
-            -> Dropdown for Competition, season, and round
-            -> datetimePicker for Fixture date and time
+        C6c: Competition -> validation (DNE) - use a dropdown
+        C6d1: Fixture -> Dropdown for Competition, season, and round
+        C6d2: Fixture -  Competition
+        C6d3: Fixture -> season
+        C6d4: Fixture -> round
+
         C6e: Teamsheet -> Drop down for 
             Fixture , (what fields necessary to uniquely id fixture 
-            Player and 
-            Position
-        C6f: Event -> dropdown for -> Fixture, Event, player and pitchposition     
+            Player and Position
+        C6f: Stats -> dropdown for -> Fixture, Event, player and pitchposition     
     C7: StatName CRUD operations
 
 # Completed
@@ -286,4 +287,6 @@ As elements are finished - move below Completed
         
     E32a: Pitchgrid adding/removing is not valid
     E39: statname - abbreviation not shown
-        gridloader updated
+       gridloader updated
+    C6g: Time/Date pickers
+        material UI DatePicker and TimePicker used to provide same.

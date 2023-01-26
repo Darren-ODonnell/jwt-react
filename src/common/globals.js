@@ -1,5 +1,6 @@
-// server host ips
+import moment from "moment";
 
+// server host ips
 // backend
 export const HOME         = "http://192.168.100.151:8080";
 export const WORK         = "http://147.252.81.3:8080";
@@ -7,13 +8,28 @@ export const WORK_LAPTOP  = "http://147.252.81.83:8080"
 export const SAME_MACHINE = "http://localhost:8080";
 // note: every time AWS EC2 instance is restarted - this host name will need to be changed
 export const AWS_BACKEND  = "";
-
 // frontend
 export const HOME_LAPTOP = "http://192.168.100.152:8080"
 // note: every time AWS EC2 instance is restarted - this host name will need to be changed
 export const AWS_REACT = ""
-
+// active endpoint
 export const ENDPOINT = SAME_MACHINE;
+
+// Date/Time
+export const DATE_FORMAT = "DD/MM/YYYY"
+export const TIME_FORMAT = "HH:mm";         // 24 hour clock without seconds
+export const TIME_FORMAT_SAVE = "HH:mm:ss"; // 24 hour clock with seconds
+export function getMinTime() {    return moment("09:00","HH:mm")}
+export function getMaxTime() {    return moment("20:00","HH:mm")}
+export function getMinDate() {    return moment("01/01/"+new Date().getFullYear()  ,"DD/MM/YYYY");}
+export function getMaxDate() {    return moment("31/12/"+new Date().getFullYear()+1,"DD/MM/YYYY");}
+
+// static look up arrays
+// any other lookup arrays are taken from endpoint
+export const ROUNDS = [1,2,3,4,5,6,7,8,9,10]
+export const PLAYER_NUMBERS = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
+export const PITCH_GRIDS = ["A1","A2","A3","B1","B2","B3","C1","C2","C3","D1","D2","D3","E1","E2","E3"]
+export function getSeasons() { return [new Date().getFullYear(), new Date().getFullYear()+1] }
 
 // for Form/Grid columns
 export const Club        = 'Club';

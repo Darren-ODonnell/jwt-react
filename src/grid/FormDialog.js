@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Dialog, TextField} from "@mui/material";
+import { Button, Dialog, MenuItem, TextField, Select } from "@mui/material";
 import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { ErrorMessage } from "../common/ErrorMessage";
 import AuthService from "../auth/AuthService";
@@ -11,13 +11,29 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import moment from "moment";
+import {
+    DATE_FORMAT,
+    getMaxDate, getMaxTime,
+    getMinDate, getMinTime, getSeasons,
+    MAX_TIME,
+    MIN_TIME, ROUNDS,
+    TIME_FORMAT,
+    TIME_FORMAT_SAVE
+} from "../common/globals";
+import { AbcRounded } from "@mui/icons-material";
+
 
 
 
 const FormDialog = (props) => {
     // close popup window
+
+
+
     const [value, setValue] = useState();
-    const [dateValue, setDateValue] = useState(moment().format('YYYY-MM-DD'));
+    const [dateValue, setDateValue] = useState(props.formData.fixtureDate);
+    const [timeValue, setTimeValue] = useState(moment(props.formData.fixtureTime,TIME_FORMAT));
+
     const handleClose = (setOpen) => {
         setOpen(false);
         // setFormData(props.initialValue);
@@ -50,6 +66,33 @@ const FormDialog = (props) => {
         // refresh grid
         refreshPage()
         // window.location.reload()
+    }
+
+    function onChange(newValue) {
+        const newDate = new Date(newValue)
+        console.log("Time: " + value + " - " + newDate)
+        setValue(newValue.toString());
+    }
+    const onChangeDate = (value, id) => {
+        // update field with data from user
+        // data updated here first, then screen is updated
+        console.log(value)
+        let dateStr = moment(value.$d,DATE_FORMAT)
+        console.log(value + " - " + dateStr + " - " + id)
+        setDateValue(dateStr);
+        props.setFormData({...props.formData, [id]: value})
+    }
+
+    const onChangeTime = (value, id) => {
+        // update field with data from user
+        // data updated here first, then screen is updated
+        let timeMs = moment(value.$d,TIME_FORMAT)
+        console.log("Time: "+ timeMs + " - " + id)
+        console.log(timeMs)
+        let timeStr = moment(timeMs,TIME_FORMAT)
+        // props.setFormData({...props.formData, [id]: moment(timeStr,TIME_FORMAT)})
+        props.setFormData({...props.formData, [id]: timeMs.format(TIME_FORMAT_SAVE)})
+        setTimeValue(timeMs)
     }
     const AddData = ({methods, axiosApi, data, error, formData, setOpen, setData}) => {
         const user = AuthService.getCurrentUser();
@@ -131,17 +174,6 @@ const FormDialog = (props) => {
         )
     }
 
-    function onChange(newValue) {
-        const newDate = new Date(newValue)
-        console.log("Time: " + value + " - " + newDate)
-        setValue(newValue.toString());
-    }
-
-    const onChangeDate = (date) => {
-        const newDate = moment(date.timeStamp).format('YYYY-MM-DD');
-        setValue(newDate);
-        console.log(newDate); //always log "1970-01-01"
-    };
     const textField = ({index, field, formData, onChange, headerName}) => {
         // console.log("default - textField")
         return (
@@ -258,43 +290,22 @@ const FormDialog = (props) => {
             <LocalizationProvider key={index} dateAdapter={AdapterDayjs}>
                 <DatePicker
 
-                    // getPopupContainer = {FormDialog}
-                    style={{position: 'absolute', width: "100%"}}
-                    defaultValue={new Date("2023-01-20 18:22:00")}
                     key={index}
-                    disableClock={true}
-                    autoFocus={true}
-                    closeWidget={true}
-                    format={'yyyy-mm-dd hh:mm:ss'}
+                    format={DATE_FORMAT}
                     id={field}
+                    minDate={getMinDate()}
+                    maxDate={getMaxDate()}
                     value={formData[field]}
-                    // onChange={onChangeDate}
-                    onChange={e => onDateChange(e, field)}
-                    data={formData}
-                    placeholder={"Enter " + headerName}
+                    onChange={e => onChangeDate(e, field)}
                     label={headerName}
-                    variant="outlined"
-                    margin="dense"
-                    fullWidth
                     renderInput={(props) =>
                         <TextField {...props}
-                            // key         = { index }
-                                   id={field}
-                            // value       = { formData[field] }
-                            //        openTo="hours,minutes"
+                                   style={{borderStyle:'black', fontcolor:'black', position:'left', width:'50%'}}
+                           id={field}
 
-                            // onChange    = { e => onChange(e) }
-                            // fullwidth = { true }
-                            // data        = { formData }
-                            // placeholder = { "Enter " + headerName }
-                            // label       = { headerName }
-                            // variant     = "outlined"
-                            // margin      = "dense"
-                            // fullWidth
                         />}
                 />
             </LocalizationProvider>
-
         )
     }
 
@@ -302,47 +313,56 @@ const FormDialog = (props) => {
         return (
             <LocalizationProvider key={index} dateAdapter={AdapterDayjs}>
                 <TimePicker
-                    style={{position: 'absolute', width: "100%"}}
-                    defaultValue={new Date("2023-01-20 18:22:00")}
-                    // defaultValue = { moment("2023-01-20 18:22:00", "yyyy-mm-dd hh:mm:dd") }
-                    key={index}
-                    setValue={formData[field]}
-                    id={field}
-                    disableCalendar={true}
-                    format={'hh:mm:ss'}
-                    value={formData[field]}
-                    onChange={e => onChange(e, field)}
-                    openTo='hours'
-                    data={formData}
-                    placeholder={"Enter " + headerName}
-                    label={headerName}
-                    minutesstep={15}
-                    variant="outlined"
-                    margin="dense"
-                    appendToInput={true}
-                    z-index={100000000}
-                    fullWidth
 
-                    renderInput={(props) =>
-                        <TextField {...props}
-                                   id={field}
-                            // value       = { formData[field] }
-                            //        openTo="hours,minutes"
-                            // onChange    = { e => onChange(e) }
-                            // fullwidth = { true }
-                            // data        = { formData }
-                            // placeholder = { "Enter " + headerName }
-                            // label       = { headerName }
-                            // variant     = "outlined"
-                            // margin      = "dense"
-                            // fullWidth
+                    // defaultValue={new Date("18:22:00")}
+                    key={ index }
+                    ampm={ false }
+                    id={ field }
+                    minTime = { getMinTime() }
+                    maxTime = { getMaxTime() }
+                    value={ moment(formData[field],TIME_FORMAT) }
+                    onChange={ e => onChangeTime( e, field) }
+                    openTo='hours'
+                    placeholder={"Enter " + headerName }
+                    label={ headerName }
+                    minutesStep={ 15 }
+                    renderInput={ (props) =>
+                        <TextField {...props }
+                                   style={{borderStyle:'black', fontcolor:'black', position:'absolute', width: "46%"}}
+                           id={ field }
                         />}
                 />
-
             </LocalizationProvider>
         )
     }
 
+    const staticDropDown = ( onChange, field, formData, headerName, index, defaultValue, options ) => {
+        console.log(options)
+        return (
+            <div>
+                <Select
+                    labelId={ index}
+                    id={index}
+                    // value={formData[field]}
+                    label={headerName}
+                    default={defaultValue}
+                    // onChange={e => onChange(e)}
+                >
+                    {
+                     options?.map( (entry) => <MenuItem value={entry.value}>{entry.value}</MenuItem> )
+
+
+                    }
+                    {/*<div style={{position:"right", width:"100%"}}>*/}
+                    {/*<MenuItem style={{position:"right", width:"100%"}} value="1">1</MenuItem>*/}
+                    {/*<MenuItem style={{width:"100%"}} value="2">2</MenuItem>*/}
+                    {/*<MenuItem style={{width:"100%"}} value="3">3</MenuItem>*/}
+                    {/*</div>*/}
+                </Select>
+            </div>
+        )
+
+    }
 
     return  !props.loading ? (
           <div>
@@ -366,6 +386,12 @@ const FormDialog = (props) => {
                                 return datePicker({...props, ...prop, index});
                             case "Time":
                                 return timePicker({...props, ...prop, index});
+                            case "Round":
+                                let roundProps = {options : ROUNDS, defaultValue : 1}
+                                return staticDropDown({...props, ...prop, index, ...roundProps});
+                            case "Season":
+                                let seasonProps = {options:getSeasons(), defaultValue:new Date().getFullYear()}
+                                return staticDropDown({...props, ...prop, index, ...seasonProps});
                             default:
                                 return textField({...props, ...prop, index})
                         }
