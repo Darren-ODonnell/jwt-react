@@ -1,7 +1,8 @@
-import { Statname, METHODS, POSITION_URLS, Position } from "../common/globals";
+import { METHODS } from "../common/globals";
 import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
 
-const table = {name:Position}
+export const Position = 'Position'
+const table = {name : Position}
 
 export const positionColumnDefs = [
     // { headerName: 'Abbreviation', field: 'id', type: 'String' , min: 8, max: 60, required: true },
@@ -13,7 +14,20 @@ export const positionInitialValue = {
     abbrev: "",
     name  : ""
 };
+// positions
+const POSITION_ADD      = "/position/add";
+const POSITION_DELETE   = "/position/delete/";
+const POSITION_FINDBYID = "/position/findById/";
+const POSITION_LIST     = "/position/list";
+const POSITION_UPDATE   = "/position/update";
 
+const POSITION_URLS = {
+    add     : POSITION_ADD,
+    delete  : POSITION_DELETE,
+    findById: POSITION_FINDBYID,
+    list    : POSITION_LIST,
+    update  : POSITION_UPDATE,
+}
 const apiRequests = {
     list    : {method: METHODS.GET   , url: POSITION_URLS.list},
     findById: {method: METHODS.GET   , url: POSITION_URLS.findById},

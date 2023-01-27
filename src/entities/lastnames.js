@@ -1,8 +1,10 @@
-import { Lastname, METHODS, LASTNAME_URLS, Club } from '../common/globals'
+import { METHODS } from '../common/globals'
 import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
 
+export const Lastname = 'Lastname'
 
 const table = {name:Lastname}
+
 export const lastnameColumnDefs = [
     { headerName: 'Lastname'      , field: 'lastname'     , type: 'String', min: 3, max: 45, required: true  },
     { headerName: 'Irish Lastname', field: 'lastnameIrish', type: 'String', min: 3, max: 45, required: true  },
@@ -12,6 +14,28 @@ export const lastnameInitialValue = {
     lastname     : "",
     lastnameIrish: ""
 };
+
+// lastnames
+const LASTNAME_ADD            = "/lastname/add";
+const LASTNAME_DELETE         = "/lastname/delete/";
+const LASTNAME_FINDBYID       = "/lastname/findById/";
+const LASTNAME_FINDBYLASTNAME = "/lastname/findByLastname";
+const LASTNAME_FINDENGLISH    = "/lastname/findEnglish/";
+const LASTNAME_FINDIRISH      = "/lastname/findIrish/";
+const LASTNAME_LIST           = "/lastname/list";
+const LASTNAME_UPDATE         = "/lastname/update";
+
+export const LASTNAME_URLS = {
+    add           : LASTNAME_ADD,
+    delete        : LASTNAME_DELETE,
+    findByLastname: LASTNAME_FINDBYLASTNAME,
+    findById      : LASTNAME_FINDBYID,
+    findEnglish   : LASTNAME_FINDENGLISH,
+    findIrish     : LASTNAME_FINDIRISH,
+    list          : LASTNAME_LIST,
+    update        : LASTNAME_UPDATE,
+}
+
 
 const apiRequests = {
     list          : { method: METHODS.GET   , url: LASTNAME_URLS.list},

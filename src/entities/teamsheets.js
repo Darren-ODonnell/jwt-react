@@ -1,6 +1,12 @@
-import { Teamsheet, TEAMSHEET_URLS, METHODS, COMPETITION_URLS, CLUB_URLS, PLAYER_URLS} from "../common/globals";
-import {addMessage, copyFormColDefs, copyGridColDefs} from "../common/helper";
+import { METHODS } from "../common/globals";
 
+import {addMessage, copyFormColDefs, copyGridColDefs} from "../common/helper";
+import { CLUB_URLS } from "./clubs";
+import { COMPETITION_URLS } from "./competitions";
+import { PLAYER_URLS } from "./players";
+
+
+export const Teamsheet = 'Teamsheet'
 const table = {name:Teamsheet}
 
 export const teamsheetColumnDefs = [
@@ -42,6 +48,21 @@ const gridLoader = (data) => {
         newData.push(newRow)
     })
     return newData;
+}
+
+// teamsheets
+const TEAMSHEET_ADD      = "/teamsheet/add";
+const TEAMSHEET_DELETE   = "/teamsheet/delete/";
+const TEAMSHEET_FINDBYID = "/teamsheet/findById/";
+const TEAMSHEET_LIST     = "/teamsheet/list";
+const TEAMSHEET_UPDATE   = "/teamsheet/update";
+
+export const TEAMSHEET_URLS = {
+    add     : TEAMSHEET_ADD,
+    delete  : TEAMSHEET_DELETE,
+    findById: TEAMSHEET_FINDBYID,
+    list    : TEAMSHEET_LIST,
+    update  : TEAMSHEET_UPDATE,
 }
 
 const apiRequests = {
