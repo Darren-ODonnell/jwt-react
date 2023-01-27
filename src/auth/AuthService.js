@@ -16,14 +16,6 @@ const getUser = () => {
 }
 const saveCurrentUser = (user) => { localStorage.setItem("user", JSON.stringify(user)); }
 
-
-// auth token related
-//
-// const checkToken = () => {
-//     return instance.get(CLUB_URLS.list)
-//     // .then(() => { return true  })
-//     //  (() => { return false })
-// }
 const setAuthToken = (token) => {
     if (token) {
         //applying token

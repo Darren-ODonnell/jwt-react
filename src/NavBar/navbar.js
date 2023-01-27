@@ -20,21 +20,21 @@ export const LoggedInNavbar = (props) =>{
                             <NavDropdown.Item href = "/competitions">Competitions</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href = "/positions">Positions</NavDropdown.Item>
-                            <NavDropdown.Item href = "/pitchgrids">Pitchgrids</NavDropdown.Item>
-                            <NavDropdown.Item href = "/lastnames">Lastnames</NavDropdown.Item>
-                            <NavDropdown.Item href = "/firstnames">Firstnames</NavDropdown.Item>
+                            <NavDropdown.Item href="/pitchgrids">Pitchgrids</NavDropdown.Item>
+                            <NavDropdown.Item href="/lastnames">Lastnames</NavDropdown.Item>
+                            <NavDropdown.Item href="/firstnames">Firstnames</NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title         = "Reports" id                                    = "basic-nav-dropdown">
-                            <NavDropdown.Item href = "/playerStats">Player Stats</NavDropdown.Item>
-                            <NavDropdown.Item href = "/teamStats">Team Stats</NavDropdown.Item>
+                        <NavDropdown title="Reports" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="/playerStats">Player Stats</NavDropdown.Item>
+                            <NavDropdown.Item href="/teamStats">Team Stats</NavDropdown.Item>
 
                         </NavDropdown>
                     </Nav>
-
-                    <Nav.Link >Welcome -> { props.user.username }</Nav.Link>
-                    <Nav.Link href = "/logout">Logout</Nav.Link>
-                    <Nav.Link href = "/changePassword">Change Password</Nav.Link>
-
+                    <NavDropdown title={"Welcome -> " + props.user.username}>
+                        {/*<Nav.Link >Welcome -> { props.user.username }</Nav.Link>*/}
+                        <Nav.Link href="/logout">Logout</Nav.Link>
+                        <Nav.Link href="/changePassword">Change Password</Nav.Link>
+                    </NavDropdown>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
