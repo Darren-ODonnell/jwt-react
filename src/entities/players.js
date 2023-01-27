@@ -1,6 +1,7 @@
-import { METHODS, Player, PLAYER_URLS } from '../common/globals'
+import { METHODS } from '../common/globals'
 import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
 
+export const Player = 'Player'
 
 const table = {name:Player}
 
@@ -24,6 +25,26 @@ export const playerInitialValue = {
     yob       : "", address : "", email       : "", phone    : "", phoneIce: "",
     registered: "", grade   : "", availability: ""
 };
+// players
+const PLAYER_ADD                     = "/player/add";
+const PLAYER_DELETE                  = "/player/delete/";
+const PLAYER_FINDBYFIRSTNAME         = "/player/findByFirstname/";
+const PLAYER_FINDBYFIRSTNAMELASTNAME = "/player/findByFirstnameLastname/";
+const PLAYER_FINDBYID                = "/player/findById/";
+const PLAYER_FINDBYLASTNAME          = "/player/findByLastname/";
+const PLAYER_LIST                    = "/player/list";
+const PLAYER_UPDATE                  = "/player/update";
+
+export const PLAYER_URLS = {
+    add                    : PLAYER_ADD,
+    delete                 : PLAYER_DELETE,
+    findByFirstname        : PLAYER_FINDBYFIRSTNAME,
+    findByFirstnameLastname: PLAYER_FINDBYFIRSTNAMELASTNAME,
+    findById               : PLAYER_FINDBYID,
+    findByLastname         : PLAYER_FINDBYLASTNAME,
+    list                   : PLAYER_LIST,
+    update                 : PLAYER_UPDATE
+}
 
 export const apiRequests = {
     list: {method: METHODS.GET, url: PLAYER_URLS.list},

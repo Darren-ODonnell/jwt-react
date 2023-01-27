@@ -1,5 +1,7 @@
-import { Statname, METHODS, STAT_NAME_URLS } from "../common/globals";
+import { METHODS } from "../common/globals";
 import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
+
+export const Statname = 'Statname'
 
 const table = {name:Statname}
 
@@ -12,7 +14,20 @@ export const statnameInitialValue = {
     abbrev: "",
     name  : ""
 };
+// statnames
+const STAT_NAME_ADD      = "/statname/add";
+const STAT_NAME_DELETE   = "/statname/delete/";
+const STAT_NAME_FINDBYID = "/statname/findById/";
+const STAT_NAME_LIST     = "/statname/list";
+const STAT_NAME_UPDATE   = "/statname/update";
 
+const STAT_NAME_URLS = {
+    add     : STAT_NAME_ADD,
+    delete  : STAT_NAME_DELETE,
+    findById: STAT_NAME_FINDBYID,
+    list    : STAT_NAME_LIST,
+    update  : STAT_NAME_UPDATE,
+}
 const apiRequests = {
     list    : {method: METHODS.GET   , url: STAT_NAME_URLS.list},
     findById: {method: METHODS.GET   , url: STAT_NAME_URLS.findById},

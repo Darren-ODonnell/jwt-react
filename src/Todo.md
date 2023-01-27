@@ -21,10 +21,11 @@ As elements are finished - move below Completed
 
 
 # Refactoring
-    R10:
-    R11:
     R12: 
-
+    R13: 
+    R14: 
+    R15: 
+    
 # Investigations
     I5: 
     I6: 
@@ -35,7 +36,6 @@ As elements are finished - move below Completed
     C2: Add pictures for players 
     C3: Add club logos to tables and teamsheets
     C5: Some sample Stats data required to test report displays 
-
 
     C10: Current Season
         C10a: Set default view to Current season
@@ -290,3 +290,5 @@ As elements are finished - move below Completed
        gridloader updated
     C6g: Time/Date pickers
         material UI DatePicker and TimePicker used to provide same.
+    R10: Move entity specific variables from globals.js to specific entity.js  
+    R11:All methods in globals moved top helper

@@ -5,9 +5,17 @@
 // import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 // import { TextField } from "@mui/material";
 import React from "react";
-
 import {    useLocation,     useNavigate,     useParams } from "react-router-dom";
-import {teams, competitions} from '../common/Dropdowns'
+import moment from "moment/moment";
+
+// a unique is required when iterating javascript lists, this is used where the data does not have a suitable key.
+let id = 0;
+export function getUniqueId(): string {
+    return id++ + '';
+}
+
+export function getSeasons() { return [new Date().getFullYear()-1, new Date().getFullYear(), new Date().getFullYear()+1] }
+
 export const addMessage = (  entityName ) => {
     return {
         add: "Add " + entityName,
@@ -15,6 +23,12 @@ export const addMessage = (  entityName ) => {
         create: "Create New " + entityName,
     };
 }
+
+// date/time
+export function getMinTime() {    return moment("09:00","HH:mm")}
+export function getMaxTime() {    return moment("20:00","HH:mm")}
+export function getMinDate() {    return moment("01/01/"+new Date().getFullYear()  ,"DD/MM/YYYY");}
+export function getMaxDate() {    return moment("31/12/"+new Date().getFullYear()+1,"DD/MM/YYYY");}
 
 // const id = { headerName: 'id',  field: 'id',  width:80,  editable: false, filter: false, };
 
@@ -76,64 +90,9 @@ export function isEmptyObject(obj){
 
 }
 
-// export function datePicker ()  {
-//     // eslint-disable-next-line no-self-compare
-//     const [value, setValue] = React.useState<Date | null>null;
-//     return (
-//         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-//             <KeyboardDatePicker
-//                 fullWidth
-//                 format="MM/dd/yyyy"
-//                 margin="normal"
-//                 id="date-picker-dialog"
-//                 label="Date picker dialog"
-//                 value={value}
-//                 onChange={(newValue) => {
-//                     setValue(newValue)
-//                 }}
-//                 KeyboardButtonProps={{
-//                     'aria-label': 'change date',
-//                 }}
-//                 renderInput={(params) => <TextField {...params} />}
-//             />
-//         </MuiPickersUtilsProvider>
-//     )
-// }
-
-// export function timePicker() {
-//     // eslint-disable-next-line no-self-compare
-//     const [value, setValue] = useState<Date | null>null;
-//     return (
-//         <LocalizationProvider dateAdapter={AdapterDateFns}>
-//             <TimePicker
-//                 label="Time"
-//                 value={value}
-//                 onChange={(newValue) => {
-//                     setValue(newValue);
-//                 }}
-//                 renderInput={(params) => <TextField {...params} />}
-//             />
-//         </LocalizationProvider>
-//     )
-// }
-
 export const refreshPage = () => {
     window.location.reload();
 }
-
-// export function selectSeason () {
-//     const year = Date.year;
-//     const seasons = [year, year+1, year+2];
-//
-//     // select one from these 3 years
-// }
-// export function selectRound () {
-//     const rounds = [1,2,3,4,5,6,7,8,9,10,11,12];
-//
-//     // select one from these 12 rounds
-// }
-
-
 
 export function withRouter(Component) {
     function ComponentWithRouterProp(props) {
@@ -147,6 +106,6 @@ export function withRouter(Component) {
             />
         );
     }
-
     return ComponentWithRouterProp;
 }
+
