@@ -26,9 +26,17 @@ export const addMessage = (  entityName ) => {
 
 // date/time
 export function getMinTime() {    return moment("09:00","HH:mm")}
-export function getMaxTime() {    return moment("20:00","HH:mm")}
-export function getMinDate() {    return moment("01/01/"+new Date().getFullYear()  ,"DD/MM/YYYY");}
-export function getMaxDate() {    return moment("31/12/"+new Date().getFullYear()+1,"DD/MM/YYYY");}
+export function getMaxTime() {
+    return moment("20:00", "HH:mm")
+}
+
+export function getMinDate() {
+    return moment("01/01/" + new Date().getFullYear() - 1, "DD/MM/YYYY");
+}
+
+export function getMaxDate() {
+    return moment("31/12/" + new Date().getFullYear() + 1, "DD/MM/YYYY");
+}
 
 // const id = { headerName: 'id',  field: 'id',  width:80,  editable: false, filter: false, };
 

@@ -4,23 +4,27 @@ import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { ErrorMessage } from "../common/ErrorMessage";
 import AuthService from "../auth/AuthService";
 import instance from "../api/axios";
-import { refreshPage, getUniqueId, getSeasons,
-         getMaxDate, getMaxTime, getMinDate, getMinTime,} from "../common/helper";
+import {
+    refreshPage, getUniqueId, getSeasons,
+    getMaxDate, getMaxTime, getMinDate, getMinTime,
+} from "../common/helper";
 
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {TimePicker} from '@mui/x-date-pickers/TimePicker';
+import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import moment from "moment";
-import { DATE_FORMAT, ROUNDS, TIME_FORMAT, TIME_FORMAT_SAVE} from "../common/globals";
-
+import {DATE_FORMAT, ROUNDS, TIME_FORMAT, TIME_FORMAT_SAVE} from "../common/globals";
+import DropDown from '../formcomponents/DropDown'
+import MyTimePicker from "../formcomponents/MyTimePicker";
+import MyDatePicker from "../formcomponents/MyDatePicker";
 
 const FormDialog = (props) => {
-    const [value, setValue] = useState();
-    const [dateValue, setDateValue] = useState( props.formData.fixtureDate );
-    const [timeValue, setTimeValue] = useState( moment( props.formData.fixtureTime, TIME_FORMAT ) );
-    const [selected, setSelected] = useState(props.defaultValue);
-
+    const [value, setValue] = useState()
+    const [dateValue, setDateValue] = useState(props.formData.fixtureDate)
+    const [timeValue, setTimeValue] = useState(moment(props.formData.fixtureTime, TIME_FORMAT))
+    // const [selected , setSelected]  = useState( props.defaultValue )
+    const [formData, setFormData] = useState(props.formData)
 
     const handleClose = (setOpen) => {
         setOpen(false);
@@ -30,7 +34,7 @@ const FormDialog = (props) => {
         return <ErrorMessage message={message}/>;
 
     }
-    const handleFormSubmit = ({formData, methods, setOpen, error }) => {
+    const handleFormSubmit = ({formData, methods, setOpen, error}) => {
         console.log('FormData: ', formData)
         const request = {...methods.add, data: formData};
 
@@ -86,28 +90,31 @@ const FormDialog = (props) => {
         console.log("New Value: " + e.target.value)
         setValue(e.target.value.toString());
     }
-    const onChangeDate = (value, id) => {
-        // update field with data from user
-        // data updated here first, then screen is updated
-        console.log(value)
-        let dateStr = moment(value.$d,DATE_FORMAT)
-        console.log(value + " - " + dateStr + " - " + id)
-        setDateValue(dateStr);
-        props.setFormData({...props.formData, [id]: value})
-    }
-    const onChangeTime = (value, id) => {
-        // update field with data from user
-        // data updated here first, then screen is updated
-        let timeMs = moment(value.$d,TIME_FORMAT)
-        console.log("Time: "+ timeMs + " - " + id)
-        console.log(timeMs)
 
-
-        props.setFormData({...props.formData, [id]: timeMs.format(TIME_FORMAT_SAVE)})
-        setTimeValue(timeMs)
-    }
-    const onSelectChange = (e) => {
-        setSelected(e.target.value)
+    // const onChangeDate = (value, id) => {
+    //     // update field with data from user
+    //     // data updated here first, then screen is updated
+    //     console.log(value)
+    //     let dateStr = moment(value.$d,DATE_FORMAT)
+    //     console.log(value + " - " + dateStr + " - " + id)
+    //     setDateValue(dateStr);
+    //     props.setFormData({...props.formData, [id]: value})
+    // }
+    // const onChangeTime = (value, id) => {
+    //     // update field with data from user
+    //     // data updated here first, then screen is updated
+    //     let timeMs = moment(value.$d,TIME_FORMAT)
+    //     console.log("Time: "+ timeMs + " - " + id)
+    //     console.log(timeMs)
+    //
+    //
+    //     props.setFormData({...props.formData, [id]: timeMs.format(TIME_FORMAT_SAVE)})
+    //     setTimeValue(timeMs)
+    // }
+    const onSelectChange = (e, field) => {
+        // setSelected(e.target.value)
+        props.formData[field] = e.target.value
+        setFormData(props.formData)
     }
 
     const AddData = ({methods, axiosApi, data, error, formData, setOpen, setData}) => {
@@ -210,126 +217,147 @@ const FormDialog = (props) => {
                 key         = {index}
                 id          = {field}
                 value       = {formData[field]}
-                onChange    = {e => onChange(e)}
-                data        = {formData}
-                placeholder = {"Enter " + headerName}
-                label       = {headerName}
-                variant     = "outlined"
-                margin      = "dense"
+                onChange={e => onChange(e)}
+                data={formData}
+                placeholder={"Enter " + headerName}
+                label={headerName}
+                variant="outlined"
+                margin="dense"
                 fullWidth
             />
         )
     }
-    const datePicker = ({index, field, formData, headerName}) => {
-        return (
-            <LocalizationProvider key={index} dateAdapter={AdapterDayjs}>
-                <DatePicker
+    // const datePicker = ({index, field, formData, headerName}) => {
+    //     return (
+    //         <LocalizationProvider key={index} dateAdapter={AdapterDayjs}>
+    //             <DatePicker
+    //
+    //                 key      = {index}
+    //                 format   = {DATE_FORMAT}
+    //                 id       = {field}
+    //                 minDate  = {getMinDate()}
+    //                 maxDate  = {getMaxDate()}
+    //                 value    = {formData[field]}
+    //                 onChange = {e => onChangeDate(e, field)}
+    //                 label    = {headerName}
+    //                 renderInput={(props) =>
+    //                     <TextField {...props}
+    //                        style={{borderStyle:'black', fontcolor:'black', position:'left', width:'50%'}}
+    //                        id={field}
+    //
+    //                     />}
+    //             />
+    //         </LocalizationProvider>
+    //     )
+    // }
+    // const timePicker = ({index, field, formData, headerName }) => {
+    //     return (
+    //         <LocalizationProvider key={index} dateAdapter={AdapterDayjs}>
+    //             <TimePicker
+    //                 // defaultValue={new Date("18:22:00")}
+    //                 key         = { index }
+    //                 ampm        = { false }
+    //                 id          = { field }
+    //                 minTime     = { getMinTime() }
+    //                 maxTime     = { getMaxTime() }
+    //                 value       = { moment(formData[field], TIME_FORMAT) }
+    //                 onChange    = { e => onChangeTime( e  , field) }
+    //                 openTo      = 'hours'
+    //                 placeholder = {"Enter " + headerName }
+    //                 label       = { headerName }
+    //                 minutesStep = { 15 }
+    //                 renderInput = { (props) =>
+    //                     <TextField {...props }
+    //                                style={{borderStyle:'black', fontcolor:'black', position:'absolute', width: "46%"}}
+    //                        id={ field }
+    //                     />}
+    //             />
+    //         </LocalizationProvider>
+    //     )
+    // }
 
-                    key      = {index}
-                    format   = {DATE_FORMAT}
-                    id       = {field}
-                    minDate  = {getMinDate()}
-                    maxDate  = {getMaxDate()}
-                    value    = {formData[field]}
-                    onChange = {e => onChangeDate(e, field)}
-                    label    = {headerName}
-                    renderInput={(props) =>
-                        <TextField {...props}
-                           style={{borderStyle:'black', fontcolor:'black', position:'left', width:'50%'}}
-                           id={field}
-
-                        />}
-                />
-            </LocalizationProvider>
-        )
-    }
-    const timePicker = ({index, field, formData, headerName }) => {
-        return (
-            <LocalizationProvider key={index} dateAdapter={AdapterDayjs}>
-                <TimePicker
-                    // defaultValue={new Date("18:22:00")}
-                    key         = { index }
-                    ampm        = { false }
-                    id          = { field }
-                    minTime     = { getMinTime() }
-                    maxTime     = { getMaxTime() }
-                    value       = { moment(formData[field], TIME_FORMAT) }
-                    onChange    = { e => onChangeTime( e  , field) }
-                    openTo      = 'hours'
-                    placeholder = {"Enter " + headerName }
-                    label       = { headerName }
-                    minutesStep = { 15 }
-                    renderInput = { (props) =>
-                        <TextField {...props }
-                                   style={{borderStyle:'black', fontcolor:'black', position:'absolute', width: "46%"}}
-                           id={ field }
-                        />}
-                />
-            </LocalizationProvider>
-        )
-    }
-
-    const staticDropDown = ( props) => {
-        console.log("Field: "+props.field)
+    const staticDropDown = (props) => {
+        console.log("Field: " + props.field)
         console.log("FormData: " + props.formData)
         console.log("Options: " + props.options)
         return (
-            <FormControl  key      = {getUniqueId()} style={{marginTop:5, marginBottom:2, width:'100%'}}>
+            <FormControl key={getUniqueId()} style={{marginTop: 5, marginBottom: 2, width: '100%'}}>
                 <InputLabel>{props.headerName}</InputLabel>
-                <Select
-                    // value={(selected) ? selected : props.defaultValue}
-                    value={props.defaultValue}
-                    onChange = {e => onSelectChange(e)}
+                <Select defaultValue={props.defaultValue}
+                        value={formData[props.field]}
+                        onChange={e => onSelectChange(e, props.field)}
                 >
                     {
-                        props.options.map( (entry) =>
-                        <MenuItem
-                            key={getUniqueId()+100+''}
-                            value={entry}>{entry}
-                        </MenuItem>
-                    )}
+                        props.options.map((entry) =>
+                            <MenuItem
+                                key={getUniqueId() + 100 + ''}
+                                value={entry}>{entry}
+                            </MenuItem>
+                        )}
                 </Select>
             </FormControl>
         )
     }
 
+    const getDropDown = (props, options) => {
+        return (
+            <DropDown props={props}
+                      formData={props.formData}
+                      field={props.field}
+                      options={options}
+            />
+        )
+    }
 
-
-    return  !props.loading ? (
-          <div>
+    return !props.loading ? (
+        <div>
             <Dialog
-
-                open             = { props.open}
-                onClose          = { handleClose }
-                aria-labelledby  = "alert-dialog-title"
-                aria-describedby = "alert-dialog-description"
+                open={props.open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id  = "alert-dialog-title"> { props.formData.id ? props.messages.update: props.messages.create }</DialogTitle>
-                <DialogContent>  {
+                <DialogTitle
+                    id="alert-dialog-title"> {props.formData.id ? props.messages.update : props.messages.create}</DialogTitle>
+                <DialogContent dividers>{
 
-                    props.colDefs.map(( prop, index ) => {
-                        let displayValue = ""
-                        displayValue  = props.formData[prop.field]
+                    props.colDefs.map((prop, index) => {
+                        let options = ""
                         switch (prop.type) {
                             // case "Competition" :
                             //     return competitionDropdown({...props, ...prop, index});
                             // case "Club" :
                             //     return clubDropdown({...props, ...prop, index});
-                            // case "Date":
-                            //     return datePicker({...props, ...prop, index});
-                            // case "Time":
-                            //     return timePicker({...props, ...prop, index});
+                            case 'Date':
+                                return <MyDatePicker
+                                    key={getUniqueId() + 100 + ''}
+                                    formData={props.formData}
+                                    field={prop.field}
+                                    headerName={"Date"}/>;
+                            case 'Time':
+                                return <MyTimePicker
+                                    key={getUniqueId()}
+                                    formData={props.formData}
+                                    field={prop.field}
+                                    headerName={"Time"}/>;
                             case "Round":
-                                let roundProps = {  options : ROUNDS, defaultValue : displayValue}
-                                return staticDropDown({...props, ...prop, index, ...roundProps});
+                                options = ROUNDS
+                                return <DropDown
+                                    key={getUniqueId() + 300 + ''}
+                                    formData={props.formData}
+                                    field={prop.field}
+                                    options={options}/>
+
                             case "Season":
-
-                                let seasonProps = { options : getSeasons(), defaultValue : displayValue}
-                                return staticDropDown({...prop, ...props, ...seasonProps, index});
+                                options = getSeasons()
+                                return <DropDown
+                                    key={getUniqueId()}
+                                    formData={props.formData}
+                                    field={prop.field}
+                                    options={options}/>
                             default:
-                                return textField({...props, ...prop, index})
+                                return textField({...props, ...prop, index});
                         }
-
                     })
                 }
                 </DialogContent>
@@ -342,9 +370,3 @@ const FormDialog = (props) => {
     ): <p>Loading...</p>
 }
 export default FormDialog;
-
-
-{/*{*/}
-
-
-{/*}*/}

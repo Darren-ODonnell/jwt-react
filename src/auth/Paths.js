@@ -23,9 +23,9 @@ const Paths = () =>  {
         <div className="container">
             <Router>
                 <Routes>
-                    <Route exact path = "/lastnames"       element = {<MyDataGrid props = { lastnameData } />}  />
-                    <Route exact path = "/lastname"        element = {<MyDataGrid props = { lastnameData } />}  />
-                    <Route exact path = "/firstnames"      element = {<MyDataGrid props = { firstnameData }/>}  />
+                    <Route exact path="/lastnames" element={<MyDataGrid props={lastnameData}/>}/>
+                    <Route exact path="/lastname" element={<MyDataGrid props={lastnameData}/>}/>
+                    <Route exact path="/firstnames" element={<MyDataGrid props={firstnameData}/>}/>
                     <Route exact path="/firstname" element={<MyDataGrid props={firstnameData}/>}/>
                     <Route exact path="/fixture" element={<MyDataGrid props={fixtureData}/>}/>
                     <Route exact path="/fixtures" element={<MyDataGrid props={fixtureData}/>}/>
