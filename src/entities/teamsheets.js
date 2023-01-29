@@ -10,12 +10,15 @@ export const Teamsheet = 'Teamsheet'
 const table = {name:Teamsheet}
 
 export const teamsheetColumnDefs = [
-    { headerName: 'Competition Name', field: 'competitionName', type: 'String', min: 8 , max: 60, required: true },
-    { headerName: 'Home Team Name'  , field: 'homeTeamName'   , type: 'String', min: 8 , max: 60, required: true },
-    { headerName: 'Away Team Name'  , field: 'awayTeamName'   , type: 'String', min: 8 , max: 60, required: true },
-    { headerName: 'Player Name'       , field: 'playerName'      , type: 'String', min: -1, max: 1 , required: true },
+    {headerName: 'Competition Name', field: 'competitionName', type: 'String', min: 8, max: 60, required: true},
+    {headerName: 'Fixture Date', field: 'fixtureDate', type: 'Date', min: 8, max: 60, required: true},
+    {headerName: 'Home Team Name', field: 'homeTeamName', type: 'String', min: 8, max: 60, required: true},
+    {headerName: 'Away Team Name', field: 'awayTeamName', type: 'String', min: 8, max: 60, required: true},
+    {headerName: 'Player Name', field: 'playerName', type: 'String', min: -1, max: 1, required: true},
     // { headerName: 'Lastname'        , field: 'lastname'       , type: 'String', min: -1, max: 1 , required: true },
-    { headerName: 'Position'        , field: 'position'       , type: 'String', min: -1, max: 1 , required: true },
+    {headerName: 'Position', field: 'position', type: 'String', min: -1, max: 100, required: true},
+    {headerName: 'Position Number', field: 'positionNumber', type: 'Position', min: -1, max: 1, required: true},
+
 
 ];
 
@@ -32,18 +35,20 @@ const gridLoader = (data) => {
     let newData = [];
     data.forEach(row => {
         const newRow = {
-            id             : row.id,
+            id: row.id,
             competitionName: row.fixture.competition.name,
-            homeTeamName   : row.fixture.homeTeam.name,
-            awayTeamName   : row.fixture.awayTeam.name,
-            playerName     : row.player.firstname + " " + row.player.lastname,
+            fixtureDate: row.fixture.fixtureDate,
+            homeTeamName: row.fixture.homeTeam.name,
+            awayTeamName: row.fixture.awayTeam.name,
+            playerName: row.player.firstname + " " + row.player.lastname,
             // lastname       : row.player.lastname,
-            position       : row.position.name,
+            position: row.position.name,
+            positionNumber: row.position.id,
             // not used in teamsheetColumnDefs so not displayed in grid but used later when updating changes in teamsheet.
-            competition    : row.competition,
-            homeTeam       : row.homeTeam,
-            awayTeam       : row.awayTeam,
-            getPlayers     : row.player,
+            competition: row.competition,
+            homeTeam: row.homeTeam,
+            awayTeam: row.awayTeam,
+            getPlayers: row.player,
         }
         newData.push(newRow)
     })

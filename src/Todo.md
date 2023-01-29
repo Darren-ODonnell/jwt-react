@@ -8,17 +8,10 @@ Ig: Ignored for now
 As elements are finished - move below Completed
 
 # Errors
-    E28: Form key for each row - error
-    E29: openTo error in Form popup
-    E33: Teamsheet id is object not id
-        its a composite key of fixture and player and hence an object is displayed.
-        not sure what to do with this!
-    E40: 
+    E40: FormDialog popup shows todays date and time - should show the values from the grid/form
     E41: 
     E42: 
     E43: 
-
-
 
 # Refactoring
     R10:
@@ -31,21 +24,29 @@ As elements are finished - move below Completed
     I7: 
 
 # New Code Additions
+
     C1: Add Plug and PLay Teamsheet selection - Cancel
     C2: Add pictures for players 
     C3: Add club logos to tables and teamsheets
     C5: Some sample Stats data required to test report displays 
-
 
     C10: Current Season
         C10a: Set default view to Current season
         C10b: How to change current season?
         C10c: where to save current season?
         C10d: All api activity should use this season setting.
-    C11:
-    C12:
-    C13: 
+    C11a: Add dropdowns for data retrieved from db competitions
+    C11b: Add dropdowns for data retrieved from db players
+    C11c: Add dropdowns for data retrieved from db clubs 
+    C11d: Add dropdowns for data retrieved from db positions
+    C11e: Add dropdowns for data retrieved from db pitchgrids
+    C11f: Add dropdowns for data retrieved from db stats
+    C11g: Add dropdowns for data retrieved from db statnames
+
+    C12: Create Teamsheet for a specific fixture
+
 # Unused Files
+
     U1: auth/useUser
     U2: auth/PrivateRoute
     U3: auth/user.service
@@ -69,8 +70,7 @@ As elements are finished - move below Completed
         C6c: Competition -> validation (DNE) - use a dropdown
         C6d1: Fixture -> Dropdown for Competition, season, and round
         C6d2: Fixture -  Competition
-        C6d3: Fixture -> season
-        C6d4: Fixture -> round
+
 
         C6e: Teamsheet -> Drop down for 
             Fixture , (what fields necessary to uniquely id fixture 
@@ -290,3 +290,18 @@ As elements are finished - move below Completed
        gridloader updated
     C6g: Time/Date pickers
         material UI DatePicker and TimePicker used to provide same.
+    E33: Teamsheet id is object not id
+        its a composite key of fixture and player and hence an object is displayed.
+        not sure what to do with this!
+        id column display removed from most grid displays except statname and pitchgrid
+    E29: openTo error in Form popup
+        does notaccept more than one setting openTo={'hours'}
+    E28: Form key for each row - error
+        created a getUnique function to alleviate this error.
+    C6d3: Fixture -> season 
+        dropdown created and db updateable
+    C6d4: Fixture -> round
+        dropdown created and db updateable
+    C13: Add filter by fixture to teamsheet grid display and sort of position number
+         Add fixtureDate to teamsheet grid
+         fixture date and position id added to tyeamsheet to provide this ability
