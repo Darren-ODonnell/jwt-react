@@ -55,17 +55,18 @@ function getId(table) {
 }
 
 export const copyGridColDefs = ( columnDefs , table) => {
-    const newColDefs = columnDefs.map( ({ headerName, field }) => {
+    const newColDefs = columnDefs.map(({headerName, field}) => {
         return {
             headerName: headerName,
             field: field,
             width: 150,
         }
-    } );
+    });
 
     // add grid actions update and delete to end of row and id defs to start of row
     // return [id,...newColDefs, actions];
-    return [getId(table),...newColDefs];
+    // return [getId(table),...newColDefs];
+    return [...newColDefs];
 }
 
 // move to FormDialog

@@ -11,16 +11,16 @@ const MyDatePicker = ({formData, field, headerName}) => {
     const [dateValue, setDateValue] = useState()
 
     const onChangeDate = (value, id) => {
-        formData[field] = moment(value).format(DATE_FORMAT)
-        console.log("Value: " + value)
-        console.log("FormData[field]: " + formData[field])
-        setDateValue(formData[field])
+        let dateStr = value.format(DATE_FORMAT).toString()  //moment(value).format(DATE_FORMAT)
+        formData[id] = value.format(DATE_FORMAT).toString()
+        console.log("Value: " + value.format(DATE_FORMAT).toString())
+        console.log("FormData[id]: " + formData[id])
+        setDateValue(formData[id])
     }
 
     return (
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-
             <DatePicker
                 // key = {key}
                 // format      = {DATE_FORMAT}

@@ -18,6 +18,7 @@ import {DATE_FORMAT, ROUNDS, TIME_FORMAT, TIME_FORMAT_SAVE} from "../common/glob
 import DropDown from '../formcomponents/DropDown'
 import MyTimePicker from "../formcomponents/MyTimePicker";
 import MyDatePicker from "../formcomponents/MyDatePicker";
+import MyTextField from "../formcomponents/MyTextField";
 
 const FormDialog = (props) => {
     const [value, setValue] = useState()
@@ -86,7 +87,6 @@ const FormDialog = (props) => {
     }
 
     function onChange(e) {
-
         console.log("New Value: " + e.target.value)
         setValue(e.target.value.toString());
     }
@@ -111,11 +111,11 @@ const FormDialog = (props) => {
     //     props.setFormData({...props.formData, [id]: timeMs.format(TIME_FORMAT_SAVE)})
     //     setTimeValue(timeMs)
     // }
-    const onSelectChange = (e, field) => {
-        // setSelected(e.target.value)
-        props.formData[field] = e.target.value
-        setFormData(props.formData)
-    }
+    // const onSelectChange = (e, field) => {
+    //     // setSelected(e.target.value)
+    //     props.formData[field] = e.target.value
+    //     setFormData(props.formData)
+    // }
 
     const AddData = ({methods, axiosApi, data, error, formData, setOpen, setData}) => {
         const user = AuthService.getCurrentUser();
@@ -173,60 +173,60 @@ const FormDialog = (props) => {
     }
 
 
-    const textField = ({index, field, formData, onChange, headerName}) => {
-        // console.log("default - textField")
-        return (
-            <TextField
-                key={index}
-                id={field}
-                value={formData[field]}
-                onChange={e => onChange(e)}
-
-                data={formData}
-                placeholder = { "Enter " + headerName }
-                label       = { headerName }
-                variant     = "outlined"
-                margin      = "dense"
-                fullWidth
-            />
-        )
-    }
-    const competitionDropdown =  ( { index, field, formData, onChange, headerName }) => {
-        // get competitions
-        // console.log("competitionDropDown")
-        return (
-            <TextField
-                key         = { index }
-                id          = { field }
-                value       = { formData[field] }
-                onChange    = {e => onChange(e)}
-                data        = {formData}
-                placeholder = {"Enter " + headerName}
-                label       = {headerName}
-                variant     = "outlined"
-                margin      = "dense"
-                fullWidth
-            />
-        )
-    }
-    const clubDropdown = ({index, field, formData, onChange, headerName}) => {
-        // get club data
-        // console.log("clubDropDown")
-        return (
-            <TextField
-                key         = {index}
-                id          = {field}
-                value       = {formData[field]}
-                onChange={e => onChange(e)}
-                data={formData}
-                placeholder={"Enter " + headerName}
-                label={headerName}
-                variant="outlined"
-                margin="dense"
-                fullWidth
-            />
-        )
-    }
+    // const textField = ({index, field, formData, onChange, headerName}) => {
+    //     // console.log("default - textField")
+    //     return (
+    //         <TextField
+    //             key={index}
+    //             id={field}
+    //             value={formData[field]}
+    //             onChange={e => onChange(e)}
+    //
+    //             data={formData}
+    //             placeholder = { "Enter " + headerName }
+    //             label       = { headerName }
+    //             variant     = "outlined"
+    //             margin      = "dense"
+    //             fullWidth
+    //         />
+    //     )
+    // }
+    // const competitionDropdown =  ( { index, field, formData, onChange, headerName }) => {
+    //     // get competitions
+    //     // console.log("competitionDropDown")
+    //     return (
+    //         <TextField
+    //             key         = { index }
+    //             id          = { field }
+    //             value       = { formData[field] }
+    //             onChange    = {e => onChange(e)}
+    //             data        = {formData}
+    //             placeholder = {"Enter " + headerName}
+    //             label       = {headerName}
+    //             variant     = "outlined"
+    //             margin      = "dense"
+    //             fullWidth
+    //         />
+    //     )
+    // }
+    // const clubDropdown = ({index, field, formData, onChange, headerName}) => {
+    //     // get club data
+    //     // console.log("clubDropDown")
+    //     return (
+    //         <TextField
+    //             key         = {index}
+    //             id          = {field}
+    //             value       = {formData[field]}
+    //             onChange={e => onChange(e)}
+    //             data={formData}
+    //             placeholder={"Enter " + headerName}
+    //             label={headerName}
+    //             variant="outlined"
+    //             margin="dense"
+    //             fullWidth
+    //         />
+    //     )
+    // }
     // const datePicker = ({index, field, formData, headerName}) => {
     //     return (
     //         <LocalizationProvider key={index} dateAdapter={AdapterDayjs}>
@@ -276,38 +276,38 @@ const FormDialog = (props) => {
     //     )
     // }
 
-    const staticDropDown = (props) => {
-        console.log("Field: " + props.field)
-        console.log("FormData: " + props.formData)
-        console.log("Options: " + props.options)
-        return (
-            <FormControl key={getUniqueId()} style={{marginTop: 5, marginBottom: 2, width: '100%'}}>
-                <InputLabel>{props.headerName}</InputLabel>
-                <Select defaultValue={props.defaultValue}
-                        value={formData[props.field]}
-                        onChange={e => onSelectChange(e, props.field)}
-                >
-                    {
-                        props.options.map((entry) =>
-                            <MenuItem
-                                key={getUniqueId() + 100 + ''}
-                                value={entry}>{entry}
-                            </MenuItem>
-                        )}
-                </Select>
-            </FormControl>
-        )
-    }
-
-    const getDropDown = (props, options) => {
-        return (
-            <DropDown props={props}
-                      formData={props.formData}
-                      field={props.field}
-                      options={options}
-            />
-        )
-    }
+    // const staticDropDown = (props) => {
+    //     console.log("Field: " + props.field)
+    //     console.log("FormData: " + props.formData)
+    //     console.log("Options: " + props.options)
+    //     return (
+    //         <FormControl key={getUniqueId()} style={{marginTop: 5, marginBottom: 2, width: '100%'}}>
+    //             <InputLabel>{props.headerName}</InputLabel>
+    //             <Select defaultValue={props.defaultValue}
+    //                     value={formData[props.field]}
+    //                     onChange={e => onSelectChange(e, props.field)}
+    //             >
+    //                 {
+    //                     props.options.map((entry) =>
+    //                         <MenuItem
+    //                             key={getUniqueId() + 100 + ''}
+    //                             value={entry}>{entry}
+    //                         </MenuItem>
+    //                     )}
+    //             </Select>
+    //         </FormControl>
+    //     )
+    // }
+    //
+    // const getDropDown = (props, options) => {
+    //     return (
+    //         <DropDown props={props}
+    //                   formData={props.formData}
+    //                   field={props.field}
+    //                   options={options}
+    //         />
+    //     )
+    // }
 
     return !props.loading ? (
         <div>
@@ -346,17 +346,25 @@ const FormDialog = (props) => {
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
+                                    headerName={"Round"}
                                     options={options}/>
-
                             case "Season":
                                 options = getSeasons()
                                 return <DropDown
                                     key={getUniqueId()}
                                     formData={props.formData}
                                     field={prop.field}
+                                    headerName={"Season"}
                                     options={options}/>
                             default:
-                                return textField({...props, ...prop, index});
+
+                                return <MyTextField
+                                    key={getUniqueId()}
+                                    index={index}
+                                    formData={props.formData}
+                                    field={prop.field}
+                                    headerName={"Season"}/>
+                            // textField({...props, ...prop, index});
                         }
                     })
                 }

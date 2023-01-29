@@ -32,16 +32,17 @@ const MyTimePicker = ({formData, field, headerName}) => {
                 key={getUniqueId() + 400 + ''}
                 ampm={false}
                 id={field}
+                format="HH:mm"
                 minTime={getMinTime()}
                 maxTime={getMaxTime()}
                 // value       = { moment(formData[field], TIME_FORMAT) }
                 value={timeValue}
+                disableMinutes={false}
                 onChange={e => onChangeTime(e, field)}
                 openTo='hours'
                 placeholder={"Enter " + headerName}
                 label={headerName}
                 minutesStep={15}
-                append={true}
                 renderInput={(props) =>
                     <TextField {...props}
                                style={{borderStyle: 'black', fontcolor: 'black', position: 'absolute', width: "46%"}}

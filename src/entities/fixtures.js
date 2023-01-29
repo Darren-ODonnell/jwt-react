@@ -9,8 +9,6 @@ export const Fixture = 'Fixture'
 
 const table = {name:Fixture}
 
-const languages = ['English', 'Spanish', 'French', 'Portuguese', '(other)']
-
 // const gridOptions = {
 //     columnDefs: [
 //         { field: 'type' },
@@ -164,18 +162,18 @@ const gridLoader = (data) => {
     let newData = [];
     data.forEach(row => {
         const newRow = {
-            id: row.id,
             competitionName: row.competition.name,
-            homeTeamName   : row.homeTeam.name,
-            awayTeamName   : row.awayTeam.name,
-            fixtureDate    : row.fixtureDate,
-            fixtureTime    : row.fixtureTime,
-            season         : row.season,
-            round          : row.round,
+            homeTeamName: row.homeTeam.name,
+            awayTeamName: row.awayTeam.name,
+            fixtureDate: row.fixtureDate,
+            fixtureTime: row.fixtureTime,
+            season: row.season,
+            round: row.round,
             // not used in fixtureColumnDefs so not displayed in grid but used later when updating changes in fixtures.
-            competition    : row.competition,
-            homeTeam       : row.homeTeam,
-            awayTeam       : row.awayTeam
+            id: row.id,
+            competition: row.competition,
+            homeTeam: row.homeTeam,
+            awayTeam: row.awayTeam
         }
         newData.push(newRow)
     })
