@@ -6,8 +6,8 @@ export const Statname = 'Statname'
 const table = {name:Statname}
 
 export const statnameColumnDefs = [
-    {headerName: 'Abbreviation', field: 'abbrev', type: 'String', width:150,  required: true},
-    {headerName: 'Stat Name', field: 'name', type: 'String', width:150,  required: true},
+    {headerName: 'Abbreviation', field: 'abbrev', type: 'String', width:150,  },
+    {headerName: 'Stat Name', field: 'name', type: 'String', width:150,  },
 ];
 
 export const statnameInitialValue = {

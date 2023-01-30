@@ -7,13 +7,13 @@ export const Fixture = 'Fixture'
 const table = {name:Fixture}
 
 const fixtureColumnDefs = [
-    {headerName: 'Competition Name', field: 'competitionName', type: 'Compettion',width:120, required: true  , minWidth: 100 , wrapHeaderText: true, autoHeaderHeight:true},
-    {headerName: 'Home Team Name'  , field: 'homeTeamName'   , type: 'Club'      , width:150, required: true },
-    {headerName: 'Away Team Name'  , field: 'awayTeamName'   , type: 'Club'      , width:150, required: true},
-    {headerName: 'Fixture Date'    , field: 'fixtureDate'    , type: 'Date'      , width:100, required: true},
-    {headerName: 'Fixture Time'    , field: 'fixtureTime'    , type: 'Time'      , width:150, required: true},
-    {headerName: 'Season'          , field: 'season'         , type: 'Season'    , width:120, required: true},
-    {headerName: 'Round'           , field: 'round'          , type: 'Round'     , width:120, required: true},
+    {headerName: 'Competition Name', field: 'competitionName', type: 'Compettion',width:120,  minWidth: 100 , wrapHeaderText: true, autoHeaderHeight:true},
+    {headerName: 'Home Team Name'  , field: 'homeTeamName'   , type: 'Club'      , width:150,  },
+    {headerName: 'Away Team Name'  , field: 'awayTeamName'   , type: 'Club'      , width:150, },
+    {headerName: 'Fixture Date'    , field: 'fixtureDate'    , type: 'Date'      , width:100, },
+    {headerName: 'Fixture Time'    , field: 'fixtureTime'    , type: 'Time'      , width:150, },
+    {headerName: 'Season'          , field: 'season'         , type: 'Season'    , width:120, },
+    {headerName: 'Round'           , field: 'round'          , type: 'Round'     , width:120, },
 ];
 const fixtureDropDown = true;
 

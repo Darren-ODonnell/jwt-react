@@ -10,14 +10,14 @@ export const Teamsheet = 'Teamsheet'
 const table = {name:Teamsheet}
 
 export const teamsheetColumnDefs = [
-    {headerName: 'Competition Name', field: 'competitionName', type: 'String', width:150,  required: true},
-    {headerName: 'Fixture Date', field: 'fixtureDate', type: 'Date', width:150,  required: true},
-    {headerName: 'Home Team Name', field: 'homeTeamName', type: 'String', width:150,  required: true},
-    {headerName: 'Away Team Name', field: 'awayTeamName', type: 'String', width:150,  required: true},
-    {headerName: 'Player Name', field: 'playerName', type: 'String', width:150,  required: true},
-    // { headerName: 'Lastname'        , field: 'lastname'       , type: 'String', width:150,  required: true },
-    {headerName: 'Position', field: 'position', type: 'String', width:150,  required: true},
-    {headerName: 'Position Number', field: 'positionNumber', type: 'Position', width:150,  required: true},
+    {headerName: 'Competition Name', field: 'competitionName', type: 'String'  , width: 150, },
+    {headerName: 'Fixture Date'    , field: 'fixtureDate'    , type: 'Date'    , width: 150, },
+    {headerName: 'Home Team Name'  , field: 'homeTeamName'   , type: 'String'  , width: 150, },
+    {headerName: 'Away Team Name'  , field: 'awayTeamName'   , type: 'String'  , width: 150, },
+    {headerName: 'Player Name'     , field: 'playerName'     , type: 'String'  , width: 150, },
+    // { headerName: 'Lastname'        , field: 'lastname'       , type: 'String', width:150,   },
+    {headerName: 'Position'        , field: 'position'       , type: 'String'  , width: 150, },
+    {headerName: 'Position Number' , field: 'positionNumber' , type: 'Position', width: 150, },
 
 
 ];

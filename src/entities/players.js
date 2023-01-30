@@ -6,18 +6,18 @@ export const Player = 'Player'
 const table = {name:Player}
 
 export const playerColumnDefs = [
-    { headerName: 'Firstname'      , field: 'firstname'   , type: 'String' , width:100,  required: true },
-    { headerName: 'Lastname'       , field: 'lastname'    , type: 'String' , width:100,  required: true },
-    { headerName: 'Irish Firstname', field: 'firstnameI'  , type: 'String' , width:100,  required: true },
-    { headerName: 'Irish Lastname' , field: 'lastnameI'   , type: 'String' , width:150,  required: true },
-    { headerName: 'Year of Birth'  , field: 'yob'         , type: 'Integer', width:60,  required: true },
-    { headerName: 'Address'        , field: 'address'     , type: 'String' , width:150,  required: true },
-    { headerName: 'Email'          , field: 'email'       , type: 'Email'  , width:150,  required: true },
-    { headerName: 'Phone'          , field: 'phone'       , type: 'String' , width:150,  required: true },
-    { headerName: 'Phone ICE'      , field: 'phoneIce'    , type: 'String' , width:150,  required: true },
-    { headerName: 'Registered'     , field: 'registered'  , type: 'Boolean', width:120,  required: true },
-    { headerName: 'Grade'          , field: 'grade'       , type: 'String' , width:80,  required: true },
-    { headerName: 'Availability'   , field: 'availability', type: 'Boolean', width:80,  required: true },
+    { headerName: 'Firstname'      , field: 'firstname'   , type: 'String' , width:100, },
+    { headerName: 'Lastname'       , field: 'lastname'    , type: 'String' , width:100,   },
+    { headerName: 'Irish Firstname', field: 'firstnameI'  , type: 'String' , width:100,   },
+    { headerName: 'Irish Lastname' , field: 'lastnameI'   , type: 'String' , width:150,   },
+    { headerName: 'Year of Birth'  , field: 'yob'         , type: 'Integer', width:60,    },
+    { headerName: 'Address'        , field: 'address'     , type: 'String' , width:150,   },
+    { headerName: 'Email'          , field: 'email'       , type: 'Email'  , width:150,   },
+    { headerName: 'Phone'          , field: 'phone'       , type: 'String' , width:150,   },
+    { headerName: 'Phone ICE'      , field: 'phoneIce'    , type: 'String' , width:150,  },
+    { headerName: 'Registered'     , field: 'registered'  , type: 'Boolean', width:120,   },
+    { headerName: 'Grade'          , field: 'grade'       , type: 'String' , width:80,    },
+    { headerName: 'Availability'   , field: 'availability', type: 'Boolean', width:80,   },
 ];
 
 export const playerInitialValue = {

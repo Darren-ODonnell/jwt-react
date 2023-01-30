@@ -6,8 +6,8 @@ export const Lastname = 'Lastname'
 const table = {name:Lastname}
 
 export const lastnameColumnDefs = [
-    { headerName: 'Lastname'      , field: 'lastname'     , type: 'String', width:150, required: true  },
-    { headerName: 'Irish Lastname', field: 'lastnameIrish', type: 'String', width:150,  required: true  },
+    { headerName: 'Lastname'      , field: 'lastname'     , type: 'String', width:150,  },
+    { headerName: 'Irish Lastname', field: 'lastnameIrish', type: 'String', width:150,   },
 ];
 
 export const lastnameInitialValue = {

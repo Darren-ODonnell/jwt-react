@@ -5,9 +5,9 @@ export const Position = 'Position'
 const table = {name : Position}
 
 export const positionColumnDefs = [
-    // { headerName: 'Abbreviation', field: 'id', type: 'String' , min: 8, max: 60, required: true },
-    { headerName: 'Position Name'  , field: 'name'  , type: 'String' , width:150,  required: true },
-    { headerName: 'Abbreviation'   , field: 'abbrev'  , type: 'String' , width:150,  required: true },
+    // { headerName: 'Abbreviation', field: 'id', type: 'String' , min: 8, max: 60, },
+    { headerName: 'Position Name'  , field: 'name'  , type: 'String' , width:150,   },
+    { headerName: 'Abbreviation'   , field: 'abbrev'  , type: 'String' , width:150,   },
 ];
 
 export const positionInitialValue = {
