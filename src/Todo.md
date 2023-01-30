@@ -12,7 +12,11 @@ As elements are finished - move below Completed
     E41: App does not logout after token has timed out.
         after timeout - delete old token - logout user - switch to loggedOutrNavbar
     E42: FormDialog - heedername = season on all
-    E43: 
+    E43: FormDialog - Missing headernames for each field
+    
+    E44:
+    E45:
+    E46:
 
 # Refactoring
     R11: check the need for copyFormColDefs and CopyGridColDefs - tidyup as necessary
