@@ -11,7 +11,7 @@ As elements are finished - move below Completed
     E40: FormDialog popup shows todays date and time - should show the values from the grid/form
     E41: App does not logout after token has timed out.
         after timeout - delete old token - logout user - switch to loggedOutrNavbar
-    E42: FormDialog - haeedername = season on all
+    E42: FormDialog - heedername = season on all
     E43: 
 
 # Refactoring
@@ -35,16 +35,20 @@ As elements are finished - move below Completed
         C10b: How to change current season?
         C10c: where to save current season?
         C10d: All api activity should use this season setting.
-    C11a: Add dropdowns for data retrieved from db competitions
-    C11b: Add dropdowns for data retrieved from db players
-    C11c: Add dropdowns for data retrieved from db clubs 
-    C11d: Add dropdowns for data retrieved from db positions
-    C11e: Add dropdowns for data retrieved from db pitchgrids
-    C11f: Add dropdowns for data retrieved from db stats
-    C11g: Add dropdowns for data retrieved from db statnames
+    C11a: Add dropdowns for Competition Names
+    C11b: Add dropdowns for fixture Dates
+    C11c: Add dropdowns for player names 
+    C11d: Add dropdowns for position numbers
+    C11e: Add dropdowns for pitchegrid values
+    C11f: Add dropdowns for for statnames
+    C11g: Add dropdowns for for seasons
+    C11h: Add dropdowns for for rounds
+    C11i: Add dropdowns for for availability
+    C11j: Add dropdowns for for Grade
+    C11k: Add dropdowns for for Registered
 
     C12: Create Teamsheet for a specific fixture - suitable to be printed out - as per GAA standard Teamsheet form.
-    C13 ADD Stats to grid
+    C13: ADD Stats to grid
 
 # Unused Files
 
