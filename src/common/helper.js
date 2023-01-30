@@ -84,13 +84,13 @@ export const copyFormColDefs = ( columnDefs ) => {
 }
 
 export const defaultColDef = {
-    cellEditor: 'agSelectCellEditor',
     sortable: true,
-    editable: true,
+    editable: false,
     filter: true,
-    cellEditorPopup: true,
     floatingFilter: true,
     resizable: true,
+    wrapHeaderText: true,
+    autoHeaderHeight: true,
 };
 
 export function isEmptyObject(obj){

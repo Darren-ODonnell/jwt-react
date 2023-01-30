@@ -7,12 +7,12 @@ const table = {name:Club}
 
 export const clubColumnDefs = [
     // { headerName: 'ID',             field: 'id',            type: 'Number', min:3, max:10, required: true   },
-    {headerName: 'Club Name', field: 'name', type: 'String', min: 3, max: 45, required: true},
-    {headerName: 'Contact Name', field: 'contactName', type: 'String', min: 3, max: 45, required: false},
-    {headerName: 'Contact Email', field: 'contactEmail', type: 'Email', min: 5, max: 45, required: false},
-    {headerName: 'Contact Phone', field: 'contactPhone', type: 'String', min: 7, max: 15, required: false},
-    {headerName: 'Pitches', field: 'pitches', type: 'String', min: 3, max: 45, required: false},
-    {headerName: 'Colours', field: 'colours', type: 'String', min: 6, max: 20, required: false},
+    {headerName: 'Club Name'    , field: 'name'        , type: 'String', width: 150, required: true},
+    {headerName: 'Contact Name' , field: 'contactName' , type: 'String', width: 150, required: false},
+    {headerName: 'Contact Email', field: 'contactEmail', type: 'Email' , width: 150, required: false},
+    {headerName: 'Contact Phone', field: 'contactPhone', type: 'String', width: 150, required: false},
+    {headerName: 'Pitches'      , field: 'pitches'     , type: 'String', width: 150, required: false},
+    {headerName: 'Colours'      , field: 'colours'     , type: 'String', width: 150, required: false},
 ];
 
 const clubDropDown = false;
@@ -65,7 +65,10 @@ export const clubData = {
     type: Club,
     initialValue: clubInitialValue,
     formColDefs: copyFormColDefs(clubColumnDefs), // form column definitions
-    gridColDefs: copyGridColDefs(clubColumnDefs, table), // Grid column definitions
+
+    // gridColDefs: copyGridColDefs(clubColumnDefs, table), // Grid column definitions
+    gridColDefs: clubColumnDefs, // Grid column definitions
+
     columnDefs: clubColumnDefs,
     methods: apiRequests,
     dropDown: clubDropDown,

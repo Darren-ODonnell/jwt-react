@@ -6,8 +6,8 @@ export const Pitchgrid = 'Pitchgrid'
 const table = {name:Pitchgrid}
 
 export const pitchgridColumnDefs = [
-    {headerName: 'Abbreviation', field: 'abbrev', type: 'String', min: 8, max: 60, required: true},
-    {headerName: 'Pitchgrid', field: 'name', type: 'String', min: 8, max: 60, required: true},
+    {headerName: 'Abbreviation', field: 'abbrev', type: 'String', width:150,  required: true},
+    {headerName: 'Pitchgrid', field: 'name', type: 'String', width:150,  required: true},
 ];
 
 export const pitchgridInitialValue = {

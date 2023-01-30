@@ -9,13 +9,13 @@ As elements are finished - move below Completed
 
 # Errors
     E40: FormDialog popup shows todays date and time - should show the values from the grid/form
-    E41: 
-    E42: 
+    E41: App does not logout after token has timed out.
+        after timeout - delete old token - logout user - switch to loggedOutrNavbar
+    E42: FormDialog - haeedername = season on all
     E43: 
 
 # Refactoring
-    R10:
-    R11:
+    R11: check the need for copyFormColDefs and CopyGridColDefs - tidyup as necessary
     R12: 
 
 # Investigations
@@ -43,7 +43,8 @@ As elements are finished - move below Completed
     C11f: Add dropdowns for data retrieved from db stats
     C11g: Add dropdowns for data retrieved from db statnames
 
-    C12: Create Teamsheet for a specific fixture
+    C12: Create Teamsheet for a specific fixture - suitable to be printed out - as per GAA standard Teamsheet form.
+    C13 ADD Stats to grid
 
 # Unused Files
 
@@ -305,3 +306,6 @@ As elements are finished - move below Completed
     C13: Add filter by fixture to teamsheet grid display and sort of position number
          Add fixtureDate to teamsheet grid
          fixture date and position id added to tyeamsheet to provide this ability
+    R10: extract dropdown, textfield, timepicker and datepicker to separate components and call within formdialog
+        new components placed in formcomponents folder
+    
