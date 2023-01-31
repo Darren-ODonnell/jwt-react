@@ -16,16 +16,10 @@ import {TimePicker} from '@mui/x-date-pickers/TimePicker';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import moment from "moment";
 import {
-    DATE_FORMAT,
-    ROUNDS,
-    GRADES,
-    SUCCESS,
-    TIME_FORMAT,
-    TIME_FORMAT_SAVE,
-    HALF,
-    POSITIONS,
-    PLAYER_NUMBERS,
-    REGISTERED, AVAIL, PITCH_GRIDS, COMPETITIONS
+    DATE_FORMAT, ROUNDS, GRADES, SUCCESS,
+    TIME_FORMAT, TIME_FORMAT_SAVE, HALF, POSITIONS,
+    PLAYER_NUMBERS, REGISTERED, AVAILABILITY, PITCH_GRIDS,
+    COMPETITIONS
 } from "../common/globals";
 import DropDown from '../formcomponents/DropDown'
 import MyTimePicker from "../formcomponents/MyTimePicker";
@@ -148,10 +142,16 @@ const FormDialog = (props) => {
         refreshPage()
         // window.location.reload()
     }
-
+    const scroll = {
+        width: '50%',
+        height: '50%',
+        overflowX: 'scroll',
+        overflowY: 'scroll'
+    }
     return !props.loading ? (
         <div>
             <Dialog
+                style={scroll}
                 open={props.open}
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
@@ -161,88 +161,87 @@ const FormDialog = (props) => {
                     id="alert-dialog-title"> {props.formData.id ? props.messages.update : props.messages.create}</DialogTitle>
                 <DialogContent dividers>{
 
-
-
                     props.colDefs.map((prop, index) => {
                         let options = ""
                         switch (prop.field) {
                             case "half" :
                                 return <DropDown
-
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
                                     headerName={"First/Second Half"}
-                                    options={HALF}/>;
-                            case "registered" :
+                                    options={HALF}/>
+                            case "registered":
                                 return <DropDown
                                     key={getUniqueId() + 300 + ''}
+                                    defaultValue={props.formData[prop.field]}
                                     formData={props.formData}
                                     field={prop.field}
                                     headerName={"Registered"}
-                                    options={ REGISTERED }/>;
-                            // case "statname" :
-                            //     return
-                            case "grade" :
+                                    options={REGISTERED}/>
+                            // // case "statname" :
+                            // //     return
+                            case "grade":
                                 return <DropDown
-                                    style={{ PaperProps: {
-                                            style: {
-                                                //maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-                                                height: 400,
-                                                OverflowY: "scroll"
-                                            }}}}
+                                    style={scroll}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
+                                    setFormData={setFormData}
                                     field={prop.field}
                                     headerName={"Grade"}
-                                    options={ GRADES }/>;
-                            case "availability" :
+                                    options={GRADES}/>
+                            case "availability":
                                 return <DropDown
                                     key={getUniqueId() + 300 + ''}
+                                    defaultValue={props.formData[prop.field]}
+                                    setFormData={setFormData}
                                     formData={props.formData}
                                     field={prop.field}
                                     headerName={"Availability"}
-                                    options={ AVAIL }/>;
-                            case "pitchgrid" :
+                                    options={AVAILABILITY}/>
+                            case "pitchgrid":
                                 return <DropDown
+                                    style={scroll}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
                                     headerName={"Pitchgrid"}
-                                    options={ PITCH_GRIDS }/>;
-                            case "success" :
+                                    options={PITCH_GRIDS}/>;
+                            case "success":
                                 return <DropDown
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
                                     headerName={"Success"}
-                                    options={ SUCCESS }/>;
-                            case "position" :
+                                    options={SUCCESS}/>
+                            case "position":
                                 return <DropDown
+                                    style={scroll}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
                                     headerName={"Position"}
-                                    options={ POSITIONS }/>;
-                            case "positionNumber" :
+                                    options={POSITIONS}/>
+                            case "positionNumber":
                                 return <DropDown
+                                    style={scroll}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
                                     headerName={"Position Number"}
-                                    options={ PLAYER_NUMBERS }/>;
-                            // case "playerName" :
-                            //     return playerNameDropDown()
-                            case "competitionName" :
+                                    options={PLAYER_NUMBERS}/>
+                            case "competitionName":
                                 return <DropDown
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
                                     headerName={"Competition Name"}
-                                    options={ COMPETITIONS }/>;
+                                    options={COMPETITIONS}/>
                             // case "awayTeamName" :
                             // case "homeTeamName" :
                             //     return clubDropdown({...props, ...prop, index});
+                            // // case "playerName" :
+                            // //     return playerNameDropDown()
                             case 'fixtureDate':
                                 return <MyDatePicker
                                     key={getUniqueId() + 100 + ''}
@@ -257,26 +256,28 @@ const FormDialog = (props) => {
                                     headerName={"Time"}/>;
                             case "round":
                                 return <DropDown
-                                    key        = {getUniqueId() + 300 + ''}
-                                    formData   = {props.formData}
-                                    field      = {prop.field}
-                                    headerName = {"Round"}
-                                    options    = {ROUNDS} />
+                                    style={scroll}
+                                    key={getUniqueId() + 300 + ''}
+                                    formData={props.formData}
+                                    field={prop.field}
+                                    headerName={"Round"}
+                                    options={ROUNDS}/>
                             case "season":
                                 return <DropDown
                                     key={getUniqueId()}
                                     formData={props.formData}
+                                    defaultValue={props.formData[prop.field]}
                                     field={prop.field}
                                     headerName={"Season"}
                                     options={getSeasons()}/>
-                            default:
-                                return <MyTextField
-                                    key={getUniqueId()}
-                                    index={index}
-                                    formData={props.formData}
-                                    headerName={prop.headerName}
-                                    field={prop.field}
-                                />
+                            // default:
+                            //     return <MyTextField
+                            //         key            = {getUniqueId()+150+''}
+                            //         defaultValue   = {props.formData[prop.field]}
+                            //         formData       = {props.formData}
+                            //         headerName     = {prop.headerName}
+                            //         field          = {prop.field}
+                            //     />
 
                         }
                     })
