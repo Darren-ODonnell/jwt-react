@@ -15,7 +15,6 @@ export const teamsheetColumnDefs = [
     {headerName: 'Home Team Name'  , field: 'homeTeamName'   , type: 'String'  , width: 150, },
     {headerName: 'Away Team Name'  , field: 'awayTeamName'   , type: 'String'  , width: 150, },
     {headerName: 'Player Name'     , field: 'playerName'     , type: 'String'  , width: 150, },
-    // { headerName: 'Lastname'        , field: 'lastname'       , type: 'String', width:150,   },
     {headerName: 'Position'        , field: 'position'       , type: 'String'  , width: 150, },
     {headerName: 'Position Number' , field: 'positionNumber' , type: 'Position', width: 150, },
 
@@ -35,20 +34,19 @@ const gridLoader = (data) => {
     let newData = [];
     data.forEach(row => {
         const newRow = {
-            id: row.id,
+            id             : row.id,
             competitionName: row.fixture.competition.name,
-            fixtureDate: row.fixture.fixtureDate,
-            homeTeamName: row.fixture.homeTeam.name,
-            awayTeamName: row.fixture.awayTeam.name,
-            playerName: row.player.firstname + " " + row.player.lastname,
-            // lastname       : row.player.lastname,
-            position: row.position.name,
-            positionNumber: row.position.id,
+            fixtureDate    : row.fixture.fixtureDate,
+            homeTeamName   : row.fixture.homeTeam.name,
+            awayTeamName   : row.fixture.awayTeam.name,
+            playerName     : row.player.firstname + " " + row.player.lastname,
+            position       : row.position.name,
+            positionNumber : row.position.id,
             // not used in teamsheetColumnDefs so not displayed in grid but used later when updating changes in teamsheet.
-            competition: row.competition,
-            homeTeam: row.homeTeam,
-            awayTeam: row.awayTeam,
-            getPlayers: row.player,
+            competition    : row.competition,
+            homeTeam       : row.homeTeam,
+            awayTeam       : row.awayTeam,
+            getPlayers     : row.player,
         }
         newData.push(newRow)
     })
@@ -86,8 +84,8 @@ export const teamsheetData = {
     type        : Teamsheet,
     initialValue: teamsheetInitialValue,
     columnDefs  : teamsheetColumnDefs,
-    formColDefs : copyFormColDefs( teamsheetColumnDefs ), // form column definitions
-    gridColDefs : copyGridColDefs( teamsheetColumnDefs, table ), // Grid column definitions
+    formColDefs : copyFormColDefs( teamsheetColumnDefs ),          // form column definitions
+    gridColDefs : copyGridColDefs( teamsheetColumnDefs  , table ), // Grid column definitions
     methods     : apiRequests,
-    gridLoader: gridLoader
+    gridLoader  : gridLoader
 };

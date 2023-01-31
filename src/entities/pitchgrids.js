@@ -6,8 +6,8 @@ export const Pitchgrid = 'Pitchgrid'
 const table = {name:Pitchgrid}
 
 export const pitchgridColumnDefs = [
-    {headerName: 'Abbreviation', field: 'abbrev', type: 'String', width:150,  },
-    {headerName: 'Pitchgrid', field: 'name', type: 'String', width:150,  },
+    {headerName: 'Abbreviation', field: 'abbrev', type: 'String', width: 150, },
+    {headerName: 'Pitchgrid'   , field: 'name'  , type: 'String', width: 150, },
 ];
 
 export const pitchgridInitialValue = {
@@ -15,7 +15,7 @@ export const pitchgridInitialValue = {
     name  : ""
 };
 
-// pitchgrid
+
 const PITCH_GRID_ADD      = "/pitchgrid/add";
 const PITCH_GRID_DELETE   = "/pitchgrid/delete/";
 const PITCH_GRID_FINDBYID = "/pitchgrid/findById/";

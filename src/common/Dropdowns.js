@@ -1,13 +1,6 @@
 import {Form} from 'react-bootstrap'
 import {useState} from "react";
-// import {Select, menuItem, FormControl, InputLabel} from '@material-ui'
 
-// general dropdown used by the entity dropdowns below
-
-// sample data f
-// ]=-[por each dropdown
-export const dates = []
-export const times = []
 export const players = [
     "Aherne, Kate",
     "Barrett, Sophie ",
@@ -63,8 +56,6 @@ export const players = [
     "Warren, Emily",
     "Woods, Róisín",
     "Young, Ellie",
-
-
 ]
 export const statNames = [
     "Block",
@@ -114,46 +105,6 @@ export const teams = [
     "Skerries Harps",
     "Erins Isle",
     "St Oliver Plunkett/Eoghan Ruadh",
-]
-export const positions = [
-    "Goal Keeper",
-    "Left Full Back",
-    "Full Back",
-    "Right Full Back",
-    "Left Half Back",
-    "Centre Back",
-    "Right Half Back",
-    "Left Midfield",
-    "Right Midfield",
-    "Left Half Forward",
-    "Centre Forward",
-    "Right Half Forward",
-    "Left Full Forward",
-    "Full Forward",
-    "Right Full Forward",
-
-]
-export const pitchgrids = [
-    "A1",
-    "A2",
-    "A3",
-    "B1",
-    "B2",
-    "B3",
-    "C1",
-    "C2",
-    "C3",
-    "D1",
-    "D2",
-    "D3",
-    "E1",
-    "E2",
-    "E3",
-]
-export const competitions = [
-    "League Cup",
-    "Summer Cup",
-    "Championship",
 ]
 
 export const seasons = [

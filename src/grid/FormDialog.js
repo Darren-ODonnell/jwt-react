@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Dialog, MenuItem, TextField, Select, FormControl, InputLabel } from "@mui/material";
-import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { DialogActions, DialogContent, DialogTitle, GridListTile } from "@mui/material";
+
 import { ErrorMessage } from "../common/ErrorMessage";
 import AuthService from "../auth/AuthService";
 import instance from "../api/axios";
@@ -14,7 +15,18 @@ import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {TimePicker} from '@mui/x-date-pickers/TimePicker';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import moment from "moment";
-import {BOOLEANS, DATE_FORMAT, ROUNDS, GRADES, TIME_FORMAT, TIME_FORMAT_SAVE} from "../common/globals";
+import {
+    DATE_FORMAT,
+    ROUNDS,
+    GRADES,
+    SUCCESS,
+    TIME_FORMAT,
+    TIME_FORMAT_SAVE,
+    HALF,
+    POSITIONS,
+    PLAYER_NUMBERS,
+    REGISTERED, AVAIL, PITCH_GRIDS, COMPETITIONS
+} from "../common/globals";
 import DropDown from '../formcomponents/DropDown'
 import MyTimePicker from "../formcomponents/MyTimePicker";
 import MyDatePicker from "../formcomponents/MyDatePicker";
@@ -149,40 +161,85 @@ const FormDialog = (props) => {
                     id="alert-dialog-title"> {props.formData.id ? props.messages.update : props.messages.create}</DialogTitle>
                 <DialogContent dividers>{
 
+
+
                     props.colDefs.map((prop, index) => {
                         let options = ""
                         switch (prop.field) {
+                            case "half" :
+                                return <DropDown
+
+                                    key={getUniqueId() + 300 + ''}
+                                    formData={props.formData}
+                                    field={prop.field}
+                                    headerName={"First/Second Half"}
+                                    options={HALF}/>;
                             case "registered" :
-                                let REGISTERED = ['True', 'False']
                                 return <DropDown
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
                                     headerName={"Registered"}
-                                    options={REGISTERED}/>;
+                                    options={ REGISTERED }/>;
                             // case "statname" :
                             //     return
                             case "grade" :
                                 return <DropDown
+                                    style={{ PaperProps: {
+                                            style: {
+                                                //maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                                                height: 400,
+                                                OverflowY: "scroll"
+                                            }}}}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
                                     headerName={"Grade"}
-                                    options={GRADES}/>;
+                                    options={ GRADES }/>;
                             case "availability" :
-                                let AVAIL = ['True', 'False']
                                 return <DropDown
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
                                     headerName={"Availability"}
-                                    options={AVAIL}/>;
-                            // case "pitchgrids" :
-                            //     return pitchGridDropDown()
+                                    options={ AVAIL }/>;
+                            case "pitchgrid" :
+                                return <DropDown
+                                    key={getUniqueId() + 300 + ''}
+                                    formData={props.formData}
+                                    field={prop.field}
+                                    headerName={"Pitchgrid"}
+                                    options={ PITCH_GRIDS }/>;
+                            case "success" :
+                                return <DropDown
+                                    key={getUniqueId() + 300 + ''}
+                                    formData={props.formData}
+                                    field={prop.field}
+                                    headerName={"Success"}
+                                    options={ SUCCESS }/>;
+                            case "position" :
+                                return <DropDown
+                                    key={getUniqueId() + 300 + ''}
+                                    formData={props.formData}
+                                    field={prop.field}
+                                    headerName={"Position"}
+                                    options={ POSITIONS }/>;
+                            case "positionNumber" :
+                                return <DropDown
+                                    key={getUniqueId() + 300 + ''}
+                                    formData={props.formData}
+                                    field={prop.field}
+                                    headerName={"Position Number"}
+                                    options={ PLAYER_NUMBERS }/>;
                             // case "playerName" :
                             //     return playerNameDropDown()
-                            // case "competitionName" :
-                            //     return competitionDropdown({...props, ...prop, index});
+                            case "competitionName" :
+                                return <DropDown
+                                    key={getUniqueId() + 300 + ''}
+                                    formData={props.formData}
+                                    field={prop.field}
+                                    headerName={"Competition Name"}
+                                    options={ COMPETITIONS }/>;
                             // case "awayTeamName" :
                             // case "homeTeamName" :
                             //     return clubDropdown({...props, ...prop, index});
@@ -199,30 +256,28 @@ const FormDialog = (props) => {
                                     field={prop.field}
                                     headerName={"Time"}/>;
                             case "round":
-                                options = ROUNDS
                                 return <DropDown
-                                    key={getUniqueId() + 300 + ''}
-                                    formData={props.formData}
-                                    field={prop.field}
-                                    headerName={"Round"}
-                                    options={options}/>
+                                    key        = {getUniqueId() + 300 + ''}
+                                    formData   = {props.formData}
+                                    field      = {prop.field}
+                                    headerName = {"Round"}
+                                    options    = {ROUNDS} />
                             case "season":
-                                options = getSeasons()
                                 return <DropDown
                                     key={getUniqueId()}
                                     formData={props.formData}
                                     field={prop.field}
                                     headerName={"Season"}
-                                    options={options}/>
+                                    options={getSeasons()}/>
                             default:
                                 return <MyTextField
                                     key={getUniqueId()}
                                     index={index}
                                     formData={props.formData}
-                                    headerName={props.colDefs.headerName}
+                                    headerName={prop.headerName}
                                     field={prop.field}
                                 />
-                            // textField({...props, ...prop, index});
+
                         }
                     })
                 }

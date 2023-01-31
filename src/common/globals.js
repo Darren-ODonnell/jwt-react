@@ -23,21 +23,43 @@ export const TIME_FORMAT = "HH:mm";         // 24 hour clock without seconds
 export const TIME_FORMAT_SAVE = "HH:mm:ss"; // 24 hour clock with seconds
 
 // static look up arrays
-// any other lookup arrays are taken from endpoint
+// any other lookup arrays are taken from the endpoint
 export const ROUNDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 export const PLAYER_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
 export const PITCH_GRIDS = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "D3", "E1", "E2", "E3"]
 export const GRADES = ['S1', 'S2', 'I1', 'I2', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10']
-
+export const REGISTERED =  ["True", "False"]
+export const AVAIL =  ["True", "False"]
+export const HALF = [ 1, 2 ]
+export const SUCCESS =  ["True", "False"]
+export const COMPETITIONS = ['League Cup', "Summer Cup", "Championship"]
+export const POSITIONS = [
+    'Goal Keeper',
+    'Left Full Back',
+    'Full Back',
+    'Right Full Back',
+    'Left Half Back',
+    'Centre Back',
+    'Right Half Back',
+    'Left Midfield',
+    'Right Midfield',
+    'Left Half Forward',
+    'Centre Forward',
+    'Right Half Forward',
+    'Left Full Forward',
+    'Full Forward',
+    'Right Full Forward',
+    'Substitute',
+]
 
 // auth
 const API_AUTH_FORGOT_PASSWORD = "/api/auth/forgot_password";
 const API_AUTH_CHANGE_PASSWORD = "/api/auth/change_password";
-const API_AUTH_DELETE = "/api/auth/delete/";
-const API_AUTH_FINDBYID = "/api/auth/findById/";
-const API_AUTH_LIST = "/api/auth/list";
-const API_AUTH_LOGIN = "/api/auth/login";
-const API_AUTH_REGISTER = "/api/auth/register/";
+const API_AUTH_DELETE          = "/api/auth/delete/";
+const API_AUTH_FINDBYID        = "/api/auth/findById/";
+const API_AUTH_LIST            = "/api/auth/list";
+const API_AUTH_LOGIN           = "/api/auth/login";
+const API_AUTH_REGISTER        = "/api/auth/register/";
 const API_AUTH_UPDATE          = "/api/auth/update";
 
 export const API_AUTH_URLS = {
@@ -50,8 +72,6 @@ export const API_AUTH_URLS = {
     register: API_AUTH_REGISTER,
     userUpdate: API_AUTH_UPDATE
 }
-
-
 
 export const API_TYPE = {
     GET        : "GET",

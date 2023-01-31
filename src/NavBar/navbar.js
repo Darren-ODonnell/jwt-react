@@ -8,32 +8,30 @@ export const LoggedInNavbar = (props) =>{
             <Container>
                 <Navbar.Brand href="/home">St Judes GAA</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                <Navbar.Collapse id                = "basic-navbar-nav">
-                    <Nav className                 = "me-auto">
-                        <Nav.Link href="/home">Home</Nav.Link>
-                        <Nav.Link href="/clubsGrid">Clubs</Nav.Link>
+                <Navbar.Collapse id = "basic-navbar-nav">
+                    <Nav className  = "me-auto">
+                        <Nav.Link href = "/home">Home</Nav.Link>
+                        <Nav.Link href = "/clubsGrid">Clubs</Nav.Link>
                         <Nav.Link href             = "/players">Players</Nav.Link>
                         <Nav.Link href             = "/fixtures">Fixtures</Nav.Link>
                         <Nav.Link href             = "/teamsheets">Teamsheets</Nav.Link>
-                        <Nav.Link href             = "/statnames">Statnames</Nav.Link>
-                        <NavDropdown title         = "Dropdown" id                                   = "basic-nav-dropdown">
+                        <Nav.Link href             = "/stats">Stats</Nav.Link>
+                        <NavDropdown title = "Dropdown" id = "basic-nav-dropdown">
                             <NavDropdown.Item href = "/competitions">Competitions</NavDropdown.Item>
+                            <NavDropdown.Item href = "/statnames">Statnames</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href = "/positions">Positions</NavDropdown.Item>
-                            <NavDropdown.Item href="/pitchgrids">Pitchgrids</NavDropdown.Item>
-                            <NavDropdown.Item href="/lastnames">Lastnames</NavDropdown.Item>
-                            <NavDropdown.Item href="/firstnames">Firstnames</NavDropdown.Item>
+                            <NavDropdown.Item href = "/pitchgrids">Pitchgrids</NavDropdown.Item>
+                            <NavDropdown.Item href = "/lastnames">Lastnames</NavDropdown.Item>
+                            <NavDropdown.Item href = "/firstnames">Firstnames</NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title="Reports" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/playerStats">Player Stats</NavDropdown.Item>
-                            <NavDropdown.Item href="/teamStats">Team Stats</NavDropdown.Item>
-
+                        <NavDropdown title="Reports" id = "basic-nav-dropdown">
+                            <NavDropdown.Item href = "/printTeamsheet">Print Teamsheet</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                     <NavDropdown title={"Welcome -> " + props.user.username}>
-                        {/*<Nav.Link >Welcome -> { props.user.username }</Nav.Link>*/}
-                        <Nav.Link href="/logout">Logout</Nav.Link>
-                        <Nav.Link href="/changePassword">Change Password</Nav.Link>
+                        <NavDropdown.Item href="/logout">Logout</NavDropdown.Item>
+                        <NavDropdown.Item href="/changePassword">Change Password</NavDropdown.Item>
                     </NavDropdown>
                 </Navbar.Collapse>
             </Container>

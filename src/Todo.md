@@ -23,7 +23,7 @@ As elements are finished - move below Completed
     R12: 
 
 # Investigations
-    I5: 
+    I5: Some dropdows are too long - investigate other methods - maybe grid display!
     I6: 
     I7: 
 
@@ -42,17 +42,23 @@ As elements are finished - move below Completed
     C11a: Add dropdowns for Competition Names
     C11b: Add dropdowns for fixture Dates
     C11c: Add dropdowns for player names 
-    C11d: Add dropdowns for position numbers
-    C11e: Add dropdowns for pitchegrid values
-    C11f: Add dropdowns for for statnames
-    C11g: Add dropdowns for for seasons
-    C11h: Add dropdowns for for rounds
-    C11i: Add dropdowns for for availability
-    C11j: Add dropdowns for for Grade
-    C11k: Add dropdowns for for Registered
+    C11f: Add dropdowns for for statnames 
 
+    C11d: Add dropdowns for position numbers    -done
+    C11e: Add dropdowns for pitchegrid values   -done
+    C11g: Add dropdowns for for seasons         -done
+    C11h: Add dropdowns for for rounds          -done
+    C11i: Add dropdowns for for availability    -done
+    C11j: Add dropdowns for for Grade           -done
+    C11k: Add dropdowns for for Registered      -done
+    C11l: Create dropdown for playing time - allowing only minutes to be entered between 1 and 60.
+
+
+    
     C12: Create Teamsheet for a specific fixture - suitable to be printed out - as per GAA standard Teamsheet form.
-    C13: ADD Stats to grid
+        Ammend Navbar to include new entry for printTeamsheet - done
+        Update Routes with Endpoint /printTimesheet - done
+    C13 Add buttons to Teamsheet view <PrintTeamsheet> <TeamsheetPitchLayout>
 
 # Unused Files
 
@@ -316,4 +322,5 @@ As elements are finished - move below Completed
          fixture date and position id added to tyeamsheet to provide this ability
     R10: extract dropdown, textfield, timepicker and datepicker to separate components and call within formdialog
         new components placed in formcomponents folder
-    
+    C13: ADD Stats to grid
+        Stats added - hightlighted need for additional drop downs.

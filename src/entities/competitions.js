@@ -7,8 +7,8 @@ export const Competition = 'Competition'
 const table = {name : Competition}
 
 export const competitionColumnDefs = [
-    {headerName: 'Competition Name', field: 'name', type: 'String', width:200, },
-    {headerName: 'Season', field: 'season', type: 'Integer', width:150, },
+    {headerName: 'Competition Name', field: 'name'  , type: 'String' , width: 200, },
+    {headerName: 'Season'          , field: 'season', type: 'Integer', width: 150, },
 ];
 export const competitionInitialValue = {
     name: "",

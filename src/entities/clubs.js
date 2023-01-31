@@ -6,7 +6,6 @@ export const Club = 'Club'
 const table = {name:Club}
 
 export const clubColumnDefs = [
-    // { headerName: 'ID',             field: 'id',            type: 'Number', min:3, max:10, required: true   },
     {headerName: 'Club Name'    , field: 'name'        , type: 'String', width: 150, },
     {headerName: 'Contact Name' , field: 'contactName' , type: 'String', width: 150, },
     {headerName: 'Contact Email', field: 'contactEmail', type: 'Email' , width: 150, },
@@ -25,8 +24,6 @@ export const clubInitialValue = {
     pitches: "",
     colours: ""
 }
-
-
 
 const gridLoader = (data) => {
 
