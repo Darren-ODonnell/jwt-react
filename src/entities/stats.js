@@ -7,12 +7,12 @@ const table = {name : Stat}
 export const statColumnDefs = [
     // { headerName: 'Abbreviation', field: 'id', type: 'String' , min: 8, max: 60, },
     { headerName: 'Player Name'   , field: 'playerName'  , type: 'string' , width: 150, },
-    { headerName: 'Fixture Date'  , field: 'fixtureDate' , type: 'Date'   , width: 100, },
+    { headerName: 'Fixture Date'  , field: 'fixtureDate' , type: 'date'   , width: 100, },
     { headerName: 'Stat Name'     , field: 'statName'    , type: 'string' , width: 80 , },
     { headerName: 'Success'       , field: 'success'     , type: 'boolean', width: 150, },
-    { headerName: 'Half'          , field: 'half'        , type: 'numeric', width: 60 , },
+    { headerName: 'Half'          , field: 'half'        , type: 'integer', width: 60 , },
     { headerName: 'Pitch location', field: 'pitchgrid'   , type: 'string' , width: 150, },
-    { headerName: 'Time Occurred' , field: 'timeOccurred', type: 'Time'   , width: 80 , },
+    { headerName: 'Time Occurred' , field: 'timeOccurred', type: 'time'   , width: 80 , },
 ];
 
 export const statInitialValue = {

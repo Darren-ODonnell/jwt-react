@@ -3,11 +3,11 @@ import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
 
 const table = {name:Event}
 export const eventColumnDefs = [
-    { headerName: 'Competition Name', field: 'competitionName', type: 'String' , width:150, required: true },
-    { headerName: 'Home Team Name'  , field: 'homeTeamName'   , type: 'String' , width:150,required: true  },
-    { headerName: 'Away Team Name'  , field: 'awayTeamName'   , type: 'String' , width:150, required: true  },
-    { headerName: 'Event Name'      , field: 'season'         , type: 'Integer', width:150, required: true  },
-    { headerName: 'Round'           , field: 'round'          , type: 'Integer', width:150, required: true  },
+    { headerName: 'Competition Name', field: 'competitionName', type: 'string' , width:150,  },
+    { headerName: 'Home Team Name'  , field: 'homeTeamName'   , type: 'string' , width:150,  },
+    { headerName: 'Away Team Name'  , field: 'awayTeamName'   , type: 'string' , width:150,  },
+    { headerName: 'Event Name'      , field: 'season'         , type: 'integer', width:150,  },
+    { headerName: 'Round'           , field: 'round'          , type: 'integer', width:150,  },
 ];
 
 export const eventInitialValue = {

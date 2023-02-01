@@ -143,13 +143,20 @@ const FormDialog = (props) => {
         // window.location.reload()
     }
     const scroll = {
+        overflowX: 'scroll',
+        overflowY: 'scroll',
+    }
+
+
+    const dropDown = {
         width: '50%',
         height: '50%',
-        overflowX: 'scroll',
-        overflowY: 'scroll'
+        overflowY: 'auto',
+
     }
-    return !props.loading ? (
-        <div>
+
+
+    return !props.loading ? <div>
             <Dialog
                 style={scroll}
                 open={props.open}
@@ -159,13 +166,29 @@ const FormDialog = (props) => {
             >
                 <DialogTitle
                     id="alert-dialog-title"> {props.formData.id ? props.messages.update : props.messages.create}</DialogTitle>
-                <DialogContent dividers>{
-
-                    props.colDefs.map((prop, index) => {
+                <DialogContent dividers >
+                {
+                    props.colDefs.map(prop => {
                         let options = ""
+                        const properties = {
+                            style   : dropDown,
+                            formData: props.formData,
+                            field   : prop.field,
+                            type    : prop.type,
+                        }
                         switch (prop.field) {
+                            // case "awayTeamName" :
+                            // case "homeTeamName" :
+                            //     return clubDropdown({...props, ...prop, index});
+                            // // case "playerName" :
+                            // //     return playerNameDropDown()
+                            // // case "statname" :
+                            // //     return
                             case "half" :
                                 return <DropDown
+                                    // params={properties}
+                                    key     = {getUniqueId()}
+                                    style = {dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
@@ -173,17 +196,20 @@ const FormDialog = (props) => {
                                     options={HALF}/>
                             case "registered":
                                 return <DropDown
+                                    // params={properties}
+                                    key     = {getUniqueId()}
+                                    style = {dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     defaultValue={props.formData[prop.field]}
                                     formData={props.formData}
                                     field={prop.field}
                                     headerName={"Registered"}
                                     options={REGISTERED}/>
-                            // // case "statname" :
-                            // //     return
                             case "grade":
                                 return <DropDown
-                                    style={scroll}
+                                    // params  = {properties}
+                                    key     = {getUniqueId()}
+                                    style = {dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     setFormData={setFormData}
@@ -192,8 +218,10 @@ const FormDialog = (props) => {
                                     options={GRADES}/>
                             case "availability":
                                 return <DropDown
+                                    // params={properties}
+                                    key     = {getUniqueId()}
+                                    style = {dropDown}
                                     key={getUniqueId() + 300 + ''}
-                                    defaultValue={props.formData[prop.field]}
                                     setFormData={setFormData}
                                     formData={props.formData}
                                     field={prop.field}
@@ -201,7 +229,9 @@ const FormDialog = (props) => {
                                     options={AVAILABILITY}/>
                             case "pitchgrid":
                                 return <DropDown
-                                    style={scroll}
+                                    // params={properties}
+                                    key     = {getUniqueId()}
+                                    style={dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
@@ -209,6 +239,9 @@ const FormDialog = (props) => {
                                     options={PITCH_GRIDS}/>;
                             case "success":
                                 return <DropDown
+                                    // params={properties}
+                                    key     = {getUniqueId()}
+                                    style = {dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
@@ -216,7 +249,9 @@ const FormDialog = (props) => {
                                     options={SUCCESS}/>
                             case "position":
                                 return <DropDown
-                                    style={scroll}
+                                    // params={properties}
+                                    key     = {getUniqueId()}
+                                    style = {dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
@@ -224,61 +259,65 @@ const FormDialog = (props) => {
                                     options={POSITIONS}/>
                             case "positionNumber":
                                 return <DropDown
-                                    style={scroll}
+                                    // params={properties}
+                                    key     = {getUniqueId()}
+                                    style = {dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
                                     headerName={"Position Number"}
-                                    options={PLAYER_NUMBERS}/>
+                                    options={PLAYER_NUMBERS} />
                             case "competitionName":
                                 return <DropDown
+                                    // params={properties}
+                                    key     = {getUniqueId()}
+                                    style = {dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
                                     headerName={"Competition Name"}
-                                    options={COMPETITIONS}/>
-                            // case "awayTeamName" :
-                            // case "homeTeamName" :
-                            //     return clubDropdown({...props, ...prop, index});
-                            // // case "playerName" :
-                            // //     return playerNameDropDown()
+                                    options={COMPETITIONS} />
                             case 'fixtureDate':
                                 return <MyDatePicker
+                                    // params={properties}
                                     key={getUniqueId() + 100 + ''}
                                     formData={props.formData}
                                     field={prop.field}
-                                    headerName={"Date"}/>;
+                                    headerName={"Date"} />
                             case 'fixtureTime':
                                 return <MyTimePicker
+                                    // params={properties}
                                     key={getUniqueId()}
                                     formData={props.formData}
                                     field={prop.field}
-                                    headerName={"Time"}/>;
+                                    headerName={"Time"} />
                             case "round":
                                 return <DropDown
-                                    style={scroll}
+                                    // params={properties}
+                                    key     = {getUniqueId()}
+                                    style={dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
                                     field={prop.field}
                                     headerName={"Round"}
-                                    options={ROUNDS}/>
+                                    options={ROUNDS} />
                             case "season":
                                 return <DropDown
+                                    // params={properties}
+                                    key     = {getUniqueId()}
+                                    style = {dropDown}
                                     key={getUniqueId()}
                                     formData={props.formData}
-                                    defaultValue={props.formData[prop.field]}
                                     field={prop.field}
                                     headerName={"Season"}
-                                    options={getSeasons()}/>
-                            // default:
-                            //     return <MyTextField
-                            //         key            = {getUniqueId()+150+''}
-                            //         defaultValue   = {props.formData[prop.field]}
-                            //         formData       = {props.formData}
-                            //         headerName     = {prop.headerName}
-                            //         field          = {prop.field}
-                            //     />
-
+                                    options={getSeasons()} />
+                            default:
+                                return <MyTextField
+                                    key            = {getUniqueId()+150+''}
+                                    defaultValue   = {props.formData[prop.field]}
+                                    formData       = {props.formData}
+                                    headerName     = {prop.headerName}
+                                    field          = {prop.field} />
                         }
                     })
                 }
@@ -288,7 +327,6 @@ const FormDialog = (props) => {
                     <SubmitButton {...props} />
                 </DialogActions>
             </Dialog>
-        </div>
-    ): <p>Loading...</p>
+        </div>: <p>Loading...</p>
 }
 export default FormDialog;

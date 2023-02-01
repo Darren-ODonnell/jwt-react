@@ -14,7 +14,6 @@
     "@jridgewell/sourcemap-codec": "^1.4.14",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.7",
-    "@mui/styles": "^5.11.7",
     "@mui/x-data-grid": "^5.17.19",
     "@mui/x-data-grid-generator": "^5.17.19",
     "@mui/x-date-pickers": "^5.0.15",

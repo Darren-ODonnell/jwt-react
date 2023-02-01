@@ -14,13 +14,13 @@ As elements are finished - move below Completed
     E42: FormDialog - heedername = season on all
     E43: FormDialog - Missing headernames for each field
     
-    E44:
+    E44: 
     E45:
     E46:
 
 # Refactoring
     R11: check the need for copyFormColDefs and CopyGridColDefs - tidyup as necessary
-    R12: 
+    R12: Tidyup index.js - remove redux and associated components
 
 # Investigations
     I5: Some dropdows are too long - investigate other methods - maybe grid display!
@@ -59,6 +59,7 @@ As elements are finished - move below Completed
         Ammend Navbar to include new entry for printTeamsheet - done
         Update Routes with Endpoint /printTimesheet - done
     C13 Add buttons to Teamsheet view <PrintTeamsheet> <TeamsheetPitchLayout>
+    C14 Style the register page - its very basic
 
 # Unused Files
 
