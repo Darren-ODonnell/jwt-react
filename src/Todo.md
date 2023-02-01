@@ -8,22 +8,21 @@ Ig: Ignored for now
 As elements are finished - move below Completed
 
 # Errors
+
     E40: FormDialog popup shows todays date and time - should show the values from the grid/form
     E41: App does not logout after token has timed out.
-        after timeout - delete old token - logout user - switch to loggedOutrNavbar
-    E42: FormDialog - heedername = season on all
-    E43: FormDialog - Missing headernames for each field
-    
-    E44: 
-    E45:
+         after timeout - delete old token - logout user - switch to loggedOutrNavbar
+    E44: Should not be able to login as a User - only Admin allowed.
+    E45: FormDialog - can no longer edit textfield values!
     E46:
 
 # Refactoring
-    R11: check the need for copyFormColDefs and CopyGridColDefs - tidyup as necessary
-    R12: Tidyup index.js - remove redux and associated components
+
+    R12: Tidyup index.js - remove redux and associated components no longer required
 
 # Investigations
-    I5: Some dropdows are too long - investigate other methods - maybe grid display!
+
+    I5: Some dropdowns are too long - investigate other methods - maybe grid display!
     I6: 
     I7: 
 
@@ -39,11 +38,11 @@ As elements are finished - move below Completed
         C10b: How to change current season?
         C10c: where to save current season?
         C10d: All api activity should use this season setting.
-    C11a: Add dropdowns for Competition Names
     C11b: Add dropdowns for fixture Dates
     C11c: Add dropdowns for player names 
     C11f: Add dropdowns for for statnames 
 
+    C11a: Add dropdowns for Competition Names - done
     C11d: Add dropdowns for position numbers    -done
     C11e: Add dropdowns for pitchegrid values   -done
     C11g: Add dropdowns for for seasons         -done
@@ -52,9 +51,7 @@ As elements are finished - move below Completed
     C11j: Add dropdowns for for Grade           -done
     C11k: Add dropdowns for for Registered      -done
     C11l: Create dropdown for playing time - allowing only minutes to be entered between 1 and 60.
-
-
-    
+ 
     C12: Create Teamsheet for a specific fixture - suitable to be printed out - as per GAA standard Teamsheet form.
         Ammend Navbar to include new entry for printTeamsheet - done
         Update Routes with Endpoint /printTimesheet - done
@@ -77,6 +74,7 @@ As elements are finished - move below Completed
 
 
 # In Progress
+
     E22: Tables with foreign key data are not displayed correctly
         - Events - incomplete - need data to test.
 
@@ -84,17 +82,18 @@ As elements are finished - move below Completed
         C6a: Club -> validation (club does not already exist)
         C6b: Player -> validation (player does not already exist)
         C6c: Competition -> validation (DNE) - use a dropdown
-        C6d1: Fixture -> Dropdown for Competition, season, and round
-        C6d2: Fixture -  Competition
+
+        C6d2: Fixture -  Competition - done
+        C6d1: Fixture -> Dropdown for Competition, season, and round - done
 
 
         C6e: Teamsheet -> Drop down for 
             Fixture , (what fields necessary to uniquely id fixture 
             Player and Position
-        C6f: Stats -> dropdown for -> Fixture, Event, player and pitchposition     
-    C7: StatName CRUD operations
+        C6f: Stats -> dropdown for -> Fixture, Event, player and pitchposition
 
 # Completed
+
     R3: Build up AuthService to include login/logout/register etc
         moved all the auth related functions into AuthService
     E7: Logout not working
@@ -325,3 +324,10 @@ As elements are finished - move below Completed
         new components placed in formcomponents folder
     C13: ADD Stats to grid
         Stats added - hightlighted need for additional drop downs.
+    E42: FormDialog - heedername = season on all
+         FomrDialog and Textield and XDropDown updated
+    E43: FormDialog - Missing headernames for each field
+        FomrDialog and Textield and XDropDown updated
+    C7: StatName CRUD operations - done
+    R11: check the need for copyFormColDefs and CopyGridColDefs - tidyup as necessary
+        methods removed from each entity and deleted from helper.js

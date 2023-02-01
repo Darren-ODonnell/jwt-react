@@ -187,7 +187,6 @@ const FormDialog = (props) => {
                             case "half" :
                                 return <DropDown
                                     // params={properties}
-                                    key     = {getUniqueId()}
                                     style = {dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
@@ -197,7 +196,6 @@ const FormDialog = (props) => {
                             case "registered":
                                 return <DropDown
                                     // params={properties}
-                                    key     = {getUniqueId()}
                                     style = {dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     defaultValue={props.formData[prop.field]}
@@ -208,7 +206,6 @@ const FormDialog = (props) => {
                             case "grade":
                                 return <DropDown
                                     // params  = {properties}
-                                    key     = {getUniqueId()}
                                     style = {dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
@@ -219,7 +216,6 @@ const FormDialog = (props) => {
                             case "availability":
                                 return <DropDown
                                     // params={properties}
-                                    key     = {getUniqueId()}
                                     style = {dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     setFormData={setFormData}
@@ -230,7 +226,6 @@ const FormDialog = (props) => {
                             case "pitchgrid":
                                 return <DropDown
                                     // params={properties}
-                                    key     = {getUniqueId()}
                                     style={dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
@@ -240,7 +235,6 @@ const FormDialog = (props) => {
                             case "success":
                                 return <DropDown
                                     // params={properties}
-                                    key     = {getUniqueId()}
                                     style = {dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
@@ -250,7 +244,6 @@ const FormDialog = (props) => {
                             case "position":
                                 return <DropDown
                                     // params={properties}
-                                    key     = {getUniqueId()}
                                     style = {dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
@@ -260,7 +253,6 @@ const FormDialog = (props) => {
                             case "positionNumber":
                                 return <DropDown
                                     // params={properties}
-                                    key     = {getUniqueId()}
                                     style = {dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
@@ -270,7 +262,6 @@ const FormDialog = (props) => {
                             case "competitionName":
                                 return <DropDown
                                     // params={properties}
-                                    key     = {getUniqueId()}
                                     style = {dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
@@ -294,7 +285,6 @@ const FormDialog = (props) => {
                             case "round":
                                 return <DropDown
                                     // params={properties}
-                                    key     = {getUniqueId()}
                                     style={dropDown}
                                     key={getUniqueId() + 300 + ''}
                                     formData={props.formData}
@@ -304,7 +294,6 @@ const FormDialog = (props) => {
                             case "season":
                                 return <DropDown
                                     // params={properties}
-                                    key     = {getUniqueId()}
                                     style = {dropDown}
                                     key={getUniqueId()}
                                     formData={props.formData}
