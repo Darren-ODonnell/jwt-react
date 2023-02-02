@@ -1,12 +1,12 @@
-import {Event, METHODS, EVENT_URLS} from "../common/globals";
+import {Event, METHODS, EVENT_URLS, template} from "../common/globals";
 import {addMessage} from "../common/helper";
 
 export const eventColumnDefs = [
-    { headerName: 'Competition Name', field: 'competitionName', type: 'string' , width:150,  },
-    { headerName: 'Home Team Name'  , field: 'homeTeamName'   , type: 'string' , width:150,  },
-    { headerName: 'Away Team Name'  , field: 'awayTeamName'   , type: 'string' , width:150,  },
-    { headerName: 'Event Name'      , field: 'season'         , type: 'integer', width:150,  },
-    { headerName: 'Round'           , field: 'round'          , type: 'integer', width:150,  },
+    {headerName: 'Competition Name', field: 'competitionName', width: 150,},
+    {headerName: 'Home Team Name', field: 'homeTeamName', width: 150,},
+    {headerName: 'Away Team Name', field: 'awayTeamName', width: 150,},
+    {headerName: 'Event Name', field: 'season', width: 150,},
+    {headerName: 'Round', field: 'round', width: 150,},
 ];
 
 export const eventInitialValue = {

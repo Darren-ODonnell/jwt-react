@@ -4,8 +4,8 @@ import {addMessage} from "../common/helper";
 export const Position = 'Position'
 
 export const positionColumnDefs = [
-    { headerName: 'Position Name', field: 'name'  , type: 'string', width: 150, },
-    { headerName: 'Abbreviation' , field: 'abbrev', type: 'string', width: 150, },
+    {headerName: 'Position Name', field: 'name', width: 150,},
+    {headerName: 'Abbreviation', field: 'abbrev', width: 150,},
 ];
 
 export const positionInitialValue = {

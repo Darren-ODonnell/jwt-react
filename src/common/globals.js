@@ -1,5 +1,3 @@
-import moment from "moment";
-
 // server host ips
 // backend
 export const HOME         = "http://192.168.100.151:8080";
@@ -15,7 +13,7 @@ export const AWS_REACT = ""
 // active endpoint
 export const ENDPOINT = SAME_MACHINE;
 
-
+export const template = '<div>{{data.fieldName}}</div>'
 
 // Date/Time
 export const DATE_FORMAT = "YYYY-MM-DD"

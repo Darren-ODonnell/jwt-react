@@ -3,15 +3,13 @@ import {addMessage} from "../common/helper";
 
 export const Club = 'Club'
 
-const table = {name:Club}
-
 export const clubColumnDefs = [
-    {headerName: 'Club Name'    , field: 'name'        , type: 'string', width: 150, },
-    {headerName: 'Contact Name' , field: 'contactName' , type: 'string', width: 150, },
-    {headerName: 'Contact Email', field: 'contactEmail', type: 'string' , width: 150, },
-    {headerName: 'Contact Phone', field: 'contactPhone', type: 'string', width: 150, },
-    {headerName: 'Pitches'      , field: 'pitches'     , type: 'string', width: 150, },
-    {headerName: 'Colours'      , field: 'colours'     , type: 'string', width: 150, },
+    {headerName: 'Club Name', field: 'name', width: 150,},
+    {headerName: 'Contact Name', field: 'contactName', width: 150,},
+    {headerName: 'Contact Email', field: 'contactEmail', width: 150,},
+    {headerName: 'Contact Phone', field: 'contactPhone', width: 150,},
+    {headerName: 'Pitches', field: 'pitches', width: 150,},
+    {headerName: 'Colours', field: 'colours', width: 150,},
 ];
 
 const clubDropDown = false;

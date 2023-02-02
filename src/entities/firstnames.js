@@ -4,8 +4,8 @@ import {addMessage} from "../common/helper";
 export const Firstname = 'Firstname'
 
 export const firstnameColumnDefs = [
-    { headerName: 'Firstname'      , field: 'firstname'     , type: 'string', width:100,  },
-    { headerName: 'Irish Firstname', field: 'firstnameIrish', type: 'string', width:100,  },
+    {headerName: 'Firstname', field: 'firstname', width: 100,},
+    {headerName: 'Irish Firstname', field: 'firstnameIrish', width: 100,},
 ];
 
 export const firstnameInitialValue = {

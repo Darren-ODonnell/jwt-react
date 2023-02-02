@@ -1,22 +1,16 @@
 import React from 'react';
-import {InputLabel, MenuItem, Select, FormControl} from "@mui/material";
+import {MenuItem, Select, FormControl} from "@mui/material";
 import {getUniqueId} from "../common/helper";
 import {useState} from "react";
 
-const DropDown = ({ formData, field, options, style, headerName}) => {
-
+const DropDown = (formData, field, onChange, type, key, headerName, style, options) => {
     const [data, setData] = useState(formData[field])
-    const [value, setValue] = useState('');
 
-    // let defaultValue = (params.formData[params.field]) ? (params.formData[params.field]) : ""
     let defaultValue = (formData[field]) ? (formData[field]) : ""
 
-    // console.log("Field: "    + params.field)
-    // console.log("FormData: " + params.formData)
-    // console.log("Options: "  + params.options)
-    console.log("Field: "    + field)
+    console.log("Field: " + field)
     console.log("FormData: " + formData)
-    console.log("Options: "  + options)
+    console.log("Options: " + options)
 
     const onSelectChange = (e, field) => {
         formData[field] = e.target.value
@@ -39,13 +33,13 @@ const DropDown = ({ formData, field, options, style, headerName}) => {
     return (
         <FormControl style={style}>
             <Select
-                key     = {getUniqueId()}
+                key={getUniqueId()}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 // value={ getBooleanValue(data) }
                 // valuedefault={ getBooleanValue(defaultValue) }
-                value={ data.toString() }
-                valuedefault={ defaultValue.toString() }
+                value={data}
+                valuedefault={defaultValue}
                 variant={"outlined"}
                 onChange={e => onSelectChange(e, field)}
                 // className={classes.root}
@@ -53,7 +47,7 @@ const DropDown = ({ formData, field, options, style, headerName}) => {
                 // MenuProps={{ classes: { paper: classes.menuPaper } }}
             >
 
-                    {options.map((entry) =>
+                {options.map((entry) =>
                         <MenuItem
                             key={getUniqueId() + 100 + ''}
                             variant={"outlined"}

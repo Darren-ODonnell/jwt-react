@@ -4,8 +4,8 @@ import {addMessage} from "../common/helper";
 export const Pitchgrid = 'Pitchgrid'
 
 export const pitchgridColumnDefs = [
-    {headerName: 'Abbreviation', field: 'abbrev', type: 'string', width: 150, },
-    {headerName: 'Pitchgrid'   , field: 'name'  , type: 'string', width: 150, },
+    {headerName: 'Abbreviation', field: 'abbrev', width: 150,},
+    {headerName: 'Pitchgrid', field: 'name', width: 150,},
 ];
 
 export const pitchgridInitialValue = {

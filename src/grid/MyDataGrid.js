@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import  { AgGridReact }  from 'ag-grid-react';
+import React, {useEffect, useState} from 'react';
+import {AgGridReact} from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'ag-grid-community/styles/ag-theme-balham.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
-import moment from "moment";
 import { Button, Grid } from "@mui/material";
 import './MyDataGrid.css'
 import FormDialog from "./FormDialog";
@@ -53,9 +52,7 @@ const MyDataGrid = ({props}) => {
     }
     const handleEdit = (props) => {
         handleOpen();
-        setFormData({...props.data});
-        console.log("Data:", props.data)
-        console.log("formData:", props.formData)
+        setFormData({...props.formData});
     }
     const handleDelete = (id) => {
         setOpen(false);
@@ -99,7 +96,7 @@ const MyDataGrid = ({props}) => {
             method: method,
             url: url
         }).then (()=> {
-
+            // setFormData(resp.data)
         })
         // cancel subscription to useEffect
         return () => (isSubscribed = false)
@@ -135,9 +132,9 @@ const MyDataGrid = ({props}) => {
                 </Grid>
                 :
                 <Grid align="right">
-                    <Button disabled="true" onClick={() => handleOpen(params)}
-                        variant = "contained"
-                        color   = "primary"
+                    <Button disabled={true} onClick={() => handleOpen(params)}
+                            variant="contained"
+                            color="primary"
                     >NO ADDITION</Button>
                     };
                 </Grid>
@@ -161,10 +158,10 @@ const MyDataGrid = ({props}) => {
                 > Delete </Button>
                 :
                 <div>
-                <Button disabled="true" onClick = {()=>handleDelete( params )}
-                         variant = "outlined"
-                         color   = "secondary"
-                >NO Delete </Button>
+                    <Button disabled={true} onClick={() => handleDelete(params)}
+                            variant="outlined"
+                            color="secondary"
+                    >NO Delete </Button>
                 </div>
 
         )
@@ -179,7 +176,7 @@ const MyDataGrid = ({props}) => {
         filter    : false,
         sortable  : false,
         lockPosition : 'right',
-        cellRenderer:  (params) => {
+        cellRenderer: (params) => {
             return (
                 <>
                     <EditButton {...params} />
@@ -189,82 +186,86 @@ const MyDataGrid = ({props}) => {
         }
     };
 
-    return (
+    let commonProps = {
+        key: props.index,
+        setData: setFormData,
+        open: open,
+        // onClose   : handleClose,
+        data: data,
+        // handleClose  : handleClose,
+        setOpen: setOpen,
+        update: props.gridLoader.update,
+        onChange: onChange,
+        // // actions  :props.actions,
+        methods: props.methods,
+        colDefs: props.formColDefs,
+        messages: props.messages,
+        formData: formData,
+        setFormData: setFormData,
+        getData: getData,
+        initialValue: props.initialValue,
+        // // useAxios params
+        axiosApi: axiosApi,
 
-        !loading  ? <div >
-            {console.log("MyDataGrid loading...")}
+    };
+    return (
+        !loading ? <div>
             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
                 <AddButton {...props}/>
                 <AgGridReact
                     // ref                        = { gridRef }
-                    defaultColDef              = { defaultColDef }
-                    pagination                 = { true }
-                    suppressRowDrag            = { true }
-                    columnDefs                 = { [...props.gridColDefs   , formActions] }
+                    defaultColDef={defaultColDef}
+                    pagination={true}
+                    suppressRowDrag={true}
+                    columnDefs={[...props.gridColDefs, formActions]}
                     onGridReady                = { onGridReady }
-                    // rowData                    = { props.gridLoader(formData) }
                     rowData                    = { props.gridLoader(data) }
-                    // animateRows                = { true }
-                    // alwaysShowHorizontalScroll = { true }
-                    // suppressClickEdit          = { true }
-
                 />
 
                 {!props.gridLoader.dropDown} ?
-
                 <FormDialog
-                    key = {props.index}
-                    setData      = {setFormData}
-                    open         = {open}
-                    // onClose      = {handleClose}
-                    data         = {formData}
-                    // handleClose  = {handleClose}
-                    setOpen      = {setOpen}
-                    update       = {props.gridLoader.update}
-                    onChange     = {onChange}
-                    // // actions      = { props.actions }
-                    methods      = {props.methods}
-                    colDefs      = {props.formColDefs}
-                    messages     = {props.messages}
-                    formData     = {formData}
-                    setFormData  = {setFormData}
-                    getData      = { getData }
-                    initialValue = {props.initialValue}
+                    key={props.index}
+                    setData={setFormData}
+                    open={open}
+                    // onClose   = {handleClose}
+                    data={data}
+                    // handleClose  : handleClose,
+                    setOpen={setOpen}
+                    update={props.gridLoader.update}
+                    onChange={onChange}
+                    // // actions  :props.actions}
+                    methods={props.methods}
+                    colDefs={props.formColDefs}
+                    messages={props.messages}
+                    formData={formData}
+                    setFormData={setFormData}
+                    getData={getData}
+                    initialValue={props.initialValue}
                     // // useAxios params
                     axiosApi     = {axiosApi}
-                    // error        = {error}
-                    // loading      = {loading}
-                    // setChanged   = {setChanged}
-                    // changed      = {changed}
-
                 />
                 :
                 <FormDialog
-                    key          = {props.index}
-                    setData      = {setFormData}
-                    open         = {open}
-                    // onClose      = {handleClose}
-                    data         = {formData}
-                    // handleClose  = {handleClose}
-                    setOpen      = {setOpen}
-                    update       = {props.gridLoader.update}
-                    onChange     = {onChange}
-                    // // actions      = { props.actions }
-                    methods      = {props.methods}
-                    colDefs      = {props.formColDefs}
-                    messages     = {props.messages}
-                    formData     = {formData}
-                    setFormData  = {setFormData}
-                    getData      = { getData }
-                    initialValue = {props.initialValue}
+
+                    key={props.index}
+                    setData={setFormData}
+                    open={open}
+                    // onClose   = {handleClose}
+                    data={data}
+                    // handleClose  : handleClose,
+                    setOpen={setOpen}
+                    update={props.gridLoader.update}
+                    onChange={onChange}
+                    // // actions  :props.actions}
+                    methods={props.methods}
+                    colDefs={props.formColDefs}
+                    messages={props.messages}
+                    formData={formData}
+                    setFormData={setFormData}
+                    getData={getData}
+                    initialValue={props.initialValue}
                     // // useAxios params
                     axiosApi     = {axiosApi}
-                    // error        = {error}
-                    // loading      = {loading}
-                    // setChanged   = {setChanged}
-                    // changed      = {changed}
-
-
                 />
             </div>
         </div> : <p> Loading...</p>

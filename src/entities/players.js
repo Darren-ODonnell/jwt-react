@@ -4,18 +4,18 @@ import {addMessage} from "../common/helper";
 export const Player = 'Player'
 
 export const playerColumnDefs = [
-    { headerName: 'Firstname'      , field: 'firstname'   , type: 'string' , width: 100, },
-    {headerName : 'Lastname'       , field: 'lastname'    , type: 'string' , width: 100, },
-    {headerName : 'Irish Firstname', field: 'firstnameI'  , type: 'string' , width: 100, },
-    {headerName : 'Irish Lastname' , field: 'lastnameI'   , type: 'string' , width: 150, },
-    {headerName : 'Year of Birth'  , field: 'yob'         , type: 'Integer', width: 60 , },
-    {headerName : 'Address'        , field: 'address'     , type: 'string' , width: 150, },
-    {headerName : 'Email'          , field: 'email'       , type: 'string'  , width: 150, },
-    {headerName : 'Phone'          , field: 'phone'       , type: 'string' , width: 150, },
-    {headerName : 'Phone ICE'      , field: 'phoneIce'    , type: 'string' , width: 150, },
-    {headerName : 'Registered'     , field: 'registered'  , type: 'boolean', width: 120, },
-    {headerName : 'Grade'          , field: 'grade'       , type: 'string' , width: 80 , },
-    {headerName : 'Availability'   , field: 'availability', type: 'string' , width: 80 , },
+    {headerName: 'Firstname', field: 'firstname', width: 100,},
+    {headerName: 'Lastname', field: 'lastname', width: 100,},
+    {headerName: 'Irish Firstname', field: 'firstnameI', width: 100,},
+    {headerName: 'Irish Lastname', field: 'lastnameI', width: 150,},
+    {headerName: 'Year of Birth', field: 'yob', width: 60,},
+    {headerName: 'Address', field: 'address', width: 150,},
+    {headerName: 'Email', field: 'email', width: 150,},
+    {headerName: 'Phone', field: 'phone', width: 150,},
+    {headerName: 'Phone ICE', field: 'phoneIce', width: 150,},
+    {headerName: 'Registered', field: 'registered', width: 120,},
+    {headerName: 'Grade', field: 'grade', width: 80,},
+    {headerName: 'Availability', field: 'availability', width: 80,},
 ];
 
 export const playerInitialValue = {

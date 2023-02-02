@@ -5,13 +5,13 @@ export const Stat = 'Stat'
 
 
 export const statColumnDefs = [
-    { headerName: 'Player Name'   , field: 'playerName'  , type: 'string' , width: 150, },
-    { headerName: 'Fixture Date'  , field: 'fixtureDate' , type: 'date'   , width: 100, },
-    { headerName: 'Stat Name'     , field: 'statName'    , type: 'string' , width: 80 , },
-    { headerName: 'Success'       , field: 'success'     , type: 'boolean', width: 150, },
-    { headerName: 'Half'          , field: 'half'        , type: 'integer', width: 60 , },
-    { headerName: 'Pitch location', field: 'pitchgrid'   , type: 'string' , width: 150, },
-    { headerName: 'Time Occurred' , field: 'timeOccurred', type: 'time'   , width: 80 , },
+    {headerName: 'Player Name', field: 'playerName', width: 150,},
+    {headerName: 'Fixture Date', field: 'fixtureDate', width: 100,},
+    {headerName: 'Stat Name', field: 'statName', width: 80,},
+    {headerName: 'Success', field: 'success', width: 150,},
+    {headerName: 'Half', field: 'half', width: 60,},
+    {headerName: 'Pitch location', field: 'pitchgrid', width: 150,},
+    {headerName: 'Time Occurred', field: 'timeOccurred', width: 80,},
 ];
 
 export const statInitialValue = {

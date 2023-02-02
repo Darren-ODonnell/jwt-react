@@ -1,14 +1,11 @@
 import {METHODS} from '../common/globals'
 import {addMessage} from "../common/helper";
-import {TextField} from "@mui/material";
-import React from "react";
 
 export const Competition = 'Competition'
-const table = {name : Competition}
 
 export const competitionColumnDefs = [
-    {headerName: 'Competition Name', field: 'name'  , type: 'string' , width: 200, },
-    {headerName: 'Season'          , field: 'season', type: 'integer', width: 150, },
+    {headerName: 'Competition Name', field: 'name', width: 200,},
+    {headerName: 'Season', field: 'season', width: 150,},
 ];
 export const competitionInitialValue = {
     name: "",

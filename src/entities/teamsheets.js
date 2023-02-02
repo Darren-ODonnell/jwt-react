@@ -1,4 +1,4 @@
-import { METHODS } from "../common/globals";
+import {METHODS} from "../common/globals";
 
 import {addMessage} from "../common/helper";
 import {CLUB_URLS} from "./clubs";
@@ -9,13 +9,13 @@ import { PLAYER_URLS } from "./players";
 export const Teamsheet = 'Teamsheet'
 
 export const teamsheetColumnDefs = [
-    {headerName: 'Competition Name', field: 'competitionName', type: 'string'  , width: 150, },
-    {headerName: 'Fixture Date'    , field: 'fixtureDate'    , type: 'date'    , width: 150, },
-    {headerName: 'Home Team Name'  , field: 'homeTeamName'   , type: 'string'  , width: 150, },
-    {headerName: 'Away Team Name'  , field: 'awayTeamName'   , type: 'string'  , width: 150, },
-    {headerName: 'Player Name'     , field: 'playerName'     , type: 'string'  , width: 150, },
-    {headerName: 'Position'        , field: 'position'       , type: 'string'  , width: 150, },
-    {headerName: 'Position Number' , field: 'positionNumber' , type: 'integer',  width: 150, },
+    {headerName: 'Competition Name', field: 'competitionName', width: 150,},
+    {headerName: 'Fixture Date', field: 'fixtureDate', width: 150,},
+    {headerName: 'Home Team Name', field: 'homeTeamName', width: 150,},
+    {headerName: 'Away Team Name', field: 'awayTeamName', width: 150,},
+    {headerName: 'Player Name', field: 'playerName', width: 150,},
+    {headerName: 'Position', field: 'position', width: 150,},
+    {headerName: 'Position Number', field: 'positionNumber', width: 150,},
 
 
 ];
