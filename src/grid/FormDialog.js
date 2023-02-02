@@ -170,11 +170,13 @@ const FormDialog = (props) => {
                 {
                     props.colDefs.map(prop => {
                         let options = ""
-                        const properties = {
+                        const commonProps = {
                             style   : dropDown,
                             formData: props.formData,
                             field   : prop.field,
                             type    : prop.type,
+                            key     : getUniqueId(),
+                            defaultValue : props.formData[prop.field],
                         }
                         switch (prop.field) {
                             // case "awayTeamName" :
@@ -186,138 +188,71 @@ const FormDialog = (props) => {
                             // //     return
                             case "half" :
                                 return <DropDown
-                                    // params={properties}
-                                    key     = {getUniqueId()}
-                                    style = {dropDown}
-                                    key={getUniqueId() + 300 + ''}
-                                    formData={props.formData}
-                                    field={prop.field}
+                                    {...commonProps}
                                     headerName={"First/Second Half"}
                                     options={HALF}/>
                             case "registered":
                                 return <DropDown
-                                    // params={properties}
-                                    key     = {getUniqueId()}
-                                    style = {dropDown}
-                                    key={getUniqueId() + 300 + ''}
-                                    defaultValue={props.formData[prop.field]}
-                                    formData={props.formData}
-                                    field={prop.field}
+                                    {...commonProps}
                                     headerName={"Registered"}
                                     options={REGISTERED}/>
                             case "grade":
                                 return <DropDown
-                                    // params  = {properties}
-                                    key     = {getUniqueId()}
-                                    style = {dropDown}
-                                    key={getUniqueId() + 300 + ''}
-                                    formData={props.formData}
-                                    setFormData={setFormData}
-                                    field={prop.field}
+                                    {...commonProps}
                                     headerName={"Grade"}
                                     options={GRADES}/>
                             case "availability":
                                 return <DropDown
-                                    // params={properties}
-                                    key     = {getUniqueId()}
-                                    style = {dropDown}
-                                    key={getUniqueId() + 300 + ''}
-                                    setFormData={setFormData}
-                                    formData={props.formData}
-                                    field={prop.field}
+                                    {...commonProps}
                                     headerName={"Availability"}
                                     options={AVAILABILITY}/>
                             case "pitchgrid":
                                 return <DropDown
-                                    // params={properties}
-                                    key     = {getUniqueId()}
-                                    style={dropDown}
-                                    key={getUniqueId() + 300 + ''}
-                                    formData={props.formData}
-                                    field={prop.field}
+                                    {...commonProps}
                                     headerName={"Pitchgrid"}
                                     options={PITCH_GRIDS}/>;
                             case "success":
                                 return <DropDown
-                                    // params={properties}
-                                    key     = {getUniqueId()}
-                                    style = {dropDown}
-                                    key={getUniqueId() + 300 + ''}
-                                    formData={props.formData}
-                                    field={prop.field}
+                                    {...commonProps}
                                     headerName={"Success"}
                                     options={SUCCESS}/>
                             case "position":
                                 return <DropDown
-                                    // params={properties}
-                                    key     = {getUniqueId()}
-                                    style = {dropDown}
-                                    key={getUniqueId() + 300 + ''}
-                                    formData={props.formData}
-                                    field={prop.field}
+                                    {...commonProps}
                                     headerName={"Position"}
                                     options={POSITIONS}/>
                             case "positionNumber":
                                 return <DropDown
-                                    // params={properties}
-                                    key     = {getUniqueId()}
-                                    style = {dropDown}
-                                    key={getUniqueId() + 300 + ''}
-                                    formData={props.formData}
-                                    field={prop.field}
+                                    {...commonProps}
                                     headerName={"Position Number"}
                                     options={PLAYER_NUMBERS} />
                             case "competitionName":
                                 return <DropDown
-                                    // params={properties}
-                                    key     = {getUniqueId()}
-                                    style = {dropDown}
-                                    key={getUniqueId() + 300 + ''}
-                                    formData={props.formData}
-                                    field={prop.field}
+                                    {...commonProps}
                                     headerName={"Competition Name"}
                                     options={COMPETITIONS} />
                             case 'fixtureDate':
                                 return <MyDatePicker
-                                    // params={properties}
-                                    key={getUniqueId() + 100 + ''}
-                                    formData={props.formData}
-                                    field={prop.field}
+                                    {...commonProps}
                                     headerName={"Date"} />
                             case 'fixtureTime':
                                 return <MyTimePicker
-                                    // params={properties}
-                                    key={getUniqueId()}
-                                    formData={props.formData}
-                                    field={prop.field}
+                                    {...commonProps}
                                     headerName={"Time"} />
                             case "round":
                                 return <DropDown
-                                    // params={properties}
-                                    key     = {getUniqueId()}
-                                    style={dropDown}
-                                    key={getUniqueId() + 300 + ''}
-                                    formData={props.formData}
-                                    field={prop.field}
+                                    {...commonProps}
                                     headerName={"Round"}
                                     options={ROUNDS} />
                             case "season":
                                 return <DropDown
-                                    // params={properties}
-                                    key     = {getUniqueId()}
-                                    style = {dropDown}
-                                    key={getUniqueId()}
-                                    formData={props.formData}
-                                    field={prop.field}
+                                    {...commonProps}
                                     headerName={"Season"}
                                     options={getSeasons()} />
                             default:
                                 return <MyTextField
-                                    key            = {getUniqueId()+150+''}
-                                    defaultValue   = {props.formData[prop.field]}
-                                    formData       = {props.formData}
-                                    headerName     = {prop.headerName}
-                                    field          = {prop.field} />
+                                    {...commonProps}
+                                    headerName     = {prop.headerName}/>
                         }
                     })
                 }
