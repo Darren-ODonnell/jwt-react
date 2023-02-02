@@ -231,14 +231,7 @@ const FormDialog = (props) => {
                                     {...commonProps}
                                     headerName={"Competition Name"}
                                     options={COMPETITIONS} />
-                            case 'fixtureDate':
-                                return <MyDatePicker
-                                    {...commonProps}
-                                    headerName={"Date"} />
-                            case 'fixtureTime':
-                                return <MyTimePicker
-                                    {...commonProps}
-                                    headerName={"Time"} />
+
                             case "round":
                                 return <DropDown
                                     {...commonProps}
@@ -249,6 +242,14 @@ const FormDialog = (props) => {
                                     {...commonProps}
                                     headerName={"Season"}
                                     options={getSeasons()} />
+                            case 'fixtureDate':
+                                return <MyDatePicker
+                                    {...commonProps}
+                                    headerName={"Date"} />
+                            case 'fixtureTime':
+                                return <MyTimePicker
+                                    {...commonProps}
+                                    headerName={"Time"} />
                             default:
                                 return <MyTextField
                                     {...commonProps}
