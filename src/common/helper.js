@@ -40,48 +40,48 @@ export function getMaxDate() {
 
 // const id = { headerName: 'id',  field: 'id',  width:80,  editable: false, filter: false, };
 
-function getId(table) {
-    // return id;
-    switch (table.name) {
-        case "Position":
-            return { headerName: 'Number',  field: 'id',  width:120,  editable: false, filter: false, };
-        case "Pitchgrid":
-            return { headerName: 'Abbreviation',  field: 'abbrev',  width:120,  editable: false, filter: false, };
-        case "Statname":
-            return { headerName: 'Abbreviation',  field: 'abbrev',  width:120,  editable: false, filter: false, };
-        default:
-            return { headerName: 'id',  field: 'id',  width:80,  editable: false, filter: false, };
-    }
-}
+// function getId(table) {
+//     // return id;
+//     switch (table.name) {
+//         case "Position":
+//             return { headerName: 'Number',  field: 'id',  width:120,  editable: false, filter: false, };
+//         case "Pitchgrid":
+//             return { headerName: 'Abbreviation',  field: 'abbrev',  width:120,  editable: false, filter: false, };
+//         case "Statname":
+//             return { headerName: 'Abbreviation',  field: 'abbrev',  width:120,  editable: false, filter: false, };
+//         default:
+//             return { headerName: 'id',  field: 'id',  width:80,  editable: false, filter: false, };
+//     }
+// }
 
-export const copyGridColDefs = ( columnDefs , table) => {
-    const newColDefs = columnDefs.map(({headerName, field}) => {
-        return {
-            headerName: headerName,
-            field: field,
-            width: 150,
-        }
-    });
-
-    // add grid actions update and delete to end of row and id defs to start of row
-    // return [id,...newColDefs, actions];
-    // return [getId(table),...newColDefs];
-    return [...newColDefs];
-}
-
-// move to FormDialog
-export const copyFormColDefs = ( columnDefs ) => {
-    return columnDefs.map( ( prop ) => {
-        return {
-            headerName: prop.headerName,
-            field     : prop.field,
-            type      : prop.type,
-            min       : prop.min,
-            max       : prop.max,
-            required  : prop.required
-        }
-    } );
-}
+// export const copyGridColDefs = ( columnDefs , table) => {
+//     const newColDefs = columnDefs.map(({headerName, field}) => {
+//         return {
+//             headerName: headerName,
+//             field: field,
+//             width: 150,
+//         }
+//     });
+//
+//     // add grid actions update and delete to end of row and id defs to start of row
+//     // return [id,...newColDefs, actions];
+//     // return [getId(table),...newColDefs];
+//     return [...newColDefs];
+// }
+//
+// // move to FormDialog
+// export const copyFormColDefs = ( columnDefs ) => {
+//     return columnDefs.map( ( prop ) => {
+//         return {
+//             headerName: prop.headerName,
+//             field     : prop.field,
+//             type      : prop.type,
+//             min       : prop.min,
+//             max       : prop.max,
+//
+//         }
+//     } );
+// }
 
 export const defaultColDef = {
     sortable: true,

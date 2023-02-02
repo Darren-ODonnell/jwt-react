@@ -1,9 +1,7 @@
-import { METHODS } from '../common/globals'
-import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
+import {METHODS} from '../common/globals'
+import {addMessage} from "../common/helper";
 
 export const Firstname = 'Firstname'
-
-const table = {name:Firstname}
 
 export const firstnameColumnDefs = [
     { headerName: 'Firstname'      , field: 'firstname'     , type: 'string', width:100,  },
@@ -46,18 +44,17 @@ const apiRequests = {
 }
 
 const gridLoader = (data) => {
-
     return data;
 }
 
 export const firstnameData = {
-    messages    : addMessage(Firstname),
-    type        : Firstname,
+    messages: addMessage(Firstname),
+    type: Firstname,
     initialValue: firstnameInitialValue,
-    columnDefs  : firstnameColumnDefs,
-    formColDefs : copyFormColDefs( firstnameColumnDefs ), // form column definitions
-    gridColDefs : copyGridColDefs( firstnameColumnDefs , table), // Grid column definitions
-    methods     : apiRequests,
-    gridLoader  : gridLoader
+    columnDefs: firstnameColumnDefs,
+    formColDefs: firstnameColumnDefs, // form column definitions
+    gridColDefs: firstnameColumnDefs, // Grid column definitions
+    methods: apiRequests,
+    gridLoader: gridLoader
 };
 

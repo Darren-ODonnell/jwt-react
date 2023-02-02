@@ -1,10 +1,8 @@
-import { METHODS } from '../common/globals'
-import {addMessage, copyFormColDefs, copyGridColDefs} from "../common/helper";
+import {METHODS} from '../common/globals'
+import {addMessage} from "../common/helper";
 
 
 export const Fixture = 'Fixture'
-
-const table = {name:Fixture}
 
 const fixtureColumnDefs = [
     {headerName: 'Competition Name', field: 'competitionName', type: 'string' , width: 120, },
@@ -90,17 +88,19 @@ const gridLoader = (data) => {
         }
         newData.push(newRow)
     })
-    return newData;
+    return newData
 }
 
 export const fixtureData = {
-    messages    : addMessage(Fixture),
-    type        : Fixture,
+    messages: addMessage(Fixture),
+    type: Fixture,
     initialValue: fixtureInitialValue,
-    columnDefs  : fixtureColumnDefs,
-    formColDefs : copyFormColDefs(fixtureColumnDefs), // form column definitions
-    gridColDefs : copyGridColDefs(fixtureColumnDefs, table), // Grid column definitions
-    methods     : apiRequests,
-    dropDown    : fixtureDropDown,
-    gridLoader  : gridLoader
+    columnDefs: fixtureColumnDefs,
+    // formColDefs : copyFormColDefs(fixtureColumnDefs), // form column definitions
+    // gridColDefs : copyGridColDefs(fixtureColumnDefs, table), // Grid column definitions
+    formColDefs: fixtureColumnDefs, // form column definitions
+    gridColDefs: fixtureColumnDefs, // Grid column definitions
+    methods: apiRequests,
+    dropDown: fixtureDropDown,
+    gridLoader: gridLoader
 };

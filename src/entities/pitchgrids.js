@@ -1,9 +1,7 @@
-import { METHODS } from "../common/globals";
-import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
+import {METHODS} from "../common/globals";
+import {addMessage} from "../common/helper";
 
 export const Pitchgrid = 'Pitchgrid'
-
-const table = {name:Pitchgrid}
 
 export const pitchgridColumnDefs = [
     {headerName: 'Abbreviation', field: 'abbrev', type: 'string', width: 150, },
@@ -52,14 +50,14 @@ const gridLoader = (data) => {
 
 
 export const pitchgridData = {
-    messages    : addMessage(Pitchgrid),
-    type        : Pitchgrid,
+    messages: addMessage(Pitchgrid),
+    type: Pitchgrid,
     initialValue: pitchgridInitialValue,
-    columnDefs  : pitchgridColumnDefs,
-    formColDefs : copyFormColDefs( pitchgridColumnDefs ), // form column definitions
-    gridColDefs : copyGridColDefs( pitchgridColumnDefs,table ), // Grid column definitions
-    methods     : apiRequests,
-    gridLoader  : gridLoader
+    columnDefs: pitchgridColumnDefs,
+    formColDefs: pitchgridColumnDefs, // form column definitions
+    gridColDefs: pitchgridColumnDefs, // Grid column definitions
+    methods: apiRequests,
+    gridLoader: gridLoader
 };
 
 

@@ -1,5 +1,5 @@
-import { METHODS } from '../common/globals'
-import {addMessage, copyFormColDefs, copyGridColDefs} from "../common/helper";
+import {METHODS} from '../common/globals'
+import {addMessage} from "../common/helper";
 import {TextField} from "@mui/material";
 import React from "react";
 
@@ -50,8 +50,10 @@ export const competitionData = {
     type: Competition,
     initialValue: competitionInitialValue,
     columnDefs: competitionColumnDefs,
-    formColDefs: copyFormColDefs(competitionColumnDefs), // form column definitions
-    gridColDefs: copyGridColDefs(competitionColumnDefs, table), // Grid column definitions
+    // formColDefs: copyFormColDefs(competitionColumnDefs), // form column definitions
+    // gridColDefs: copyGridColDefs(competitionColumnDefs, table), // Grid column definitions
+    formColDefs: competitionColumnDefs, // form column definitions
+    gridColDefs: competitionColumnDefs, // Grid column definitions
     methods: apiRequests,
     gridLoader: gridLoader
 };

@@ -1,11 +1,10 @@
-import { METHODS } from "../common/globals";
-import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
+import {METHODS} from "../common/globals";
+import {addMessage} from "../common/helper";
 
 export const Stat = 'Stat'
-const table = {name : Stat}
+
 
 export const statColumnDefs = [
-    // { headerName: 'Abbreviation', field: 'id', type: 'String' , min: 8, max: 60, },
     { headerName: 'Player Name'   , field: 'playerName'  , type: 'string' , width: 150, },
     { headerName: 'Fixture Date'  , field: 'fixtureDate' , type: 'date'   , width: 100, },
     { headerName: 'Stat Name'     , field: 'statName'    , type: 'string' , width: 80 , },
@@ -68,14 +67,14 @@ const gridLoader = (data) => {
 
 
 export const statData = {
-    messages    : addMessage(Stat),
-    type        : Stat,
+    messages: addMessage(Stat),
+    type: Stat,
     initialValue: statInitialValue,
-    columnDefs  : statColumnDefs,
-    formColDefs : copyFormColDefs( statColumnDefs ), // form column definitions
-    gridColDefs : copyGridColDefs( statColumnDefs, table ), // Grid column definitions
-    methods     : apiRequests,
-    gridLoader  : gridLoader
+    columnDefs: statColumnDefs,
+    formColDefs: statColumnDefs, // form column definitions
+    gridColDefs: statColumnDefs, // Grid column definitions
+    methods: apiRequests,
+    gridLoader: gridLoader
 };
 
 

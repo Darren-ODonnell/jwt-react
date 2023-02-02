@@ -1,13 +1,12 @@
 import { METHODS } from "../common/globals";
 
-import {addMessage, copyFormColDefs, copyGridColDefs} from "../common/helper";
-import { CLUB_URLS } from "./clubs";
+import {addMessage} from "../common/helper";
+import {CLUB_URLS} from "./clubs";
 import { COMPETITION_URLS } from "./competitions";
 import { PLAYER_URLS } from "./players";
 
 
 export const Teamsheet = 'Teamsheet'
-const table = {name:Teamsheet}
 
 export const teamsheetColumnDefs = [
     {headerName: 'Competition Name', field: 'competitionName', type: 'string'  , width: 150, },
@@ -80,12 +79,14 @@ const apiRequests = {
 }
 
 export const teamsheetData = {
-    messages    : addMessage(Teamsheet),
-    type        : Teamsheet,
+    messages: addMessage(Teamsheet),
+    type: Teamsheet,
     initialValue: teamsheetInitialValue,
-    columnDefs  : teamsheetColumnDefs,
-    formColDefs : copyFormColDefs( teamsheetColumnDefs ),          // form column definitions
-    gridColDefs : copyGridColDefs( teamsheetColumnDefs  , table ), // Grid column definitions
-    methods     : apiRequests,
-    gridLoader  : gridLoader
+    columnDefs: teamsheetColumnDefs,
+    // formColDefs : copyFormColDefs( teamsheetColumnDefs ),          // form column definitions
+    // gridColDefs : copyGridColDefs( teamsheetColumnDefs  , table ), // Grid column definitions
+    formColDefs: teamsheetColumnDefs,          // form column definitions
+    gridColDefs: teamsheetColumnDefs, // Grid column definitions
+    methods: apiRequests,
+    gridLoader: gridLoader
 };

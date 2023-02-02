@@ -1,8 +1,7 @@
-import { METHODS } from "../common/globals";
-import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
+import {METHODS} from "../common/globals";
+import {addMessage} from "../common/helper";
 
 export const Position = 'Position'
-const table = {name : Position}
 
 export const positionColumnDefs = [
     { headerName: 'Position Name', field: 'name'  , type: 'string', width: 150, },
@@ -36,28 +35,21 @@ const apiRequests = {
 }
 
 const gridLoader = (data) => {
-    let newData = [];
-    data.forEach(row => {
-        const newRow = {
-            id: row.id,
-            name: row.name,
-            abbrev  : row.abbrev
-        }
-        newData.push(newRow)
-    })
-    return newData;
+    return data;
 }
 
 
 export const positionData = {
-    messages    : addMessage(Position),
-    type        : Position,
+    messages: addMessage(Position),
+    type: Position,
     initialValue: positionInitialValue,
-    columnDefs  : positionColumnDefs,
-    formColDefs : copyFormColDefs( positionColumnDefs ), // form column definitions
-    gridColDefs : copyGridColDefs( positionColumnDefs, table ), // Grid column definitions
-    methods     : apiRequests,
-    gridLoader  : gridLoader
+    columnDefs: positionColumnDefs,
+    // formColDefs : copyFormColDefs( positionColumnDefs ), // form column definitions
+    // gridColDefs : copyGridColDefs( positionColumnDefs, table ), // Grid column definitions
+    formColDefs: positionColumnDefs, // form column definitions
+    gridColDefs: positionColumnDefs, // Grid column definitions
+    methods: apiRequests,
+    gridLoader: gridLoader
 };
 
 

@@ -1,5 +1,5 @@
-import { METHODS } from '../common/globals'
-import { addMessage, copyFormColDefs, copyGridColDefs } from "../common/helper";
+import {METHODS} from '../common/globals'
+import {addMessage} from "../common/helper";
 
 export const Club = 'Club'
 
@@ -26,7 +26,6 @@ export const clubInitialValue = {
 }
 
 const gridLoader = (data) => {
-
     return data;
 }
 
@@ -61,15 +60,15 @@ export const clubData = {
     messages: addMessage(Club),
     type: Club,
     initialValue: clubInitialValue,
-    formColDefs: copyFormColDefs(clubColumnDefs), // form column definitions
+    // formColDefs: copyFormColDefs(clubColumnDefs), // form column definitions
+    formColDefs: clubColumnDefs, // form column definitions
 
     // gridColDefs: copyGridColDefs(clubColumnDefs, table), // Grid column definitions
     gridColDefs: clubColumnDefs, // Grid column definitions
-
     columnDefs: clubColumnDefs,
     methods: apiRequests,
     dropDown: clubDropDown,
-    homePage : HOME_PAGE,
+    homePage: HOME_PAGE,
     gridLoader: gridLoader
 };
 
