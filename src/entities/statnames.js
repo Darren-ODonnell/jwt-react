@@ -38,6 +38,7 @@ const gridLoader = (data) => {
     let newData = [];
     data.forEach(row => {
         const newRow = {
+            id    : row.id,
             abbrev: row.id,
             name  : row.name
         }

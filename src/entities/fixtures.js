@@ -5,7 +5,7 @@ import {addMessage} from "../common/helper";
 export const Fixture = 'Fixture'
 
 const fixtureColumnDefs = [
-    {headerName: 'Competition Name', field: 'competitionName', width: 120,},
+    {headerName: 'Competition Name', field: 'competitionName', width: 140,},
     {headerName: 'Home Team Name', field: 'homeTeamName', width: 150,},
     {headerName: 'Away Team Name', field: 'awayTeamName', width: 150,},
     {headerName: 'Fixture Date', field: 'fixtureDate', width: 100,},
@@ -66,7 +66,6 @@ const apiRequests = {
     update: {method: METHODS.POST  , url: FIXTURE_URLS.update},
     add   : {method: METHODS.PUT   , url: FIXTURE_URLS.add},
     delete: {method: METHODS.DELETE, url: FIXTURE_URLS.delete}
-
 }
 
 const gridLoader = (data) => {
@@ -96,8 +95,6 @@ export const fixtureData = {
     type: Fixture,
     initialValue: fixtureInitialValue,
     columnDefs: fixtureColumnDefs,
-    // formColDefs : copyFormColDefs(fixtureColumnDefs), // form column definitions
-    // gridColDefs : copyGridColDefs(fixtureColumnDefs, table), // Grid column definitions
     formColDefs: fixtureColumnDefs, // form column definitions
     gridColDefs: fixtureColumnDefs, // Grid column definitions
     methods: apiRequests,

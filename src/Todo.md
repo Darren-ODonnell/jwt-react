@@ -14,7 +14,9 @@ As elements are finished - move below Completed
          after timeout - delete old token - logout user - switch to loggedOutrNavbar
     E44: Should not be able to login as a User - only Admin allowed.
     E45: FormDialog - can no longer edit textfield values!
-    E46:
+    E47: 
+    E48: 
+    E49: 
 
 # Refactoring
 
@@ -42,7 +44,7 @@ As elements are finished - move below Completed
     C11c: Add dropdowns for player names 
     C11f: Add dropdowns for for statnames 
 
-    C11a: Add dropdowns for Competition Names - done
+    C11a: Add dropdowns for Competition Names   -done
     C11d: Add dropdowns for position numbers    -done
     C11e: Add dropdowns for pitchegrid values   -done
     C11g: Add dropdowns for for seasons         -done
@@ -331,3 +333,7 @@ As elements are finished - move below Completed
     C7: StatName CRUD operations - done
     R11: check the need for copyFormColDefs and CopyGridColDefs - tidyup as necessary
         methods removed from each entity and deleted from helper.js
+    E46:Stats screen goes blank and browser freezes
+        Database had null values which were not handled
+        Player was null for PO and POO - PO -> 1, POO -> 80 better data would be required to fix this properly
+        Location was null when statname = Substitute - now properly handled

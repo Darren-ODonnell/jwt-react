@@ -23,7 +23,14 @@ const FormDialog = (props) => {
     const [dateValue, setDateValue] = useState(props.data.fixtureDate)
     const [timeValue, setTimeValue] = useState(moment(props.data.fixtureTime, TIME_FORMAT))
     // const [selected , setSelected]  = useState( props.defaultValue )
-    const [formData, setFormData] = useState(props.data)
+    const [formData, setFormData] = useState(props.rowData)
+
+
+    console.log("DateValue: " + dateValue)
+    console.log("Value: " + value)
+    console.log("TimeValue: " + timeValue)
+    console.log("FormData: " + formData)
+    console.log("RowData: " + props.rowData)
 
     const handleClose = (setOpen) => {
         setOpen(false);
@@ -76,11 +83,12 @@ const FormDialog = (props) => {
     }
 
     function onChange(e, field) {
-        console.log("New Value: " + e.target.value)
+        // console.log("New Value: " + e.target.value)
         formData[field] = e.target.value
         setFormData(formData)
         setValue(e.target.value);
     }
+
 
     const AddData = ({methods, axiosApi, data, error, formData, setOpen, setData}) => {
         const user = AuthService.getCurrentUser();
@@ -165,6 +173,7 @@ const FormDialog = (props) => {
                             const commonProps = {
                                 style: dropDown,
                                 formData: props.data,
+                                setFormData: setFormData,
                                 field: prop.field,
                                 onChange: onChange,
                                 key: getUniqueId(),

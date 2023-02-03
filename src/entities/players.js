@@ -4,18 +4,19 @@ import {addMessage} from "../common/helper";
 export const Player = 'Player'
 
 export const playerColumnDefs = [
-    {headerName: 'Firstname', field: 'firstname', width: 100,},
-    {headerName: 'Lastname', field: 'lastname', width: 100,},
-    {headerName: 'Irish Firstname', field: 'firstnameI', width: 100,},
+    {headerName: 'Firstname', field: 'firstname', width: 120,},
+    {headerName: 'Lastname', field: 'lastname', width: 120,},
+    {headerName: 'Irish Firstname', field: 'firstnameI', width: 120,},
     {headerName: 'Irish Lastname', field: 'lastnameI', width: 150,},
-    {headerName: 'Year of Birth', field: 'yob', width: 60,},
+    {headerName: 'Year of Birth', field: 'yob', width: 100,},
     {headerName: 'Address', field: 'address', width: 150,},
-    {headerName: 'Email', field: 'email', width: 150,},
-    {headerName: 'Phone', field: 'phone', width: 150,},
-    {headerName: 'Phone ICE', field: 'phoneIce', width: 150,},
     {headerName: 'Registered', field: 'registered', width: 120,},
-    {headerName: 'Grade', field: 'grade', width: 80,},
-    {headerName: 'Availability', field: 'availability', width: 80,},
+    {headerName: 'Grade', field: 'grade', width: 120,},
+    {headerName: 'Availability', field: 'availability', width: 120,},
+    {headerName: 'Email', field: 'email', width: 100,},
+    {headerName: 'Phone', field: 'phone', width: 100,},
+    {headerName: 'Phone ICE', field: 'phoneIce', width: 100,},
+
 ];
 
 export const playerInitialValue = {
@@ -52,7 +53,26 @@ export const apiRequests = {
     delete  : {method: METHODS.DELETE, url: PLAYER_URLS.delete}
 }
 const gridLoader = (data) => {
-    return data;
+    let newData = [];
+    data.forEach(row => {
+        const newRow = {
+            id : row.id,
+            firstname: row.firstname,
+            lastname: row.lastname,
+            firstnameI: row.firstnameI,
+            lastnameI: row.lastnameI,
+            yob: row.yob,
+            address: row.address,
+            email: row.email,
+            phone: row.phone,
+            phoneIce: row.phoneIce,
+            registered: row.registered,
+            grade: row.grade,
+            availability: row.availability,
+        }
+        newData.push(newRow)
+    })
+    return newData
 }
 
 export const playerData = {

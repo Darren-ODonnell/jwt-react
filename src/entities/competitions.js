@@ -37,7 +37,16 @@ const apiRequests = {
     delete    : {method: METHODS.DELETE, url: COMPETITION_URLS.delete}
 }
 const gridLoader = (data) => {
-    return data;
+    let newData = [];
+    data.forEach(row => {
+        const newRow = {
+            id : row.id,
+            name: row.name,
+            season: row.season,
+        }
+        newData.push(newRow)
+    })
+    return newData
 }
 
 

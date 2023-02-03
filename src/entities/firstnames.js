@@ -4,8 +4,8 @@ import {addMessage} from "../common/helper";
 export const Firstname = 'Firstname'
 
 export const firstnameColumnDefs = [
-    {headerName: 'Firstname', field: 'firstname', width: 100,},
-    {headerName: 'Irish Firstname', field: 'firstnameIrish', width: 100,},
+    {headerName: 'Firstname', field: 'firstname', width: 150,},
+    {headerName: 'Irish Firstname', field: 'firstnameIrish', width: 150,},
 ];
 
 export const firstnameInitialValue = {
@@ -44,7 +44,16 @@ const apiRequests = {
 }
 
 const gridLoader = (data) => {
-    return data;
+    let newData = [];
+    data.forEach(row => {
+        const newRow = {
+            id : row.id,
+            firstname: row.firstname,
+            firstnameIrish: row.firstnameIrish,
+        }
+        newData.push(newRow)
+    })
+    return newData
 }
 
 export const firstnameData = {

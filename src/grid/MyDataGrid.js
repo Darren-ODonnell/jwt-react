@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {AgGridReact} from 'ag-grid-react';
+import React, { useEffect, useRef, useState } from 'react';
+import {AgGridReact, gridApi} from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'ag-grid-community/styles/ag-theme-balham.css';
@@ -18,11 +18,11 @@ import {} from './Forms';
 import {GetData} from "../api/GetData";
 
 const MyDataGrid = ({props}) => {
-    // const gridRef = useRef(); // Optional - for accessing Grid's API
-    const [, setGridApi] = useState(null);
+    const gridRef = useRef(); // Optional - for accessing Grid's API
+    const [gridApi, setGridApi] = useState(null);
 
     // grid control
-    // const [rowData, setRowData] = useState();
+    const [rowData, setRowData] = useState();
 
     // const [changed, setChanged] = useState();
     const [formData, setFormData] = useState(props.initialValue)
@@ -48,11 +48,11 @@ const MyDataGrid = ({props}) => {
         setFormData({...formData, [id]: value})
     }
     const onGridReady = (params) => {
-        setGridApi(params)
+        setGridApi(params.api)
     }
     const handleEdit = (props) => {
         handleOpen();
-        setFormData({...props.formData});
+        setFormData({...props.data});
     }
     const handleDelete = (id) => {
         setOpen(false);
@@ -96,7 +96,7 @@ const MyDataGrid = ({props}) => {
             method: method,
             url: url
         }).then (()=> {
-            // setFormData(resp.data)
+            setFormData([...data]);
         })
         // cancel subscription to useEffect
         return () => (isSubscribed = false)
@@ -115,9 +115,8 @@ const MyDataGrid = ({props}) => {
     }
 
     useEffect(()=>{
-
         getData(props.methods.list)
-
+        setFormData([...data]);
     }, []);
 
     const AddButton = (params) => {
@@ -191,7 +190,7 @@ const MyDataGrid = ({props}) => {
         setData: setFormData,
         open: open,
         // onClose   : handleClose,
-        data: data,
+        data: rowData,
         // handleClose  : handleClose,
         setOpen: setOpen,
         update: props.gridLoader.update,
@@ -208,12 +207,16 @@ const MyDataGrid = ({props}) => {
         axiosApi: axiosApi,
 
     };
+    console.log("Index: " )
     return (
         !loading ? <div>
             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
                 <AddButton {...props}/>
                 <AgGridReact
-                    // ref                        = { gridRef }
+                    onGridReady = {onGridReady}
+                    gridApi = {gridApi}
+                    ref                        = { gridRef }
+                    rowData                    = {gridRef.current}
                     defaultColDef={defaultColDef}
                     pagination={true}
                     suppressRowDrag={true}
@@ -222,8 +225,8 @@ const MyDataGrid = ({props}) => {
                     rowData                    = { props.gridLoader(data) }
                 />
 
-                {!props.gridLoader.dropDown} ?
                 <FormDialog
+                    gridApi={ gridApi}
                     key={props.index}
                     setData={setFormData}
                     open={open}
@@ -237,36 +240,14 @@ const MyDataGrid = ({props}) => {
                     methods={props.methods}
                     colDefs={props.formColDefs}
                     messages={props.messages}
-                    formData={formData}
+                    formData={formData[props.index]}
                     setFormData={setFormData}
                     getData={getData}
                     initialValue={props.initialValue}
                     // // useAxios params
                     axiosApi     = {axiosApi}
                 />
-                :
-                <FormDialog
 
-                    key={props.index}
-                    setData={setFormData}
-                    open={open}
-                    // onClose   = {handleClose}
-                    data={data}
-                    // handleClose  : handleClose,
-                    setOpen={setOpen}
-                    update={props.gridLoader.update}
-                    onChange={onChange}
-                    // // actions  :props.actions}
-                    methods={props.methods}
-                    colDefs={props.formColDefs}
-                    messages={props.messages}
-                    formData={formData}
-                    setFormData={setFormData}
-                    getData={getData}
-                    initialValue={props.initialValue}
-                    // // useAxios params
-                    axiosApi     = {axiosApi}
-                />
             </div>
         </div> : <p> Loading...</p>
     )

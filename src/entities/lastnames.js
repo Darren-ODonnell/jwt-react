@@ -47,7 +47,17 @@ const apiRequests = {
 }
 
 const gridLoader = (data) => {
-    return data;
+
+    let newData = [];
+    data.forEach(row => {
+        const newRow = {
+            id : row.id,
+            lastname: row.lastname,
+            lastnameIrish: row.lastnameIrish,
+        }
+        newData.push(newRow)
+    })
+    return newData
 }
 
 

@@ -24,7 +24,20 @@ export const clubInitialValue = {
 }
 
 const gridLoader = (data) => {
-    return data;
+    let newData = [];
+    data.forEach(row => {
+        const newRow = {
+            id : row.id,
+            name : row.name,
+            contactName: row.contactName,
+            contactEmail: row.contactEmail,
+            contactPhone: row.contactPhone,
+            pitches: row.pitches,
+            colours: row.colours,
+        }
+        newData.push(newRow)
+    })
+    return newData
 }
 
 // clubs

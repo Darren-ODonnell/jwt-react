@@ -5,13 +5,13 @@ export const Stat = 'Stat'
 
 
 export const statColumnDefs = [
-    {headerName: 'Player Name', field: 'playerName', width: 150,},
-    {headerName: 'Fixture Date', field: 'fixtureDate', width: 100,},
-    {headerName: 'Stat Name', field: 'statName', width: 80,},
-    {headerName: 'Success', field: 'success', width: 150,},
-    {headerName: 'Half', field: 'half', width: 60,},
-    {headerName: 'Pitch location', field: 'pitchgrid', width: 150,},
-    {headerName: 'Time Occurred', field: 'timeOccurred', width: 80,},
+    {headerName: 'Player Name'   , field: 'playerName'  , width: 150, },
+    {headerName: 'Fixture Date'  , field: 'fixtureDate' , width: 120, },
+    {headerName: 'Stat Name'     , field: 'statName'    , width: 120 , },
+    {headerName: 'Success'       , field: 'success'     , width: 150, },
+    {headerName: 'Half'          , field: 'half'        , width: 100 , },
+    {headerName: 'Pitch location', field: 'pitchgrid'   , width: 150, },
+    {headerName: 'Time Occurred' , field: 'timeOccurred', width: 120 , },
 ];
 
 export const statInitialValue = {
@@ -52,6 +52,7 @@ const gridLoader = (data) => {
         let pgrid = row.location ? row.location.name + " (" + row.location.id + ")" : ""
 
         const newRow = {
+            id          : row.id,
             playerName  : row.player.firstname + " " + row.player.lastname,
             fixtureDate : row.fixture.fixtureDate,
             statName    : row.statName.name,
