@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {AgGridReact, gridApi} from 'ag-grid-react';
+import {AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'ag-grid-community/styles/ag-theme-balham.css';
@@ -18,68 +18,67 @@ import {} from './Forms';
 import {GetData} from "../api/GetData";
 
 const MyDataGrid = ({props}) => {
-    const gridRef = useRef(); // Optional - for accessing Grid's API
-    const [gridApi, setGridApi] = useState(null);
+    // const gridRef = useRef(); // Optional - for accessing Grid's API
+    const [gridApi , setGridApi]  = useState(null);
+    // grid data
+    const [rowData , setRowData]  = useState([]);
 
-    // grid control
-    const [rowData, setRowData] = useState();
-
-    // const [changed, setChanged] = useState();
+    // data for form
     const [formData, setFormData] = useState(props.initialValue)
     // form control
-    const [open, setOpen] = useState(false);
+    const [open    , setOpen]     = useState(false);
     // api control
-    const [data, error, loading, axiosApi] = useAxios();
+    const [data , error , loading  , axiosApi] = useAxios();
 
     let loader = true;
 
-    const handleOpen = () => {
+    const handleOpen                = () => {
         setOpen(true);
     }
-    const handleClose = () => {
+    const handleClose               = () => {
         setOpen(false);
         // setFormData(data.initialValue);
     };
-    const onChange = (e) => {
-        const {value, id} = e.target
+    const onChange                  = (e) => {
+        const {value               , id}                                                         = e.target
         // update field with data from user
         // data updated here first, then screen is updated
         console.log(value + " - " + id)
-        setFormData({...formData, [id]: value})
+        setFormData({...formData   , [id]                                                       : value})
     }
-    const onGridReady = (params) => {
+    const onGridReady               = (params) => {
         setGridApi(params.api)
     }
-    const handleEdit = (props) => {
+    const handleEdit                = (props) => {
         handleOpen();
         setFormData({...props.data});
     }
-    const handleDelete = (id) => {
+    const handleDelete              = (id) => {
         setOpen(false);
-        const confirm = window.confirm("Are you sure, you want to delete this row", id)
+        const confirm               = window.confirm("Are you sure, you want to delete this row", id)
         if (confirm) {
             deleteData(id)
         }
     }
-    const deleteData = ({ data, error  }) => {
-        const user = AuthService.getCurrentUser();
+    const deleteData                = ({ data                                                   , error  }) => {
+        const user                  = AuthService.getCurrentUser();
         AuthService.setAuthToken(user.accessToken);
 
-        const configObj = {
-            axiosInstance: instance,
+        const configObj             = {
+            axiosInstance          : instance,
             ...props.methods.delete,
-            requestConfig: {
-                data: {data}
+            requestConfig          : {
+                data               : {data}
             }
         }
 
         axiosApi(configObj)
             .then(response => {
-                data = response.data
+                data                = response.data
                 setOpen(false)
             })
             .catch(err => {
-                error = err.message;
+                error               = err.message;
                 setOpen(false)
             })
         refreshPage()
@@ -95,10 +94,12 @@ const MyDataGrid = ({props}) => {
             axiosInstance: instance,
             method: method,
             url: url
-        }).then (()=> {
-            setFormData([...data]);
-        })
-        // cancel subscription to useEffect
+        }).then ((resp)=> {
+            setRowData([...resp.data])
+        }).catch(err => {
+            console.log(err.message)
+            setOpen(false)
+        })        // cancel subscription to useEffect
         return () => (isSubscribed = false)
     }
 
@@ -114,9 +115,9 @@ const MyDataGrid = ({props}) => {
         // return (type!==Position || type!==Pitchgrid)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getData(props.methods.list)
-        setFormData([...data]);
+        setRowData([...data]);
     }, []);
 
     const AddButton = (params) => {
@@ -141,7 +142,9 @@ const MyDataGrid = ({props}) => {
         )
     }
     const EditButton = (params) => {
+        console.log(params.id)
         return (
+
             <Button  onClick = {()=>handleEdit( params )}
                      variant = "outlined"
                      color   = "primary"
@@ -185,65 +188,66 @@ const MyDataGrid = ({props}) => {
         }
     };
 
-    let commonProps = {
-        key: props.index,
-        setData: setFormData,
-        open: open,
-        // onClose   : handleClose,
-        data: rowData,
-        // handleClose  : handleClose,
-        setOpen: setOpen,
-        update: props.gridLoader.update,
-        onChange: onChange,
-        // // actions  :props.actions,
-        methods: props.methods,
-        colDefs: props.formColDefs,
-        messages: props.messages,
-        formData: formData,
-        setFormData: setFormData,
-        getData: getData,
-        initialValue: props.initialValue,
-        // // useAxios params
-        axiosApi: axiosApi,
-
-    };
-    console.log("Index: " )
+    // let commonProps = {
+    //     key: props.index,
+    //     setData: setFormData,
+    //     open: open,
+    //     // onClose   : handleClose,
+    //     data: rowData,
+    //     // handleClose  : handleClose,
+    //     setOpen: setOpen,
+    //     update: props.gridLoader.update,
+    //     onChange: onChange,
+    //     // // actions  :props.actions,
+    //     methods: props.methods,
+    //     colDefs: props.formColDefs,
+    //     messages: props.messages,
+    //     formData: formData,
+    //     setFormData: setFormData,
+    //     getData: getData,
+    //     initialValue: props.initialValue,
+    //     // // useAxios params
+    //     axiosApi: axiosApi,
+    //
+    // };
+    console.log("RowData: " + rowData)
+    let rowIndex
     return (
+
         !loading ? <div>
             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
                 <AddButton {...props}/>
                 <AgGridReact
-                    onGridReady = {onGridReady}
-                    gridApi = {gridApi}
-                    ref                        = { gridRef }
-                    rowData                    = {gridRef.current}
-                    defaultColDef={defaultColDef}
-                    pagination={true}
-                    suppressRowDrag={true}
-                    columnDefs={[...props.gridColDefs, formActions]}
-                    onGridReady                = { onGridReady }
-                    rowData                    = { props.gridLoader(data) }
+                    // onGridReady     = {onGridReady}
+                    gridApi         = {gridApi}
+                    defaultColDef   = {defaultColDef}
+                    // pagination      = {true}
+                    // suppressRowDrag = {true}
+                    columnDefs      = {[...props.gridColDefs, formActions]}
+                    rowData         = { rowData }
+
                 />
 
                 <FormDialog
-                    gridApi={ gridApi}
-                    key={props.index}
-                    setData={setFormData}
-                    open={open}
+                    gridApi      = { gridApi}
+                    key          = {props.index}
+                    setData      = {setFormData}
+                    open         = {open}
                     // onClose   = {handleClose}
-                    data={data}
+                    index        = {props.index}
+                    data         = {formData}
                     // handleClose  : handleClose,
-                    setOpen={setOpen}
-                    update={props.gridLoader.update}
-                    onChange={onChange}
+                    setOpen      = {setOpen}
+                    update       = {props.gridLoader.update}
+                    onChange     = {onChange}
                     // // actions  :props.actions}
-                    methods={props.methods}
-                    colDefs={props.formColDefs}
-                    messages={props.messages}
-                    formData={formData[props.index]}
-                    setFormData={setFormData}
-                    getData={getData}
-                    initialValue={props.initialValue}
+                    methods      = {props.methods}
+                    colDefs      = {props.formColDefs}
+                    messages     = {props.messages}
+                    formData     = {formData[1]} // dummy value to test index .. props.index previous
+                    setFormData  = {setFormData}
+                    getData      = {getData}
+                    initialValue = {props.initialValue}
                     // // useAxios params
                     axiosApi     = {axiosApi}
                 />

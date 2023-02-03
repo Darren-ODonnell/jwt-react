@@ -23,7 +23,7 @@ const FormDialog = (props) => {
     const [dateValue, setDateValue] = useState(props.data.fixtureDate)
     const [timeValue, setTimeValue] = useState(moment(props.data.fixtureTime, TIME_FORMAT))
     // const [selected , setSelected]  = useState( props.defaultValue )
-    const [formData, setFormData] = useState(props.rowData)
+    const [formData, setFormData] = useState(props.data)
 
 
     console.log("DateValue: " + dateValue)

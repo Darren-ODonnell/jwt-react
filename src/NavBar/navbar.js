@@ -11,11 +11,11 @@ export const LoggedInNavbar = (props) =>{
                 <Navbar.Collapse id = "basic-navbar-nav">
                     <Nav className  = "me-auto">
                         <Nav.Link href = "/home">Home</Nav.Link>
-                        <Nav.Link href = "/clubsGrid">Clubs</Nav.Link>
-                        <Nav.Link href             = "/players">Players</Nav.Link>
-                        <Nav.Link href             = "/fixtures">Fixtures</Nav.Link>
-                        <Nav.Link href             = "/teamsheets">Teamsheets</Nav.Link>
-                        <Nav.Link href             = "/stats">Stats</Nav.Link>
+                        <Nav.Link href = "/clubs">Clubs</Nav.Link>
+                        <Nav.Link href = "/players">Players</Nav.Link>
+                        <Nav.Link href = "/fixtures">Fixtures</Nav.Link>
+                        <Nav.Link href = "/teamsheets">Teamsheets</Nav.Link>
+                        <Nav.Link href = "/stats">Stats</Nav.Link>
                         <NavDropdown title = "Dropdown" id = "basic-nav-dropdown">
                             <NavDropdown.Item href = "/competitions">Competitions</NavDropdown.Item>
                             <NavDropdown.Item href = "/statnames">Statnames</NavDropdown.Item>
