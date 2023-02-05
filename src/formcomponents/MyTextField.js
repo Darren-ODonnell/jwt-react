@@ -18,7 +18,6 @@ const MyTextField = ({index, field, formData, setFormData, onChange, headerName,
             style={style}
             key={getUniqueId()}
             id={field}
-
             valuedefault={defaultValue}
             value={formData[field] ? formData[field] : ""}
             onChange={e => onSelectChange(e, field)}

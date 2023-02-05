@@ -1,6 +1,5 @@
 import AuthService from "../auth/AuthService";
 import instance from "./axios";
-import {useAxios} from "../api/ApiService";
 
 
 export const GetData = ( { method, url, setFormData, data, error, loading, axiosApi } ) => {

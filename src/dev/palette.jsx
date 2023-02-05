@@ -12,7 +12,7 @@ export const PaletteTree = () => (
         <Category name="HTML">
             <Component name="a">
                 <Variant requiredParams={['href']}>
-                    <a>Link</a>
+                    <a href={''}>Link</a>
                 </Variant>
             </Component>
             <Component name="button">

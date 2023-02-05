@@ -9,12 +9,8 @@ export const useAxios = () => {
     const [controller, setController] = useState(null);
 
     const axiosApi = async (configObj) => {
-        const {
-            axiosInstance,
-            method,
-            url,
-            requestConfig = {}
-        } = configObj;
+        // spread out configObj
+        const {axiosInstance, method, url, requestConfig = {}} = configObj;
 
         try {
             const ctrl = new AbortController();
@@ -24,7 +20,6 @@ export const useAxios = () => {
                 ...requestConfig.data,
                 signal: ctrl.signal
             });
-
             setData(res.data);
         } catch (err) {
             setError(err.message);
