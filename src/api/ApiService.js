@@ -44,7 +44,6 @@ export let LoginRequest = (loginModel) => {
 }
 export const useAxios2 = (url) => {
     const [data, setData] = useState(null);
-
     const user = AuthService.getCurrentUser();
     AuthService.setAuthToken(user.accessToken);
 

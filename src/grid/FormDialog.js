@@ -28,13 +28,6 @@ const FormDialog = (props) => {
     // const [selected , setSelected]  = useState( props.defaultValue )
     const [formData, setFormData] = useState(props.data)
 
-
-    console.log("DateValue: " + dateValue)
-    console.log("Value: " + value)
-    console.log("TimeValue: " + timeValue)
-    console.log("FormData: " + formData)
-    console.log("RowData: " + props.rowData)
-
     const handleClose = (setOpen) => {
         setOpen(false);
         // setFormData(props.initialValue);
@@ -85,13 +78,12 @@ const FormDialog = (props) => {
         )
     }
 
-    function onChange(e, field) {
-        // console.log("New Value: " + e.target.value)
-        formData[field] = e.target.value
-        setFormData(formData)
-        setValue(e.target.value);
-    }
+    function onChange(e) {
+        const {id, value} = e.target
+        setFormData({...formData, [id]: value})
 
+        // setValue(e.target.value);
+    }
 
     const AddData = ({methods, axiosApi, data, error, formData, setOpen, setData}) => {
         const user = AuthService.getCurrentUser();
@@ -175,8 +167,8 @@ const FormDialog = (props) => {
                             let options
                             const commonProps = {
                                 style: dropDown,
-                                formData: props.data,
-                                setFormData: setFormData,
+                                formData: {...props.formData},
+                                setFormData: props.setFormData,
                                 field: prop.field,
                                 onChange: onChange,
                                 key: getUniqueId(),
@@ -252,14 +244,14 @@ const FormDialog = (props) => {
                                 //         {...commonProps}
                                 //         headerName={"Season"}
                                 //         options={getSeasons()} />
-                                case 'fixtureDate':
-                                    return <MyDatePicker
-                                        {...commonProps}
-                                        headerName={"Date"}/>
-                                case 'fixtureTime':
-                                    return <MyTimePicker
-                                        {...commonProps}
-                                        headerName={"Time"}/>
+                                // case 'fixtureDate':
+                                //     return <MyDatePicker
+                                //         {...commonProps}
+                                //         headerName={"Date"}/>
+                                // case 'fixtureTime':
+                                //     return <MyTimePicker
+                                //         {...commonProps}
+                                //         headerName={"Time"}/>
                                 default:
                                     return <MyTextField
                                         {...commonProps}

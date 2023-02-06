@@ -19,14 +19,17 @@ As elements are finished - move below Completed
     E49: 
 
 # Refactoring
+    R13: 
+    R14: 
+    R15: 
 
-    R12: Tidyup index.js - remove redux and associated components no longer required
 
 # Investigations
 
     I5: Some dropdowns are too long - investigate other methods - maybe grid display!
     I6: 
     I7: 
+    I8: 
 
 # New Code Additions
 
@@ -59,6 +62,9 @@ As elements are finished - move below Completed
         Update Routes with Endpoint /printTimesheet - done
     C13 Add buttons to Teamsheet view <PrintTeamsheet> <TeamsheetPitchLayout>
     C14 Style the register page - its very basic
+    C15: 
+    C16: 
+    C17: 
 
 # Unused Files
 
@@ -74,6 +80,9 @@ As elements are finished - move below Completed
 
 # Ignore for now
 
+    IG01: 
+    IG02: 
+    IG03: 
 
 # In Progress
 
@@ -337,3 +346,5 @@ As elements are finished - move below Completed
         Database had null values which were not handled
         Player was null for PO and POO - PO -> 1, POO -> 80 better data would be required to fix this properly
         Location was null when statname = Substitute - now properly handled
+    R12: Tidyup index.js - remove redux and associated components no longer required
+        All redux and store related elements removed from index.js

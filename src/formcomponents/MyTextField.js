@@ -5,21 +5,23 @@ import {getUniqueId} from "../common/helper";
 const MyTextField = ({index, field, formData, setFormData, onChange, headerName, style}) => {
 
     // let defaultValue = (params.formData[params.field]) ? (params.formData[params.field]) : ""
-    let defaultValue = (formData[field]) ? (formData[field]) : ""
+    // let defaultValue = (formData[field]) ? (formData[field]) : ""
 
-    const onSelectChange = (e, field) => {
-        setFormData( ...formData , [field] = e.target.value)
+    const onSelectChange = (e) => {
+        const {id, value} = e.target
+        setFormData({...formData, [id]: value})
     }
 
+    console.log("textFiled-FormData: " + formData)
     return (
         <TextField
             // style={style}
             key={getUniqueId()}
             id={field}
-            valuedefault={defaultValue}
-            value={formData[field] ? formData[field] : ""}
-            onChange={e => onSelectChange(e, field)}
-            data={formData}
+            // valuedefault={defaultValue}
+            value={formData[field]} //{formData[field] ? formData[field] : ""}
+            onChange={e => onSelectChange(e)}
+            data={formData[field]}
             placeholder={"Enter " + headerName}
             label={headerName}
             variant="outlined"
