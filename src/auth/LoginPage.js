@@ -26,13 +26,11 @@ export const LoginPage = () => {
         //Prevent page reload
         event.preventDefault();
         console.log("HandleSubmit: " + event)
-
         loginModel.username = usernameValue;
         loginModel.password = passwordValue;
 
         LoginRequest(loginModel)
             .then(response => {
-
                 updateState(response.data)
                 setIsSubmitted(true);
                 window.location = "/";
@@ -43,10 +41,7 @@ export const LoginPage = () => {
                 setIsSubmitted(false);
                 return null;
             });
-
-
     }
-
     // JSX code for login form
     const renderForm = (
         <div className="form">

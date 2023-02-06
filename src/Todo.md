@@ -27,7 +27,6 @@ As elements are finished - move below Completed
 # Investigations
 
     I5: Some dropdowns are too long - investigate other methods - maybe grid display!
-    I6: 
     I7: 
     I8: 
 
@@ -44,12 +43,18 @@ As elements are finished - move below Completed
         C10c: where to save current season?
         C10d: All api activity should use this season setting.
     C11b: Add dropdowns for fixture Dates
+          rest call complete - dropdown to be loaded and tested
     C11c: Add dropdowns for player names 
-    C11f: Add dropdowns for for statnames 
+        rest call complete - dropdown to be loaded and tested
+    C11f: Add dropdowns for for statnames
+        rest call complete - dropdown to be loaded and tested
 
     C11a: Add dropdowns for Competition Names   -done
+        rest call complete - dropdown to be loaded and tested
     C11d: Add dropdowns for position numbers    -done
+        rest call complete - dropdown to be loaded and tested
     C11e: Add dropdowns for pitchegrid values   -done
+        rest call complete - dropdown to be loaded and tested
     C11g: Add dropdowns for for seasons         -done
     C11h: Add dropdowns for for rounds          -done
     C11i: Add dropdowns for for availability    -done
@@ -61,7 +66,7 @@ As elements are finished - move below Completed
         Ammend Navbar to include new entry for printTeamsheet - done
         Update Routes with Endpoint /printTimesheet - done
     C13 Add buttons to Teamsheet view <PrintTeamsheet> <TeamsheetPitchLayout>
-    C14 Style the register page - its very basic
+
     C15: 
     C16: 
     C17: 
@@ -348,3 +353,10 @@ As elements are finished - move below Completed
         Location was null when statname = Substitute - now properly handled
     R12: Tidyup index.js - remove redux and associated components no longer required
         All redux and store related elements removed from index.js
+    C14 Style the register page - its very basic
+        TextField components used to style regsitration page
+        Error found with naming of values confirmPasword s/b passwordConfirm
+    I6: Change Password not working
+        Change password added - spring element now required
+
+        

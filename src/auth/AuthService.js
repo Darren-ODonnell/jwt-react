@@ -6,12 +6,12 @@ const API_URL = "http://localhost:8080/api/auth/";
 
 // auth user related
 
-const getCurrentUser = () => {
-    const user = JSON.parse( localStorage.getItem( 'user' ) );
+export const getCurrentUser = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
     return (isEmptyObject(user)) ? {} : user;
 };
 const getUser = () => {
-    const user = JSON.parse( localStorage.getItem( 'user' ) );
+    const user = JSON.parse(localStorage.getItem('user'));
     return (isEmptyObject(user)) ? {} : user;
 }
 const saveCurrentUser = (user) => { localStorage.setItem("user", JSON.stringify(user)); }

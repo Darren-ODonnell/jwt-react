@@ -9,18 +9,19 @@ import { statnameData } from "../entities/statnames";
 import { firstnameData } from "../entities/firstnames";
 import { lastnameData } from "../entities/lastnames";
 import { teamsheetData } from "../entities/teamsheets";
-import { positionData } from "../entities/positions";
-import { pitchgridData } from "../entities/pitchgrids";
-import { statData } from "../entities/stats";
-
+import {positionData} from "../entities/positions";
+import {pitchgridData} from "../entities/pitchgrids";
+import {statData} from "../entities/stats";
 
 
 import AuthService from "./AuthService";
 import Reports from "../reports/Reports"
 import MyDataGrid from "../grid/MyDataGrid";
 import FileUpload from "../common/FileUpload";
+import UserRegistration from "./UserRegistration";
+import ChangePassword from "./ChangePassword";
 
-const Paths = () =>  {
+const Paths = () => {
     return (
         <div className="container">
             <Router>
@@ -75,9 +76,10 @@ const Paths = () =>  {
                     <Route exact path="/teamStats" element={<Reports.TeamStats/>}/>
 
                     <Route exact path="/login" element={<LoginPage/>}/>
-                    <Route exact path="/register" element={<RegisterPage/>}/>
+                    <Route exact path="/register" element={<UserRegistration/>}/>
+                    {/*<Route exact path="/register" element={<RegisterPage/>}/>*/}
                     <Route exact path="/logout" element={<AuthService.Logout/>}/>
-                    <Route exact path="/changePassword" element={<AuthService.ChangePassword/>}/>
+                    <Route exact path="/changePassword" element={<ChangePassword/>}/>
                     <Route exact path="/forgotPassword" element={<AuthService.ForgotPassword/>}/>
 
                 </Routes>
