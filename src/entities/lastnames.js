@@ -66,8 +66,6 @@ export const lastnameData = {
     type: Lastname,
     initialValue: lastnameInitialValue,
     columnDefs: lastnameColumnDefs,
-    formColDefs: lastnameColumnDefs, // form column definitions
-    gridColDefs: lastnameColumnDefs, // Grid column definitions
     methods: apiRequests,
     gridLoader: gridLoader
 };

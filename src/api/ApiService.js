@@ -1,6 +1,7 @@
 import  { useEffect, useState } from 'react';
 import instance  from './axios';
-import { API_AUTH_URLS } from "../common/globals";
+import {API_AUTH_URLS} from "../common/globals";
+import AuthService from "../auth/AuthService";
 
 export const useAxios = () => {
     const [data      , setData]       = useState([]);
@@ -36,12 +37,34 @@ export const useAxios = () => {
     return [data, error, loading, axiosApi];
 }
 
-export let LoginRequest = ( loginModel) => {
+export let LoginRequest = (loginModel) => {
     // token from get user object
-    return instance.post( API_AUTH_URLS.login, loginModel )
+    return instance.post(API_AUTH_URLS.login, loginModel)
 
 }
+export const useAxios2 = (url) => {
+    const [data, setData] = useState(null);
 
+    const user = AuthService.getCurrentUser();
+    AuthService.setAuthToken(user.accessToken);
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await instance.get(url);
+            setData(response.data);
+        };
+        fetchData().then(r => {
+        })
+        // } catch (err) {
+        //     setError(err.message);
+        // } finally {
+        //     setLoading(false);
+        // }
+    }, [url]);
+
+    return data;
+};
 const ApiService = {
     // AnotherRequest,
     // GetRequest,

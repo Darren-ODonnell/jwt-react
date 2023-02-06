@@ -56,10 +56,6 @@ export const competitionData = {
     type: Competition,
     initialValue: competitionInitialValue,
     columnDefs: competitionColumnDefs,
-    // formColDefs: copyFormColDefs(competitionColumnDefs), // form column definitions
-    // gridColDefs: copyGridColDefs(competitionColumnDefs, table), // Grid column definitions
-    formColDefs: competitionColumnDefs, // form column definitions
-    gridColDefs: competitionColumnDefs, // Grid column definitions
     methods: apiRequests,
     gridLoader: gridLoader
 };

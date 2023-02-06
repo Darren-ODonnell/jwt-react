@@ -56,7 +56,7 @@ const gridLoader = (data) => {
     let newData = [];
     data.forEach(row => {
         const newRow = {
-            id : row.id,
+            id: row.id,
             firstname: row.firstname,
             lastname: row.lastname,
             firstnameI: row.firstnameI,
@@ -80,8 +80,6 @@ export const playerData = {
     type: Player,
     initialValue: playerInitialValue,
     columnDefs: playerColumnDefs,
-    formColDefs: playerColumnDefs, // form column definitions
-    gridColDefs: playerColumnDefs, // Grid column definitions
     methods: apiRequests,
     gridLoader: gridLoader
 };

@@ -17,6 +17,9 @@ import {
     COMPETITIONS
 } from "../common/globals";
 import MyTextField from "../formcomponents/MyTextField";
+import DropDown from "../formcomponents/DropDown";
+import MyTimePicker from "../formcomponents/MyTimePicker";
+import MyDatePicker from "../formcomponents/MyDatePicker";
 
 const FormDialog = (props) => {
     const [value, setValue] = useState()
@@ -150,7 +153,7 @@ const FormDialog = (props) => {
     }
 
     const dropDown = {
-        width: '50%',
+        width: '60%',
         height: '50%',
         overflowY: 'auto',
 
@@ -249,14 +252,14 @@ const FormDialog = (props) => {
                                 //         {...commonProps}
                                 //         headerName={"Season"}
                                 //         options={getSeasons()} />
-                                // case 'fixtureDate':
-                                //     return <MyDatePicker
-                                //         {...commonProps}
-                                //         headerName={"Date"} />
-                                // case 'fixtureTime':
-                                //     return <MyTimePicker
-                                //         {...commonProps}
-                                //         headerName={"Time"} />
+                                case 'fixtureDate':
+                                    return <MyDatePicker
+                                        {...commonProps}
+                                        headerName={"Date"}/>
+                                case 'fixtureTime':
+                                    return <MyTimePicker
+                                        {...commonProps}
+                                        headerName={"Time"}/>
                                 default:
                                     return <MyTextField
                                         {...commonProps}

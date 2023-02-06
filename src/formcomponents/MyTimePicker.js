@@ -45,7 +45,13 @@ const MyTimePicker = ({formData, field, headerName}) => {
                 minutesStep={15}
                 renderInput={(props) =>
                     <TextField {...props}
-                               style={{borderStyle: 'black', fontcolor: 'black', position: 'absolute', width: "46%"}}
+                               style={{
+                                   borderStyle: 'black',
+                                   fontcolor: 'black',
+                                   position: 'left',
+                                   width: '50%',
+                                   marginTop: '5px'
+                               }}
                                id={field}
                     />}
             />

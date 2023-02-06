@@ -19,17 +19,17 @@ const STAT_NAME_FINDBYID = "/statname/findById/";
 const STAT_NAME_LIST     = "/statname/list";
 const STAT_NAME_UPDATE   = "/statname/update";
 
-const STAT_NAME_URLS = {
-    add     : STAT_NAME_ADD,
-    delete  : STAT_NAME_DELETE,
+export const STAT_NAME_URLS = {
+    add: STAT_NAME_ADD,
+    delete: STAT_NAME_DELETE,
     findById: STAT_NAME_FINDBYID,
-    list    : STAT_NAME_LIST,
-    update  : STAT_NAME_UPDATE,
+    list: STAT_NAME_LIST,
+    update: STAT_NAME_UPDATE,
 }
 const apiRequests = {
-    list    : {method: METHODS.GET   , url: STAT_NAME_URLS.list},
-    findById: {method: METHODS.GET   , url: STAT_NAME_URLS.findById},
-    update  : {method: METHODS.POST  , url: STAT_NAME_URLS.update},
+    list: {method: METHODS.GET, url: STAT_NAME_URLS.list},
+    findById: {method: METHODS.GET, url: STAT_NAME_URLS.findById},
+    update: {method: METHODS.POST, url: STAT_NAME_URLS.update},
     add     : {method: METHODS.PUT   , url: STAT_NAME_URLS.add},
     delete  : {method: METHODS.DELETE, url: STAT_NAME_URLS.delete}
 }
@@ -53,8 +53,6 @@ export const statnameData = {
     type: Statname,
     initialValue: statnameInitialValue,
     columnDefs: statnameColumnDefs,
-    formColDefs: statnameColumnDefs, // form column definitions
-    gridColDefs: statnameColumnDefs, // Grid column definitions
     methods: apiRequests,
     gridLoader: gridLoader
 };

@@ -72,8 +72,6 @@ export const statData = {
     type: Stat,
     initialValue: statInitialValue,
     columnDefs: statColumnDefs,
-    formColDefs: statColumnDefs, // form column definitions
-    gridColDefs: statColumnDefs, // Grid column definitions
     methods: apiRequests,
     gridLoader: gridLoader
 };

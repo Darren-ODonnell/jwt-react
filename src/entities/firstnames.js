@@ -61,8 +61,6 @@ export const firstnameData = {
     type: Firstname,
     initialValue: firstnameInitialValue,
     columnDefs: firstnameColumnDefs,
-    formColDefs: firstnameColumnDefs, // form column definitions
-    gridColDefs: firstnameColumnDefs, // Grid column definitions
     methods: apiRequests,
     gridLoader: gridLoader
 };

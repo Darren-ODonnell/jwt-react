@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { RegisterPage } from './RegisterPage'
-import { Login2 } from "./Login2";
-import { clubData } from "../entities/clubs";
+import {RegisterPage} from './RegisterPage'
+import {LoginPage} from "./LoginPage";
+import {clubData} from "../entities/clubs";
 import { playerData } from "../entities/players";
 import { competitionData } from "../entities/competitions";
 import { fixtureData } from "../entities/fixtures";
@@ -74,7 +74,7 @@ const Paths = () =>  {
                     <Route exact path="/playerStats" element={<Reports.PlayerStats/>}/>
                     <Route exact path="/teamStats" element={<Reports.TeamStats/>}/>
 
-                    <Route exact path="/login" element={<Login2/>}/>
+                    <Route exact path="/login" element={<LoginPage/>}/>
                     <Route exact path="/register" element={<RegisterPage/>}/>
                     <Route exact path="/logout" element={<AuthService.Logout/>}/>
                     <Route exact path="/changePassword" element={<AuthService.ChangePassword/>}/>

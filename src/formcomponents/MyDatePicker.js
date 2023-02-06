@@ -32,7 +32,13 @@ const MyDatePicker = ({formData, field, headerName}) => {
                 label={headerName}
                 renderInput={(props) =>
                     <TextField {...props}
-                               style={{borderStyle: 'black', fontcolor: 'black', position: 'left', width: '50%'}}
+                               style={{
+                                   borderStyle: 'black',
+                                   fontcolor: 'black',
+                                   position: 'left',
+                                   width: '50%',
+                                   marginTop: '5px'
+                               }}
                                id={field}
                     />
                 }

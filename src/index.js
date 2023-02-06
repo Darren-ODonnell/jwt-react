@@ -6,7 +6,7 @@ import { createRoot } from 'react-dom/client';
 // import {persistStore} from "redux-persist";
 // import {PersistGate} from "redux-persist/integration/react";
 import {DevSupport} from "@react-buddy/ide-toolbox";
-import {ComponentPreviews, useInitial} from "./dev";
+// import {ComponentPreviews, useInitial} from "./dev";
 
 // const store = configureStore();
 // const persistor = persistStore(store)
@@ -20,13 +20,13 @@ root.render(
     //         loading={<div>Loading...</div>}
     //         persistor={persistor}
     //     >
-            <DevSupport
-                ComponentPreviews={ComponentPreviews}
-                useInitialHook={useInitial}
-            >
-                <App/>
-            </DevSupport>
-        // </PersistGate>
+    //         <DevSupport
+    //             ComponentPreviews={ComponentPreviews}
+    //             useInitialHook={useInitial}
+    //         >
+    <App/>
+    // </DevSupport>
+    // </PersistGate>
     // </Provider>,
     // document.getElementById('root'),
 );

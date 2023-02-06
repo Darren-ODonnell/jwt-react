@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useMemo} from 'react';
 import {AgGridReact} from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -8,11 +8,20 @@ import {Button, Grid} from "@mui/material";
 import './MyDataGrid.css'
 import FormDialog from "./FormDialog";
 import {defaultColDef, refreshPage} from "../common/helper";
-import {useAxios} from "../api/ApiService";
+import {useAxios, useAxios2} from "../api/ApiService";
 import instance from "../api/axios";
 import AuthService from "../auth/AuthService";
-import { Position } from '../entities/positions'
-import { Pitchgrid } from '../entities/pitchgrids'
+import {Position} from '../entities/positions'
+import {Pitchgrid} from '../entities/pitchgrids'
+
+import {METHODS} from "../common/globals";
+import {COMPETITION_URLS} from "../entities/competitions";
+import {PLAYER_URLS} from "../entities/players";
+import {CLUB_URLS} from "../entities/clubs";
+import {PITCH_GRID_URLS} from "../entities/pitchgrids";
+import {STAT_NAME_URLS} from "../entities/statnames";
+import {POSITION_URLS} from "../entities/positions";
+
 
 const MyDataGrid = ({props}) => {
     const gridRef = useRef(); // Optional - for accessing Grid's API
@@ -29,10 +38,37 @@ const MyDataGrid = ({props}) => {
     // api control
     const [data, error, loading, axiosApi] = useAxios();
 
-    const handleOpen                = () => {
+    // load up data for dropdowns
+    const competitions = useAxios2(COMPETITION_URLS.list);
+    const players = useAxios2(PLAYER_URLS.list);
+    const clubs = useAxios2(CLUB_URLS.list);
+    const positions = useAxios2(POSITION_URLS.list);
+    const pitchgrids = useAxios2(PITCH_GRID_URLS.list);
+    const statnames = useAxios2(STAT_NAME_URLS.list);
+
+
+    function getData({method, url}) {
+        // clean up controller
+        let isSubscribed = true;
+        const user = AuthService.getCurrentUser();
+        AuthService.setAuthToken(user.accessToken);
+        axiosApi({
+            axiosInstance: instance,
+            method: method,
+            url: url,
+        }).then(() => {
+
+        }).catch(err => {
+
+            setOpen(false)
+        })        // cancel subscription to useEffect
+        return () => (isSubscribed = false)
+    }
+
+    const handleOpen = () => {
         setOpen(true);
     }
-    const handleClose               = () => {
+    const handleClose = () => {
         setOpen(false);
         // setFormData(data.initialValue);
     };
@@ -82,25 +118,6 @@ const MyDataGrid = ({props}) => {
         // window.location.reload()
     }
 
-    const getData = ({method, url}) => {
-        // clean up controller
-        let isSubscribed = true;
-        const user = AuthService.getCurrentUser();
-        AuthService.setAuthToken(user.accessToken);
-        axiosApi({
-            axiosInstance: instance,
-            method: method,
-            url: url,
-            data: data
-        }).then(() => {
-
-        }).catch(err => {
-
-            setOpen(false)
-        })        // cancel subscription to useEffect
-        return () => (isSubscribed = false)
-    }
-
     const showAddButton = (type) => {
         let b =(type===Position || type===Pitchgrid)
         return !b;
@@ -113,6 +130,7 @@ const MyDataGrid = ({props}) => {
 
     useEffect(() => {
         getData(props.methods.list)
+
     }, []);
 
     const AddButton = (params) => {
@@ -199,7 +217,7 @@ const MyDataGrid = ({props}) => {
                     defaultColDef={defaultColDef}
                     // pagination={true}
                     // suppressRowDrag={true}
-                    columnDefs={[...props.gridColDefs, formActions]}
+                    columnDefs={[...props.columnDefs, formActions]}
                 />
                 <FormDialog
                     gridApi={gridApi}
@@ -211,15 +229,15 @@ const MyDataGrid = ({props}) => {
                     data={formData}
                     handleClose={handleClose}
                     setOpen={setOpen}
-                    update       = {props.gridLoader.update}
+                    update={props.gridLoader.update}
                     onChange={onChange}
                     actions={props.actions}
                     methods={props.methods}
-                    colDefs      = {props.formColDefs}
-                    messages     = {props.messages}
-                    formData     = {formData[1]} // dummy value to test index .. props.index previous
-                    setFormData  = {setFormData}
-                    getData      = {getData}
+                    colDefs={props.columnDefs}
+                    messages={props.messages}
+                    formData={formData[1]}             // dummy value to test index .. props.index previous
+                    setFormData={setFormData}
+                    getData={getData}
                     initialValue={props.initialValue}
                     axiosApi={axiosApi}
                 />
@@ -254,7 +272,6 @@ export default MyDataGrid;
 //     axiosApi: axiosApi,
 //
 // };
-
 
 
 

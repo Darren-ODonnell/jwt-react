@@ -19,17 +19,17 @@ const POSITION_FINDBYID = "/position/findById/";
 const POSITION_LIST     = "/position/list";
 const POSITION_UPDATE   = "/position/update";
 
-const POSITION_URLS = {
-    add     : POSITION_ADD,
-    delete  : POSITION_DELETE,
+export const POSITION_URLS = {
+    add: POSITION_ADD,
+    delete: POSITION_DELETE,
     findById: POSITION_FINDBYID,
-    list    : POSITION_LIST,
-    update  : POSITION_UPDATE,
+    list: POSITION_LIST,
+    update: POSITION_UPDATE,
 }
 const apiRequests = {
-    list    : {method: METHODS.GET   , url: POSITION_URLS.list},
-    findById: {method: METHODS.GET   , url: POSITION_URLS.findById},
-    update  : {method: METHODS.POST  , url: POSITION_URLS.update},
+    list: {method: METHODS.GET, url: POSITION_URLS.list},
+    findById: {method: METHODS.GET, url: POSITION_URLS.findById},
+    update: {method: METHODS.POST, url: POSITION_URLS.update},
     add     : {method: METHODS.PUT   , url: POSITION_URLS.add},
     delete  : {method: METHODS.DELETE, url: POSITION_URLS.delete}
 }
@@ -53,10 +53,6 @@ export const positionData = {
     type: Position,
     initialValue: positionInitialValue,
     columnDefs: positionColumnDefs,
-    // formColDefs : copyFormColDefs( positionColumnDefs ), // form column definitions
-    // gridColDefs : copyGridColDefs( positionColumnDefs, table ), // Grid column definitions
-    formColDefs: positionColumnDefs, // form column definitions
-    gridColDefs: positionColumnDefs, // Grid column definitions
     methods: apiRequests,
     gridLoader: gridLoader
 };

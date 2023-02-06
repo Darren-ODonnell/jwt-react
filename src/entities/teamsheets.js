@@ -83,10 +83,6 @@ export const teamsheetData = {
     type: Teamsheet,
     initialValue: teamsheetInitialValue,
     columnDefs: teamsheetColumnDefs,
-    // formColDefs : copyFormColDefs( teamsheetColumnDefs ),          // form column definitions
-    // gridColDefs : copyGridColDefs( teamsheetColumnDefs  , table ), // Grid column definitions
-    formColDefs: teamsheetColumnDefs,          // form column definitions
-    gridColDefs: teamsheetColumnDefs, // Grid column definitions
     methods: apiRequests,
     gridLoader: gridLoader
 };

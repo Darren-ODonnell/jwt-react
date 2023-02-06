@@ -95,8 +95,6 @@ export const fixtureData = {
     type: Fixture,
     initialValue: fixtureInitialValue,
     columnDefs: fixtureColumnDefs,
-    formColDefs: fixtureColumnDefs, // form column definitions
-    gridColDefs: fixtureColumnDefs, // Grid column definitions
     methods: apiRequests,
     dropDown: fixtureDropDown,
     gridLoader: gridLoader

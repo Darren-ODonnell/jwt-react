@@ -10,12 +10,10 @@ const MyTextField = ({index, field, formData, setFormData, onChange, headerName,
     const onSelectChange = (e, field) => {
         setFormData( ...formData , [field] = e.target.value)
     }
-    // console.log('formData: ', formData)
-    // console.log('defaultValue: ', defaultValue)
-    // console.log('value: ', formData[field] ? formData[field] : "")
+
     return (
         <TextField
-            style={style}
+            // style={style}
             key={getUniqueId()}
             id={field}
             valuedefault={defaultValue}

@@ -71,11 +71,6 @@ export const clubData = {
     messages: addMessage(Club),
     type: Club,
     initialValue: clubInitialValue,
-    // formColDefs: copyFormColDefs(clubColumnDefs), // form column definitions
-    formColDefs: clubColumnDefs, // form column definitions
-
-    // gridColDefs: copyGridColDefs(clubColumnDefs, table), // Grid column definitions
-    gridColDefs: clubColumnDefs, // Grid column definitions
     columnDefs: clubColumnDefs,
     methods: apiRequests,
     dropDown: clubDropDown,

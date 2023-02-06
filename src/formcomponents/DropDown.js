@@ -9,12 +9,11 @@ const DropDown = (formData, field, onChange, type, key, headerName, style, optio
     let defaultValue = (formData[field]) ? (formData[field]) : ""
 
     const onSelectChange = (e, field) => {
-        formData[field] = e.target.value
         setData( ...formData , [field] = e.target.value)
     }
 
     return (
-        <FormControl style={style}>
+        <FormControl>
             <Select
                 key={getUniqueId()}
                 labelId="demo-simple-select-label"
