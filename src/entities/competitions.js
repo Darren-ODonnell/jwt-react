@@ -5,10 +5,14 @@ export const Competition = 'Competition'
 
 export const competitionColumnDefs = [
     {headerName: 'Competition Name', field: 'name', width: 200,},
+    {headerName: 'Competition Irish Name', field: 'irishName', width: 200,},
+    {headerName: 'Grade', field: 'grade', width: 100,},
     {headerName: 'Season', field: 'season', width: 150,},
 ];
 export const competitionInitialValue = {
     name: "",
+    irishName: "",
+    grade: "",
     season: ""
 };
 
@@ -40,8 +44,10 @@ const gridLoader = (data) => {
     let newData = [];
     data.forEach(row => {
         const newRow = {
-            id : row.id,
+            id: row.id,
             name: row.name,
+            irishName: row.irishName,
+            grade: row.grade,
             season: row.season,
         }
         newData.push(newRow)

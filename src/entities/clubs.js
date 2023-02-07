@@ -5,6 +5,7 @@ export const Club = 'Club'
 
 export const clubColumnDefs = [
     {headerName: 'Club Name', field: 'name', width: 150,},
+    {headerName: 'Club Irish Name', field: 'irishName', width: 150,},
     {headerName: 'Contact Name', field: 'contactName', width: 150,},
     {headerName: 'Contact Email', field: 'contactEmail', width: 150,},
     {headerName: 'Contact Phone', field: 'contactPhone', width: 150,},
@@ -16,6 +17,7 @@ const clubDropDown = false;
 
 export const clubInitialValue = {
     name: "",
+    irishName: "",
     contactName: "",
     contactEmail: "",
     contactPhone: "",
@@ -27,8 +29,9 @@ const gridLoader = (data) => {
     let newData = [];
     data.forEach(row => {
         const newRow = {
-            id : row.id,
-            name : row.name,
+            id: row.id,
+            name: row.name,
+            irishName: row.irishName,
             contactName: row.contactName,
             contactEmail: row.contactEmail,
             contactPhone: row.contactPhone,
