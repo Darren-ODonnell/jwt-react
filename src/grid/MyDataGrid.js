@@ -24,13 +24,9 @@ import {POSITION_URLS} from "../entities/positions";
 
 
 const MyDataGrid = ({props}) => {
-    const gridRef = useRef(); // Optional - for accessing Grid's API
-
     const [gridApi, setGridApi] = useState(null);
     // grid data
     const [rowData, setRowData] = useState([]);
-
-    const [changed, setChanged] = useState();
     // data for form
     const [formData, setFormData] = useState(props.initialValue)
     // form control

@@ -49,7 +49,6 @@ export const LoggedOutNavbar = () => {
                     <Nav className     = "justify-content-end" style = {{ width: "100%" }}>
                         <Nav.Link href = "/login">Login</Nav.Link>
                         <Nav.Link href = "/register">Register</Nav.Link>
-                        <Nav.Link href = "/forgotPassword">Forgot Password</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

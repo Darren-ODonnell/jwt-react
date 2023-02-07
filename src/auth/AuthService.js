@@ -67,24 +67,12 @@ const Logout = () => {
     window.location = "/";
 };
 
-const ChangePassword = () => {
-    // form oldPassword / newPassword / newConfirmPassword
-    return <div>Change Password...</div>
-}
-const ForgotPassword = () => {
-    // enter email address
-    // send email to user if email exists in db
-    //
-    return <div>Forgot Password...</div>
-}
 
 const AuthService = {
     // auth menu actions
     Register,
     Login,
     Logout,
-    ChangePassword,
-    ForgotPassword,
     // utility auth methods
     getCurrentUser,
     getUser,

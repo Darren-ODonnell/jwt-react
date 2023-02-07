@@ -3,83 +3,101 @@ import {TextField, Button, Typography} from '@mui/material';
 import AuthService, {getCurrentUser} from '../auth/AuthService'
 import Axios from "axios";
 import {useNavigate} from "react-router-dom";
+import instance from "../api/axios";
+
+import { refreshPage } from "../common/helper";
+import { useAxios } from "../api/ApiService";
 
 const ChangePassword = () => {
-    let {errorMessage, setErrorMessage} = useState('');
+    const [message, setMessage] = useState('');
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
-    const [error, setError] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
     const navigate = useNavigate();
+    const [ data, error, loading, axiosApi ] = useAxios()
 
-    useEffect(() => {
-        if (newPassword !== passwordConfirm) {
-            setError('Passwords do not match');
-        } else {
-            setError(null);
+    const onPasswordChangeClicked = () => {
+        const user = AuthService.getCurrentUser();
+        AuthService.setAuthToken(user.accessToken);
+
+        const changePasswordDetails =  {
+            username : user.username,
+            oldPassword : oldPassword,
+            newPassword : newPassword,
+            passwordConfirm : passwordConfirm,
         }
-    }, [newPassword, passwordConfirm]);
-    let response = '';
-    const handleSubmit = () => {
-        const user = getCurrentUser()
-        const changePasswordRequest = {
-            username: user.username,
-            oldPassword: oldPassword,
-            newPassword: newPassword,
-            paswordConfirm: passwordConfirm
-        }
-        const onPasswordChangeClicked = async () => {
 
-            const changePasswordUrl = 'http://localhost:8080/api/auth/changePassword/';
-
-            try {
-                // res.setHeader('Access-Control-Allow-Origin', '*');
-                console.log(changePasswordRequest)
-                response = await Axios.post(changePasswordUrl, changePasswordRequest);
-                const {token} = response.data;
-                AuthService.setAuthToken(token);
-                navigate('/');
-            } catch (e) {
-                setErrorMessage(e)
-                errorMessage = e;
-                console.log(e)
+        const configObj = {
+            axiosInstance: instance,
+            method: "POST",
+            requestConfig: {
+                data: {...changePasswordDetails}
             }
-        };
+        }
 
-        return (
-            <div>
-                <form style={{display: 'flex', flexDirection: 'column'}}>
-                    <TextField
-                        label="Old Password"
-                        type="password"
-                        value={oldPassword}
-                        onChange={event => setOldPassword(event.target.value)}
-                        style={{margin: '1em 0'}}
-                    />
-                    <TextField
-                        label="New Password"
-                        type="password"
-                        value={newPassword}
-                        onChange={event => setNewPassword(event.target.value)}
-                        style={{margin: '1em 0'}}
-                    />
-                    <TextField
-                        label="Confirm Password"
-                        type="password"
-                        value={passwordConfirm}
-                        onChange={event => setPasswordConfirm(event.target.value)}
-                        style={{margin: '1em 0'}}
-                        error={Boolean(error)}
-                        helperText={error}
-                    />
-                    <Button variant="contained" color="primary" onClick={onPasswordChangeClicked}
-                            disabled={error !== null}>
-                        Change Password
-                    </Button>
-                </form>
+        axiosApi(configObj)
+            .then(response => {
+                let data                = response.data
+                // setOpen(false)
+            })
+            .catch(err => {
+                let error               = err.message;
+                // setOpen(false)
+            })
+        refreshPage()
 
-            </div>
-        );
-    };
+    }
+    // useEffect(() => {
+    //     if (newPassword !== passwordConfirm) {
+    //         setMessage('Passwords do not match');
+    //     } else {
+    //         setMessage('');
+    //     }
+    // }, [newPassword, passwordConfirm]);
+    // useEffect(() => {
+    //     if (!loading && data) {
+    //         setMessage('Password successfully changed');
+    //     } else if (!loading && error) {
+    //         setMessage('Error changing password');
+    //     }
+    // }, [data, error, loading]);
+
+    return (
+        <div>
+            <form style={ { display: 'flex', flexDirection: 'column' } }>
+                <TextField
+                    label="Old Password"
+                    type="password"
+                    value={ oldPassword }
+                    onChange={ event => setOldPassword( event.target.value ) }
+                    style={ { margin: '1em 0' } }
+                />
+                <TextField
+                    label="New Password"
+                    type="password"
+                    value={ newPassword }
+                    onChange={ event => setNewPassword( event.target.value ) }
+                    style={ { margin: '1em 0' } }
+                />
+                <TextField
+                    label="Confirm Password"
+                    type="password"
+                    value={ passwordConfirm }
+                    onChange={ event => setPasswordConfirm( event.target.value ) }
+                    style={ { margin: '1em 0' } }
+                    error={ Boolean( error ) }
+                    helperText={ error }
+                />
+                <Button variant="contained" color="primary" onClick={ onPasswordChangeClicked }
+                        // disabled={ error !== null }
+                >
+                    Change Password
+                </Button>
+                <p>{message}</p>
+            </form>
+
+        </div>
+    );
 }
 export default ChangePassword;

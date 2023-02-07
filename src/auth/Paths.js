@@ -77,10 +77,9 @@ const Paths = () => {
 
                     <Route exact path="/login" element={<LoginPage/>}/>
                     <Route exact path="/register" element={<UserRegistration/>}/>
-                    {/*<Route exact path="/register" element={<RegisterPage/>}/>*/}
+
                     <Route exact path="/logout" element={<AuthService.Logout/>}/>
                     <Route exact path="/changePassword" element={<ChangePassword/>}/>
-                    <Route exact path="/forgotPassword" element={<AuthService.ForgotPassword/>}/>
 
                 </Routes>
             </Router>
