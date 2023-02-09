@@ -27,43 +27,18 @@ import {
 import PageFooter from "./PageFooter";
 import Header from "./Header";
 
-const getHeader = (data) => {
-    const row = data[0]
-
-    const header = {
-        competitionNameIrish: row.fixture.competition.irishName,
-        homeTeamNameIrish: row.fixture.homeTeam.irishName,
-        awayTeamNameIrish: row.fixture.awayTeam.irishName,
-        competitionName: row.fixture.competition.name,
-        homeTeamName: row.fixture.homeTeam.name,
-        awayTeamName: row.fixture.awayTeam.name,
-    }
-    return header;
+const getHeader1 = (data) => {
+    return null
 }
 
+const getHeader2 = (data) => {
+    return null
+}
 const getTeam1to15 = (data) => {
-    let players = []
-    for (let i = 0; i < 15; i++) {
-        const player = {
-            position: data[i].player.position,
-            name: data[i].player.name,
-            irishName: data[i].player.irishName,
-        }
-        players.add(player)
-    }
-    return players
+    return null
 }
 const getTeamSubs = (data) => {
-    let players = []
-    for (let i = 16; i < data.size(); i++) {
-        const player = {
-            position: data[i].player.position,
-            name: data[i].player.name,
-            irishName: data[i].player.irishName,
-        }
-        players.add(player)
-    }
-    return players
+    return null
 }
 
 const Report = ({data}) => {
@@ -77,7 +52,9 @@ const Report = ({data}) => {
 
     useEffect(() => {
         const tableElement = tableRef.current;
+
         const newWindow = window.open('', '_blank');
+
     }, [tableRef]);
 
     return (
@@ -147,15 +124,40 @@ const Report = ({data}) => {
                     </TableRow>
                 ))}
             </Table>
+            {/*List of Management personnel - Table*/}
+            <div className="TitleStyle page-break marginTop"/>
+            <p className="TitleStyle ">{TEAM_LIST_MANAGERS_TITLE}</p>
+            <Table className="TableCellStyle">
+                <TableHead>
+                    <TableRow className="TableCellStyle Bold">
+                        <td className="ManagerCellStyleCol">{TEAM_LIST_MANAGERS_ROLE}</td>
+                        <td className="ManagerCellStyle">{TEAM_LIST_MANAGERS_NAME_IRISH}</td>
+                        <td className="ManagerCellStyle">{TEAM_LIST_MANAGERS_NAME_ENGLISH}</td>
+                    </TableRow>
+                </TableHead>
+                {data.footer.map(row => (
 
+                    <TableRow className="ManagerCellStyle">
+                        <td className="TableCellStyle colManagers left">{row.role}</td>
+                        <td className="TableCellStyle left">{row.nameIrish}</td>
+                        <td className="TableCellStyle left">{row.name}</td>
+                    </TableRow>
+                ))}
+            </Table>
             {/*Signatures */}
-            <div className="text-block">
-                <p>{TEAM_LIST_OFFICIAL_IRISH}_________________________________________ {TEAM_LIST_DATE_IRISH}__________________<br/>
-                    {TEAM_LIST_OFFICIAL_ENGLISH}</p>
-                <p>{TEAM_LIST_REFEREE_IRISH}__________________________________________<br/>
-                    {TEAM_LIST_REFEREE_ENGLISH}</p>
-            </div>
-
+            <br/>
+            <br/>
+            <p>{TEAM_LIST_OFFICIAL_IRISH}_________________________________________ {TEAM_LIST_DATE_IRISH}__________________</p>
+            <p>{TEAM_LIST_OFFICIAL_ENGLISH}</p>
+            <br/>
+            <p>{TEAM_LIST_REFEREE_IRISH}__________________________________________</p>
+            <p>{TEAM_LIST_REFEREE_ENGLISH}</p>
+            <br/>
+            <p>{TEAM_LIST_INSTRUCTIONS_IRISH}</p>
+            <p>{TEAM_LIST_INSTRUCTIONS_ENGLISH}</p>
+            {/* Page Footer - will appear on each page*/}
+            <PageFooter message={TEAM_LIST_FOOTER} className="footer printFooter"/>
+            {/*<p className="footer print-footer">{TEAM_LIST_FOOTER}</p>*/}
         </div>
     );
 };

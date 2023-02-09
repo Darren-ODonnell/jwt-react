@@ -132,3 +132,9 @@
         text-align: center;
     }
 }
+
+.text-block {
+    width: 80%;
+    font-size: 12px;
+    line-height: 1;
+}

@@ -94,9 +94,9 @@ export const TEAM_LIST_HEADER_TEAMS_SEPARATOR = '-v-'
 
 /* Report Sub-Header Club and County */
 export const TEAM_LIST_HEADER_CLUB = 'Club'
-export const TEAM_LIST_HEADER_CLUB_NAME = 'St Judes'
+export const TEAM_LIST_HEADER_CLUB_NAME = 'Naomh Jude'
 export const TEAM_LIST_HEADER_COUNTY = 'Contae'
-export const TEAM_LIST_HEADER_COUNTY_NAME = 'Dublin'
+export const TEAM_LIST_HEADER_COUNTY_NAME = 'BÁC'
 
 /* Players & Substitutes */
 export const TEAM_LIST_TEAM_NOS = '*No.'

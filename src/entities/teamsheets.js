@@ -5,7 +5,6 @@ import {CLUB_URLS} from "./clubs";
 import { COMPETITION_URLS } from "./competitions";
 import { PLAYER_URLS } from "./players";
 
-
 export const Teamsheet = 'Teamsheet'
 
 export const teamsheetColumnDefs = [
@@ -16,8 +15,6 @@ export const teamsheetColumnDefs = [
     {headerName: 'Player Name', field: 'playerName', width: 150,},
     {headerName: 'Position', field: 'position', width: 150,},
     {headerName: 'Position Number', field: 'positionNumber', width: 150,},
-
-
 ];
 
 export const teamsheetInitialValue = {
@@ -33,19 +30,23 @@ const gridLoader = (data) => {
     let newData = [];
     data.forEach(row => {
         const newRow = {
-            id             : row.id,
+            id: row.id,
             competitionName: row.fixture.competition.name,
-            fixtureDate    : row.fixture.fixtureDate,
-            homeTeamName   : row.fixture.homeTeam.name,
-            awayTeamName   : row.fixture.awayTeam.name,
-            playerName     : row.player.firstname + " " + row.player.lastname,
-            position       : row.position.name,
-            positionNumber : row.position.id,
-            // not used in teamsheetColumnDefs so not displayed in grid but used later when updating changes in teamsheet.
-            competition    : row.competition,
-            homeTeam       : row.homeTeam,
-            awayTeam       : row.awayTeam,
-            getPlayers     : row.player,
+            fixtureDate: row.fixture.fixtureDate,
+            homeTeamName: row.fixture.homeTeam.name,
+            awayTeamName: row.fixture.awayTeam.name,
+            playerName: row.player.firstname + " " + row.player.lastname,
+            position: row.position.name,
+            positionNumber: row.position.id,
+            // not used in teamsheetColumnDefs so not displayed in grid but used later when updating/printing changes in teamsheet.
+            competition: row.competition,
+            homeTeam: row.homeTeam,
+            awayTeam: row.awayTeam,
+            getPlayers: row.player,
+            competitionNameIrish: row.fixture.competition.irishName,
+            homeTeamIrishName: row.homeTeam.irishName,
+            awayTeamIrishName: row.awayTeam.irishName,
+            playerIrishName: row.player.firstnameIrish + " " + row.player.lastnameIrish,
         }
         newData.push(newRow)
     })
@@ -68,14 +69,14 @@ export const TEAMSHEET_URLS = {
 }
 
 const apiRequests = {
-    list           : {method: METHODS.GET   , url: TEAMSHEET_URLS.list},
-    findById       : {method: METHODS.GET   , url: TEAMSHEET_URLS.findById},
-    update         : {method: METHODS.POST  , url: TEAMSHEET_URLS.update},
-    add            : {method: METHODS.PUT   , url: TEAMSHEET_URLS.add},
-    delete         : {method: METHODS.DELETE, url: TEAMSHEET_URLS.delete},
-    getCompetitions: {method: METHODS.GET   , url: COMPETITION_URLS.list},
-    getClubs       : {method: METHODS.GET   , url: CLUB_URLS.list},
-    getPlayers     : {method: METHODS.GET   , url: PLAYER_URLS.list},
+    list: {method: METHODS.GET, url: TEAMSHEET_URLS.list},
+    findById: {method: METHODS.GET, url: TEAMSHEET_URLS.findById},
+    update: {method: METHODS.POST, url: TEAMSHEET_URLS.update},
+    add: {method: METHODS.PUT, url: TEAMSHEET_URLS.add},
+    delete: {method: METHODS.DELETE, url: TEAMSHEET_URLS.delete},
+    getCompetitions: {method: METHODS.GET, url: COMPETITION_URLS.list},
+    getClubs: {method: METHODS.GET, url: CLUB_URLS.list},
+    getPlayers: {method: METHODS.GET, url: PLAYER_URLS.list},
 }
 
 export const teamsheetData = {
