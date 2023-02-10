@@ -21,8 +21,9 @@ import {CLUB_URLS} from "../entities/clubs";
 import {PITCH_GRID_URLS} from "../entities/pitchgrids";
 import {STAT_NAME_URLS} from "../entities/statnames";
 import {POSITION_URLS} from "../entities/positions";
-import { Teamsheet } from "../entities/teamsheets";
-import HandlePrintPreview from "../teamsheetComponents/HandlePrintPreview"
+import {Teamsheet} from "../entities/teamsheets";
+// import HandlePrintPreview from "../teamsheetComponents/HandlePrintPreview"
+import usePrintPreview from '../teamsheetComponents/usePrintPreview'
 
 
 import TeamsheetReport from "../teamsheetComponents/TeamsheetReport";
@@ -39,6 +40,8 @@ const MyDataGrid = ({props}) => {
     // api control
     const [data, error, loading, axiosApi] = useAxios();
 
+    // print preview handler state
+    const {isPrintPreview, handlePrintPreview} = usePrintPreview(false);
     // load up data for dropdowns
     const competitions = useAxios2(COMPETITION_URLS.list);
     const players = useAxios2(PLAYER_URLS.list);
@@ -155,6 +158,8 @@ const MyDataGrid = ({props}) => {
 
         console.log("FilteredData-: " + filteredData);
     };
+
+
     const AddButton = (params) => {
         return (
             showAddButton(params.type) ?
@@ -163,7 +168,6 @@ const MyDataGrid = ({props}) => {
                             variant="contained"
                             color="primary"
                     >{props.messages.add}</Button>
-                    };
                 </Grid>
                 :
                 <Grid align="right">
@@ -171,11 +175,11 @@ const MyDataGrid = ({props}) => {
                             variant="contained"
                             color="primary"
                     >NO ADDITION</Button>
-                    };
+
                 </Grid>
 
-        )
-    }
+        );
+    };
 
     const formActions = {
         headerName: 'Actions',
@@ -223,11 +227,33 @@ const MyDataGrid = ({props}) => {
 
         )
     }
+
+    // const handlePrintPreview = () => {
+    //     const [renderPreview, setRenderPreview] = useState(false);
+    //
+    //     console.log('gridApi:', gridApi);
+    //     console.log('filteredData:', filteredData);
+    //
+    //     if (filteredData.length === 0 || filteredData.length > 30) {
+    //         alert("Add Filter using Fixture Date column");
+    //         return;
+    //     }
+    //
+    //     setRenderPreview(true);
+    //
+    //     return renderPreview ? (
+    //         <div>
+    //             <TeamsheetReport />
+    //         </div>
+    //     ) : null;
+    // }
+
+
     const TeamsheetButton = (params) => {
         return (
             showTeamsheetButton(props.type) ?
                 <Grid align="left">
-                    <Button onClick={() => <HandlePrintPreview/>}
+                    <Button onClick={(params) => handlePrintPreview(params)}
                             variant="contained"
                             color="primary"
                     >PrintPreview</Button>
@@ -238,24 +264,29 @@ const MyDataGrid = ({props}) => {
         )
     }
 
-
     useEffect(() => {
         setRowData(data)
         console.log(data[0])
     }, [data]);
 
     return (
-
         !loading ? <div>
+            {/*<div>*/}
+            {/*    <TeamsheetButton {...props}/>*/}
+            {/*    /!*<button onClick={handlePrintPreview}>*!/*/}
+            {/*    /!*    {isPrintPreview ? 'Exit Print Preview' : 'Show Print Preview'}*!/*/}
+            {/*    /!*</button>*!/*/}
+            {/*    /!*{isPrintPreview && <div>This is the print preview</div>}*!/*/}
+            {/*</div>*/}
             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
                 <TeamsheetButton {...props}/>
                 <AddButton {...props}/>
                 <AgGridReact
-                    ref           = {gridRef}
-                    onGridReady   = {onGridReady}
+                    ref={gridRef}
+                    onGridReady={onGridReady}
                     onFilterChanged={handleFilterChanged}
-                    rowData       = {props.gridLoader(rowData)}
-                    defaultColDef = {defaultColDef}
+                    rowData={props.gridLoader(rowData)}
+                    defaultColDef={defaultColDef}
                     // pagination={true}
                     // suppressRowDrag={true}
                     columnDefs    = {[...props.columnDefs      , formActions]}

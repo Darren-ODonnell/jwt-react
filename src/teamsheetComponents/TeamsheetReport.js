@@ -16,7 +16,7 @@ import {
 import './TeamsheetReport.css'
 // import Header from "./Header";
 
-const TeamsheetReport = () => {
+const TeamsheetReport = (data) => {
     const [value, setValue] = useState(null)
     // const tableRef = useRef(null);
 
@@ -65,12 +65,12 @@ const TeamsheetReport = () => {
     const team1to15 = getTeam1to15(data)
     const teamSubs = getTeamSubs(data)
 
-    useEffect(() => {
-        const tableElement = tableRef.current;
-        const newWindow = window.open('', '_blank');
-    }, [tableRef]);
+    // useEffect(() => {
+    //     const tableElement = tableRef.current;
+    //     const newWindow = window.open('', '_blank');
+    // }, [tableRef]);
 
-    console.log("ReportData: " )
+    console.log("ReportData: ")
     return (
 
         <div>

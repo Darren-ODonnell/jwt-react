@@ -14,7 +14,8 @@ As elements are finished - move below Completed
          after timeout - delete old token - logout user - switch to loggedOutrNavbar
     E44: Should not be able to login as a User - only Admin allowed.
     E45: FormDialog - can no longer edit textfield values!
-    E47: 
+    E47: Fix teamsheet display
+        add code to usePrintPreview from MyDataGrid
     E48: 
     E49: 
 
