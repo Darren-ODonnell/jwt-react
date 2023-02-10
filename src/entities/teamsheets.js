@@ -43,10 +43,10 @@ const gridLoader = (data) => {
             homeTeam: row.homeTeam,
             awayTeam: row.awayTeam,
             getPlayers: row.player,
-            competitionNameIrish: row.fixture.competition.irishName,
-            homeTeamIrishName: row.homeTeam.irishName,
-            awayTeamIrishName: row.awayTeam.irishName,
-            playerIrishName: row.player.firstnameIrish + " " + row.player.lastnameIrish,
+            competitionIrishName: row.fixture.competition.irishName,
+            homeTeamIrishName: row.fixture.homeTeam.irishName,
+            awayTeamIrishName: row.fixture.awayTeam.irishName,
+            playerIrishName: row.player.firstnameI + " " + row.player.lastnameI,
         }
         newData.push(newRow)
     })

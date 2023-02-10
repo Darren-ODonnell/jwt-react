@@ -6,7 +6,7 @@ import {TableContainer} from '@mui/material';
 import {TableHead} from '@mui/material';
 import {TableRow} from '@mui/material';
 import {Paper} from '@mui/material';
-import './Report.css'
+import './TeamsheetReport.css'
 
 import {
     TEAM_LIST_HEADER_COMPETITION_ENGLISH, TEAM_LIST_HEADER_COMPETITION_IRISH,

@@ -15,7 +15,7 @@ import {statData} from "../entities/stats";
 
 
 import AuthService from "./AuthService";
-import Reports from "../reports/Reports"
+
 import MyDataGrid from "../grid/MyDataGrid";
 import FileUpload from "../common/FileUpload";
 import UserRegistration from "./UserRegistration";
@@ -72,8 +72,8 @@ const Paths = () => {
                     <Route excat path="/upload/statnames" element={<FileUpload props={statnameData}/>}/>
                     <Route excat path="/upload/teamsheets" element={<FileUpload props={teamsheetData}/>}/>
 
-                    <Route exact path="/playerStats" element={<Reports.PlayerStats/>}/>
-                    <Route exact path="/teamStats" element={<Reports.TeamStats/>}/>
+                    {/*<Route exact path="/playerStats" element={<Reports.PlayerStats/>}/>*/}
+                    {/*<Route exact path="/teamStats" element={<Reports.TeamStats/>}/>*/}
 
                     <Route exact path="/login" element={<LoginPage/>}/>
                     <Route exact path="/register" element={<UserRegistration/>}/>
