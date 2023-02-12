@@ -6,7 +6,7 @@ import {TableContainer} from '@mui/material';
 import {TableHead} from '@mui/material';
 import {TableRow} from '@mui/material';
 import {Paper} from '@mui/material';
-import './TeamsheetReport.css'
+import '../teamsheetComponents/TeamsheetReport.css'
 
 import {
     TEAM_LIST_HEADER_COMPETITION_ENGLISH, TEAM_LIST_HEADER_COMPETITION_IRISH,
@@ -24,8 +24,8 @@ import {
     TEAM_LIST_REFEREE_ENGLISH, TEAM_LIST_INSTRUCTIONS_IRISH,
     TEAM_LIST_INSTRUCTIONS_ENGLISH, TEAM_LIST_FOOTER,
 } from "../globals";
-import PageFooter from "./PageFooter";
-import Header from "./Header";
+import PageFooter from "../teamsheetComponents/PageFooter";
+import Header from "../teamsheetComponents/Header";
 
 const getHeader1 = (data) => {
     return null

@@ -16,7 +16,7 @@ As elements are finished - move below Completed
     E45: FormDialog - can no longer edit textfield values!
     E47: Fix teamsheet display
         add code to usePrintPreview from MyDataGrid
-    E48: 
+    E48: Horiz scroll bar not activating 
     E49: 
 
 # Refactoring
@@ -68,7 +68,7 @@ As elements are finished - move below Completed
         Update Routes with Endpoint /printTimesheet - done
     C13 Add buttons to Teamsheet view <PrintTeamsheet> <TeamsheetPitchLayout>
 
-    C15: 
+    C15: Add Import/Export capability
     C16: 
     C17: 
 
