@@ -41,6 +41,12 @@ export const POSITIONS = [
     'Substitute',
 ]
 
+export const GRID_ROW_DELETE = 'Are you sure you want to delete this item?'
+export const REPORT_PRINT_PREVIEW = "Print Preview ?"
+
+
+
+
 // auth
 const API_AUTH_FORGOT_PASSWORD = "/api/auth/forgot_password";
 const API_AUTH_CHANGE_PASSWORD = "/api/auth/change_password";

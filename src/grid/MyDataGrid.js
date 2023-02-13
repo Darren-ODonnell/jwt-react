@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef, useMemo} from 'react';
+import React, { useEffect, useState, useRef, useMemo, Fragment } from 'react';
 import {AgGridReact} from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -14,7 +14,7 @@ import AuthService from "../auth/AuthService";
 import {Position} from '../entities/positions'
 import {Pitchgrid} from '../entities/pitchgrids'
 
-import {METHODS} from "../common/globals";
+import { GRID_ROW_DELETE, METHODS, REPORT_PRINT_PREVIEW } from "../common/globals";
 import {COMPETITION_URLS} from "../entities/competitions";
 import {PLAYER_URLS} from "../entities/players";
 import {CLUB_URLS} from "../entities/clubs";
@@ -28,6 +28,7 @@ import usePrintPreview from '../teamsheetComponents/usePrintPreview'
 
 import TeamsheetReport from "../teamsheetComponents/TeamsheetReport";
 import useConfirm from "../common/useConfirm";
+import HandlePrintPreview from "../teamsheetComponents/HandlePrintPreview";
 
 const MyDataGrid = ({props}) => {
     // const [gridOptions, setGridOptions] = useState<GridOptions>({});
@@ -35,8 +36,9 @@ const MyDataGrid = ({props}) => {
     const gridRef = useRef(null);
     // manage id for edis and deletes
     const [id, setId] = useState(null)
+    // used with delete to confirm the record is to be deleted
     const [showConfirm, setShowConfirm] = useState(false);
-
+    const [showPrintPreview, setShowPrintPreview] = useState(false);
     // grid data
     const [rowData, setRowData] = useState([]);
     // data for form
@@ -45,6 +47,8 @@ const MyDataGrid = ({props}) => {
     const [open, setOpen] = useState(false);
     // api control
     const [data, error, loading, axiosApi] = useAxios();
+    // print preview handler state
+    const {isPrintPreview, handlePrintPreview} = usePrintPreview(false);
     // export data hook
     // const exportData = useExportData(gridOptions.api);
     // // import data hook
@@ -52,8 +56,9 @@ const MyDataGrid = ({props}) => {
     // delete confirm hook
 
 
-    // print preview handler state
-    const {isPrintPreview, handlePrintPreview} = usePrintPreview(false);
+    let message = "";
+    let model = [];
+    let filteredData = []
     // load up data for dropdowns
     // pass this as a single object , rather than individual collections
     const dropDownData = {
@@ -66,26 +71,6 @@ const MyDataGrid = ({props}) => {
     }
 
 
-    let model = [];
-    let filteredData = []
-
-    function getData({method, url}) {
-        // clean up controller
-        let isSubscribed = true;
-        const user = AuthService.getCurrentUser();
-        AuthService.setAuthToken(user.accessToken);
-        axiosApi({
-            axiosInstance: instance,
-            method: method,
-            url: url,
-        }).then(() => {
-
-        }).catch(err => {
-
-            setOpen(false)
-        })        // cancel subscription to useEffect
-        return () => (isSubscribed = false)
-    }
 
     const handleOpen = () => {
         setOpen(true);
@@ -94,6 +79,7 @@ const MyDataGrid = ({props}) => {
         setOpen(false);
         // setFormData(data.initialValue);
     };
+
     const onChange = (e) => {
         const {value, id} = e.target
         // update field with data from user
@@ -117,6 +103,38 @@ const MyDataGrid = ({props}) => {
     //         deleteData(id)
     //     }
     // }
+
+    // returned the filtered data
+    const handleFilterChanged = () => {
+        model = gridApi.getModel().rowsToDisplay;
+        filteredData = model.map(function(m) {
+            return m.data
+        })
+        console.log("FilteredData-: " + filteredData);
+    };
+    const handleDelete = (itemId) => {
+        console.log(`Deleting item with id: ${itemId}...`);
+    };
+
+    const formActions = {
+        headerName: 'Actions',
+        field: 'id',
+        width: 200,
+        editable: false,
+        pinned: 'right',
+        filter: false,
+        sortable: false,
+        lockPosition: 'right',
+        cellRenderer: (params) => {
+            return (
+                <>
+
+                    <EditButton {...params} />
+                    <DeleteButton {...params}/>
+                </>
+            )
+        }
+    };
 
     const deleteData = ({data, error}) => {
         const user = AuthService.getCurrentUser();
@@ -142,44 +160,56 @@ const MyDataGrid = ({props}) => {
         refreshPage()
         // window.location.reload()
     }
+    function getData({method, url}) {
+        // clean up controller
+        let isSubscribed = true;
+        const user = AuthService.getCurrentUser();
+        AuthService.setAuthToken(user.accessToken);
+        axiosApi({
+            axiosInstance: instance,
+            method: method,
+            url: url,
+        }).then(() => {
 
-    const [handleConfirm] = useConfirm('Are you sure you want to delete this item?', deleteData);
+        }).catch(err => {
 
-    const showAddButton = (type) => {
-        return !(type === Position || type === Pitchgrid)
+            setOpen(false)
+        })        // cancel subscription to useEffect
+        return () => (isSubscribed = false)
     }
-    const showDeleteButton = (type) => {
-        return !(type === Position || type === Pitchgrid)
+    const [handleConfirm] = useConfirm(message, deleteData);
+
+    // in grid
+    const EditButton = (params) => {
+
+        return (
+
+            <Button onClick={() => handleEdit(params)}
+                    variant="outlined"
+                    color="primary"
+            > Edit </Button>
+        )
     }
-    const showTeamsheetButton = (type) => {
-        return (type === Teamsheet)
+    const DeleteButton = (params) => {
+        message = GRID_ROW_DELETE;
+        return (
+            showDeleteButton(props.type) ?
+                <Button onClick={() => handleConfirm(params.data)}
+                        variant="outlined"
+                        color="secondary"
+                > Delete </Button>
+                :
+                <div>
+                    <Button disabled={true} onClick={() => handleConfirm(params.data)}
+                            variant="outlined"
+                            color="secondary"
+                    >NO Delete </Button>
+                </div>
 
+        )
     }
-    // watch when the filter is changed
-    useEffect(() => {
-        if (gridApi) {
-            gridApi.addEventListener('filterChanged', handleFilterChanged);
-        }
-        return () => {
-            if (gridApi) {
-                gridApi.removeEventListener('filterChanged', handleFilterChanged);
-            }
-        };
-    }, [gridApi]);
-    // loading grid at start / and reloading on grid changes
-    useEffect(() => {
-        getData(props.methods.list)
-    }, []);
 
-    // returned the filetered data
-    const handleFilterChanged = () => {
-        model = gridApi.getModel().rowsToDisplay;
-        filteredData = model.map(function(m) {
-            return m.data
-        })
-        console.log("FilteredData-: " + filteredData);
-    };
-
+    // above grid
     const AddButton = (params) => {
         return (
             showAddButton(params.type) ?
@@ -201,82 +231,23 @@ const MyDataGrid = ({props}) => {
         );
     };
 
-    const formActions = {
-        headerName: 'Actions',
-        field: 'id',
-        width: 200,
-        editable: false,
-        pinned: 'right',
-        filter: false,
-        sortable: false,
-        lockPosition: 'right',
-        cellRenderer: (params) => {
-            return (
-                <>
 
-                    <EditButton {...params} />
-                    <DeleteButton {...params}/>
-                </>
-            )
-        }
-    };
-    const EditButton = (params) => {
 
-        return (
-
-            <Button onClick={() => handleEdit(params)}
-                    variant="outlined"
-                    color="primary"
-            > Edit </Button>
-        )
+    const showAddButton = (type) => {
+        return !(type === Position || type === Pitchgrid)
     }
-    const DeleteButton = (params) => {
-        return (
-            showDeleteButton(props.type) ?
-                <Button onClick={() => handleConfirm(params.data)}
-                        variant="outlined"
-                        color="secondary"
-                > Delete </Button>
-                :
-                <div>
-                    <Button disabled={true} onClick={() => handleConfirm(params.data)}
-                            variant="outlined"
-                            color="secondary"
-                    >NO Delete </Button>
-                </div>
-
-        )
+    const showDeleteButton = (type) => {
+        return !(type === Position || type === Pitchgrid)
     }
-
-    const handleDelete = (itemId) => {
-        console.log(`Deleting item with id: ${itemId}...`);
-    };
-
-    // const handlePrintPreview = () => {
-    //     const [renderPreview, setRenderPreview] = useState(false);
-    //
-    //     console.log('gridApi:', gridApi);
-    //     console.log('filteredData:', filteredData);
-    //
-    //     if (filteredData.length === 0 || filteredData.length > 30) {
-    //         alert("Add Filter using Fixture Date column");
-    //         return;
-    //     }
-    //
-    //     setRenderPreview(true);
-    //
-    //     return renderPreview ? (
-    //         <div>
-    //             <TeamsheetReport />
-    //         </div>
-    //     ) : null;
-    // }
-
-    const TeamsheetButton = (params) => {
+    const showPrintPreviewButton = (type) => {
+        return (type === Teamsheet)
+    }
+    const PrintPreviewButton = (params) => {
+        {message = REPORT_PRINT_PREVIEW}
         return (
-            showTeamsheetButton(props.type) ?
+            showPrintPreviewButton(props.type) ?
                 <Grid align="left">
-                    <Button onClick={(params) => handlePrintPreview(params)}
+                    <Button onClick={(params) => HandlePrintPreview(params) }
                             variant="contained"
                             color="primary"
                     >PrintPreview</Button>
@@ -286,12 +257,31 @@ const MyDataGrid = ({props}) => {
                 <div></div>
         )
     }
+    const handlePrintPreviewButton = (params) => {
+        return setShowPrintPreview( HandlePrintPreview(params) )
 
+    }
+    // watch when the filter is changed in the grid
+    useEffect(() => {
+        if (gridApi) {
+            gridApi.addEventListener('filterChanged', handleFilterChanged);
+        }
+        return () => {
+            if (gridApi) {
+                gridApi.removeEventListener('filterChanged', handleFilterChanged);
+            }
+        };
+    }, [gridApi]);
+    // loading grid at start / and reloading on grid changes
+    useEffect(() => {
+        getData(props.methods.list)
+    }, []);
     // what to do when row data changes
     useEffect(() => {
         setRowData(data)
         console.log(data[0])
     }, [data]);
+
     // handling delete
     useEffect(() => {
         if (showConfirm) {
@@ -305,52 +295,53 @@ const MyDataGrid = ({props}) => {
 
     return (
         !loading ? <div>
-            {/*<div>*/}
-            {/*    <TeamsheetButton {...props}/>*/}
-            {/*    /!*<button onClick={handlePrintPreview}>*!/*/}
-            {/*    /!*    {isPrintPreview ? 'Exit Print Preview' : 'Show Print Preview'}*!/*/}
-            {/*    /!*</button>*!/*/}
-            {/*    /!*{isPrintPreview && <div>This is the print preview</div>}*!/*/}
-            {/*</div>*/}
-            <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
-                <TeamsheetButton {...props}/>
-                <AddButton {...props}/>
+            <div className          = "ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
+                return (
+                <Fragment>
+                    { showPrintPreview ? <TeamsheetReport props={props}/> : null }
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <PrintPreviewButton {...props} gridApi={gridApi}/>
+                    <AddButton {...props}/>
+                </div>
+                </Fragment>
+
                 <AgGridReact
-                    ref={gridRef}
-                    onGridReady={onGridReady}
-                    onFilterChanged={handleFilterChanged}
-                    rowData={props.gridLoader(rowData)}
-                    defaultColDef={defaultColDef}
+                    ref             = {gridRef}
+                    onGridReady     = {onGridReady}
+                    onFilterChanged = {handleFilterChanged}
+                    rowData         = {props.gridLoader(rowData)}
+                    defaultColDef   = {defaultColDef}
                     // pagination={true}
                     // suppressRowDrag={true}
-                    columnDefs    = {[...props.columnDefs      , formActions]}
+                    columnDefs      = {[...props.columnDefs                                                    , formActions]}
                 />
                 <FormDialog
-                    gridApi      = {gridApi}
-                    key          = {props.index}
-                    setData      = {setFormData}
-                    open         = {open}
-                    onClose      = {handleClose}
-                    index        = {props.index}
-                    data         = {formData}
-                    handleClose  = {handleClose}
-                    setOpen      = {setOpen}
-                    update       = {props.gridLoader.update}
-                    onChange     = {onChange}
-                    actions      = {props.actions}
-                    methods      = {props.methods}
-                    colDefs      = {props.columnDefs}
-                    messages     = {props.messages}
-                    formData     = {formData[1]}             // dummy value to test index .. props.index previous
-                    setFormData  = {setFormData}
-                    getData      = {getData}
-                    initialValue = {props.initialValue}
-                    axiosApi     = {axiosApi}
+                    gridApi         = {gridApi}
+                    key             = {props.index}
+                    setData         = {setFormData}
+                    open            = {open}
+                    onClose         = {handleClose}
+                    index           = {props.index}
+                    data            = {formData}
+                    handleClose     = {handleClose}
+                    setOpen         = {setOpen}
+                    update          = {props.gridLoader.update}
+                    onChange        = {onChange}
+                    actions         = {props.actions}
+                    methods         = {props.methods}
+                    colDefs         = {props.columnDefs}
+                    messages        = {props.messages}
+                    formData        = {formData[1]}                                                                            // dummy value to test index .. props.index previous
+                    setFormData     = {setFormData}
+                    getData         = {getData}
+                    initialValue    = {props.initialValue}
+                    axiosApi        = {axiosApi}
+                    dropDownData    = {dropDownData}
                 />
 
             </div>
             {/*<button onClick={exportData}>Export Data</button>*/}
-        </div> : <p> Loading...</p>
+        </div>                     : <p> Loading...</p>
     )
 };
 

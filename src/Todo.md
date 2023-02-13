@@ -7,6 +7,22 @@ Ig: Ignored for now
 
 As elements are finished - move below Completed
 
+
+Current Tasks - with comments on progress
+=========================================
+1. Get Teamsheet to display for printing - 
+2. Get teamsheet to print.               - 
+3. Get Form add/edit yo work again       - 
+4. Get delete to work again              - 
+5. Set grid min-width                    - 
+6. Start work on import/export           - 
+7. Get print and add to be on same line  - done
+
+
+
+
+
+
 # Errors
 
     E40: FormDialog popup shows todays date and time - should show the values from the grid/form
@@ -16,7 +32,6 @@ As elements are finished - move below Completed
     E45: FormDialog - can no longer edit textfield values!
     E47: Fix teamsheet display
         add code to usePrintPreview from MyDataGrid
-    E48: Horiz scroll bar not activating 
     E49: 
 
 # Refactoring
@@ -359,5 +374,6 @@ As elements are finished - move below Completed
         Error found with naming of values confirmPasword s/b passwordConfirm
     I6: Change Password not working
         Change password added - spring element now required
-
+    E48: Horiz scroll bar not activating 
+        And extra Y-scrollbar removed .
         

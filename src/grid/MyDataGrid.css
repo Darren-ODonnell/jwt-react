@@ -6,8 +6,5 @@
 .datagrid {
     height: 600px;
     width: 1200px;
-    overflow-y: scroll;
-    overflow-x: scroll;
-    /*scrollbar-color: rebeccapurple green;*/
-    /*scrollbar-width: thin;*/
+
 }

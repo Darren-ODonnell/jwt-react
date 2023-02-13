@@ -12,7 +12,7 @@ const MyTextField = ({index, field, formData, setFormData, onChange, headerName,
         setFormData({...formData, [id]: value})
     }
 
-    console.log("textFiled-FormData: " + formData)
+    console.log("textField-FormData: " + formData)
     return (
         <TextField
             // style={style}
