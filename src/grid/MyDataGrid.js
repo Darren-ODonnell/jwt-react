@@ -70,8 +70,6 @@ const MyDataGrid = ({props}) => {
         statnames: useAxios2(STAT_NAME_URLS.list),
     }
 
-
-
     const handleOpen = () => {
         setOpen(true);
     }
@@ -243,11 +241,16 @@ const MyDataGrid = ({props}) => {
         return (type === Teamsheet)
     }
     const PrintPreviewButton = (params) => {
-        {message = REPORT_PRINT_PREVIEW}
+        {
+            message = REPORT_PRINT_PREVIEW
+        }
+        {
+            console.log("PrintPreviewButton")
+        }
         return (
             showPrintPreviewButton(props.type) ?
                 <Grid align="left">
-                    <Button onClick={(params) => HandlePrintPreview(params) }
+                    <Button onClick={(params) => HandlePrintPreview(params, filteredData)}
                             variant="contained"
                             color="primary"
                     >PrintPreview</Button>
@@ -257,10 +260,10 @@ const MyDataGrid = ({props}) => {
                 <div></div>
         )
     }
-    const handlePrintPreviewButton = (params) => {
-        return setShowPrintPreview( HandlePrintPreview(params) )
-
-    }
+    // const handlePrintPreviewButton = (params) => {
+    //     return setShowPrintPreview( HandlePrintPreview(params) )
+    //
+    // }
     // watch when the filter is changed in the grid
     useEffect(() => {
         if (gridApi) {
@@ -298,11 +301,11 @@ const MyDataGrid = ({props}) => {
             <div className          = "ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
                 return (
                 <Fragment>
-                    { showPrintPreview ? <TeamsheetReport props={props}/> : null }
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <PrintPreviewButton {...props} gridApi={gridApi}/>
-                    <AddButton {...props}/>
-                </div>
+                    {showPrintPreview ? <TeamsheetReport props={filteredData}/> : null}
+                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                        <PrintPreviewButton {...props} gridApi={gridApi}/>
+                        <AddButton {...props}/>
+                    </div>
                 </Fragment>
 
                 <AgGridReact

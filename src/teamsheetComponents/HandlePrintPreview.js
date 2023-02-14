@@ -1,12 +1,12 @@
 import TeamsheetReport from "./TeamsheetReport";
 import { useState } from "react";
 
-const HandlePrintPreview = (props) => {
+const HandlePrintPreview = (props, filteredData) => {
 
     console.log('gridApi:', props.gridApi);
-    console.log('filteredData:', props.filteredData);
+    console.log('filteredData:', filteredData);
 
-    if (props.filteredData.length === 0 || props.filteredData.length > 30) {
+    if (filteredData.length === 0 || filteredData.length > 30) {
         alert("Add Filter using Fixture Date column");
         return false
     }

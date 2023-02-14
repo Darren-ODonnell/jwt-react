@@ -16,14 +16,14 @@ import {
 import './TeamsheetReport.css'
 // import Header from "./Header";
 
-const TeamsheetReport = (data) => {
+const TeamsheetReport = (filteredData) => {
     const [value, setValue] = useState(null)
     // const tableRef = useRef(null);
 
     console.log("Report: top :...")
 
-    const getHeader = (data) => {
-        const row = data[0]
+    const getHeader = (filteredData) => {
+        const row = filteredData[0]
 
         const header = {
             // competitionNameIrish: row.fixture.competition.irishName,
