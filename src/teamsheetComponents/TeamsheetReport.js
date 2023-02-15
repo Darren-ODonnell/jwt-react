@@ -129,8 +129,8 @@ const TeamsheetReport = (filteredData) => {
     {/*    <p>{TEAM_LIST_REFEREE_IRISH}__________________________________________<br/>*/}
     {/*        {TEAM_LIST_REFEREE_ENGLISH}</p>*/}
     {/*</div>    const header = getHeader(data) */}
-    const team1to15 = getTeam1to15(data)
-    const teamSubs = getTeamSubs(data)
+    const team1to15 = getTeam1to15(filteredData)
+    const teamSubs = getTeamSubs(filteredData)
 
     // useEffect(() => {
     //     const tableElement = tableRef.current;

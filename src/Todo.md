@@ -19,10 +19,6 @@ Current Tasks - with comments on progress
 7. Get print and add to be on same line  - done
 
 
-
-
-
-
 # Errors
 
     E40: FormDialog popup shows todays date and time - should show the values from the grid/form

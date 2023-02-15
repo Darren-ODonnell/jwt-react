@@ -314,7 +314,8 @@ const MyDataGrid = ({props}) => {
                     onFilterChanged = {handleFilterChanged}
                     rowData         = {props.gridLoader(rowData)}
                     defaultColDef   = {defaultColDef}
-                    // pagination={true}
+                    pagination         = {true}
+                    paginationPageSize = {10}
                     // suppressRowDrag={true}
                     columnDefs      = {[...props.columnDefs                                                    , formActions]}
                 />
