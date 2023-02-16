@@ -9,25 +9,31 @@ const MyTextField = ({index, field, formData, setFormData, onChange, headerName,
 
     const onSelectChange = (e) => {
         const {id, value} = e.target
-        setFormData((prevState) => ({  ...prevState, [id]: value }))
+        setFormData((prevState) => ({...prevState, [id]: value}))
     }
 
+    console.log("textField-FormData-field: " + formData[field])
     console.log("Field:  " + field)
     console.log("textField-FormData: " + {...formData})
-    console.log("textField-FormData[field]: " + formData[field])
+
+    const textFieldParams = {
+        value: formData[field],       //{formData[field] ? formData[field] : "",
+        onChange: e => onChange(e),
+        data: formData,
+        placeholder: "Enter " + headerName,
+        label: headerName,
+        variant: "outlined",
+        margin: "dense",
+
+    }
+
     return (
         <TextField
-            // style={style}
-            // key={getUniqueId()}
-            // id={field}
-            // valuedefault={formData}
-            value={formData[field]} //{formData[field] ? formData[field] : ""}
-            onChange={e => onChange(e)}
-            data={formData}
-            // placeholder={"Enter " + headerName}
-            // label={headerName}
-            // variant="outlined"
-            // margin="dense"
+            {...textFieldParams}
+            // style : style}
+            // key : getUniqueId()}
+            // id : field}
+            // valuedefault : formData}
             fullWidth
         />
     )

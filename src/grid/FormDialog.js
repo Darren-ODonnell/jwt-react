@@ -184,8 +184,8 @@ const FormDialog = (props) => {
                         const commonProps = {
                             style: dropDown,
                             // formData: {...props.data},
-                            formData: props.formData,
-                            setFormData: props.data,
+                            formData: props.data,
+                            setFormData: props.setData,
                             field: prop.field,
                             onChange: handleChange,
                             key: getUniqueId(),

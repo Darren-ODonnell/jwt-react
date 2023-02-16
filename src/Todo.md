@@ -25,6 +25,8 @@ Current Tasks - with comments on progress
          after timeout - delete old token - logout user - switch to loggedOutrNavbar
     E44: Should not be able to login as a User - only Admin allowed.
     E45: FormDialog - can no longer edit textfield values!
+         FormDialogs showing data from grid, but cannot edit any textfield element.
+
     E47: Fix teamsheet display
         add code to usePrintPreview from MyDataGrid
     E49: 

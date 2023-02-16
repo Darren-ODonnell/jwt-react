@@ -7,7 +7,7 @@ import 'ag-grid-community/styles/ag-theme-material.css';
 import {Button, Grid} from "@mui/material";
 import './MyDataGrid.css'
 import FormDialog from "./FormDialog";
-import {defaultColDef, refreshPage} from "../common/helper";
+import {defaultColDef, getUniqueId, refreshPage} from "../common/helper";
 import {useAxios, useAxios2} from "../api/ApiService";
 import instance from "../api/axios";
 import AuthService from "../auth/AuthService";
@@ -34,11 +34,15 @@ const MyDataGrid = ({props}) => {
     // const [gridOptions, setGridOptions] = useState<GridOptions>({});
     const [gridApi, setGridApi] = useState(null);
     const gridRef = useRef(null);
+    const [paginationEnabled, setPaginationEnabled] = useState(true);
     // manage id for edis and deletes
-    const [id, setId] = useState(null)
+    // const [id, setId] = useState(null)
     // used with delete to confirm the record is to be deleted
-    const [showConfirm, setShowConfirm] = useState(false);
-    const [showPrintPreview, setShowPrintPreview] = useState(false);
+
+    // const [showConfirm, setShowConfirm] = useState(false);
+    // const [showPrintPreview, setShowPrintPreview] = useState(false);
+    // const {isPrintPreview, handlePrintPreview} = usePrintPreview(false);
+
     // grid data
     const [rowData, setRowData] = useState([]);
     // data for form
@@ -48,17 +52,17 @@ const MyDataGrid = ({props}) => {
     // api control
     const [data, error, loading, axiosApi] = useAxios();
     // print preview handler state
-    const {isPrintPreview, handlePrintPreview} = usePrintPreview(false);
+
+    const [filteredData, setFilteredData] = useState([])
     // export data hook
     // const exportData = useExportData(gridOptions.api);
     // // import data hook
     // const importData = useImportData(gridOptions.api);
     // delete confirm hook
 
-
     let message = "";
     let model = [];
-    let filteredData = []
+
     // load up data for dropdowns
     // pass this as a single object , rather than individual collections
     const dropDownData = {
@@ -105,9 +109,10 @@ const MyDataGrid = ({props}) => {
     // returned the filtered data
     const handleFilterChanged = () => {
         model = gridApi.getModel().rowsToDisplay;
-        filteredData = model.map(function(m) {
+        let newFilteredData = model.map(function (m) {
             return m.data
         })
+        setFilteredData(newFilteredData)
         console.log("FilteredData-: " + filteredData);
     };
     const handleDelete = (itemId) => {
@@ -126,7 +131,6 @@ const MyDataGrid = ({props}) => {
         cellRenderer: (params) => {
             return (
                 <>
-
                     <EditButton {...params} />
                     <DeleteButton {...params}/>
                 </>
@@ -283,22 +287,73 @@ const MyDataGrid = ({props}) => {
     }, [data]);
 
     // handling delete
-    useEffect(() => {
-        if (showConfirm) {
-            const confirmAction = window.confirm('Are you sure you want to delete this item?');
-            if (confirmAction) {
-                handleDelete(id);
-            }
-            setShowConfirm(false);
-        }
-    }, [showConfirm, id, handleDelete]);
+    // useEffect(() => {
+    //     if (showConfirm) {
+    //         const confirmAction = window.confirm('Are you sure you want to delete this item?');
+    //         if (confirmAction) {
+    //             handleDelete(id);
+    //         }
+    //         setShowConfirm(false);
+    //     }
+    // }, [showConfirm, id, handleDelete]);
+
+
+    const commonParams = {
+        ref: gridRef,
+        gridApi: gridApi,
+
+    }
+    const gridParams = {
+        onGridReady: onGridReady,
+        onFilterChanged: handleFilterChanged,
+        rowData: props.gridLoader(rowData),
+        defaultColDef: defaultColDef,
+        pagination: true,
+        paginationPageSize: 10,
+        columnDefs: [...props.columnDefs, formActions],
+
+        // suppressRowDrag={true}
+
+    }
+    const formParams = {
+        index: props.index,        // check if key above can be used on its own...
+        open: open,
+        setOpen: setOpen,         // dummy value to test index .. props.index previous
+        setFormData: setFormData,
+        data: formData,
+        formData: formData,
+        onChange: onChange,
+        onClose: handleClose,
+        handleClose: handleClose,        // onClose and Handle close appear tom be doing the same thing
+        methods: props.methods,
+        colDefs: props.columnDefs,
+        messages: props.messages,
+        initialValue: props.initialValue,
+        axiosApi: axiosApi,
+        dropDownData: dropDownData,
+    }
+
+    const togglePagination = () => {
+        const pageSize = paginationEnabled ? 0 : 10;
+        setPaginationEnabled(!paginationEnabled);
+        gridApi.paginationSetPageSize(pageSize);
+    };
+
+    const PaginationButton = () => {
+        return (
+            <button onClick={togglePagination}>
+                {paginationEnabled ? 'Disable Pagination' : 'Enable Pagination'}
+            </button>
+        )
+    }
 
     return (
         !loading ? <div>
-            <div className          = "ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
+            <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
+
                 return (
                 <Fragment>
-                    {showPrintPreview ? <TeamsheetReport props={filteredData}/> : null}
+                    {/*{showPrintPreview ? <TeamsheetReport props={filteredData}/> : null}*/}
                     <div style={{display: "flex", justifyContent: "space-between"}}>
                         <PrintPreviewButton {...props} gridApi={gridApi}/>
                         <AddButton {...props}/>
@@ -306,42 +361,19 @@ const MyDataGrid = ({props}) => {
                 </Fragment>
 
                 <AgGridReact
-                    ref             = {gridRef}
-                    onGridReady     = {onGridReady}
-                    onFilterChanged = {handleFilterChanged}
-                    rowData         = {props.gridLoader(rowData)}
-                    defaultColDef   = {defaultColDef}
-                    pagination         = {true}
-                    paginationPageSize = {10}
-                    // suppressRowDrag={true}
-                    columnDefs      = {[...props.columnDefs                                                    , formActions]}
+
+                    {...commonParams}
+                    {...gridParams}
+
                 />
                 <FormDialog
-                    gridApi         = {gridApi}
-                    key             = {props.index}
-                    setData         = {setFormData}
-                    open            = {open}
-                    onClose         = {handleClose}
-                    index           = {props.index} // check if key above can be used on its own...
-                    data            = {formData}
-                    handleClose     = {handleClose} // onClose and Handle close appear tom be doing the same thing
-                    setOpen         = {setOpen}
-                    update          = {props.gridLoader.update}
-                    onChange        = {onChange}
-                    actions         = {props.actions}
-                    methods         = {props.methods}
-                    colDefs         = {props.columnDefs}
-                    messages        = {props.messages}
-                    // formData        = {formData[1]}                                                                            // dummy value to test index .. props.index previous
-                    setFormData     = {setFormData}
-                    getData         = {getData}
-                    initialValue    = {props.initialValue}
-                    axiosApi        = {axiosApi}
-                    dropDownData    = {dropDownData}
+                    {...commonParams}
+                    {...formParams}
                 />
-
+                <PaginationButton/>
             </div>
             {/*<button onClick={exportData}>Export Data</button>*/}
+
         </div>                     : <p> Loading...</p>
     )
 };
