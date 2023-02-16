@@ -1,5 +1,5 @@
 import {TextField} from "@mui/material";
-import React from "react";
+import React, {useState} from "react";
 import {getUniqueId} from "../common/helper";
 
 const MyTextField = ({index, field, formData, setFormData, onChange, headerName, style}) => {
@@ -9,23 +9,25 @@ const MyTextField = ({index, field, formData, setFormData, onChange, headerName,
 
     const onSelectChange = (e) => {
         const {id, value} = e.target
-        setFormData({...formData, [id]: value})
+        setFormData((prevState) => ({  ...prevState, [id]: value }))
     }
 
-    console.log("textField-FormData: " + formData)
+    console.log("Field:  " + field)
+    console.log("textField-FormData: " + {...formData})
+    console.log("textField-FormData[field]: " + formData[field])
     return (
         <TextField
             // style={style}
-            key={getUniqueId()}
-            id={field}
-            // valuedefault={defaultValue}
+            // key={getUniqueId()}
+            // id={field}
+            // valuedefault={formData}
             value={formData[field]} //{formData[field] ? formData[field] : ""}
-            onChange={e => onSelectChange(e)}
-            data={formData[field]}
-            placeholder={"Enter " + headerName}
-            label={headerName}
-            variant="outlined"
-            margin="dense"
+            onChange={e => onChange(e)}
+            data={formData}
+            // placeholder={"Enter " + headerName}
+            // label={headerName}
+            // variant="outlined"
+            // margin="dense"
             fullWidth
         />
     )

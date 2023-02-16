@@ -20,7 +20,6 @@ Current Tasks - with comments on progress
 
 
 # Errors
-
     E40: FormDialog popup shows todays date and time - should show the values from the grid/form
     E41: App does not logout after token has timed out.
          after timeout - delete old token - logout user - switch to loggedOutrNavbar

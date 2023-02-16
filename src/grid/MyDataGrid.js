@@ -90,7 +90,7 @@ const MyDataGrid = ({props}) => {
     }
     const handleEdit = (props) => {
         handleOpen();
-        setFormData({...props.data});
+        setFormData(props.data);
     }
 
     // const handleConfirm = (id) => {
@@ -179,9 +179,7 @@ const MyDataGrid = ({props}) => {
 
     // in grid
     const EditButton = (params) => {
-
         return (
-
             <Button onClick={() => handleEdit(params)}
                     variant="outlined"
                     color="primary"
@@ -228,7 +226,6 @@ const MyDataGrid = ({props}) => {
 
         );
     };
-
 
 
     const showAddButton = (type) => {
@@ -325,9 +322,9 @@ const MyDataGrid = ({props}) => {
                     setData         = {setFormData}
                     open            = {open}
                     onClose         = {handleClose}
-                    index           = {props.index}
+                    index           = {props.index} // check if key above can be used on its own...
                     data            = {formData}
-                    handleClose     = {handleClose}
+                    handleClose     = {handleClose} // onClose and Handle close appear tom be doing the same thing
                     setOpen         = {setOpen}
                     update          = {props.gridLoader.update}
                     onChange        = {onChange}
@@ -335,7 +332,7 @@ const MyDataGrid = ({props}) => {
                     methods         = {props.methods}
                     colDefs         = {props.columnDefs}
                     messages        = {props.messages}
-                    formData        = {formData[1]}                                                                            // dummy value to test index .. props.index previous
+                    // formData        = {formData[1]}                                                                            // dummy value to test index .. props.index previous
                     setFormData     = {setFormData}
                     getData         = {getData}
                     initialValue    = {props.initialValue}
