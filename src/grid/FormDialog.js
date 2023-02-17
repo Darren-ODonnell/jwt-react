@@ -185,6 +185,7 @@ const FormDialog = (props) => {
                             style: dropDown,
                             // formData: {...props.data},
                             formData: props.data,
+
                             setFormData: props.setData,
                             field: prop.field,
                             onChange: handleChange,

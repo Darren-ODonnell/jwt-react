@@ -49,10 +49,11 @@ const MyDataGrid = ({props}) => {
     const [formData, setFormData] = useState(props.initialValue)
     // form control
     const [open, setOpen] = useState(false);
+
     // api control
     const [data, error, loading, axiosApi] = useAxios();
-    // print preview handler state
 
+    // print preview handler state
     const [filteredData, setFilteredData] = useState([])
     // export data hook
     // const exportData = useExportData(gridOptions.api);
@@ -94,6 +95,7 @@ const MyDataGrid = ({props}) => {
     }
     const handleEdit = (props) => {
         handleOpen();
+        const selectedRows = gridApi.getSelectedRows();
         setFormData(props.data);
     }
 
