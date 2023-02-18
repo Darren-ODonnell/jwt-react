@@ -2,7 +2,7 @@ import {TextField} from "@mui/material";
 import React, {useState} from "react";
 import {getUniqueId} from "../common/helper";
 
-const MyTextField = ({index, field, formData, setFormData, onChange, headerName, style}) => {
+const MyTextField = ({index, field, formData, setFormData, onChange, headerName, style, value}) => {
 
     // let defaultValue = (params.formData[params.field]) ? (params.formData[params.field]) : ""
     // let defaultValue = (formData[field]) ? (formData[field]) : ""
@@ -17,7 +17,8 @@ const MyTextField = ({index, field, formData, setFormData, onChange, headerName,
     console.log("textField-FormData: " + {...formData})
 
     const textFieldParams = {
-        value: formData[field],       //{formData[field] ? formData[field] : "",
+        value: value,
+        // value: formData[field],       //{formData[field] ? formData[field] : "",
         onChange: e => onChange(e),
         data: formData,
         placeholder: "Enter " + headerName,

@@ -24,16 +24,19 @@ import MyTimePicker from "../formcomponents/MyTimePicker";
 import MyDatePicker from "../formcomponents/MyDatePicker";
 
 const FormDialog = (props) => {
-    const [value, setValue] = useState()
-    const [dateValue, setDateValue] = useState(props.data.fixtureDate)
-    const [timeValue, setTimeValue] = useState(moment(props.data.fixtureTime, TIME_FORMAT))
+    const [formValues, setFormValues] = useState(props.rowData)
+    // const [value, setValue] = useState()
+    // const [dateValue, setDateValue] = useState(props.rowData.fixtureDate)
+    // const [timeValue, setTimeValue] = useState(moment(props.data.fixtureTime, TIME_FORMAT))
     // const [selected , setSelected]  = useState( props.defaultValue )
     // const [formData, setFormData] = useState({...props.data})
 
-    const handleClose = (setOpen) => {
-        setOpen(false);
-        // setFormData(props.initialValue);
+    const handleChange2 = (event) => {
+        const {name, value} = event.target;
+        setFormValues({...formValues, [name]: value});
     };
+
+
     const handleError = (message) => {
         return <ErrorMessage message={message}/>;
 
@@ -58,7 +61,7 @@ const FormDialog = (props) => {
     }
     // form elements
     const onCancel = ({setOpen, initialValue, setFormData}) => {
-        handleClose(setOpen)
+        props.onClose(setOpen)
         setFormData(initialValue);
         setOpen(false)
     }
@@ -164,44 +167,48 @@ const FormDialog = (props) => {
         overflowY: 'auto',
 
     }
-
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        props.onSubmit(formValues);
+    };
     return (
         !props.loading ? <div>
 
-        <Dialog
-            style={scroll}
-            open={props.open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-        >
-            <DialogTitle
-                id="alert-dialog-title"> {props.data.id ? props.messages.update : props.messages.create}</DialogTitle>
-            <DialogContent dividers>
-                {
-                    props.colDefs.map(prop => {
-                        let options
-                        const commonProps = {
-                            style: dropDown,
-                            // formData: {...props.data},
-                            formData: props.data,
+            <Dialog
+                style={scroll}
+                // open={props.open}
+                onClose={props.onClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle
+                    id="alert-dialog-title"> {props.rowData.id ? props.messages.update : props.messages.create}</DialogTitle>
+                <DialogContent dividers>
+                    {
+                        props.colDefs.map(prop => {
+                            let options
+                            const commonProps = {
+                                style: dropDown,
+                                // formData: {...props.data},
+                                formData: props.rowData,
+                                value: formValues[prop.field],
+                                setFormData: props.setData,
+                                field: prop.field,
+                                onChange: handleChange2,
+                                key: getUniqueId(),
+                                defaultValue: props.data[prop.field],
+                                onSubmit: handleSubmit,
+                            }
 
-                            setFormData: props.setData,
-                            field: prop.field,
-                            onChange: handleChange,
-                            key: getUniqueId(),
-                            defaultValue: props.data[prop.field],
-                        }
-
-                        switch (prop.field) {
-                            // case "awayTeamName" :
-                            // case "homeTeamName" :
-                            //     return clubDropdown({...props, ...prop, index});
-                            // // case "playerName" :
-                            // //     return playerNameDropDown()
-                            // // case "statname" :
-                            // //     return
-                            // case "half" :
+                            switch (prop.field) {
+                                // case "awayTeamName" :
+                                // case "homeTeamName" :
+                                //     return clubDropdown({...props, ...prop, index});
+                                // // case "playerName" :
+                                // //     return playerNameDropDown()
+                                // // case "statname" :
+                                // //     return
+                                // case "half" :
                             //     return <DropDown
                             //         {...commonProps}
                             //         headerName={"First/Second Half"}

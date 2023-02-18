@@ -43,6 +43,7 @@ const MyDataGrid = ({props}) => {
     // const [showPrintPreview, setShowPrintPreview] = useState(false);
     // const {isPrintPreview, handlePrintPreview} = usePrintPreview(false);
 
+    const [selectedRow, setSelectedRow] = useState(null)
     // grid data
     const [rowData, setRowData] = useState([]);
     // data for form
@@ -76,11 +77,18 @@ const MyDataGrid = ({props}) => {
     }
 
     const handleOpen = () => {
+        const selectedRows = gridApi.getSelectedRows();
+        setFormData(selectedRow);
         setOpen(true);
     }
     const handleClose = () => {
         setOpen(false);
         // setFormData(data.initialValue);
+    };
+
+    const handleSelectionChanged = () => {
+        const selectedRows = gridApi.getSelectedRows();
+        setSelectedRow(selectedRows[0] || null);
     };
 
     const onChange = (e) => {
@@ -96,7 +104,7 @@ const MyDataGrid = ({props}) => {
     const handleEdit = (props) => {
         handleOpen();
         const selectedRows = gridApi.getSelectedRows();
-        setFormData(props.data);
+        setFormData(selectedRows[0]);
     }
 
     // const handleConfirm = (id) => {
@@ -142,6 +150,10 @@ const MyDataGrid = ({props}) => {
 
     const deleteData = ({data, error}) => {
         const user = AuthService.getCurrentUser();
+
+        const selectedRows = gridApi.getSelectedRows();
+        setFormData(selectedRows[0]);
+
         AuthService.setAuthToken(user.accessToken);
 
         const configObj = {
@@ -174,7 +186,8 @@ const MyDataGrid = ({props}) => {
             method: method,
             url: url,
         }).then(() => {
-
+            setRowData(data)
+            console.log(data)
         }).catch(err => {
 
             setOpen(false)
@@ -281,6 +294,8 @@ const MyDataGrid = ({props}) => {
     // loading grid at start / and reloading on grid changes
     useEffect(() => {
         getData(props.methods.list)
+        setRowData(data)
+
     }, []);
     // what to do when row data changes
     useEffect(() => {
@@ -288,6 +303,17 @@ const MyDataGrid = ({props}) => {
         console.log(data[0])
     }, [data]);
 
+    const handleSubmit = (formValues) => {
+        if (selectedRow) {
+            const index = rowData.findIndex((row) => row === selectedRow);
+            const updatedRow = {...selectedRow, ...formValues};
+            setRowData([...rowData.slice(0, index), updatedRow, ...rowData.slice(index + 1)]);
+            setSelectedRow(null);
+        } else {
+            setRowData([...rowData, formValues]);
+        }
+        setOpen(false);
+    };
     // handling delete
     // useEffect(() => {
     //     if (showConfirm) {
@@ -308,25 +334,25 @@ const MyDataGrid = ({props}) => {
     const gridParams = {
         onGridReady: onGridReady,
         onFilterChanged: handleFilterChanged,
-        rowData: props.gridLoader(rowData),
+        rowData: rowData,
         defaultColDef: defaultColDef,
         pagination: true,
         paginationPageSize: 10,
         columnDefs: [...props.columnDefs, formActions],
-
-        // suppressRowDrag={true}
-
+        onSelectionChanged: handleSelectionChanged,
+        rowSelection: "single",
     }
     const formParams = {
         index: props.index,        // check if key above can be used on its own...
         open: open,
-        setOpen: setOpen,         // dummy value to test index .. props.index previous
+        setOpen: setOpen,            // dummy value to test index .. props.index previous
         setFormData: setFormData,
         data: formData,
         formData: formData,
+        rowData: selectedRow,
+        onSubmit: handleSubmit,
         onChange: onChange,
         onClose: handleClose,
-        handleClose: handleClose,        // onClose and Handle close appear tom be doing the same thing
         methods: props.methods,
         colDefs: props.columnDefs,
         messages: props.messages,
@@ -365,13 +391,15 @@ const MyDataGrid = ({props}) => {
                 <AgGridReact
 
                     {...commonParams}
+
+
                     {...gridParams}
 
                 />
-                <FormDialog
-                    {...commonParams}
-                    {...formParams}
-                />
+                {/*<FormDialog*/}
+                {/*    {...commonParams}*/}
+                {/*    {...formParams}*/}
+                {/*/>*/}
                 <PaginationButton/>
             </div>
             {/*<button onClick={exportData}>Export Data</button>*/}
