@@ -325,7 +325,6 @@ const MyDataGrid = ({props}) => {
     //     }
     // }, [showConfirm, id, handleDelete]);
 
-
     const commonParams = {
         ref: gridRef,
         gridApi: gridApi,
@@ -334,13 +333,14 @@ const MyDataGrid = ({props}) => {
     const gridParams = {
         onGridReady: onGridReady,
         onFilterChanged: handleFilterChanged,
-        rowData: rowData,
+        rowData: props.gridLoader(rowData),
         defaultColDef: defaultColDef,
         pagination: true,
+        messages: props.messages,
         paginationPageSize: 10,
         columnDefs: [...props.columnDefs, formActions],
         onSelectionChanged: handleSelectionChanged,
-        rowSelection: "single",
+        // rowSelection: "single",
     }
     const formParams = {
         index: props.index,        // check if key above can be used on its own...
@@ -360,13 +360,11 @@ const MyDataGrid = ({props}) => {
         axiosApi: axiosApi,
         dropDownData: dropDownData,
     }
-
     const togglePagination = () => {
         const pageSize = paginationEnabled ? 0 : 10;
         setPaginationEnabled(!paginationEnabled);
         gridApi.paginationSetPageSize(pageSize);
     };
-
     const PaginationButton = () => {
         return (
             <button onClick={togglePagination}>
@@ -389,12 +387,8 @@ const MyDataGrid = ({props}) => {
                 </Fragment>
 
                 <AgGridReact
-
                     {...commonParams}
-
-
                     {...gridParams}
-
                 />
                 {/*<FormDialog*/}
                 {/*    {...commonParams}*/}
