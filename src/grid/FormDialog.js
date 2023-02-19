@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import {Button, Dialog} from "@mui/material";
-import {DialogActions, DialogContent, DialogTitle} from "@mui/material";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 
 import {ErrorMessage} from "../common/ErrorMessage";
 import AuthService from "../auth/AuthService";
@@ -32,8 +31,8 @@ const FormDialog = (props) => {
     // const [formData, setFormData] = useState({...props.data})
 
     const handleChange2 = (event) => {
-        const {name, value} = event.target;
-        setFormValues({...formValues, [name]: value});
+        // const {name, value} = event.target;
+        // setFormValues({...formValues, [name]: value});
     };
 
 
@@ -41,163 +40,173 @@ const FormDialog = (props) => {
         return <ErrorMessage message={message}/>;
 
     }
-    const handleFormSubmit = ({formData, methods, setOpen, error}) => {
-        console.log('FormData: ', formData)
-        const request = {...methods.add, data: formData};
-
-        if (formData.id)  {// updating a record
-            // const confirm = window.confirm("Are you sure, you want to update this row ?")
-            // confirm && actions.update(formData.id, formData)
-            setOpen(false)
-            const request = methods.update;
-            UpdateData( {...props, request});
-            if (error !== null) {   return handleError(error.message); }
-
-        } else { // adding new record
-            setOpen(false)
-            AddData( {...props, request});
-            if (error !== null) {   return handleError(error.message); }
-        }
+    const handleFormSubmit = ({formValues, methods, setOpen, error}) => {
+        // console.log('FormValues: ', formValues)
+        // const request = {...methods.add, data: formValues};
+        //
+        // if (formValues.id)  {// updating a record
+        //     // const confirm = window.confirm("Are you sure, you want to update this row ?")
+        //     // confirm && actions.update(formData.id, formData)
+        //     setOpen(false)
+        //     const request = methods.update;
+        //     UpdateData( {...props, request});
+        //     if (error !== null) {   return handleError(error.message); }
+        //
+        // } else { // adding new record
+        //     setOpen(false)
+        //     AddData( {...props, request});
+        //     if (error !== null) {   return handleError(error.message); }
+        // }
     }
     // form elements
-    const onCancel = ({setOpen, initialValue, setFormData}) => {
-        props.onClose(setOpen)
-        setFormData(initialValue);
-        setOpen(false)
+    const onCancel = ({setOpen, initialValue, setFormValues}) => {
+        // props.onClose(setOpen)
+        // setFormValues(initialValue);
+        // setOpen(false)
     }
     const CancelButton = (props) => {
         return (
-            <Button onClick={ () => onCancel(props) }
-                    color   = "secondary"
-                    variant = "outlined"
-            > Cancel </Button>
+            <></>
+            // <Button onClick={ () => onCancel(props) }
+            //         color   = "secondary"
+            //         variant = "outlined"
+            // > Cancel </Button>
         )
     }
     const SubmitButton = (props) => {
         return (
-            <Button onClick={() => handleFormSubmit(props)}
-                    type="submit"
-                    color="primary"
-                    variant="outlined"
-            >Submit</Button>
+            <></>
+            // <Button onClick={() => handleFormSubmit({formValues, props.methods, props.setOpen, props.error})}
+            //         type="submit"
+            //         color="primary"
+            //         variant="outlined"
+            // >Submit</Button>
         )
     }
 
-    function onChange(e) {
-        const {id, value} = e.target
-        console.log("Id: "+id + "value: "+value)
-        // props.setFormData({...props.formData, [id]: value})
-        props.setFormData((prevState) => ({  ...prevState, [id]: value }))
-
-        // setValue(e.target.value);
-    }
-    const handleChange = (e) => {
-        const {id, value} = e.target
-
-        props.setFormData((prevFormData) => ({
-            ...prevFormData,
-            [id]: value,
-        }));
-        console.log("ID: "+id+" Value: " + value)
-    };
+    // function onChange(e) {
+    //     const {id, value} = e.target
+    //     console.log("Id: "+id + "value: "+value)
+    //     // props.setFormValues({...props.formValues, [id]: value})
+    //     props.setFormValues((prevState) => ({  ...prevState, [id]: value }))
+    //
+    //     // setValue(e.target.value);
+    // }
+    // const handleChange = (e) => {
+    //     const {id, value} = e.target
+    //
+    //     props.setFormValues((prevFormValues) => ({
+    //         ...prevFormValues,
+    //         [id]: value,
+    //     }));
+    //     console.log("ID: "+id+" Value: " + value)
+    // };
 
 
     const AddData = ({methods, axiosApi, data, error, formData, setOpen, setData}) => {
-        const user = AuthService.getCurrentUser();
-        AuthService.setAuthToken(user.accessToken);
-
-        const configObj = {
-            axiosInstance: instance,
-            ...methods.add,
-            requestConfig: {
-                data: {...formData}
-            }
-        }
-
-
-        axiosApi( configObj )
-            .then( response => {
-                setOpen( false )
-                data = response.data
-                console.log("Add: ", response.data)
-                setData(data)
-            })
-            .catch(err => {
-                error = err.message;
-                setOpen(false)
-
-            })
-        // refresh grid
-        refreshPage()
-        // window.location.reload()
+        // const user = AuthService.getCurrentUser();
+        // AuthService.setAuthToken(user.accessToken);
+        //
+        // const configObj = {
+        //     axiosInstance: instance,
+        //     ...methods.add,
+        //     requestConfig: {
+        //         data: {...formData}
+        //     }
+        // }
+        //
+        //
+        // axiosApi( configObj )
+        //     .then( response => {
+        //         setOpen( false )
+        //         data = response.data
+        //         console.log("Add: ", response.data)
+        //         setData(data)
+        //     })
+        //     .catch(err => {
+        //         error = err.message;
+        //         setOpen(false)
+        //
+        //     })
+        // // refresh grid
+        // refreshPage()
+        // // window.location.reload()
     }
     const UpdateData = ({methods, axiosApi, data, error, formData}) => {
-
-        const user = AuthService.getCurrentUser();
-        AuthService.setAuthToken(user.accessToken);
-
-        const configObj = {
-            axiosInstance: instance,
-            ...methods.update,
-            requestConfig: {
-                data: formData
-            }
-        }
-
-        axiosApi(configObj)
-            .then(response => {
-                data = response.data
-                console.log("Update: ", data)
-            })
-            .catch(err => {
-                error = err.message;
-            })
-        // refresh grid
-        refreshPage()
-        // window.location.reload()
+        //
+        // const user = AuthService.getCurrentUser();
+        // AuthService.setAuthToken(user.accessToken);
+        //
+        // const configObj = {
+        //     axiosInstance: instance,
+        //     ...methods.update,
+        //     requestConfig: {
+        //         data: formData
+        //     }
+        // }
+        //
+        // axiosApi(configObj)
+        //     .then(response => {
+        //         data = response.data
+        //         console.log("Update: ", data)
+        //     })
+        //     .catch(err => {
+        //         error = err.message;
+        //     })
+        // // refresh grid
+        // refreshPage()
+        // // window.location.reload()
     }
-    const scroll = {
-        overflowX: 'scroll',
-        overflowY: 'scroll',
+    // const scroll = {
+    //     overflowX: 'scroll',
+    //     overflowY: 'scroll',
+    // }
+
+    // const dropDown = {
+    //     width: '60%',
+    //     height: '50%',
+    //     overflowY: 'auto',
+    //
+    // }
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     props.onSubmit(formValues);
+    // };
+
+    const handleDialogEnter = () => {
+        console.log("Inside Dialog")
     }
 
-    const dropDown = {
-        width: '60%',
-        height: '50%',
-        overflowY: 'auto',
-
-    }
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        props.onSubmit(formValues);
-    };
     return (
-        !props.loading ? <div>
+        // !props.loading  ?
+        <div>
 
-            <Dialog
-                style={scroll}
+            <Dialog onEnter={handleDialogEnter}
+
+                // className="scroll"
+                // style={scroll}
+                // id = {getUniqueId()}
                 // open={props.open}
-                onClose={props.onClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
+                // onClose={props.onClose}
+                // aria-labelledby="alert-dialog-title"
+                // aria-describedby="alert-dialog-description"
             >
-                <DialogTitle
-                    id="alert-dialog-title"> {props.rowData.id ? props.messages.update : props.messages.create}</DialogTitle>
+
                 <DialogContent dividers>
                     {
                         props.colDefs.map(prop => {
                             let options
                             const commonProps = {
-                                style: dropDown,
+                                // style: dropDown,
                                 // formData: {...props.data},
-                                formData: props.rowData,
+                                // formValues: props.rowData,
                                 value: formValues[prop.field],
-                                setFormData: props.setData,
-                                field: prop.field,
+                                // setFormValues: props.setData,
+                                // field: prop.field,
                                 onChange: handleChange2,
                                 key: getUniqueId(),
-                                defaultValue: props.data[prop.field],
-                                onSubmit: handleSubmit,
+                                // defaultValue: props.data[prop.field],
+                                // onSubmit: props.handleSubmit,
                             }
 
                             switch (prop.field) {
@@ -274,21 +283,31 @@ const FormDialog = (props) => {
                             // case 'fixtureTime':
                             //     return <MyTimePicker
                             //         {...commonProps}
-                            //         headerName={"Time"}/>
-                            default:
-                                return <MyTextField
-                                    {...commonProps}
-                                    headerName={prop.headerName}/>
-                        }
-                    })
-                }
-            </DialogContent>
-            <DialogActions>
-                <CancelButton {...props} />
-                <SubmitButton {...props} />
-            </DialogActions>
-        </Dialog>
-    </div>: <p>Loading...</p>
+                                //         headerName={"Time"}/>
+                                default:
+                                    return <MyTextField
+                                        {...commonProps}
+                                        headerName={prop.headerName}/>
+                            }
+                        })
+                    }
+                    :
+                </DialogContent>
+                {/*<DialogActions>*/}
+                {/*    <CancelButton {...props} />*/}
+                {/*    <SubmitButton {...props} />*/}
+                {/*</DialogActions>*/}
+            </Dialog>
+        </div>
+        // :
+        // <p>Loading...</p>
     );
 }
 export default FormDialog;
+
+// {/*<DialogTitle id="alert-dialog-title">*/}
+// {/*    {props.rowData.id ? props.messages.update : props.messages.create}*/}
+// {/*</DialogTitle>*/}
+//
+// {/*className="dropDown"*/}
+

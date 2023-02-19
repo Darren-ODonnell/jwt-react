@@ -25,17 +25,20 @@ const MyTextField = ({index, field, formData, setFormData, onChange, headerName,
         label: headerName,
         variant: "outlined",
         margin: "dense",
-
+        key: getUniqueId(),
+        id: field,
+        valuedefault: formData,
     }
 
     return (
         <TextField
             {...textFieldParams}
+            fullwidth
             // style : style}
             // key : getUniqueId()}
             // id : field}
             // valuedefault : formData}
-            fullWidth
+            // fullWidth
         />
     )
 }

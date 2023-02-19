@@ -29,6 +29,7 @@ import usePrintPreview from '../teamsheetComponents/usePrintPreview'
 import TeamsheetReport from "../teamsheetComponents/TeamsheetReport";
 import useConfirm from "../common/useConfirm";
 import HandlePrintPreview from "../teamsheetComponents/HandlePrintPreview";
+import FormDialog2 from "./FormDialog2";
 
 const MyDataGrid = ({props}) => {
     // const [gridOptions, setGridOptions] = useState<GridOptions>({});
@@ -77,8 +78,6 @@ const MyDataGrid = ({props}) => {
     }
 
     const handleOpen = () => {
-        const selectedRows = gridApi.getSelectedRows();
-        setFormData(selectedRow);
         setOpen(true);
     }
     const handleClose = () => {
@@ -102,9 +101,11 @@ const MyDataGrid = ({props}) => {
         setGridApi(params.api)
     }
     const handleEdit = (props) => {
-        handleOpen();
         const selectedRows = gridApi.getSelectedRows();
-        setFormData(selectedRows[0]);
+        setSelectedRow(selectedRows[0])
+        setFormData(selectedRows[0] || null);
+        setOpen(true);
+        console.log(selectedRows[0])
     }
 
     // const handleConfirm = (id) => {
@@ -130,6 +131,7 @@ const MyDataGrid = ({props}) => {
     };
 
     const formActions = {
+
         headerName: 'Actions',
         field: 'id',
         width: 200,
@@ -186,14 +188,14 @@ const MyDataGrid = ({props}) => {
             method: method,
             url: url,
         }).then(() => {
-            setRowData(data)
-            console.log(data)
+            // setRowData(data)
+            // console.log(data)
         }).catch(err => {
-
             setOpen(false)
         })        // cancel subscription to useEffect
         return () => (isSubscribed = false)
     }
+
     const [handleConfirm] = useConfirm(message, deleteData);
 
     // in grid
@@ -246,7 +248,6 @@ const MyDataGrid = ({props}) => {
         );
     };
 
-
     const showAddButton = (type) => {
         return !(type === Position || type === Pitchgrid)
     }
@@ -295,13 +296,14 @@ const MyDataGrid = ({props}) => {
     useEffect(() => {
         getData(props.methods.list)
         setRowData(data)
-
     }, []);
     // what to do when row data changes
-    useEffect(() => {
-        setRowData(data)
-        console.log(data[0])
-    }, [data]);
+
+    // useEffect(() => {
+    //     const rows = gridApi.getSelectedRows()
+    //     setSelectedRow(rows[0])
+    // }, [gridApi.getSelectedRows]);
+
 
     const handleSubmit = (formValues) => {
         if (selectedRow) {
@@ -325,12 +327,10 @@ const MyDataGrid = ({props}) => {
     //     }
     // }, [showConfirm, id, handleDelete]);
 
-    const commonParams = {
+    const commonParams = {}
+    const gridParams = {
         ref: gridRef,
         gridApi: gridApi,
-
-    }
-    const gridParams = {
         onGridReady: onGridReady,
         onFilterChanged: handleFilterChanged,
         rowData: props.gridLoader(rowData),
@@ -340,25 +340,31 @@ const MyDataGrid = ({props}) => {
         paginationPageSize: 10,
         columnDefs: [...props.columnDefs, formActions],
         onSelectionChanged: handleSelectionChanged,
-        // rowSelection: "single",
+        rowSelection: "single",
     }
+    console.log("SelectedRow: " + selectedRow)
+    console.log("open: " + open)
+    console.log("onClose: " + handleClose)
+    console.log("SelectedRow: " + selectedRow)
+
     const formParams = {
         index: props.index,        // check if key above can be used on its own...
-        open: open,
-        setOpen: setOpen,            // dummy value to test index .. props.index previous
-        setFormData: setFormData,
-        data: formData,
-        formData: formData,
-        rowData: selectedRow,
-        onSubmit: handleSubmit,
-        onChange: onChange,
+
         onClose: handleClose,
-        methods: props.methods,
-        colDefs: props.columnDefs,
-        messages: props.messages,
-        initialValue: props.initialValue,
-        axiosApi: axiosApi,
-        dropDownData: dropDownData,
+        onSubmit: handleSubmit,
+        setOpen: setOpen,            // dummy value to test index .. props.index previous
+        // setFormData: setFormData,
+        // data: formData,
+        // formData: formData,
+        // rowData: selectedRow,
+        // onChange: onChange,
+        // onClose: handleClose,
+        // methods: props.methods,
+        // colDefs: props.columnDefs,
+        // messages: props.messages,
+        // initialValue: props.initialValue,
+        // axiosApi: axiosApi,
+        // dropDownData: dropDownData,
     }
     const togglePagination = () => {
         const pageSize = paginationEnabled ? 0 : 10;
@@ -376,8 +382,6 @@ const MyDataGrid = ({props}) => {
     return (
         !loading ? <div>
             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
-
-                return (
                 <Fragment>
                     {/*{showPrintPreview ? <TeamsheetReport props={filteredData}/> : null}*/}
                     <div style={{display: "flex", justifyContent: "space-between"}}>
@@ -390,9 +394,11 @@ const MyDataGrid = ({props}) => {
                     {...commonParams}
                     {...gridParams}
                 />
-                {/*<FormDialog*/}
+                {/*<FormDialog2*/}
                 {/*    {...commonParams}*/}
                 {/*    {...formParams}*/}
+                {/*    open={open}*/}
+                {/*    rowData = {selectedRow}*/}
                 {/*/>*/}
                 <PaginationButton/>
             </div>

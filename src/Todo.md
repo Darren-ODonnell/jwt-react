@@ -10,14 +10,18 @@ As elements are finished - move below Completed
 
 Current Tasks - with comments on progress
 =========================================
-1. Get Teamsheet to display for printing - 
-2. Get teamsheet to print.               - 
-3. Get Form add/edit yo work again       - 
-4. Get delete to work again              - 
-5. Set grid min-width                    - 
-6. Start work on import/export           - 
-7. Get print and add to be on same line  - done
-
+1. Get Teamsheet to display for printing -
+2. Get teamsheet to print. -
+3. Get Form add/edit to work again -
+4. Get Grid to display correctly again - done
+5. Get delete to work again -
+6. Set grid min-width - done
+7. Start work on import/export -
+8. Get print and add to be on same line - done
+9. Update Node and npm to latest - done
+10. After testing the above updates,Pin
+    the version of each module to the
+    latest in the package.json file - done
 
 # Errors
     E40: FormDialog popup shows todays date and time - should show the values from the grid/form
@@ -29,7 +33,6 @@ Current Tasks - with comments on progress
 
     E47: Fix teamsheet display
         add code to usePrintPreview from MyDataGrid
-    E49: 
 
 # Refactoring
     R13: 
@@ -373,4 +376,8 @@ Current Tasks - with comments on progress
         Change password added - spring element now required
     E48: Horiz scroll bar not activating 
         And extra Y-scrollbar removed .
+    E49: Form can no longer display data - fixed
+         Reset the state parameters correctly
+    E50: Linked data tables missing values - fixed
+         updated grid params to load the data via the gridLoader
         
