@@ -400,10 +400,10 @@ const MyDataGrid = ({props}) => {
                     {...gridParams}
                 />
                 <PaginationButton/>
-                <FormDialog
-                    {...formParams}
+                {/*<FormDialog*/}
+                {/*    {...formParams}*/}
 
-                />
+                {/*/>*/}
 
             </div>
             {/*<button onClick={exportData}>Export Data</button>*/}
