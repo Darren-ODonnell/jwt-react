@@ -185,11 +185,11 @@ const FormDialog = (props) => {
 
                 // className="scroll"
                 // style={scroll}
-                // id = {getUniqueId()}
-                // open={props.open}
-                // onClose={props.onClose}
-                // aria-labelledby="alert-dialog-title"
-                // aria-describedby="alert-dialog-description"
+                    id={getUniqueId()}
+                    open={props.open}
+                    onClose={props.onClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
             >
 
                 <DialogContent dividers>
@@ -199,14 +199,14 @@ const FormDialog = (props) => {
                             const commonProps = {
                                 // style: dropDown,
                                 // formData: {...props.data},
-                                // formValues: props.rowData,
+                                formValues: props.rowData,
                                 value: formValues[prop.field],
-                                // setFormValues: props.setData,
-                                // field: prop.field,
+                                setFormValues: props.setData,
+                                field: prop.field,
                                 onChange: handleChange2,
                                 key: getUniqueId(),
-                                // defaultValue: props.data[prop.field],
-                                // onSubmit: props.handleSubmit,
+                                defaultValue: props.data[prop.field],
+                                onSubmit: props.handleSubmit,
                             }
 
                             switch (prop.field) {

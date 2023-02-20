@@ -25,11 +25,11 @@ import {Teamsheet} from "../entities/teamsheets";
 // import HandlePrintPreview from "../teamsheetComponents/HandlePrintPreview"
 import usePrintPreview from '../teamsheetComponents/usePrintPreview'
 
-
 import TeamsheetReport from "../teamsheetComponents/TeamsheetReport";
 import useConfirm from "../common/useConfirm";
 import HandlePrintPreview from "../teamsheetComponents/HandlePrintPreview";
 import FormDialog2 from "./FormDialog2";
+import dropDownData from "../formcomponents/DropDownData";
 
 const MyDataGrid = ({props}) => {
     // const [gridOptions, setGridOptions] = useState<GridOptions>({});
@@ -37,11 +37,11 @@ const MyDataGrid = ({props}) => {
     const gridRef = useRef(null);
     const [paginationEnabled, setPaginationEnabled] = useState(true);
     // manage id for edis and deletes
-    // const [id, setId] = useState(null)
+    const [id, setId] = useState(null)
     // used with delete to confirm the record is to be deleted
 
-    // const [showConfirm, setShowConfirm] = useState(false);
-    // const [showPrintPreview, setShowPrintPreview] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [showPrintPreview, setShowPrintPreview] = useState(false);
     // const {isPrintPreview, handlePrintPreview} = usePrintPreview(false);
 
     const [selectedRow, setSelectedRow] = useState(null)
@@ -68,26 +68,25 @@ const MyDataGrid = ({props}) => {
 
     // load up data for dropdowns
     // pass this as a single object , rather than individual collections
-    const dropDownData = {
-        competitions: useAxios2(COMPETITION_URLS.list),
-        players: useAxios2(PLAYER_URLS.list),
-        clubs: useAxios2(CLUB_URLS.list),
-        positions: useAxios2(POSITION_URLS.list),
-        pitchgrids: useAxios2(PITCH_GRID_URLS.list),
-        statnames: useAxios2(STAT_NAME_URLS.list),
-    }
+
 
     const handleOpen = () => {
         setOpen(true);
     }
     const handleClose = () => {
         setOpen(false);
-        // setFormData(data.initialValue);
+        setFormData(props.initialValue);
     };
 
     const handleSelectionChanged = () => {
-        const selectedRows = gridApi.getSelectedRows();
-        setSelectedRow(selectedRows[0] || null);
+        if (gridApi != null) {
+            const selectedRows = gridApi.getSelectedRows();
+            setSelectedRow(selectedRows[0] || null);
+            // Do something with selected rows...
+        } else {
+            console.log("Grid instance is null or undefined");
+        }
+
     };
 
     const onChange = (e) => {
@@ -102,10 +101,12 @@ const MyDataGrid = ({props}) => {
     }
     const handleEdit = (props) => {
         const selectedRows = gridApi.getSelectedRows();
-        setSelectedRow(selectedRows[0])
-        setFormData(selectedRows[0] || null);
-        setOpen(true);
-        console.log(selectedRows[0])
+        if (selectedRows.length > 0) {
+            setSelectedRow(selectedRows[0])
+            setFormData(selectedRows[0] || null);
+            setOpen(true);
+            console.log(selectedRows[0])
+        }
     }
 
     // const handleConfirm = (id) => {
@@ -131,7 +132,6 @@ const MyDataGrid = ({props}) => {
     };
 
     const formActions = {
-
         headerName: 'Actions',
         field: 'id',
         width: 200,
@@ -277,10 +277,10 @@ const MyDataGrid = ({props}) => {
                 <div></div>
         )
     }
-    // const handlePrintPreviewButton = (params) => {
-    //     return setShowPrintPreview( HandlePrintPreview(params) )
-    //
-    // }
+    const handlePrintPreviewButton = (params) => {
+        return setShowPrintPreview(HandlePrintPreview(params))
+
+    }
     // watch when the filter is changed in the grid
     useEffect(() => {
         if (gridApi) {
@@ -295,15 +295,19 @@ const MyDataGrid = ({props}) => {
     // loading grid at start / and reloading on grid changes
     useEffect(() => {
         getData(props.methods.list)
-        setRowData(data)
     }, []);
     // what to do when row data changes
 
-    // useEffect(() => {
-    //     const rows = gridApi.getSelectedRows()
-    //     setSelectedRow(rows[0])
-    // }, [gridApi.getSelectedRows]);
+    useEffect(() => {
+        if (gridApi) {
+            const rows = gridApi.getSelectedRows()
+            setSelectedRow(rows[0])
+        }
+    }, [gridApi, setSelectedRow]);
 
+    useEffect(() => {
+        setRowData(data);
+    }, [data]);
 
     const handleSubmit = (formValues) => {
         if (selectedRow) {
@@ -317,15 +321,15 @@ const MyDataGrid = ({props}) => {
         setOpen(false);
     };
     // handling delete
-    // useEffect(() => {
-    //     if (showConfirm) {
-    //         const confirmAction = window.confirm('Are you sure you want to delete this item?');
-    //         if (confirmAction) {
-    //             handleDelete(id);
-    //         }
-    //         setShowConfirm(false);
-    //     }
-    // }, [showConfirm, id, handleDelete]);
+    useEffect(() => {
+        if (showConfirm) {
+            const confirmAction = window.confirm('Are you sure you want to delete this item?');
+            if (confirmAction) {
+                handleDelete(id);
+            }
+            setShowConfirm(false);
+        }
+    }, [showConfirm, id, handleDelete]);
 
     const commonParams = {}
     const gridParams = {
@@ -352,19 +356,20 @@ const MyDataGrid = ({props}) => {
 
         onClose: handleClose,
         onSubmit: handleSubmit,
+        open: open,
         setOpen: setOpen,            // dummy value to test index .. props.index previous
-        // setFormData: setFormData,
-        // data: formData,
-        // formData: formData,
-        // rowData: selectedRow,
-        // onChange: onChange,
+        setFormData: setFormData,
+        data: formData,
+        formData: formData,
+        rowData: selectedRow,
+        onChange: onChange,
         // onClose: handleClose,
-        // methods: props.methods,
-        // colDefs: props.columnDefs,
-        // messages: props.messages,
-        // initialValue: props.initialValue,
-        // axiosApi: axiosApi,
-        // dropDownData: dropDownData,
+        methods: props.methods,
+        colDefs: props.columnDefs,
+        messages: props.messages,
+        initialValue: props.initialValue,
+        axiosApi: axiosApi,
+        dropDownData: dropDownData,
     }
     const togglePagination = () => {
         const pageSize = paginationEnabled ? 0 : 10;
@@ -383,7 +388,7 @@ const MyDataGrid = ({props}) => {
         !loading ? <div>
             <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
                 <Fragment>
-                    {/*{showPrintPreview ? <TeamsheetReport props={filteredData}/> : null}*/}
+                    {showPrintPreview ? <TeamsheetReport props={filteredData}/> : null}
                     <div style={{display: "flex", justifyContent: "space-between"}}>
                         <PrintPreviewButton {...props} gridApi={gridApi}/>
                         <AddButton {...props}/>
@@ -394,22 +399,24 @@ const MyDataGrid = ({props}) => {
                     {...commonParams}
                     {...gridParams}
                 />
-                {/*<FormDialog2*/}
-                {/*    {...commonParams}*/}
-                {/*    {...formParams}*/}
-                {/*    open={open}*/}
-                {/*    rowData = {selectedRow}*/}
-                {/*/>*/}
                 <PaginationButton/>
+                <FormDialog
+                    {...formParams}
+
+                />
+
             </div>
             {/*<button onClick={exportData}>Export Data</button>*/}
 
-        </div>                     : <p> Loading...</p>
+        </div> : <p> Loading...</p>
     )
 };
 
 export default MyDataGrid;
 
 
-
+// {...commonParams}
+// {...formParams}
+// open={open}
+// rowData = {selectedRow}
 
