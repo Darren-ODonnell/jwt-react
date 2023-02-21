@@ -106,15 +106,18 @@ const MyDataGrid = ({props}) => {
         const {value, id} = e.target
         // update field with data from user
         // data updated here first, then screen is updated
-        console.log(value + " - " + id)
         setFormData({...formData, [id]: value})
     }
     const onGridReady = (params) => {
         setGridApi(params.api)
+        gridApi.addEventListener('rowSelected', function (event) {
+            var selectedRows = gridApi.getSelectedRows();
+            setSelectedRow(selectedRows[0])
+            console.log('Selected Rows:-', selectedRows[0]);
+        });
     }
     const handleEdit = (props) => {
         const selectedRows = gridApi.getSelectedRows();
-        console.log("SelectedRows: " + selectedRows)
         handleOpen()
         // if (selectedRows.length > 0) {
         //     setSelectedRow(selectedRows[0])
@@ -306,13 +309,18 @@ const MyDataGrid = ({props}) => {
     useEffect(() => {
         getData(props.methods.list)
     }, []);
-    // what to do when row data changes
-
+    // // what to do when row data changes
+    // gridApi.addEventListener('rowSelected', function(event) {
+    //     // handle row selection event here
+    //     console.log("Row selected: " + event.node.data.id);
+    // });
     useEffect(() => {
         if (gridApi) {
+            // const row = gridApi.selection.selectRow(rowNode);
+
             const rows = gridApi.getSelectedRows()
             setSelectedRow(rows[0])
-            console.log("UseEffect SelectedRow: " + selectedRow)
+
         }
     }, [gridApi, setSelectedRow]);
 
@@ -355,15 +363,9 @@ const MyDataGrid = ({props}) => {
         paginationPageSize: 10,
         columnDefs: [...props.columnDefs, formActions],
         onSelectionChanged: handleSelectionChanged,
-        rowSelection: "single",
+        rowSelection: "multiple",
     }
-    useEffect(() => {
-        console.log("SelectedRow: " + selectedRow)
-        console.log("open: " + open)
 
-        console.log("SelectedRow: " + selectedRow)
-
-    },[selectedRow])
 
     const formParams = {
         index: props.index,        // check if key above can be used on its own...

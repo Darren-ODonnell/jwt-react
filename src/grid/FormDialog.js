@@ -181,7 +181,7 @@ const FormDialog = ({ open, onClose, onSubmit, rowData, setData, colDefs, handle
     }
 
     return (
-        !loading  ?
+
         <div>
 
             <Dialog
@@ -296,7 +296,6 @@ const FormDialog = ({ open, onClose, onSubmit, rowData, setData, colDefs, handle
                             }
                         })
                     }
-                    :
                 </DialogContent>
                 <DialogActions>
                     <CancelButton setOpen={setOpen} initialValue={initialValue} setFormValues={setFormValues} />
@@ -304,8 +303,7 @@ const FormDialog = ({ open, onClose, onSubmit, rowData, setData, colDefs, handle
                 </DialogActions>
             </Dialog>
         </div>
-        :
-        <p>Loading...</p>
+
     );
 }
 export default FormDialog;
