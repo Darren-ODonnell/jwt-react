@@ -29,11 +29,11 @@ import useConfirm from "../common/useConfirm";
 import HandlePrintPreview from "../teamsheetComponents/HandlePrintPreview";
 import dropDownData from "../formcomponents/DropDownData";
 import FormDialog from "./FormDialog";
+import {GridOptions} from "ag-grid-community";
 
 // import FormDialog2 from "./FormDialog2";
 
 const MyDataGrid = ({props}) => {
-    // const [gridOptions, setGridOptions] = useState<GridOptions>({});
     const [gridApi, setGridApi] = useState(null);
     const gridRef = useRef(null);
     const [paginationEnabled, setPaginationEnabled] = useState(true);
@@ -52,10 +52,8 @@ const MyDataGrid = ({props}) => {
     const [formData, setFormData] = useState(props.initialValue)
     // form control
     const [open, setOpen] = useState(false);
-
     // api control
     const [data, error, loading, axiosApi] = useAxios();
-
     // print preview handler state
     const [filteredData, setFilteredData] = useState([])
     // export data hook
@@ -78,7 +76,6 @@ const MyDataGrid = ({props}) => {
         } else {
             console.log("Form already open")
         }
-
     }
     const handleClose = () => {
         if(open!==false) {
@@ -99,7 +96,6 @@ const MyDataGrid = ({props}) => {
         } else {
             console.log("Grid instance is null or undefined");
         }
-
     };
 
     const onChange = (e) => {
@@ -110,6 +106,7 @@ const MyDataGrid = ({props}) => {
     }
     const onGridReady = (params) => {
         setGridApi(params.api)
+        const gridApi = params.api;
         gridApi.addEventListener('rowSelected', function (event) {
             var selectedRows = gridApi.getSelectedRows();
             setSelectedRow(selectedRows[0])
@@ -118,13 +115,14 @@ const MyDataGrid = ({props}) => {
     }
     const handleEdit = (props) => {
         const selectedRows = gridApi.getSelectedRows();
-        handleOpen()
-        // if (selectedRows.length > 0) {
-        //     setSelectedRow(selectedRows[0])
-        //     setFormData(selectedRows[0] || null);
-        //     handleOpen();
-        //     console.log("SelectedRow: " + selectedRow)
-        // }
+        if (selectedRows.length > 0) {
+            setSelectedRow(selectedRows[0])
+            setFormData(selectedRows[0] || null);
+            handleOpen();
+            console.log("SelectedRow: " + selectedRow)
+            handleOpen()
+
+        }
     }
 
     // const handleConfirm = (id) => {
@@ -206,8 +204,7 @@ const MyDataGrid = ({props}) => {
             method: method,
             url: url,
         }).then(() => {
-            // setRowData(data)
-            // console.log(data)
+
         }).catch(err => {
             handleClose()
         })        // cancel subscription to useEffect
@@ -317,10 +314,8 @@ const MyDataGrid = ({props}) => {
     useEffect(() => {
         if (gridApi) {
             // const row = gridApi.selection.selectRow(rowNode);
-
             const rows = gridApi.getSelectedRows()
             setSelectedRow(rows[0])
-
         }
     }, [gridApi, setSelectedRow]);
 
