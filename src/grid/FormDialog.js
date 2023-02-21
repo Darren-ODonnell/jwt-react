@@ -22,13 +22,15 @@ import DropDown from "../formcomponents/DropDown";
 import MyTimePicker from "../formcomponents/MyTimePicker";
 import MyDatePicker from "../formcomponents/MyDatePicker";
 
-const FormDialog = (props) => {
-    const [formValues, setFormValues] = useState(props.rowData)
+const FormDialog = ({ open, onClose, onSubmit, rowData, setData, colDefs, handleClose, handleSubmit,initialValue, error, setOpen, methods, loading }) => {
+    const [formValues, setFormValues] = useState(rowData)
     // const [value, setValue] = useState()
     // const [dateValue, setDateValue] = useState(props.rowData.fixtureDate)
     // const [timeValue, setTimeValue] = useState(moment(props.data.fixtureTime, TIME_FORMAT))
-    // const [selected , setSelected]  = useState( props.defaultValue )
+    // const [selected , setSelected]  = useState( rowData )
     // const [formData, setFormData] = useState({...props.data})
+
+    console.log("Open: "+open)
 
     const handleChange2 = (event) => {
         // const {name, value} = event.target;
@@ -64,23 +66,24 @@ const FormDialog = (props) => {
         // setFormValues(initialValue);
         // setOpen(false)
     }
-    const CancelButton = (props) => {
+    const CancelButton = () => {
         return (
-            <></>
-            // <Button onClick={ () => onCancel(props) }
-            //         color   = "secondary"
-            //         variant = "outlined"
-            // > Cancel </Button>
+
+            <Button onClick={ () => handleClose() }
+                    color   = "secondary"
+                    variant = "outlined"
+            > Cancel </Button>
         )
     }
-    const SubmitButton = (props) => {
+    const SubmitButton = ({formValues, methods, setOpen, error}) => {
         return (
-            <></>
-            // <Button onClick={() => handleFormSubmit({formValues, props.methods, props.setOpen, props.error})}
-            //         type="submit"
-            //         color="primary"
-            //         variant="outlined"
-            // >Submit</Button>
+            <>
+                <Button onClick={() => handleFormSubmit({formValues, methods, setOpen, error})}
+                        type="submit"
+                        color="primary"
+                        variant="outlined"
+                >Submit</Button>
+            </>
         )
     }
 
@@ -157,17 +160,17 @@ const FormDialog = (props) => {
         // refreshPage()
         // // window.location.reload()
     }
-    // const scroll = {
-    //     overflowX: 'scroll',
-    //     overflowY: 'scroll',
-    // }
+    const scroll = {
+        overflowX: 'scroll',
+        overflowY: 'scroll',
+    }
 
-    // const dropDown = {
-    //     width: '60%',
-    //     height: '50%',
-    //     overflowY: 'auto',
-    //
-    // }
+    const dropDown = {
+        width: '60%',
+        height: '50%',
+        overflowY: 'auto',
+
+    }
     // const handleSubmit = (event) => {
     //     event.preventDefault();
     //     props.onSubmit(formValues);
@@ -178,35 +181,35 @@ const FormDialog = (props) => {
     }
 
     return (
-        // !props.loading  ?
+        !loading  ?
         <div>
 
-            <Dialog onEnter={handleDialogEnter}
+            <Dialog
 
-                // className="scroll"
-                // style={scroll}
-                    id={getUniqueId()}
-                    open={props.open}
-                    onClose={props.onClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
+                className="scroll"
+                style={scroll}
+                id={getUniqueId()}
+                open={open}
+                onClose={onClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
             >
-
+                {console.log("ColDefs: " + colDefs)}
                 <DialogContent dividers>
                     {
-                        props.colDefs.map(prop => {
+                        colDefs.map(prop => {
                             let options
                             const commonProps = {
                                 // style: dropDown,
                                 // formData: {...props.data},
-                                formValues: props.rowData,
-                                value: formValues[prop.field],
-                                setFormValues: props.setData,
+                                formValues: rowData,
+                                value: colDefs[prop.field],
+                                setFormValues: setData,
                                 field: prop.field,
                                 onChange: handleChange2,
                                 key: getUniqueId(),
-                                defaultValue: props.data[prop.field],
-                                onSubmit: props.handleSubmit,
+                                defaultValue: colDefs[prop.field],
+                                onSubmit: handleSubmit,
                             }
 
                             switch (prop.field) {
@@ -287,20 +290,22 @@ const FormDialog = (props) => {
                                 default:
                                     return <MyTextField
                                         {...commonProps}
-                                        headerName={prop.headerName}/>
+                                        headerName={prop.headerName}
+
+                                    />
                             }
                         })
                     }
                     :
                 </DialogContent>
-                {/*<DialogActions>*/}
-                {/*    <CancelButton {...props} />*/}
-                {/*    <SubmitButton {...props} />*/}
-                {/*</DialogActions>*/}
+                <DialogActions>
+                    <CancelButton setOpen={setOpen} initialValue={initialValue} setFormValues={setFormValues} />
+                    <SubmitButton formValue={formValues} methods={methods} setOpen={setOpen} error={error} />
+                </DialogActions>
             </Dialog>
         </div>
-        // :
-        // <p>Loading...</p>
+        :
+        <p>Loading...</p>
     );
 }
 export default FormDialog;

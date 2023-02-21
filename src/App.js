@@ -5,12 +5,12 @@ import { NavbarSelect } from "./NavBar/NavBarSelect";
 
 const App = () =>  {
     return (
-        <React.StrictMode>
-            <div>
-                <NavbarSelect/>
-                <Paths/>
-            </div>
-        </React.StrictMode>
+
+        <div>
+            <NavbarSelect/>
+            <Paths/>
+        </div>
+
     )
 }
 export default App;

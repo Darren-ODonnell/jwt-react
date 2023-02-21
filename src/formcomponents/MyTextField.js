@@ -1,44 +1,50 @@
 import {TextField} from "@mui/material";
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import {getUniqueId} from "../common/helper";
 
-const MyTextField = ({index, field, formData, setFormData, onChange, headerName, style, value}) => {
+const MyTextField = ({index, field, formValues, setFormValues, onChange, headerName, style, value}) => {
 
     // let defaultValue = (params.formData[params.field]) ? (params.formData[params.field]) : ""
     // let defaultValue = (formData[field]) ? (formData[field]) : ""
 
     const onSelectChange = (e) => {
         const {id, value} = e.target
-        setFormData((prevState) => ({...prevState, [id]: value}))
+        setFormValues((prevState) => ({...prevState, [id]: value}))
     }
 
-    console.log("textField-FormData-field: " + formData[field])
+    // console.log("textField-FormValues-field: " + formValues[field])
     console.log("Field:  " + field)
-    console.log("textField-FormData: " + {...formData})
+    console.log("textField-FormValues: " + {...formValues})
 
+    console.log("FormValues: " + formValues)
     const textFieldParams = {
-        value: value,
-        // value: formData[field],       //{formData[field] ? formData[field] : "",
-        onChange: e => onChange(e),
-        data: formData,
-        placeholder: "Enter " + headerName,
-        label: headerName,
-        variant: "outlined",
-        margin: "dense",
-        key: getUniqueId(),
-        id: field,
-        valuedefault: formData,
+        // value: value,
+
+        onChange    : e => onChange(e),
+        data: formValues,
+        placeholder : "Enter " + headerName,
+        label       : headerName,
+        variant     : "outlined",
+        margin      : "dense",
+        key         : getUniqueId(),
+        id          : field,
+        valuedefault: formValues,
     }
+
+    useEffect(() => {
+
+    },[formValues])
+
 
     return (
         <TextField
             {...textFieldParams}
-            fullwidth
+
             // style : style}
             // key : getUniqueId()}
             // id : field}
             // valuedefault : formData}
-            // fullWidth
+            fullWidth
         />
     )
 }
