@@ -30,9 +30,7 @@ import HandlePrintPreview from "../teamsheetComponents/HandlePrintPreview";
 import dropDownData from "../formcomponents/DropDownData";
 import FormDialog4 from "./FormDialog4";
 import {GridOptions} from "ag-grid-community";
-// import FormDialog from "./FormDialog";
 
-// import FormDialog2 from "./FormDialog2";
 
 const MyDataGrid = ({props}) => {
     const [gridApi, setGridApi] = useState(null);
@@ -46,11 +44,11 @@ const MyDataGrid = ({props}) => {
     const [showPrintPreview, setShowPrintPreview] = useState(false);
     // const {isPrintPreview, handlePrintPreview} = usePrintPreview(false);
 
-    const [selectedRow, setSelectedRow] = useState({})
+    const [selectedRow, setSelectedRow] = useState()
     // grid data
     const [rowData, setRowData] = useState([]);
     // data for form
-    const [formData, setFormData] = useState(props.initialValue)
+    // const [formData, setFormData] = useState(props.initialValue)
     // form control
     const [open, setOpen] = useState(false);
     // api control
@@ -78,8 +76,9 @@ const MyDataGrid = ({props}) => {
     }
     const handleClose = () => {
         if(open!==false) {
-            setOpen( false );
-            setFormData(props.initialValue);
+            setOpen(false);
+            setRowData(props.initialValue);
+            // setFormData(props.initialValue);
             console.log("Closing Form: ")
         }
     };
@@ -100,7 +99,8 @@ const MyDataGrid = ({props}) => {
         const {value, id} = e.target
         // update field with data from user
         // data updated here first, then screen is updated
-        setFormData({...formData, [id]: value})
+        setRowData({...rowData, [id]: value})
+        // setFormData({...formData, [id]: value})
     }
     const onGridReady = (params) => {
         setGridApi(params.api)
@@ -167,8 +167,9 @@ const MyDataGrid = ({props}) => {
     const deleteData = ({data, error}) => {
         const user = AuthService.getCurrentUser();
 
-        const selectedRows = gridApi.getSelectedRows();
-        setFormData(selectedRows[0]);
+        // const selectedRows = gridApi.getSelectedRows();
+        // setRowData(selectedRows[0])
+        // setFormData(selectedRows[0]);
 
         AuthService.setAuthToken(user.accessToken);
 
@@ -289,20 +290,20 @@ const MyDataGrid = ({props}) => {
         return setShowPrintPreview(HandlePrintPreview(params))
 
     }
-    useEffect(() => {
-        // Do something with the updated selectedRow state variable here
-    }, [selectedRow]);
+    // useEffect(() => {
+    //     // Do something with the updated selectedRow state variable here
+    // }, [selectedRow]);
     // watch when the filter is changed in the grid
-    useEffect(() => {
-        if (gridApi) {
-            gridApi.addEventListener('filterChanged', handleFilterChanged);
-        }
-        return () => {
-            if (gridApi) {
-                gridApi.removeEventListener('filterChanged', handleFilterChanged);
-            }
-        };
-    }, [gridApi]);
+    // useEffect(() => {
+    //     if (gridApi) {
+    //         gridApi.addEventListener('filterChanged', handleFilterChanged);
+    //     }
+    //     return () => {
+    //         if (gridApi) {
+    //             gridApi.removeEventListener('filterChanged', handleFilterChanged);
+    //         }
+    //     };
+    // }, [gridApi]);
     // loading grid at start / and reloading on grid changes
     useEffect(() => {
         getData(props.methods.list)
@@ -312,39 +313,39 @@ const MyDataGrid = ({props}) => {
     //     // handle row selection event here
     //     console.log("Row selected: " + event.node.data.id);
     // });
-    useEffect(() => {
-        if (gridApi) {
-            // const row = gridApi.selection.selectRow(rowNode);
-            const rows = gridApi.getSelectedRows()
-            setSelectedRow(rows[0])
-        }
-    }, [gridApi, setSelectedRow]);
+    // useEffect(() => {
+    //     if (gridApi) {
+    //         // const row = gridApi.selection.selectRow(rowNode);
+    //         const rows = gridApi.getSelectedRows()
+    //         setSelectedRow(rows[0])
+    //     }
+    // }, [gridApi, setSelectedRow]);
 
     useEffect(() => {
         setRowData(data);
     }, [data]);
 
-    const handleSubmit = (formValues) => {
-        if (selectedRow) {
-            const index = rowData.findIndex((row) => row === selectedRow);
-            const updatedRow = {...selectedRow, ...formValues};
-            setRowData([...rowData.slice(0, index), updatedRow, ...rowData.slice(index + 1)]);
-            setSelectedRow(null);
-        } else {
-            setRowData([...rowData, formValues]);
-        }
-        handleClose()
-    };
+    // const handleSubmit = (formValues) => {
+    //     if (selectedRow) {
+    //         const index = rowData.findIndex((row) => row === selectedRow);
+    //         const updatedRow = {...selectedRow, ...formValues};
+    //         setRowData([...rowData.slice(0, index), updatedRow, ...rowData.slice(index + 1)]);
+    //         setSelectedRow(null);
+    //     } else {
+    //         setRowData([...rowData, formValues]);
+    //     }
+    //     handleClose()
+    // };
     // handling delete
-    useEffect(() => {
-        if (showConfirm) {
-            const confirmAction = window.confirm('Are you sure you want to delete this item?');
-            if (confirmAction) {
-                handleDelete(id);
-            }
-            setShowConfirm(false);
-        }
-    }, [showConfirm, id, handleDelete]);
+    // useEffect(() => {
+    //     if (showConfirm) {
+    //         const confirmAction = window.confirm('Are you sure you want to delete this item?');
+    //         if (confirmAction) {
+    //             handleDelete(id);
+    //         }
+    //         setShowConfirm(false);
+    //     }
+    // }, [showConfirm, id, handleDelete]);
 
     const commonParams = {}
     const gridParams = {
@@ -359,36 +360,32 @@ const MyDataGrid = ({props}) => {
         paginationPageSize: 10,
         columnDefs: [...props.columnDefs, formActions],
         onSelectionChanged: handleSelectionChanged,
-        rowSelection: "multiple",
+        rowSelection: "single",
     }
-
-
     const formParams = {
-        index: props.index,        // check if key above can be used on its own...
+        // index: props.index,        // check if key above can be used on its own...
 
-        onClose: handleClose,
+        // onClose: handleClose,
         handleClose: handleClose,
-        onSubmit: handleSubmit,
+        // onSubmit: handleSubmit,
         open: open,
-        setOpen: handleOpen,            // dummy value to test index .. props.index previous
-        data: formData,
-        formData: formData,
-        setFormData: setFormData,
-        rowData: selectedRow,
-        values:selectedRow,
-        onChange: onChange,
-        methods: props.methods,
+        // setOpen: handleOpen,            // dummy value to test index .. props.index previous
+        // data: formData,
+        // formData: formData,
+        // setFormData: setFormData,
+        rowData: {...selectedRow},
+        // values:selectedRow,
+        // onChange: onChange,
+        // methods: props.methods,
         colDefs: props.columnDefs,
-        messages: props.messages,
-        initialValue: props.initialValue,
-        axiosApi: axiosApi,
-        loading: loading,
-        error: error,
+        // messages: props.messages,
+        // initialValue: props.initialValue,
+        // axiosApi: axiosApi,
+        // loading: loading,
+        // error: error,
 
         dropDownData: dropDownData,
     }
-
-
     const togglePagination = () => {
         const pageSize = paginationEnabled ? 0 : 10;
         setPaginationEnabled(!paginationEnabled);
@@ -418,9 +415,10 @@ const MyDataGrid = ({props}) => {
                     {...gridParams}
                 />
                 <PaginationButton/>
+                {console.log("selectedRow: " + JSON.stringify(selectedRow))}
                 <FormDialog4
                     {...formParams}
-                    rowData={selectedRow}
+                    // rowData={selectedRow}
                 />
 
             </div>

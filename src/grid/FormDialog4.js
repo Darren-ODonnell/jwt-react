@@ -11,18 +11,18 @@ import MyTextField from "../formcomponents/MyTextField";
 
 const FormDialog4 = ({ open, onClose, onSubmit, rowData, setData, colDefs, handleClose, handleSubmit,
                         initialValue, error, setOpen, methods, loading }) => {
-    const [formValues, setFormValues] = useState(rowData)
+    const [formValues, setFormValues] = useState()
     // const [formValues, setFormValues] = useState(initialValue)
 
     const handleFormSubmit = ({formValues, methods, setOpen, error}) => {
     }
     const handleChange2 = (event) => {
-
+        setFormValues([...rowData, [event.target.id] = event.target.value])
+        setOpen(false);
     };
 
     const CancelButton = () => {
         return (
-
             <Button onClick={ () => handleClose() }
                     color   = "secondary"
                     variant = "outlined"
@@ -41,39 +41,33 @@ const FormDialog4 = ({ open, onClose, onSubmit, rowData, setData, colDefs, handl
         )
     }
 
+
     useEffect(() => {
         setFormValues(rowData);
     }, [rowData]);
 
     return  (
-        formValues ? <div>
+        <div>
             <Dialog
-                className        = "scroll"
-                id               = {getUniqueId()}
-                open             = {open}
-                onClose          = {onClose}
-                aria-labelledby  = "alert-dialog-title"
-                aria-describedby = "alert-dialog-description"
+                className="scroll"
+                open={open}
+                onClose={onClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
             >
+                {console.log("RowData2: " + JSON.stringify(rowData))}
                 <DialogContent dividers>
-                    {
-
-                        colDefs.map(prop => {
-                            let options
-                            switch ( prop.field ) {
-                                default:
-                                    return <MyTextField
-                                        headerName={ prop.headerName }
-                                        value={ formValues[prop.field]}
-                                        setFormValues={ setData }
-                                        field={ prop.field }
-                                        onChange={ handleChange2 }
-                                        key={ getUniqueId() }
-                                        defaultValue={ colDefs[ prop.field ] }
-                                        onSubmit={ handleSubmit }
-
-                                    />
-                            }
+                    {colDefs.map(prop => {
+                        switch (prop.field) {
+                            default:
+                                return <MyTextField
+                                    headerName={prop.headerName}
+                                    value={formValues ? formValues[prop.field] : undefined}
+                                    onChange={handleChange2}
+                                    key={getUniqueId()}
+                                    handleClose={handleClose}
+                                />
+                        }
                         })
                     }
                 </DialogContent>
@@ -83,8 +77,7 @@ const FormDialog4 = ({ open, onClose, onSubmit, rowData, setData, colDefs, handl
                 </DialogActions>
             </Dialog>
         </div>
-        :
-        <div>Loading</div>
+
     );
 }
 export default FormDialog4;
