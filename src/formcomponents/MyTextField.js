@@ -4,40 +4,27 @@ import {getUniqueId} from "../common/helper";
 
 const MyTextField = ({index, field, formValues, setFormValues, onChange, headerName, style, value}) => {
 
-    // let defaultValue = (params.formData[params.field]) ? (params.formData[params.field]) : ""
-    // let defaultValue = (formData[field]) ? (formData[field]) : ""
 
-    const onSelectChange = (e) => {
-        const {id, value} = e.target
-        setFormValues((prevState) => ({...prevState, [id]: value}))
-    }
+    // const onSelectChange = (e) => {
+    //     const {id, value} = e.target
+    //     setFormValues((prevState) => ({...prevState, [id]: value}))
+    // }
 
-    // console.log("textField-FormValues-field: " + formValues[field])
-    console.log("Field:  " + field)
-    console.log("textField-FormValues: " + {...formValues})
 
-    console.log("FormValues: " + formValues)
     const textFieldParams = {
-        // value: value,
-
         onChange    : e => onChange(e),
-        data: formValues,
+        value        : value,
         placeholder : "Enter " + headerName,
         label       : headerName,
         variant     : "outlined",
         margin      : "dense",
         key         : getUniqueId(),
         id          : field,
-        valuedefault: formValues,
+
     }
 
-    useEffect(() => {
-
-    },[formValues])
-
-
     return (
-        <TextField
+       <TextField
             {...textFieldParams}
 
             // style : style}
@@ -46,6 +33,7 @@ const MyTextField = ({index, field, formValues, setFormValues, onChange, headerN
             // valuedefault : formData}
             fullWidth
         />
+
     )
 }
 export default MyTextField;

@@ -28,8 +28,9 @@ import TeamsheetReport from "../teamsheetComponents/TeamsheetReport";
 import useConfirm from "../common/useConfirm";
 import HandlePrintPreview from "../teamsheetComponents/HandlePrintPreview";
 import dropDownData from "../formcomponents/DropDownData";
-import FormDialog from "./FormDialog";
+import FormDialog4 from "./FormDialog4";
 import {GridOptions} from "ag-grid-community";
+// import FormDialog from "./FormDialog";
 
 // import FormDialog2 from "./FormDialog2";
 
@@ -45,7 +46,7 @@ const MyDataGrid = ({props}) => {
     const [showPrintPreview, setShowPrintPreview] = useState(false);
     // const {isPrintPreview, handlePrintPreview} = usePrintPreview(false);
 
-    const [selectedRow, setSelectedRow] = useState([])
+    const [selectedRow, setSelectedRow] = useState({})
     // grid data
     const [rowData, setRowData] = useState([]);
     // data for form
@@ -73,8 +74,6 @@ const MyDataGrid = ({props}) => {
         if(open!==true) {
             setOpen( true );
             console.log("Opening Form: ")
-        } else {
-            console.log("Form already open")
         }
     }
     const handleClose = () => {
@@ -82,16 +81,15 @@ const MyDataGrid = ({props}) => {
             setOpen( false );
             setFormData(props.initialValue);
             console.log("Closing Form: ")
-        } else {
-            console.log("Form already closed")
         }
     };
 
     const handleSelectionChanged = () => {
         if (gridApi != null) {
-            const selectedRows = gridApi.getSelectedRows();
-            setSelectedRow(selectedRows[0] || null);
-            console.log("SelectedRow set to: " + selectedRows[0]);
+                const selectedNodes = gridApi.getSelectedNodes();
+                const selectedData = selectedNodes.map((node) => node.data);
+                setSelectedRow(selectedData[0]);
+                handleOpen();
             // Do something with selected rows...
         } else {
             console.log("Grid instance is null or undefined");
@@ -108,19 +106,19 @@ const MyDataGrid = ({props}) => {
         setGridApi(params.api)
         const gridApi = params.api;
         gridApi.addEventListener('rowSelected', function (event) {
-            var selectedRows = gridApi.getSelectedRows();
+            let selectedRows = gridApi.getSelectedRows();
             setSelectedRow(selectedRows[0])
-            console.log('Selected Rows:-', selectedRows[0]);
+
         });
     }
     const handleEdit = (props) => {
-        const selectedRows = gridApi.getSelectedRows();
-        if (selectedRows.length > 0) {
-            setSelectedRow(selectedRows[0])
-            setFormData(selectedRows[0] || null);
+        const selectedNodes = gridApi.getSelectedRows();
+        if (selectedNodes.length === 1) {
+            const selectedData = selectedNodes[0];
+            setSelectedRow(selectedData);
             handleOpen();
-            console.log("SelectedRow: " + selectedRow)
-            handleOpen()
+
+
 
         }
     }
@@ -291,6 +289,9 @@ const MyDataGrid = ({props}) => {
         return setShowPrintPreview(HandlePrintPreview(params))
 
     }
+    useEffect(() => {
+        // Do something with the updated selectedRow state variable here
+    }, [selectedRow]);
     // watch when the filter is changed in the grid
     useEffect(() => {
         if (gridApi) {
@@ -372,7 +373,9 @@ const MyDataGrid = ({props}) => {
         setOpen: handleOpen,            // dummy value to test index .. props.index previous
         data: formData,
         formData: formData,
+        setFormData: setFormData,
         rowData: selectedRow,
+        values:selectedRow,
         onChange: onChange,
         methods: props.methods,
         colDefs: props.columnDefs,
@@ -381,9 +384,10 @@ const MyDataGrid = ({props}) => {
         axiosApi: axiosApi,
         loading: loading,
         error: error,
-        setFormData: setFormData,
+
         dropDownData: dropDownData,
     }
+
 
     const togglePagination = () => {
         const pageSize = paginationEnabled ? 0 : 10;
@@ -414,8 +418,9 @@ const MyDataGrid = ({props}) => {
                     {...gridParams}
                 />
                 <PaginationButton/>
-                <FormDialog
+                <FormDialog4
                     {...formParams}
+                    rowData={selectedRow}
                 />
 
             </div>

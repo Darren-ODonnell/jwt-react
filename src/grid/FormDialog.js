@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 
 import {ErrorMessage} from "../common/ErrorMessage";
@@ -23,7 +23,7 @@ import MyTimePicker from "../formcomponents/MyTimePicker";
 import MyDatePicker from "../formcomponents/MyDatePicker";
 
 const FormDialog = ({ open, onClose, onSubmit, rowData, setData, colDefs, handleClose, handleSubmit,initialValue, error, setOpen, methods, loading }) => {
-    const [formValues, setFormValues] = useState(rowData)
+    const [formValues, setFormValues] = useState(initialValue)
     // const [value, setValue] = useState()
     // const [dateValue, setDateValue] = useState(props.rowData.fixtureDate)
     // const [timeValue, setTimeValue] = useState(moment(props.data.fixtureTime, TIME_FORMAT))
@@ -31,6 +31,9 @@ const FormDialog = ({ open, onClose, onSubmit, rowData, setData, colDefs, handle
     // const [formData, setFormData] = useState({...props.data})
 
     console.log("Open: "+open)
+    console.log("RowData: "+{...rowData})
+    console.log("formValues: "+{...formValues})
+
 
     const handleChange2 = (event) => {
         // const {name, value} = event.target;
@@ -160,6 +163,10 @@ const FormDialog = ({ open, onClose, onSubmit, rowData, setData, colDefs, handle
         // refreshPage()
         // // window.location.reload()
     }
+    useEffect(() => {
+        setFormValues(rowData);
+    }, [rowData]);
+
     const scroll = {
         overflowX: 'scroll',
         overflowY: 'scroll',
@@ -182,7 +189,7 @@ const FormDialog = ({ open, onClose, onSubmit, rowData, setData, colDefs, handle
 
     return (
 
-        <div>
+         <div>
 
             <Dialog
 
@@ -194,103 +201,37 @@ const FormDialog = ({ open, onClose, onSubmit, rowData, setData, colDefs, handle
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                {console.log("ColDefs: " + colDefs)}
                 <DialogContent dividers>
                     {
+
                         colDefs.map(prop => {
                             let options
                             const commonProps = {
                                 // style: dropDown,
                                 // formData: {...props.data},
-                                formValues: rowData,
-                                value: colDefs[prop.field],
-                                setFormValues: setData,
-                                field: prop.field,
-                                onChange: handleChange2,
-                                key: getUniqueId(),
-                                defaultValue: colDefs[prop.field],
-                                onSubmit: handleSubmit,
+                                // formValues: rowData,
+                                // value: formValues[prop.field],
+                                // setFormValues: setData,
+                                // field: prop.field,
+                                // onChange: handleChange2,
+                                // key: getUniqueId(),
+                                // defaultValue: colDefs[prop.field],
+                                // onSubmit: handleSubmit,
                             }
 
-                            switch (prop.field) {
-                                // case "awayTeamName" :
-                                // case "homeTeamName" :
-                                //     return clubDropdown({...props, ...prop, index});
-                                // // case "playerName" :
-                                // //     return playerNameDropDown()
-                                // // case "statname" :
-                                // //     return
-                                // case "half" :
-                            //     return <DropDown
-                            //         {...commonProps}
-                            //         headerName={"First/Second Half"}
-                            //         options={HALF} />
-                            // case "registered":
-                            //     let component =
-                            //         <DropDown
-                            //             {...commonProps}
-                            //             headerName={"Registered"}
-                            //             options={REGISTERED} />
-                            //     console.log(component)
-                            //     return component
-                            // case "grade":
-                            //     return <DropDown
-                            //         {...commonProps}
-                            //         headerName={"Grade"}
-                            //         options={GRADES} />
-                            // case "availability":
-                            //     return <DropDown
-                            //         {...commonProps}
-                            //         headerName={"Availability"}
-                            //         options={AVAILABILITY} />
-                            // case "pitchgrid":
-                            //     return <DropDown
-                            //         {...commonProps}
-                            //         headerName={"Pitchgrid"}
-                            //         options={PITCH_GRIDS} />
-                            // case "success":
-                            //     return <DropDown
-                            //         {...commonProps}
-                            //         headerName={"Success"}
-                            //         options={SUCCESS} />
-                            // case "position":
-                            //     return <DropDown
-                            //         {...commonProps}
-                            //         headerName={"Position"}
-                            //         options={POSITIONS} />
-                            // case "positionNumber":
-                            //     return <DropDown
-                            //         {...commonProps}
-                            //         headerName={"Position Number"}
-                            //         options={PLAYER_NUMBERS} />
-                            // case "competitionName":
-                            //     return <DropDown
-                            //         {...commonProps}
-                            //         headerName={"Competition Name"}
-                            //         options={COMPETITIONS} />
-                            //
-                            // case "round":
-                            //     return <DropDown
-                            //         {...commonProps}
-                            //         headerName={"Round"}
-                            //         options={ROUNDS} />
-                            // case "season":
-                            //     return <DropDown
-                            //         {...commonProps}
-                            //         headerName={"Season"}
-                            //         options={getSeasons()} />
-                            // case 'fixtureDate':
-                            //     return <MyDatePicker
-                            //         {...commonProps}
-                            //         headerName={"Date"}/>
-                            // case 'fixtureTime':
-                            //     return <MyTimePicker
-                            //         {...commonProps}
-                                //         headerName={"Time"}/>
+                            switch ( prop.field ) {
+
                                 default:
                                     return <MyTextField
-                                        {...commonProps}
-                                        headerName={prop.headerName}
+                                        headerName={ prop.headerName }
+                                        formValues ={formValues}
+                                        // value={ formValues[ prop.field ] }
+                                        setFormValues={ setData }
+                                        field={ prop.field }
+                                        onChange={ handleChange2 }
+                                        key={ getUniqueId() }
+                                        defaultValue={ colDefs[ prop.field ] }
+                                        onSubmit={ handleSubmit }
 
                                     />
                             }
@@ -304,6 +245,8 @@ const FormDialog = ({ open, onClose, onSubmit, rowData, setData, colDefs, handle
             </Dialog>
         </div>
 
+
+
     );
 }
 export default FormDialog;
@@ -314,3 +257,77 @@ export default FormDialog;
 //
 // {/*className="dropDown"*/}
 
+// case "awayTeamName" :
+// case "homeTeamName" :
+//     return clubDropdown({...props, ...prop, index});
+// // case "playerName" :
+// //     return playerNameDropDown()
+// // case "statname" :
+// //     return
+// case "half" :
+//     return <DropDown
+//         {...commonProps}
+//         headerName={"First/Second Half"}
+//         options={HALF} />
+// case "registered":
+//     let component =
+//         <DropDown
+//             {...commonProps}
+//             headerName={"Registered"}
+//             options={REGISTERED} />
+//     console.log(component)
+//     return component
+// case "grade":
+//     return <DropDown
+//         {...commonProps}
+//         headerName={"Grade"}
+//         options={GRADES} />
+// case "availability":
+//     return <DropDown
+//         {...commonProps}
+//         headerName={"Availability"}
+//         options={AVAILABILITY} />
+// case "pitchgrid":
+//     return <DropDown
+//         {...commonProps}
+//         headerName={"Pitchgrid"}
+//         options={PITCH_GRIDS} />
+// case "success":
+//     return <DropDown
+//         {...commonProps}
+//         headerName={"Success"}
+//         options={SUCCESS} />
+// case "position":
+//     return <DropDown
+//         {...commonProps}
+//         headerName={"Position"}
+//         options={POSITIONS} />
+// case "positionNumber":
+//     return <DropDown
+//         {...commonProps}
+//         headerName={"Position Number"}
+//         options={PLAYER_NUMBERS} />
+// case "competitionName":
+//     return <DropDown
+//         {...commonProps}
+//         headerName={"Competition Name"}
+//         options={COMPETITIONS} />
+//
+// case "round":
+//     return <DropDown
+//         {...commonProps}
+//         headerName={"Round"}
+//         options={ROUNDS} />
+// case "season":
+//     return <DropDown
+//         {...commonProps}
+//         headerName={"Season"}
+//         options={getSeasons()} />
+// case 'fixtureDate':
+//     return <MyDatePicker
+//         {...commonProps}
+//         headerName={"Date"}/>
+// case 'fixtureTime':
+//     return <MyTimePicker
+//         {...commonProps}
+//         headerName={"Time"}/>
