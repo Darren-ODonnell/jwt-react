@@ -11,21 +11,31 @@ import MyTextField from "../formcomponents/MyTextField";
 
 const FormDialog4 = ({ open, onClose, onSubmit, rowData, setData, colDefs, handleClose, handleSubmit,
                         initialValue, error, setOpen, methods, loading }) => {
-    const [formValues, setFormValues] = useState()
-    // const [formValues, setFormValues] = useState(initialValue)
+    const [formValues, setFormValues] = useState(initialValue)
 
     const handleFormSubmit = ({formValues, methods, setOpen, error}) => {
+        // setOpen(false);
     }
-    const handleChange2 = (event) => {
-        setFormValues([...rowData, [event.target.id] = event.target.value])
-        setOpen(false);
+    const handleChange3 = (value, field) => {
+        setFormValues({...formValues, [field]: value})
+    };
+
+    const handleChange2 = (field, value) => {
+        // const currentFocus = document.activeElement;
+        setFormValues((prevState) => ({
+            ...prevState,
+            [field]: value,
+        }));
+        // if (currentFocus) {
+        //     currentFocus.focus();
+        // }
     };
 
     const CancelButton = () => {
         return (
-            <Button onClick={ () => handleClose() }
-                    color   = "secondary"
-                    variant = "outlined"
+            <Button onClick={() => handleClose()}
+                    color="secondary"
+                    variant="outlined"
             > Cancel </Button>
         )
     }
@@ -51,11 +61,11 @@ const FormDialog4 = ({ open, onClose, onSubmit, rowData, setData, colDefs, handl
             <Dialog
                 className="scroll"
                 open={open}
-                onClose={onClose}
+                // onClose={onClose}
+                onClose={() => onClose(false)}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                {console.log("RowData2: " + JSON.stringify(rowData))}
                 <DialogContent dividers>
                     {colDefs.map(prop => {
                         switch (prop.field) {
@@ -65,11 +75,10 @@ const FormDialog4 = ({ open, onClose, onSubmit, rowData, setData, colDefs, handl
                                     value={formValues ? formValues[prop.field] : undefined}
                                     onChange={handleChange2}
                                     key={getUniqueId()}
-                                    handleClose={handleClose}
+                                    field={prop.field}
                                 />
                         }
-                        })
-                    }
+                    })}
                 </DialogContent>
                 <DialogActions>
                     <CancelButton setOpen={setOpen} initialValue={initialValue} setFormValues={setFormValues} />

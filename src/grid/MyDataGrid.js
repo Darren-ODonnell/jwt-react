@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo, Fragment } from 'react';
+import React, {useEffect, useState, useRef, useMemo, Fragment, useCallback} from 'react';
 import {AgGridReact} from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -48,7 +48,7 @@ const MyDataGrid = ({props}) => {
     // grid data
     const [rowData, setRowData] = useState([]);
     // data for form
-    // const [formData, setFormData] = useState(props.initialValue)
+    const [formData, setFormData] = useState(props.initialValue)
     // form control
     const [open, setOpen] = useState(false);
     // api control
@@ -67,33 +67,37 @@ const MyDataGrid = ({props}) => {
     // load up data for dropdowns
     // pass this as a single object , rather than individual collections
 
-
     const handleOpen = () => {
         if(open!==true) {
+
             setOpen( true );
             console.log("Opening Form: ")
         }
     }
     const handleClose = () => {
-        if(open!==false) {
+        if (open !== false) {
             setOpen(false);
-            setRowData(props.initialValue);
-            // setFormData(props.initialValue);
+            // setRowData(props.initialValue);
             console.log("Closing Form: ")
         }
     };
 
-    const handleSelectionChanged = () => {
-        if (gridApi != null) {
-                const selectedNodes = gridApi.getSelectedNodes();
-                const selectedData = selectedNodes.map((node) => node.data);
-                setSelectedRow(selectedData[0]);
-                handleOpen();
-            // Do something with selected rows...
-        } else {
-            console.log("Grid instance is null or undefined");
-        }
-    };
+    const onRowSelected = useCallback((event) => {
+        setSelectedRow(event.node.data)
+
+    }, []);
+
+    // const handleSelectionChanged = () => {
+    //     if (gridApi != null) {
+    //             const selectedNodes = gridApi.getSelectedNodes();
+    //             const selectedData = selectedNodes.map((node) => node.data);
+    //             setSelectedRow(selectedData[0]);
+    //             handleOpen();
+    //         // Do something with selected rows...
+    //     } else {
+    //         console.log("Grid instance is null or undefined");
+    //     }
+    // };
 
     const onChange = (e) => {
         const {value, id} = e.target
@@ -117,9 +121,6 @@ const MyDataGrid = ({props}) => {
             const selectedData = selectedNodes[0];
             setSelectedRow(selectedData);
             handleOpen();
-
-
-
         }
     }
 
@@ -240,12 +241,18 @@ const MyDataGrid = ({props}) => {
         )
     }
 
+    const handleAdd = (params) => {
+        setSelectedRow(props.initialValue)
+        handleOpen(params)
+    }
+
+
     // above grid
     const AddButton = (params) => {
         return (
             showAddButton(params.type) ?
                 <Grid align="right">
-                    <Button onClick={() => handleOpen(params)}
+                    <Button onClick={() => handleAdd(params)}
                             variant="contained"
                             color="primary"
                     >{props.messages.add}</Button>
@@ -357,10 +364,11 @@ const MyDataGrid = ({props}) => {
         defaultColDef: defaultColDef,
         pagination: true,
         messages: props.messages,
+        onRowSelected: onRowSelected,
         paginationPageSize: 10,
         columnDefs: [...props.columnDefs, formActions],
-        onSelectionChanged: handleSelectionChanged,
-        rowSelection: "single",
+        // onSelectionChanged: handleSelectionChanged,
+        rowSelection: "multiple",
     }
     const formParams = {
         // index: props.index,        // check if key above can be used on its own...
@@ -369,8 +377,8 @@ const MyDataGrid = ({props}) => {
         handleClose: handleClose,
         // onSubmit: handleSubmit,
         open: open,
-        // setOpen: handleOpen,            // dummy value to test index .. props.index previous
-        // data: formData,
+        setOpen: handleOpen,            // dummy value to test index .. props.index previous
+        data: selectedRow,
         // formData: formData,
         // setFormData: setFormData,
         rowData: {...selectedRow},
@@ -378,11 +386,11 @@ const MyDataGrid = ({props}) => {
         // onChange: onChange,
         // methods: props.methods,
         colDefs: props.columnDefs,
-        // messages: props.messages,
+        messages: props.messages,
         // initialValue: props.initialValue,
-        // axiosApi: axiosApi,
-        // loading: loading,
-        // error: error,
+        axiosApi: axiosApi,
+        loading: loading,
+        error: error,
 
         dropDownData: dropDownData,
     }

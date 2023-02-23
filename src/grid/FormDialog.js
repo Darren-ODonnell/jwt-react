@@ -230,7 +230,6 @@ const FormDialog = ({ open, onClose, onSubmit, rowData, setData, colDefs, handle
                                         field={ prop.field }
                                         onChange={ handleChange2 }
                                         key={ getUniqueId() }
-                                        defaultValue={ colDefs[ prop.field ] }
                                         onSubmit={ handleSubmit }
 
                                     />
