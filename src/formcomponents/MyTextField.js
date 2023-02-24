@@ -1,9 +1,10 @@
 import {TextField} from "@mui/material";
 import React, {useEffect, useRef, useState} from "react";
 import {getUniqueId} from "../common/helper";
+import './textfield.css'
 
 
-const MyTextField = ({onChange, headerName, value, field}) => {
+const MyTextField = ({onChange, headerName, value, field, className}) => {
     const [dataValue, setDataValue] = useState(value)
     const inputRef = useRef(null);
 
@@ -20,8 +21,10 @@ const MyTextField = ({onChange, headerName, value, field}) => {
     }, [value]);
 
     const textFieldParams = {
+
         placeholder: "Enter " + headerName,
         field: field,
+        style: {margin: 10},
         label: headerName,
         value: value ? value : undefined,
         onChange: handleChange,
@@ -30,6 +33,13 @@ const MyTextField = ({onChange, headerName, value, field}) => {
         inputRef: inputRef,
     }
 
-    return (<TextField  {...textFieldParams} fullWidth/>)
+    return (
+        <TextField
+            {...textFieldParams}
+            className={className}
+            variant="filled"
+            fullWidth
+        />
+    )
 }
 export default MyTextField;

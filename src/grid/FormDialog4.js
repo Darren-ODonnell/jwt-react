@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography} from "@mui/material";
 import './FormDialog.css'
+import '../formcomponents/textfield.css'
+
 
 import {
     refreshPage, getUniqueId,
@@ -9,26 +11,22 @@ import {
 
 import MyTextField from "../formcomponents/MyTextField";
 
-const FormDialog4 = ({ open, onClose, onSubmit, rowData, setData, colDefs, handleClose, handleSubmit,
-                        initialValue, error, setOpen, methods, loading }) => {
-    const [formValues, setFormValues] = useState(initialValue)
+const FormDialog4 = ({
+                         open, onClose, messages, onSubmit, rowData, setData, colDefs, handleClose, handleSubmit,
+                         initialValue, error, setOpen, methods, loading
+                     }) => {
+    const [formValues, setFormValues] = useState({initialValue})
 
     const handleFormSubmit = ({formValues, methods, setOpen, error}) => {
         // setOpen(false);
     }
-    const handleChange3 = (value, field) => {
-        setFormValues({...formValues, [field]: value})
-    };
 
     const handleChange2 = (field, value) => {
-        // const currentFocus = document.activeElement;
         setFormValues((prevState) => ({
             ...prevState,
             [field]: value,
         }));
-        // if (currentFocus) {
-        //     currentFocus.focus();
-        // }
+
     };
 
     const CancelButton = () => {
@@ -59,6 +57,7 @@ const FormDialog4 = ({ open, onClose, onSubmit, rowData, setData, colDefs, handl
     return  (
         <div>
             <Dialog
+
                 className="scroll"
                 open={open}
                 // onClose={onClose}
@@ -66,15 +65,18 @@ const FormDialog4 = ({ open, onClose, onSubmit, rowData, setData, colDefs, handl
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogContent dividers>
+                {/*<DialogTitle id  = "alert-dialog-title"> { formValues.id ? messages.update: messages.create }</DialogTitle>*/}
+                <DialogContent>
+
                     {colDefs.map(prop => {
                         switch (prop.field) {
                             default:
                                 return <MyTextField
+                                    className="myTextField"
                                     headerName={prop.headerName}
-                                    value={formValues ? formValues[prop.field] : undefined}
+                                    value={formValues ? formValues[prop.field] : ""}
                                     onChange={handleChange2}
-                                    key={getUniqueId()}
+                                    key={prop.field}
                                     field={prop.field}
                                 />
                         }

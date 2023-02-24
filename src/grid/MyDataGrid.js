@@ -43,12 +43,10 @@ const MyDataGrid = ({props}) => {
     const [showConfirm, setShowConfirm] = useState(false);
     const [showPrintPreview, setShowPrintPreview] = useState(false);
     // const {isPrintPreview, handlePrintPreview} = usePrintPreview(false);
-
+    // data for form
     const [selectedRow, setSelectedRow] = useState()
     // grid data
     const [rowData, setRowData] = useState([]);
-    // data for form
-    const [formData, setFormData] = useState(props.initialValue)
     // form control
     const [open, setOpen] = useState(false);
     // api control
@@ -77,7 +75,7 @@ const MyDataGrid = ({props}) => {
     const handleClose = () => {
         if (open !== false) {
             setOpen(false);
-            // setRowData(props.initialValue);
+            setSelectedRow(props.initialValue);
             console.log("Closing Form: ")
         }
     };
@@ -104,7 +102,6 @@ const MyDataGrid = ({props}) => {
         // update field with data from user
         // data updated here first, then screen is updated
         setRowData({...rowData, [id]: value})
-        // setFormData({...formData, [id]: value})
     }
     const onGridReady = (params) => {
         setGridApi(params.api)
@@ -170,7 +167,6 @@ const MyDataGrid = ({props}) => {
 
         // const selectedRows = gridApi.getSelectedRows();
         // setRowData(selectedRows[0])
-        // setFormData(selectedRows[0]);
 
         AuthService.setAuthToken(user.accessToken);
 
@@ -242,7 +238,7 @@ const MyDataGrid = ({props}) => {
     }
 
     const handleAdd = (params) => {
-        setSelectedRow(props.initialValue)
+        setSelectedRow({...props.initialValue})
         handleOpen(params)
     }
 
@@ -379,15 +375,13 @@ const MyDataGrid = ({props}) => {
         open: open,
         setOpen: handleOpen,            // dummy value to test index .. props.index previous
         data: selectedRow,
-        // formData: formData,
-        // setFormData: setFormData,
         rowData: {...selectedRow},
         // values:selectedRow,
         // onChange: onChange,
         // methods: props.methods,
         colDefs: props.columnDefs,
         messages: props.messages,
-        // initialValue: props.initialValue,
+        initialValue: props.initialValue,
         axiosApi: axiosApi,
         loading: loading,
         error: error,
