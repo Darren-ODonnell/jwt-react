@@ -1,13 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography} from "@mui/material";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import './FormDialog.css'
 import '../formcomponents/textfield.css'
-
-
-import {
-    refreshPage, getUniqueId,
-} from "../common/helper";
-
 
 import MyTextField from "../formcomponents/MyTextField";
 
@@ -60,31 +54,34 @@ const FormDialog4 = ({
 
                 className="scroll"
                 open={open}
-                // onClose={onClose}
                 onClose={() => onClose(false)}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                {/*<DialogTitle id  = "alert-dialog-title"> { formValues.id ? messages.update: messages.create }</DialogTitle>*/}
+                <DialogTitle id="alert-dialog-title"> {formValues.id ? messages.update : messages.create}</DialogTitle>
                 <DialogContent>
-
                     {colDefs.map(prop => {
                         switch (prop.field) {
                             default:
                                 return <MyTextField
+                                    key={prop.field}
                                     className="myTextField"
                                     headerName={prop.headerName}
                                     value={formValues ? formValues[prop.field] : ""}
                                     onChange={handleChange2}
-                                    key={prop.field}
                                     field={prop.field}
                                 />
                         }
                     })}
                 </DialogContent>
                 <DialogActions>
-                    <CancelButton setOpen={setOpen} initialValue={initialValue} setFormValues={setFormValues} />
-                    <SubmitButton formValue={formValues} methods={methods} setOpen={setOpen} error={error} />
+                    <CancelButton
+                        setOpen={setOpen}
+                        initialValue={initialValue}
+                        setFormValues={setFormValues}/>
+                    <SubmitButton
+                        formValue={formValues}
+                        methods={methods} setOpen={setOpen} error={error}/>
                 </DialogActions>
             </Dialog>
         </div>

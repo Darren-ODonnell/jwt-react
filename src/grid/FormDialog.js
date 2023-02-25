@@ -223,14 +223,14 @@ const FormDialog = ({ open, onClose, onSubmit, rowData, setData, colDefs, handle
 
                                 default:
                                     return <MyTextField
-                                        headerName={ prop.headerName }
-                                        formValues ={formValues}
+                                        headerName={prop.headerName}
+                                        formValues={formValues}
                                         // value={ formValues[ prop.field ] }
-                                        setFormValues={ setData }
-                                        field={ prop.field }
-                                        onChange={ handleChange2 }
-                                        key={ getUniqueId() }
-                                        onSubmit={ handleSubmit }
+                                        setFormValues={setData}
+                                        field={prop.field}
+                                        onChange={handleChange2}
+                                        key={prop.field}
+                                        onSubmit={handleSubmit}
 
                                     />
                             }
