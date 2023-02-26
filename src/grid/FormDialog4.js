@@ -14,31 +14,7 @@ const FormDialog4 = ({
                          initialValue, error, setOpen, methods, loading, axiosApi, setRowData
                      }) => {
     const [formValues, setFormValues] = useState({initialValue})
-    const UpdateData = ({rowData, error, formValues}) => {
 
-        const user = AuthService.getCurrentUser();
-        AuthService.setAuthToken(user.accessToken);
-
-        const configObj = {
-            axiosInstance: instance,
-            ...methods.update,
-            requestConfig: {
-                data: formValues
-            }
-        }
-
-        axiosApi(configObj)
-            .then(response => {
-                rowData = response.data
-                console.log("Update: ", rowData)
-            })
-            .catch(err => {
-                error = err.message;
-            })
-        // refresh grid
-        refreshPage()
-        // window.location.reload()
-    }
     const handleFormSubmit = ({formValues, error}) => {
         console.log('FormValues: ', formValues)
         const request = {...methods.add, data: formValues};
@@ -63,15 +39,72 @@ const FormDialog4 = ({
     }
     const handleError = (message) => {
         return <ErrorMessage message={message}/>;
-
     }
     const handleChange2 = (field, value) => {
         setFormValues((prevState) => ({
-            ...prevState,
-            [field]: value,
+            ...prevState, [field]: value,
         }));
-
     };
+
+    useEffect(() => {
+        setFormValues(rowData);
+    }, [rowData]);
+
+    // reduce number of renders when formValues is empty
+    if (Object.keys(formValues).length === 0) {
+        return <div>Loading...</div>
+    }
+    const UpdateData = ({rowData, error, formValues}) => {
+        const user = AuthService.getCurrentUser();
+        AuthService.setAuthToken(user.accessToken);
+
+        const configObj = {
+            axiosInstance: instance,
+            ...methods.update,
+            requestConfig: {
+                data: formValues
+            }
+        }
+
+        axiosApi(configObj)
+            .then(response => {
+                rowData = response.data
+                console.log("Update: ", rowData)
+            })
+            .catch(err => {
+                error = err.message;
+            })
+        // refresh grid
+        refreshPage()
+    }
+    const AddData = ({error, formValues}) => {
+        const user = AuthService.getCurrentUser();
+        AuthService.setAuthToken(user.accessToken);
+
+        const configObj = {
+            axiosInstance: instance,
+            ...methods.add,
+            requestConfig: {
+                data: {...formValues}
+            }
+        }
+
+        axiosApi(configObj)
+            .then(response => {
+                handleClose()
+                rowData = response.data
+                console.log("Add: ", response.data)
+                setRowData(response.data)
+            })
+            .catch(err => {
+                error = err.message;
+                console.log("Error Message from Endpoint: " + err.message)
+                handleClose()
+
+            })
+        // refresh grid
+        // refreshPage()
+    }
 
     const CancelButton = () => {
         return (
@@ -90,46 +123,6 @@ const FormDialog4 = ({
             >Submit</Button>
         )
     }
-
-    useEffect(() => {
-        setFormValues(rowData);
-    }, [rowData]);
-
-
-    // reduce number of renders when formValues is empty
-    if (Object.keys(formValues).length === 0) {
-        return <div>Loading...</div>
-    }
-    const AddData = ({error, formValues}) => {
-        const user = AuthService.getCurrentUser();
-        AuthService.setAuthToken(user.accessToken);
-
-        const configObj = {
-            axiosInstance: instance,
-            ...methods.add,
-            requestConfig: {
-                data: {...formValues}
-            }
-        }
-
-
-        axiosApi(configObj)
-            .then(response => {
-                handleClose()
-                rowData = response.data
-                console.log("Add: ", response.data)
-                setRowData(response.data)
-            })
-            .catch(err => {
-                error = err.message;
-                handleClose()
-
-            })
-        // refresh grid
-        refreshPage()
-        // window.location.reload()
-    }
-
 
     return (
         <Dialog
