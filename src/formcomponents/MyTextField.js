@@ -12,18 +12,20 @@ const MyTextField = ({onChange, headerName, value, field, className}) => {
     const textFieldParams = {
         placeholder: "Enter " + headerName,
         field: field,
-        style: {margin: 8},
+        style: {margin: 8, backgroundColor: "#F2F2F2"},
         label: headerName,
         value: value ? value : "",
         onChange: handleChange,
         variant: "outlined",
+
     }
 
     return (
         <TextField
             {...textFieldParams}
+
             className={className}
-            variant="filled"
+
             // fullWidth
         />
     )

@@ -6,11 +6,11 @@ export const Fixture = 'Fixture'
 
 const fixtureColumnDefs = [
     {headerName: 'Competition Name', field: 'competitionName', width: 140,},
+    {headerName: 'Season', field: 'season', width: 120,},
     {headerName: 'Home Team Name', field: 'homeTeamName', width: 150,},
     {headerName: 'Away Team Name', field: 'awayTeamName', width: 150,},
     {headerName: 'Fixture Date', field: 'fixtureDate', width: 100,},
     {headerName: 'Fixture Time', field: 'fixtureTime', width: 150,},
-    {headerName: 'Season', field: 'season', width: 120,},
     {headerName: 'Round', field: 'round', width: 120,},
 ];
 const fixtureDropDown = true;

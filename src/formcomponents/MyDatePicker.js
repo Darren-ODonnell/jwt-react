@@ -4,27 +4,25 @@ import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import {DATE_FORMAT} from "../common/globals";
 import {getMaxDate, getMinDate, getUniqueId} from "../common/helper";
 import {TextField} from "@mui/material";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import moment from "moment/moment";
 
-const MyDatePicker = ({formData, field, headerName}) => {
+const MyDatePicker = ({formValues, field, headerName}) => {
     const [dateValue, setDateValue] = useState()
 
     const onChangeDate = (value, id) => {
-        let dateStr = value.format(DATE_FORMAT).toString()  //moment(value).format(DATE_FORMAT)
-        formData[id] = value.format(DATE_FORMAT).toString()
-        console.log("Value: " + value.format(DATE_FORMAT).toString())
-        console.log("FormData[id]: " + formData[id])
-        setDateValue(formData[id])
+        formValues[id] = value.format(DATE_FORMAT).toString()
+        setDateValue(formValues[id])
     }
+
+    useEffect(() => {
+        setDateValue(formValues[field])
+    }, [formValues])
 
     return (
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
-                // key = {key}
-                // format      = {DATE_FORMAT}
-                // id          = {field}
                 minDate={getMinDate()}
                 maxDate={getMaxDate()}
                 value={dateValue}
@@ -33,18 +31,20 @@ const MyDatePicker = ({formData, field, headerName}) => {
                 renderInput={(props) =>
                     <TextField {...props}
                                style={{
+                                   backgroundColor: '#f2f2f2',
                                    borderStyle: 'black',
                                    fontcolor: 'black',
                                    position: 'left',
-                                   width: '50%',
-                                   marginTop: '5px'
+                                   width: '47%',
+                                   marginTop: '5px',
+                                   marginLeft: '7px',
+                                   marginBottom: '5px',
                                }}
                                id={field}
                     />
                 }
             />
         </LocalizationProvider>
-
     )
 }
 

@@ -29,7 +29,8 @@ import useConfirm from "../common/useConfirm";
 import HandlePrintPreview from "../teamsheetComponents/HandlePrintPreview";
 import dropDownData from "../formcomponents/DropDownData";
 import FormDialog4 from "./FormDialog4";
-import {GridOptions} from "ag-grid-community";
+// import {GridOptions} from "ag-grid-community";
+import ConfirmationModal from "../common/ConfirmationModal";
 
 
 const MyDataGrid = ({props}) => {
@@ -43,6 +44,7 @@ const MyDataGrid = ({props}) => {
     const [deleteNode, setDeleteNode] = useState(false)
 
     const [showConfirm, setShowConfirm] = useState(false);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [showPrintPreview, setShowPrintPreview] = useState(false);
     // const {isPrintPreview, handlePrintPreview} = usePrintPreview(false);
     // data for form
@@ -55,6 +57,10 @@ const MyDataGrid = ({props}) => {
     const [data, error, loading, axiosApi] = useAxios();
     // print preview handler state
     const [filteredData, setFilteredData] = useState([])
+    // show Confirmation state
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+    const [confirmation, setConfirmation] = useState(false)
     // export data hook
     // const exportData = useExportData(gridOptions.api);
     // // import data hook
@@ -69,7 +75,6 @@ const MyDataGrid = ({props}) => {
 
     const handleOpen = () => {
         if(open!==true) {
-
             setOpen( true );
             console.log("Opening Form: ")
         }
@@ -132,15 +137,6 @@ const MyDataGrid = ({props}) => {
         handleOpen();
     }
 
-    // const handleConfirm = (id) => {
-    //
-    //     setOpen(false);
-    //     const confirm = window.confirm("Are you sure, you want to delete this row", id)
-    //     if (confirm) {
-    //         deleteData(id)
-    //     }
-    // }
-
     // returned the filtered data
     const handleFilterChanged = () => {
         model = gridApi.getModel().rowsToDisplay;
@@ -152,9 +148,9 @@ const MyDataGrid = ({props}) => {
     };
     const handleDelete = (itemId) => {
         getSelectedRow()
-        message = "Are you sure you want to delete this record?"
-        setShowConfirm(true) // this will trigger a render which the next useEffect will catch this state change
-
+        deleteData(selectedRow)
+        setShowConfirm(false) // this will trigger a render which the next useEffect will catch this state change
+        setShowDeleteModal(false)
         console.log(`Deleting item with id: ${itemId}...`);
     };
 
@@ -177,16 +173,9 @@ const MyDataGrid = ({props}) => {
         }
     };
 
-    const deleteData = ({id, error}) => {
-        console.log("deleting data with id: " + id)
-        return
-
+    const deleteData = (data, error) => {
+        console.log("deleting data with id: " + data)
         const user = AuthService.getCurrentUser();
-
-        // const selectedRows = gridApi.getSelectedRows();
-        // setRowData(selectedRows[0])
-
-
         AuthService.setAuthToken(user.accessToken);
 
         const configObj = {
@@ -199,11 +188,11 @@ const MyDataGrid = ({props}) => {
 
         axiosApi(configObj)
             .then(response => {
-                data = response.data
                 handleClose();
             })
             .catch(err => {
-                error = err.message;
+                window.alert(error.message)
+                console.log("Error: " + error.message)
                 handleClose()
             })
         refreshPage()
@@ -228,7 +217,11 @@ const MyDataGrid = ({props}) => {
 
     const onDelete = () => {
         getSelectedRow()
-        setShowConfirm(true)
+        setShowDeleteConfirm(true)
+    }
+
+    const handleShowDeleteModal = () => {
+        setShowDeleteModal(true)
     }
 
 
@@ -246,8 +239,7 @@ const MyDataGrid = ({props}) => {
         return (
             // positions and pitchgrids are reference data and dont need add/delete operations
             showDeleteButton(props.type) ?
-
-                <Button onClick={onDelete}
+                <Button onClick={handleShowDeleteModal}
                         variant="outlined"
                         color="secondary"
                 > Delete </Button>
@@ -318,62 +310,14 @@ const MyDataGrid = ({props}) => {
         return setShowPrintPreview(HandlePrintPreview(params))
 
     }
-    // useEffect(() => {
-    //     // Do something with the updated selectedRow state variable here
-    // }, [selectedRow]);
-    // watch when the filter is changed in the grid
-    // useEffect(() => {
-    //     if (gridApi) {
-    //         gridApi.addEventListener('filterChanged', handleFilterChanged);
-    //     }
-    //     return () => {
-    //         if (gridApi) {
-    //             gridApi.removeEventListener('filterChanged', handleFilterChanged);
-    //         }
-    //     };
-    // }, [gridApi]);
-    // loading grid at start / and reloading on grid changes
+
     useEffect(() => {
         getData(props.methods.list)
     }, []);
-    // // what to do when row data changes
-    // gridApi.addEventListener('rowSelected', function(event) {
-    //     // handle row selection event here
-    //     console.log("Row selected: " + event.node.data.id);
-    // });
-    // useEffect(() => {
-    //     if (gridApi) {
-    //         // const row = gridApi.selection.selectRow(rowNode);
-    //         const rows = gridApi.getSelectedRows()
-    //         setSelectedRow(rows[0])
-    //     }
-    // }, [gridApi, setSelectedRow]);
 
     useEffect(() => {
         setRowData(data);
     }, [data]);
-
-    // const handleSubmit = (formValues) => {
-    //     if (selectedRow) {
-    //         const index = rowData.findIndex((row) => row === selectedRow);
-    //         const updatedRow = {...selectedRow, ...formValues};
-    //         setRowData([...rowData.slice(0, index), updatedRow, ...rowData.slice(index + 1)]);
-    //         setSelectedRow(null);
-    //     } else {
-    //         setRowData([...rowData, formValues]);
-    //     }
-    //     handleClose()
-    // };
-    // handling delete
-    useEffect(() => {
-        if (showConfirm) {
-            const confirmAction = window.confirm(message);
-            if (confirmAction) {
-                deleteData(selectedRow[id]);
-            }
-            setShowConfirm(false); // reset trigger
-        }
-    }, [showConfirm, id, handleDelete]);
 
     const commonParams = {}
     const gridParams = {
@@ -411,8 +355,9 @@ const MyDataGrid = ({props}) => {
         loading: loading,
         error: error,
 
-        dropDownData: dropDownData,
+        // dropDownData: dropDownData,
     }
+
     const togglePagination = () => {
         const pageSize = paginationEnabled ? 0 : 10;
         setPaginationEnabled(!paginationEnabled);
@@ -448,6 +393,16 @@ const MyDataGrid = ({props}) => {
                     // rowData={selectedRow}
                 />
 
+                {/* show delete modal when required by set/reset showModal */}
+                <ConfirmationModal
+                    showModal={showDeleteModal}
+                    setShowModal={setShowDeleteModal}
+                    setConfirmation={setConfirmation}
+                    title="Delete Item"
+                    message="Are you sure you want to delete this item?"
+                    onConfirm={handleDelete}
+                />
+
             </div>
             {/*<button onClick={exportData}>Export Data</button>*/}
 
@@ -457,9 +412,4 @@ const MyDataGrid = ({props}) => {
 
 export default MyDataGrid;
 
-
-// {...commonParams}
-// {...formParams}
-// open={open}
-// rowData = {selectedRow}
 

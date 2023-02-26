@@ -4,16 +4,34 @@ import './FormDialog.css'
 import '../formcomponents/textfield.css'
 
 import MyTextField from "../formcomponents/MyTextField";
-import {refreshPage} from "../common/helper";
+import {getSeasons, refreshPage} from "../common/helper";
 import AuthService from "../auth/AuthService";
 import instance from "../api/axios";
 import {ErrorMessage} from "../common/ErrorMessage";
+import MyTimePicker from "../formcomponents/MyTimePicker";
+import MyDatePicker from "../formcomponents/MyDatePicker";
+import DropDown from "../formcomponents/DropDown";
+// import DropDownData from "../formcomponents/DropDownData";
+
+import {
+    AVAILABILITY, COMPETITIONS,
+    GRADES,
+    HALF,
+    PITCH_GRIDS,
+    PLAYER_NUMBERS,
+    POSITIONS,
+    REGISTERED, ROUNDS,
+    SUCCESS
+} from "../common/globals";
+import DropDownData from "../formcomponents/DropDownData";
 
 const FormDialog4 = ({
-                         open, onClose, messages, onSubmit, rowData, setData, colDefs, handleClose, handleSubmit,
+                         open, onClose, messages, onSubmit, rowData, data, setData, colDefs, handleClose, handleSubmit,
                          initialValue, error, setOpen, methods, loading, axiosApi, setRowData
                      }) => {
     const [formValues, setFormValues] = useState({initialValue})
+
+    let dropDownData = DropDownData()
 
     const handleFormSubmit = ({formValues, error}) => {
         console.log('FormValues: ', formValues)
@@ -47,6 +65,7 @@ const FormDialog4 = ({
     };
 
     useEffect(() => {
+        // dropDownData = DropDownData()
         setFormValues(rowData);
     }, [rowData]);
 
@@ -72,12 +91,14 @@ const FormDialog4 = ({
                 console.log("Update: ", rowData)
             })
             .catch(err => {
-                error = err.message;
+                window.alert(error.message)
+                console.log("Error: " + error.message)
+                handleClose()
             })
         // refresh grid
         refreshPage()
     }
-    const AddData = ({error, formValues}) => {
+    const AddData = ({data, loading, error, formValues}) => {
         const user = AuthService.getCurrentUser();
         AuthService.setAuthToken(user.accessToken);
 
@@ -88,6 +109,7 @@ const FormDialog4 = ({
                 data: {...formValues}
             }
         }
+        // console.log('Before axiosApi call-Data:'+ data);
 
         axiosApi(configObj)
             .then(response => {
@@ -97,10 +119,8 @@ const FormDialog4 = ({
                 setRowData(response.data)
             })
             .catch(err => {
-                error = err.message;
-                console.log("Error Message from Endpoint: " + err.message)
+                console.log("Error: " + error.message)
                 handleClose()
-
             })
         // refresh grid
         // refreshPage()
@@ -123,7 +143,17 @@ const FormDialog4 = ({
             >Submit</Button>
         )
     }
+    const dropDown = {
+        width: '60%',
+        height: '50%',
+        overflowY: 'auto',
+    }
 
+    const options = [
+        2022,
+        2023,
+        2024,
+    ]
     return (
         <Dialog
             className="scroll"
@@ -133,21 +163,124 @@ const FormDialog4 = ({
             aria-describedby="alert-dialog-description"
         >
             <DialogTitle id="alert-dialog-title"> {formValues.id ? messages.update : messages.create}</DialogTitle>
-                <DialogContent>
-
+            <DialogContent>
                     {colDefs.map(prop => {
+                        let options
+                        const commonProps = {
+                            style: dropDown,
+                            // formValues: {...props.data},
+                            formValues: rowData,
+                            value: formValues ? formValues[prop.field] : "",
+                            // setFormValues: setData,
+                            field: prop.field,
+                            onChange: handleChange2,
+                            key: prop.field,
+                            // defaultValue: colDefs[prop.field],
+                            // onSubmit: handleSubmit,
+                        }
                         switch (prop.field) {
+                            case "playerName" :
+                                return <DropDown
+                                    {...commonProps}
+                                    headerName={"Player Name"}
+                                    options={dropDownData.players}/>
+                            case "statname" :
+                                return
+                            case "awayTeamName" :
+                                return <DropDown
+                                    {...commonProps}
+                                    headerName={"Away Team Name"}
+                                    options={dropDownData.clubs}/>
+                            case "homeTeamName" :
+                                return <DropDown
+                                    {...commonProps}
+                                    headerName={"Home Team Name"}
+                                    options={dropDownData.clubs}/>
+                            case "pitchgrid":
+                                return <DropDown
+                                    {...commonProps}
+                                    headerName={"Pitchgrid"}
+                                    options={dropDownData.pitchgrids}/>
+                            case "round":
+                                return <DropDown
+                                    {...commonProps}
+                                    headerName={"Round"}
+                                    options={dropDownData.rounds}/>
+                            case "season":
+                                return <DropDown
+                                    {...commonProps}
+                                    headerName={"Season"}
+                                    options={getSeasons()}/>
+                            case "position":
+                                return <DropDown
+                                    {...commonProps}
+                                    headerName={"Position"}
+                                    options={dropDownData.positions}/>
+                            case "positionNumber":
+                                return <DropDown
+                                    {...commonProps}
+                                    headerName={"Position Number"}
+                                    options={dropDownData.positionNumbers}/>
+                            case "competitionName":
+                                return <DropDown
+                                    {...commonProps}
+                                    headerName={"Competition Name"}
+                                    options={dropDownData.competitions}/>
+                            case "success":
+                                return <DropDown
+                                    {...commonProps}
+                                    headerName={"Success"}
+                                    options={SUCCESS}/>
+                            case "statName":
+                                return <DropDown
+                                    {...commonProps}
+                                    headerName={"Statnames"}
+                                    options={dropDownData.statnames}/>
+                            case "registered":
+                                let component =
+                                    <DropDown
+                                        {...commonProps}
+                                        headerName={"Registered"}
+                                        options={REGISTERED}/>
+                                console.log(component)
+                                return component
+                            case "grade":
+                                return <DropDown
+                                    {...commonProps}
+                                    headerName={"Grade"}
+                                    options={GRADES}/>
+                            case "availability":
+                                return <DropDown
+                                    {...commonProps}
+                                    headerName={"Availability"}
+                                    options={AVAILABILITY}/>
+                            case "half" :
+                                return <DropDown
+                                    {...commonProps}
+                                    headerName={"First/Second Half"}
+                                    options={HALF}/>
+                            case "season":
+                                return <DropDown
+                                    {...commonProps}
+                                    headerName={"Season"}
+                                    options={getSeasons()}/>
+                            case 'fixtureDate':
+                                return <MyDatePicker
+                                    {...commonProps}
+                                    headerName={"Date"}/>
+                            case 'fixtureTime':
+                                return <MyTimePicker
+                                    {...commonProps}
+                                    headerName={"Time"}/>
                             default:
                                 return <MyTextField
-                                    key={prop.field}
+                                    {...commonProps}
                                     className="myTextField"
                                     headerName={prop.headerName}
-                                    value={formValues ? formValues[prop.field] : ""}
-                                    onChange={handleChange2}
-                                    field={prop.field}
                                 />
                         }
-                    })}
+                    })
+                    }
 
                 </DialogContent>
                 <DialogActions>

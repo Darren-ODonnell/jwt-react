@@ -12,7 +12,7 @@ Current Tasks - with comments on progress
 =========================================
 1. Get Teamsheet to display for printing -
 2. Get teamsheet to print. -
-3. Get Form add/edit to work again - check db updatable -
+3. Get Form add/edit to work again - check db updatable -done
    form Popup working again - textfield and formdialog tidies up - done
    Some styling added to popup form - filled textfield entry box - done
 
@@ -20,7 +20,7 @@ Current Tasks - with comments on progress
    Also controlled v uncontrolled assignment warning - done
 
 4. Get Grid to display correctly again - done
-5. Get delete to work again -
+5. Get delete to work again - done
 6. Set grid min-width - done
 7. Start work on import/export -
 8. Get print and add to be on same line - done

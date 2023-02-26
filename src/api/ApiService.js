@@ -23,7 +23,7 @@ export const useAxios = () => {
             });
             setData(res.data);
         } catch (err) {
-            setError(err.message);
+            setError(err.response.data);
         } finally {
             setLoading(false);
         }
@@ -46,7 +46,6 @@ export const useAxios2 = (url) => {
     const [data, setData] = useState(null);
     const user = AuthService.getCurrentUser();
     AuthService.setAuthToken(user.accessToken);
-
 
     useEffect(() => {
         const fetchData = async () => {
