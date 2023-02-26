@@ -223,6 +223,7 @@ const FormDialog = ({ open, onClose, onSubmit, rowData, setData, colDefs, handle
 
                                 default:
                                     return <MyTextField
+                                        className="myTextField"
                                         headerName={prop.headerName}
                                         formValues={formValues}
                                         // value={ formValues[ prop.field ] }
@@ -238,8 +239,8 @@ const FormDialog = ({ open, onClose, onSubmit, rowData, setData, colDefs, handle
                     }
                 </DialogContent>
                 <DialogActions>
-                    <CancelButton setOpen={setOpen} initialValue={initialValue} setFormValues={setFormValues} />
-                    <SubmitButton formValue={formValues} methods={methods} setOpen={setOpen} error={error} />
+                    <CancelButton setOpen={setOpen} setFormValues={setFormValues} initialValue={initialValue}/>
+                    <SubmitButton setOpen={setOpen} formValue={formValues} methods={methods} error={error}/>
                 </DialogActions>
             </Dialog>
         </div>

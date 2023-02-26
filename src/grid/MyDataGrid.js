@@ -40,6 +40,8 @@ const MyDataGrid = ({props}) => {
     const [id, setId] = useState(null)
     // used with delete to confirm the record is to be deleted
 
+    const [deleteNode, setDeleteNode] = useState(false)
+
     const [showConfirm, setShowConfirm] = useState(false);
     const [showPrintPreview, setShowPrintPreview] = useState(false);
     // const {isPrintPreview, handlePrintPreview} = usePrintPreview(false);
@@ -75,14 +77,12 @@ const MyDataGrid = ({props}) => {
     const handleClose = () => {
         if (open !== false) {
             setOpen(false);
-            setSelectedRow(props.initialValue);
             console.log("Closing Form: ")
         }
     };
 
     const onRowSelected = useCallback((event) => {
         setSelectedRow(event.node.data)
-
     }, []);
 
     // const handleSelectionChanged = () => {
@@ -96,6 +96,21 @@ const MyDataGrid = ({props}) => {
     //         console.log("Grid instance is null or undefined");
     //     }
     // };
+
+    const getSelectedRow = () => {
+        const selectedNodes = gridApi.getSelectedRows();
+        if (selectedNodes.length === 1) {
+            setSelectedRow(selectedNodes[0]);
+        }
+    }
+
+    useEffect(() => {
+        if (deleteNode) {
+            deleteData(selectedRow)
+            setDeleteNode(false)
+        }
+    })
+
 
     const onChange = (e) => {
         const {value, id} = e.target
@@ -112,13 +127,9 @@ const MyDataGrid = ({props}) => {
 
         });
     }
-    const handleEdit = (props) => {
-        const selectedNodes = gridApi.getSelectedRows();
-        if (selectedNodes.length === 1) {
-            const selectedData = selectedNodes[0];
-            setSelectedRow(selectedData);
-            handleOpen();
-        }
+    const handleEdit = (params) => {
+        getSelectedRow()
+        handleOpen();
     }
 
     // const handleConfirm = (id) => {
@@ -140,6 +151,10 @@ const MyDataGrid = ({props}) => {
         console.log("FilteredData-: " + filteredData);
     };
     const handleDelete = (itemId) => {
+        getSelectedRow()
+        message = "Are you sure you want to delete this record?"
+        setShowConfirm(true) // this will trigger a render which the next useEffect will catch this state change
+
         console.log(`Deleting item with id: ${itemId}...`);
     };
 
@@ -162,11 +177,15 @@ const MyDataGrid = ({props}) => {
         }
     };
 
-    const deleteData = ({data, error}) => {
+    const deleteData = ({id, error}) => {
+        console.log("deleting data with id: " + id)
+        return
+
         const user = AuthService.getCurrentUser();
 
         // const selectedRows = gridApi.getSelectedRows();
         // setRowData(selectedRows[0])
+
 
         AuthService.setAuthToken(user.accessToken);
 
@@ -207,7 +226,11 @@ const MyDataGrid = ({props}) => {
         return () => (isSubscribed = false)
     }
 
-    const [handleConfirm] = useConfirm(message, deleteData);
+    const onDelete = () => {
+        getSelectedRow()
+        setShowConfirm(true)
+    }
+
 
     // in grid
     const EditButton = (params) => {
@@ -221,14 +244,16 @@ const MyDataGrid = ({props}) => {
     const DeleteButton = (params) => {
         message = GRID_ROW_DELETE;
         return (
+            // positions and pitchgrids are reference data and dont need add/delete operations
             showDeleteButton(props.type) ?
-                <Button onClick={() => handleConfirm(params.data)}
+
+                <Button onClick={onDelete}
                         variant="outlined"
                         color="secondary"
                 > Delete </Button>
                 :
                 <div>
-                    <Button disabled={true} onClick={() => handleConfirm(params.data)}
+                    <Button disabled={true} onClick={() => onDelete(params.data)}
                             variant="outlined"
                             color="secondary"
                     >NO Delete </Button>
@@ -236,16 +261,16 @@ const MyDataGrid = ({props}) => {
 
         )
     }
-
+    // <Button onClick={() => handleConfirm(message, params.data)}
     const handleAdd = (params) => {
         setSelectedRow({...props.initialValue})
         handleOpen(params)
     }
 
-
     // above grid
     const AddButton = (params) => {
         return (
+            // positions and pitchgrids are reference data and dont need add/delete operations
             showAddButton(params.type) ?
                 <Grid align="right">
                     <Button onClick={() => handleAdd(params)}
@@ -340,15 +365,15 @@ const MyDataGrid = ({props}) => {
     //     handleClose()
     // };
     // handling delete
-    // useEffect(() => {
-    //     if (showConfirm) {
-    //         const confirmAction = window.confirm('Are you sure you want to delete this item?');
-    //         if (confirmAction) {
-    //             handleDelete(id);
-    //         }
-    //         setShowConfirm(false);
-    //     }
-    // }, [showConfirm, id, handleDelete]);
+    useEffect(() => {
+        if (showConfirm) {
+            const confirmAction = window.confirm(message);
+            if (confirmAction) {
+                deleteData(selectedRow[id]);
+            }
+            setShowConfirm(false); // reset trigger
+        }
+    }, [showConfirm, id, handleDelete]);
 
     const commonParams = {}
     const gridParams = {
@@ -368,17 +393,17 @@ const MyDataGrid = ({props}) => {
     }
     const formParams = {
         // index: props.index,        // check if key above can be used on its own...
-
         // onClose: handleClose,
         handleClose: handleClose,
         // onSubmit: handleSubmit,
         open: open,
         setOpen: handleOpen,            // dummy value to test index .. props.index previous
-        data: selectedRow,
+        // data: selectedRow,
         rowData: {...selectedRow},
         // values:selectedRow,
         // onChange: onChange,
-        // methods: props.methods,
+        methods: props.methods,
+        setRowData: setRowData,
         colDefs: props.columnDefs,
         messages: props.messages,
         initialValue: props.initialValue,

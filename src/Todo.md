@@ -12,33 +12,39 @@ Current Tasks - with comments on progress
 =========================================
 1. Get Teamsheet to display for printing -
 2. Get teamsheet to print. -
-3. Get Form add/edit to work again -
+3. Get Form add/edit to work again - check db updatable -
+   form Popup working again - textfield and formdialog tidies up - done
+   Some styling added to popup form - filled textfield entry box - done
+
+   L70 in formDialog still produces a bad setState() warning - done
+   Also controlled v uncontrolled assignment warning - done
+
 4. Get Grid to display correctly again - done
 5. Get delete to work again -
 6. Set grid min-width - done
 7. Start work on import/export -
 8. Get print and add to be on same line - done
 9. Update Node and npm to latest - done
-10. After testing the above updates,Pin
-    the version of each module to the
+10. After testing the above updates, Pin the version of each module to the
     latest in the package.json file - done
 
 # Errors
+
     E40: FormDialog popup shows todays date and time - should show the values from the grid/form
     E41: App does not logout after token has timed out.
          after timeout - delete old token - logout user - switch to loggedOutrNavbar
     E44: Should not be able to login as a User - only Admin allowed.
-    E45: FormDialog - can no longer edit textfield values!
-         FormDialogs showing data from grid, but cannot edit any textfield element.
-
     E47: Fix teamsheet display
         add code to usePrintPreview from MyDataGrid
 
+    E51: 
+    E52: 
+
 # Refactoring
+
     R13: 
     R14: 
     R15: 
-
 
 # Investigations
 
@@ -380,4 +386,14 @@ Current Tasks - with comments on progress
          Reset the state parameters correctly
     E50: Linked data tables missing values - fixed
          updated grid params to load the data via the gridLoader
-        
+    E45: FormDialog - can no longer edit textfield values!
+         FormDialogs showing data from grid, but cannot edit any textfield element.
+    E48: FormDialog - Uncontrolled v controlled state value assignment
+         setSelertedRow removed from handleClose() - not necessary
+    E49: FormDialog - Bad setState() assignment 
+         formDialog rendered about 42 times, more than half of these was when formValues was empty
+         reduce the rendering by checking if it was empty - this also removed the bad State error as 
+         it only occurred when formValues was empty!
+    E50: After tremoving the text from an textfield an error occurs
+         value : value ? value : undefined -> changed to value ? value : "" 
+
