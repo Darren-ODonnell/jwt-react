@@ -11,23 +11,13 @@ import {ErrorMessage} from "../common/ErrorMessage";
 import MyTimePicker from "../formcomponents/MyTimePicker";
 import MyDatePicker from "../formcomponents/MyDatePicker";
 import DropDown from "../formcomponents/DropDown";
-// import DropDownData from "../formcomponents/DropDownData";
 
-import {
-    AVAILABILITY, COMPETITIONS,
-    GRADES,
-    HALF,
-    PITCH_GRIDS,
-    PLAYER_NUMBERS,
-    POSITIONS,
-    REGISTERED, ROUNDS,
-    SUCCESS
-} from "../common/globals";
+import {AVAILABILITY, GRADES, HALF, REGISTERED, SUCCESS} from "../common/globals";
 import DropDownData from "../formcomponents/DropDownData";
 
 const FormDialog4 = ({
-                         open, onClose, messages, onSubmit, rowData, data, setData, colDefs, handleClose, handleSubmit,
-                         initialValue, error, setOpen, methods, loading, axiosApi, setRowData
+                         open, onClose, messages, rowData, colDefs, handleClose,
+                         initialValue, error, setOpen, methods, setRowData, axiosApi
                      }) => {
     const [formValues, setFormValues] = useState({initialValue})
 
@@ -149,11 +139,6 @@ const FormDialog4 = ({
         overflowY: 'auto',
     }
 
-    const options = [
-        2022,
-        2023,
-        2024,
-    ]
     return (
         <Dialog
             className="scroll"
@@ -168,15 +153,11 @@ const FormDialog4 = ({
                         let options
                         const commonProps = {
                             style: dropDown,
-                            // formValues: {...props.data},
                             formValues: rowData,
                             value: formValues ? formValues[prop.field] : "",
-                            // setFormValues: setData,
                             field: prop.field,
                             onChange: handleChange2,
                             key: prop.field,
-                            // defaultValue: colDefs[prop.field],
-                            // onSubmit: handleSubmit,
                         }
                         switch (prop.field) {
                             case "playerName" :
@@ -199,7 +180,7 @@ const FormDialog4 = ({
                             case "pitchgrid":
                                 return <DropDown
                                     {...commonProps}
-                                    headerName={"Pitchgrid"}
+                                    headerName={"Pitch-Grid"}
                                     options={dropDownData.pitchgrids}/>
                             case "round":
                                 return <DropDown
@@ -234,16 +215,13 @@ const FormDialog4 = ({
                             case "statName":
                                 return <DropDown
                                     {...commonProps}
-                                    headerName={"Statnames"}
+                                    headerName={"Stat names"}
                                     options={dropDownData.statnames}/>
                             case "registered":
-                                let component =
-                                    <DropDown
-                                        {...commonProps}
-                                        headerName={"Registered"}
-                                        options={REGISTERED}/>
-                                console.log(component)
-                                return component
+                                return <DropDown
+                                    {...commonProps}
+                                    headerName={"Registered"}
+                                    options={REGISTERED}/>
                             case "grade":
                                 return <DropDown
                                     {...commonProps}
@@ -281,7 +259,6 @@ const FormDialog4 = ({
                         }
                     })
                     }
-
                 </DialogContent>
                 <DialogActions>
                     <CancelButton

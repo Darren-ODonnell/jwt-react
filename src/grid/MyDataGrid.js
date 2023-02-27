@@ -32,7 +32,6 @@ import FormDialog4 from "./FormDialog4";
 // import {GridOptions} from "ag-grid-community";
 import ConfirmationModal from "../common/ConfirmationModal";
 
-
 const MyDataGrid = ({props}) => {
     const [gridApi, setGridApi] = useState(null);
     const gridRef = useRef(null);
@@ -59,7 +58,7 @@ const MyDataGrid = ({props}) => {
     const [filteredData, setFilteredData] = useState([])
     // show Confirmation state
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-
+    // used with confirmation dialog
     const [confirmation, setConfirmation] = useState(false)
     // export data hook
     // const exportData = useExportData(gridOptions.api);
@@ -382,16 +381,9 @@ const MyDataGrid = ({props}) => {
                     </div>
                 </Fragment>
 
-                <AgGridReact
-                    {...commonParams}
-                    {...gridParams}
-                />
+                <AgGridReact  {...commonParams} {...gridParams}  />
                 <PaginationButton/>
-                {console.log("selectedRow: " + JSON.stringify(selectedRow))}
-                <FormDialog4
-                    {...formParams}
-                    // rowData={selectedRow}
-                />
+                <FormDialog4   {...formParams}  />
 
                 {/* show delete modal when required by set/reset showModal */}
                 <ConfirmationModal
