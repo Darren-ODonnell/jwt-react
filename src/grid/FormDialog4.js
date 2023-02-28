@@ -14,45 +14,49 @@ import DropDown from "../formcomponents/DropDown";
 
 import {AVAILABILITY, GRADES, HALF, REGISTERED, SUCCESS} from "../common/globals";
 import DropDownData from "../formcomponents/DropDownData";
-
 const FormDialog4 = ({
-                         open, onClose, messages, rowData, colDefs, handleClose,
-                         initialValue, error, setOpen, methods, setRowData, axiosApi
+                         open, onClose, messages, rowData, colDefs, handleClose, handleChange2,
+                         initialValue, error, setOpen, methods, setRowData, axiosApi, entity, validate, location
                      }) => {
     const [formValues, setFormValues] = useState({initialValue})
+    const [valid, setValid] = useState(false)
 
     let dropDownData = DropDownData()
 
     const handleFormSubmit = ({formValues, error}) => {
+        setValid(validate(formValues))
+
+
         console.log('FormValues: ', formValues)
         const request = {...methods.add, data: formValues};
+        if (valid) {
+            if (formValues.id) {// updating a record
+                // const confirm = window.confirm("Are you sure, you want to update this row ?")
+                // confirm && actions.update(formData.id, formData)
+                setOpen(false)
+                const request = methods.update;
+                UpdateData({methods, axiosApi, rowData, error, formValues, request});
+                if (error !== null) {
+                    return handleError(error.message);
+                }
 
-        if (formValues.id) {// updating a record
-            // const confirm = window.confirm("Are you sure, you want to update this row ?")
-            // confirm && actions.update(formData.id, formData)
-            setOpen(false)
-            const request = methods.update;
-            UpdateData({methods, axiosApi, rowData, error, formValues, request});
-            if (error !== null) {
-                return handleError(error.message);
-            }
-
-        } else { // adding new record
-            setOpen(false)
-            AddData({methods, axiosApi, rowData, error, formValues, setOpen, setRowData, request});
-            if (error !== null) {
-                return handleError(error.message);
+            } else { // adding new record
+                setOpen(false)
+                AddData({methods, axiosApi, rowData, error, formValues, setOpen, setRowData, request});
+                if (error !== null) {
+                    return handleError(error.message);
+                }
             }
         }
+        const handleError = (message) => {
+            return <ErrorMessage message={message}/>;
+        }
+        const handleChange2 = (field, value) => {
+            setFormValues((prevState) => ({
+                ...prevState, [field]: value,
+            }));
+        };
     }
-    const handleError = (message) => {
-        return <ErrorMessage message={message}/>;
-    }
-    const handleChange2 = (field, value) => {
-        setFormValues((prevState) => ({
-            ...prevState, [field]: value,
-        }));
-    };
 
     useEffect(() => {
         // dropDownData = DropDownData()
@@ -126,6 +130,7 @@ const FormDialog4 = ({
     }
     const SubmitButton = ({formValues, setOpen, error}) => {
         return (
+
             <Button onClick={() => handleFormSubmit({formValues, setOpen, error})}
                     type="submit"
                     color="primary"
@@ -150,7 +155,6 @@ const FormDialog4 = ({
             <DialogTitle id="alert-dialog-title"> {formValues.id ? messages.update : messages.create}</DialogTitle>
             <DialogContent>
                     {colDefs.map(prop => {
-                        let options
                         const commonProps = {
                             style: dropDown,
                             formValues: rowData,
@@ -164,84 +168,93 @@ const FormDialog4 = ({
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Player Name"}
+                                    defaultValue={"Select Player"}
                                     options={dropDownData.players}/>
-                            case "statname" :
-                                return
                             case "awayTeamName" :
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Away Team Name"}
+                                    defaultValue={"Select Away Team"}
                                     options={dropDownData.clubs}/>
                             case "homeTeamName" :
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Home Team Name"}
+                                    defaultValue={"Select Home Team"}
                                     options={dropDownData.clubs}/>
                             case "pitchgrid":
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Pitch-Grid"}
+                                    defaultValue={dropDownData.pitchgrids[0]}
                                     options={dropDownData.pitchgrids}/>
                             case "round":
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Round"}
+                                    defaultValue={dropDownData.rounds[0]}
                                     options={dropDownData.rounds}/>
                             case "season":
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Season"}
+
                                     options={getSeasons()}/>
                             case "position":
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Position"}
+                                    defaultValue={"Select Position Name"}
                                     options={dropDownData.positions}/>
                             case "positionNumber":
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Position Number"}
+                                    defaultValue={"Select Position Number"}
                                     options={dropDownData.positionNumbers}/>
                             case "competitionName":
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Competition Name"}
-                                    options={dropDownData.competitions}/>
+                                    defaultValue={dropDownData.competitions[0]}
+                                    options={[...new Set(dropDownData.competitions)]}/>
                             case "success":
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Success"}
+                                    defaultValue={"true"}
+
                                     options={SUCCESS}/>
                             case "statName":
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Stat names"}
+                                    defaultValue={"Select Stat Name"}
                                     options={dropDownData.statnames}/>
                             case "registered":
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Registered"}
+                                    defaultValue={"true"}
                                     options={REGISTERED}/>
                             case "grade":
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Grade"}
+                                    defaultValue={GRADES[0]}
                                     options={GRADES}/>
                             case "availability":
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Availability"}
+                                    defaultValue={"true"}
                                     options={AVAILABILITY}/>
                             case "half" :
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"First/Second Half"}
+                                    defaultValue={1}
                                     options={HALF}/>
-                            case "season":
-                                return <DropDown
-                                    {...commonProps}
-                                    headerName={"Season"}
-                                    options={getSeasons()}/>
                             case 'fixtureDate':
                                 return <MyDatePicker
                                     {...commonProps}
@@ -249,6 +262,7 @@ const FormDialog4 = ({
                             case 'fixtureTime':
                                 return <MyTimePicker
                                     {...commonProps}
+                                    defaultValue={new Date().getTime()}
                                     headerName={"Time"}/>
                             default:
                                 return <MyTextField
@@ -270,6 +284,7 @@ const FormDialog4 = ({
                         setRowData={setRowData}
                         axiosApi={axiosApi}
                         rowData={rowData}
+                        entity={entity}
 
                         formValues={formValues}
                         methods={methods}

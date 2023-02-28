@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef, useMemo, Fragment, useCallback} from 'react';
+import React, {useEffect, useState, useRef, Fragment, useCallback} from 'react';
 import {AgGridReact} from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -6,20 +6,14 @@ import 'ag-grid-community/styles/ag-theme-balham.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 import {Button, Grid} from "@mui/material";
 import './MyDataGrid.css'
-import {defaultColDef, getUniqueId, refreshPage} from "../common/helper";
-import {useAxios, useAxios2} from "../api/ApiService";
+import {defaultColDef, refreshPage} from "../common/helper";
+import {useAxios} from "../api/ApiService";
 import instance from "../api/axios";
 import AuthService from "../auth/AuthService";
 import {Position} from '../entities/positions'
 import {Pitchgrid} from '../entities/pitchgrids'
 
-import { GRID_ROW_DELETE, METHODS, REPORT_PRINT_PREVIEW } from "../common/globals";
-import {COMPETITION_URLS} from "../entities/competitions";
-import {PLAYER_URLS} from "../entities/players";
-import {CLUB_URLS} from "../entities/clubs";
-import {PITCH_GRID_URLS} from "../entities/pitchgrids";
-import {STAT_NAME_URLS} from "../entities/statnames";
-import {POSITION_URLS} from "../entities/positions";
+import {GRID_ROW_DELETE, REPORT_PRINT_PREVIEW} from "../common/globals";
 import {Teamsheet} from "../entities/teamsheets";
 // import HandlePrintPreview from "../teamsheetComponents/HandlePrintPreview"
 // import usePrintPreview from '../teamsheetComponents/usePrintPreview'
@@ -36,10 +30,8 @@ const MyDataGrid = ({props}) => {
     const [gridApi, setGridApi] = useState(null);
     const gridRef = useRef(null);
     const [paginationEnabled, setPaginationEnabled] = useState(true);
-    // manage id for edis and deletes
-    const [id, setId] = useState(null)
-    // used with delete to confirm the record is to be deleted
 
+    // used with delete to confirm the record is to be deleted
     const [deleteNode, setDeleteNode] = useState(false)
 
     const [showConfirm, setShowConfirm] = useState(false);
@@ -307,7 +299,6 @@ const MyDataGrid = ({props}) => {
     }
     const handlePrintPreviewButton = (params) => {
         return setShowPrintPreview(HandlePrintPreview(params))
-
     }
 
     useEffect(() => {
@@ -351,14 +342,16 @@ const MyDataGrid = ({props}) => {
         messages: props.messages,
         initialValue: props.initialValue,
         axiosApi: axiosApi,
+        entity: props.type,
         loading: loading,
         error: error,
+        // location: props.location,
 
         // dropDownData: dropDownData,
     }
 
     const togglePagination = () => {
-        const pageSize = paginationEnabled ? 0 : 10;
+        const pageSize = paginationEnabled ? 1000 : 10;
         setPaginationEnabled(!paginationEnabled);
         gridApi.paginationSetPageSize(pageSize);
     };

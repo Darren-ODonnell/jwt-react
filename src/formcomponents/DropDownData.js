@@ -36,7 +36,6 @@ const DropdownData = () => {
     }) : []
     const rounds = Array.from({length: 10}, (_, index) => index + 1);
 
-
     const dropDownData = useMemo(() => {
         return {
             competitions,

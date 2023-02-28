@@ -3,7 +3,7 @@ import React from "react";
 import './textfield.css'
 
 
-const MyTextField = ({onChange, headerName, value, field, className}) => {
+const MyTextField = ({onChange, headerName, value, field, className, defaultValue}) => {
 
     const handleChange = (event) => {
         onChange(field, event.target.value);
@@ -14,16 +14,16 @@ const MyTextField = ({onChange, headerName, value, field, className}) => {
         field: field,
         style: {margin: 8, backgroundColor: "#F2F2F2"},
         label: headerName,
-        value: value ? value : "",
+        value: value ? value : defaultValue,
         onChange: handleChange,
         variant: "outlined",
+        defaultValue: defaultValue,
 
     }
 
     return (
         <TextField
             {...textFieldParams}
-
             className={className}
 
             // fullWidth

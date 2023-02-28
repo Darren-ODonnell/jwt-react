@@ -4,7 +4,7 @@ import {getUniqueId} from "../common/helper";
 import {useState} from "react";
 import './dropdown.css'
 
-const DropDown = ({formValues, field, headerName, options, options2}) => {
+const DropDown = ({formValues, field, headerName, options, options2, required, validator}) => {
     const [data, setData] = useState(formValues[field])
 
     let defaultValue = (formValues[field]) ? (formValues[field]) : ""
@@ -26,7 +26,7 @@ const DropDown = ({formValues, field, headerName, options, options2}) => {
                         id="demo-simple-select"
                         placeholder={"Enter " + headerName}
                         value={data}
-
+                        required={required}
                         variant={"outlined"}
                         onChange={e => onSelectChange(e, field)}
                         inputProps={{id: 'my-select'}}

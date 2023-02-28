@@ -9,7 +9,7 @@ export const ErrorMessage = (props) => {
 
     function onClick() {
         setShow(false);
-        window.location = "/"
+        window.location = props.location ? props.location : "/"
     }
 
     return (

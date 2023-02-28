@@ -7,26 +7,11 @@ Ig: Ignored for now
 
 As elements are finished - move below Completed
 
-
 Current Tasks - with comments on progress
 =========================================
 1. Get Teamsheet to display for printing -
 2. Get teamsheet to print. -
-3. Get Form add/edit to work again - check db updatable -done
-   form Popup working again - textfield and formdialog tidies up - done
-   Some styling added to popup form - filled textfield entry box - done
-
-   L70 in formDialog still produces a bad setState() warning - done
-   Also controlled v uncontrolled assignment warning - done
-
-4. Get Grid to display correctly again - done
-5. Get delete to work again - done
-6. Set grid min-width - done
 7. Start work on import/export -
-8. Get print and add to be on same line - done
-9. Update Node and npm to latest - done
-10. After testing the above updates, Pin the version of each module to the
-    latest in the package.json file - done
 
 # Errors
 
@@ -41,14 +26,13 @@ Current Tasks - with comments on progress
     E52: 
 
 # Refactoring
-
     R13: 
     R14: 
     R15: 
 
 # Investigations
 
-    I5: Some dropdowns are too long - investigate other methods - maybe grid display!
+
     I7: 
     I8: 
 
@@ -66,22 +50,7 @@ Current Tasks - with comments on progress
         C10d: All api activity should use this season setting.
     C11b: Add dropdowns for fixture Dates
           rest call complete - dropdown to be loaded and tested
-    C11c: Add dropdowns for player names 
-        rest call complete - dropdown to be loaded and tested
-    C11f: Add dropdowns for for statnames
-        rest call complete - dropdown to be loaded and tested
 
-    C11a: Add dropdowns for Competition Names   -done
-        rest call complete - dropdown to be loaded and tested
-    C11d: Add dropdowns for position numbers    -done
-        rest call complete - dropdown to be loaded and tested
-    C11e: Add dropdowns for pitchegrid values   -done
-        rest call complete - dropdown to be loaded and tested
-    C11g: Add dropdowns for for seasons         -done
-    C11h: Add dropdowns for for rounds          -done
-    C11i: Add dropdowns for for availability    -done
-    C11j: Add dropdowns for for Grade           -done
-    C11k: Add dropdowns for for Registered      -done
     C11l: Create dropdown for playing time - allowing only minutes to be entered between 1 and 60.
  
     C12: Create Teamsheet for a specific fixture - suitable to be printed out - as per GAA standard Teamsheet form.
@@ -113,17 +82,10 @@ Current Tasks - with comments on progress
 
 # In Progress
 
-    E22: Tables with foreign key data are not displayed correctly
-        - Events - incomplete - need data to test.
-
     C6: FormDialog Add/Edit Changes
         C6a: Club -> validation (club does not already exist)
         C6b: Player -> validation (player does not already exist)
         C6c: Competition -> validation (DNE) - use a dropdown
-
-        C6d2: Fixture -  Competition - done
-        C6d1: Fixture -> Dropdown for Competition, season, and round - done
-
 
         C6e: Teamsheet -> Drop down for 
             Fixture , (what fields necessary to uniquely id fixture 
@@ -152,12 +114,10 @@ Current Tasks - with comments on progress
         it re-renders each time state is changed, once data is changed it returns.
     U4: auth/LoginSuccess, auth/LoginFailure 
         - deleted - files were empty anyway
-
     E10: Foreign key details not display on any entity
         All the data has been captured from the server.
         Redo the columns for these tables
         data2 created - could not change the state variable data.
-
     E4. Add Entity not working for any entity - add api code to achieve same
         When adding a colDef, the ettribute field was omitted
     I6: Check useForm (from react-hook-form) for form handling ratherv than grid
@@ -397,3 +357,25 @@ Current Tasks - with comments on progress
     E50: After tremoving the text from an textfield an error occurs
          value : value ? value : undefined -> changed to value ? value : "" 
 
+    I5: Some dropdowns are too long - investigate other methods - maybe grid display!
+    C11a: Add dropdowns for Competition Names   -done
+        rest call complete - dropdown to be loaded and tested
+    C11d: Add dropdowns for position numbers    -done
+        rest call complete - dropdown to be loaded and tested
+    C11e: Add dropdowns for pitchegrid values   -done
+        rest call complete - dropdown to be loaded and tested
+    C11g: Add dropdowns for for seasons         -done
+    C11h: Add dropdowns for for rounds          -done
+    C11i: Add dropdowns for for availability    -done
+    C11j: Add dropdowns for for Grade           -done
+    C11k: Add dropdowns for for Registered      -done
+    C11c: Add dropdowns for player names  - done
+        rest call complete - dropdown to be loaded and tested
+    C11f: Add dropdowns for for statnames - done
+        rest call complete - dropdown to be loaded and tested
+    C6d2: Fixture -  Competition - done
+    C6d1: Fixture -> Dropdown for Competition, season, and round - done
+    E22: Tables with foreign key data are not displayed correctly
+        - Events - incomplete - need data to test.
+    xx After testing the above updates, Pin the version of each module to the
+    latest in the package.json file - done
