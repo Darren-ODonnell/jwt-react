@@ -52,13 +52,13 @@ const gridLoader = (data) => {
         let pgrid = row.location ? row.location.name + " (" + row.location.id + ")" : ""
 
         const newRow = {
-            id          : row.id,
-            playerName  : row.player.firstname + " " + row.player.lastname,
-            fixtureDate : row.fixture.fixtureDate,
-            statName    : row.statName.name,
-            success     : row.success,
-            half        : row.half,
-            pitchgrid   : pgrid,
+            id: row.id,
+            playerName: row.player.lastname + ", " + row.player.firstname,
+            fixtureDate: row.fixture.fixtureDate,
+            statName: row.statName.name,
+            success: row.success,
+            half: row.half,
+            pitchgrid: pgrid,
             timeOccurred: row.id.timeOccurred
         }
         newData.push(newRow)

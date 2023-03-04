@@ -64,21 +64,18 @@ const MyDataGrid = ({props}) => {
     // load up data for dropdowns
     // pass this as a single object , rather than individual collections
 
-    const handleOpen = () => {
-        if(open!==true) {
-            setOpen( true );
-            console.log("Opening Form: ")
-        }
-    }
-    const handleClose = () => {
-        if (open !== false) {
-            setOpen(false);
-            console.log("Closing Form: ")
-        }
-    };
+    const handleOpen = useCallback(() => {
+        setOpen(true);
+        console.log('Opening Form:');
+    }, []);
+
+    const handleClose = useCallback(() => {
+        setOpen(false);
+        console.log('Closing Form:');
+    }, []);
 
     const onRowSelected = useCallback((event) => {
-        setSelectedRow(event.node.data)
+        setSelectedRow(event.node.data);
     }, []);
 
     // const handleSelectionChanged = () => {
@@ -93,57 +90,58 @@ const MyDataGrid = ({props}) => {
     //     }
     // };
 
-    const getSelectedRow = () => {
+    const getSelectedRow = useCallback(() => {
         const selectedNodes = gridApi.getSelectedRows();
         if (selectedNodes.length === 1) {
             setSelectedRow(selectedNodes[0]);
         }
-    }
+    }, [gridApi]);
 
     useEffect(() => {
         if (deleteNode) {
-            deleteData(selectedRow)
-            setDeleteNode(false)
+            deleteData(selectedRow);
+            setDeleteNode(false);
         }
-    })
+    }, [deleteNode, selectedRow]);
 
 
-    const onChange = (e) => {
-        const {value, id} = e.target
-        // update field with data from user
-        // data updated here first, then screen is updated
-        setRowData({...rowData, [id]: value})
-    }
-    const onGridReady = (params) => {
-        setGridApi(params.api)
+    const onChange = useCallback((e) => {
+        const {value, id} = e.target;
+        setRowData({...rowData, [id]: value});
+    }, [rowData]);
+
+    const onGridReady = useCallback((params) => {
+        setGridApi(params.api);
         const gridApi = params.api;
         gridApi.addEventListener('rowSelected', function (event) {
             let selectedRows = gridApi.getSelectedRows();
-            setSelectedRow(selectedRows[0])
-
+            setSelectedRow(selectedRows[0]);
         });
-    }
-    const handleEdit = (params) => {
-        getSelectedRow()
+    }, []);
+
+    const handleEdit = useCallback(() => {
+        getSelectedRow();
         handleOpen();
-    }
+    }, [getSelectedRow, handleOpen]);
 
     // returned the filtered data
-    const handleFilterChanged = () => {
+    const handleFilterChanged = useCallback(() => {
+        model = gridApi
         model = gridApi.getModel().rowsToDisplay;
         let newFilteredData = model.map(function (m) {
             return m.data
         })
         setFilteredData(newFilteredData)
         console.log("FilteredData-: " + filteredData);
-    };
-    const handleDelete = (itemId) => {
+    }, []);
+
+    const handleDelete = useCallback((itemId) => {
         getSelectedRow()
         deleteData(selectedRow)
         setShowConfirm(false) // this will trigger a render which the next useEffect will catch this state change
         setShowDeleteModal(false)
         console.log(`Deleting item with id: ${itemId}...`);
-    };
+    }, []);
 
     const formActions = {
         headerName: 'Actions',

@@ -118,4 +118,18 @@ export function withRouter(Component) {
     return ComponentWithRouterProp;
 }
 
+export const handleBooleanValues = (testValue) => {
+    let value
+    switch (testValue) {
+        case "True" :
+            value = true
+            break
+        case "False" :
+            value = false
+            break
+        default :
+            value = testValue
+    }
+    return value
+}
 
