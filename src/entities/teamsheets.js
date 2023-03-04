@@ -35,10 +35,11 @@ const gridLoader = (data) => {
             fixtureDate: row.fixture.fixtureDate,
             homeTeamName: row.fixture.homeTeam.name,
             awayTeamName: row.fixture.awayTeam.name,
-            playerName: row.player.firstname + " " + row.player.lastname,
+            playerName: row.player.lastname + ", " + row.player.firstname,
             position: row.position.name,
             positionNumber: row.position.id,
             // not used in teamsheetColumnDefs so not displayed in grid but used later when updating/printing changes in teamsheet.
+            firstnameLastname: row.player.firstname + ", " + row.player.lastname,
             competition: row.competition,
             homeTeam: row.homeTeam,
             awayTeam: row.awayTeam,

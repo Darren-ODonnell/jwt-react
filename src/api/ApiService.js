@@ -36,7 +36,6 @@ export const useAxios = () => {
 
     return [data, error, loading, axiosApi];
 }
-
 export let LoginRequest = (loginModel) => {
     // token from get user object
     return instance.post(API_AUTH_URLS.login, loginModel)
@@ -77,4 +76,97 @@ const ApiService = {
     // usePutRequest
     // useResource
 };
+
+
+export const deleteData = (data, error, props, axiosApi, handleClose) => {
+    console.log("deleting data with id: " + data)
+    const user = AuthService.getCurrentUser();
+    AuthService.setAuthToken(user.accessToken);
+
+    const configObj = {
+        axiosInstance: instance,
+        ...props.methods.delete,
+        requestConfig: {
+            data: {data}
+        }
+    }
+
+    return axiosApi(configObj)
+        .then(response => {
+            handleClose();
+        })
+        .catch(err => {
+            window.alert(error.message)
+            console.log("Error: " + error.message)
+            handleClose()
+        })
+}
+
+export const getData = ({method, url}, axiosApi, handleClose) => {
+    // clean up controller
+    let isSubscribed = true;
+    const user = AuthService.getCurrentUser();
+    AuthService.setAuthToken(user.accessToken);
+    return axiosApi({
+        axiosInstance: instance,
+        method: method,
+        url: url,
+    }).then(() => {
+
+    }).catch(err => {
+        handleClose()
+    })        // cancel subscription to useEffect
+    return () => (isSubscribed = false)
+}
+
+export const UpdateData = ({methods, axiosApi, rowData, error, formValues}) => {
+    const user = AuthService.getCurrentUser();
+    AuthService.setAuthToken(user.accessToken);
+
+    const configObj = {
+        axiosInstance: instance,
+        ...methods.update,
+        requestConfig: {
+            data: formValues
+        }
+    };
+
+    return axiosApi(configObj)
+        .then(response => {
+            rowData = response.data;
+            console.log("Update: ", rowData);
+            return rowData;
+        })
+        .catch(err => {
+            window.alert(error.message);
+            console.log("Error: " + error.message);
+            return null;
+        });
+};
+
+export const AddData = ({methods, axiosApi, rowData, error, formValues}) => {
+    const user = AuthService.getCurrentUser();
+    AuthService.setAuthToken(user.accessToken);
+
+    const configObj = {
+        axiosInstance: instance,
+        ...methods.add,
+        requestConfig: {
+            data: {...formValues}
+        }
+    };
+
+    return axiosApi(configObj)
+        .then(response => {
+            rowData = response.data;
+            console.log("Add: ", response.data);
+            return rowData;
+        })
+        .catch(err => {
+            console.log("Error: " + error.message);
+            return null;
+        });
+};
+
+
 export default ApiService;

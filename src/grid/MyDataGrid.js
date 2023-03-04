@@ -7,7 +7,7 @@ import 'ag-grid-community/styles/ag-theme-material.css';
 import {Button, Grid} from "@mui/material";
 import './MyDataGrid.css'
 import {defaultColDef, refreshPage} from "../common/helper";
-import {useAxios} from "../api/ApiService";
+import {deleteData, getData, useAxios} from "../api/ApiService";
 import instance from "../api/axios";
 import AuthService from "../auth/AuthService";
 import {Position} from '../entities/positions'
@@ -126,18 +126,18 @@ const MyDataGrid = ({props}) => {
 
     // returned the filtered data
     const handleFilterChanged = useCallback(() => {
-        model = gridApi
+        // model = gridApi
         model = gridApi.getModel().rowsToDisplay;
         let newFilteredData = model.map(function (m) {
             return m.data
         })
         setFilteredData(newFilteredData)
         console.log("FilteredData-: " + filteredData);
-    }, []);
+    }, [gridApi]);
 
     const handleDelete = useCallback((itemId) => {
         getSelectedRow()
-        deleteData(selectedRow)
+        deleteData(selectedRow, axiosApi, handleClose)
         setShowConfirm(false) // this will trigger a render which the next useEffect will catch this state change
         setShowDeleteModal(false)
         console.log(`Deleting item with id: ${itemId}...`);
@@ -162,47 +162,47 @@ const MyDataGrid = ({props}) => {
         }
     };
 
-    const deleteData = (data, error) => {
-        console.log("deleting data with id: " + data)
-        const user = AuthService.getCurrentUser();
-        AuthService.setAuthToken(user.accessToken);
-
-        const configObj = {
-            axiosInstance: instance,
-            ...props.methods.delete,
-            requestConfig: {
-                data: {data}
-            }
-        }
-
-        axiosApi(configObj)
-            .then(response => {
-                handleClose();
-            })
-            .catch(err => {
-                window.alert(error.message)
-                console.log("Error: " + error.message)
-                handleClose()
-            })
-        refreshPage()
-        // window.location.reload()
-    }
-    function getData({method, url}) {
-        // clean up controller
-        let isSubscribed = true;
-        const user = AuthService.getCurrentUser();
-        AuthService.setAuthToken(user.accessToken);
-        axiosApi({
-            axiosInstance: instance,
-            method: method,
-            url: url,
-        }).then(() => {
-
-        }).catch(err => {
-            handleClose()
-        })        // cancel subscription to useEffect
-        return () => (isSubscribed = false)
-    }
+    // const deleteData = (data, error) => {
+    //     console.log("deleting data with id: " + data)
+    //     const user = AuthService.getCurrentUser();
+    //     AuthService.setAuthToken(user.accessToken);
+    //
+    //     const configObj = {
+    //         axiosInstance: instance,
+    //         ...props.methods.delete,
+    //         requestConfig: {
+    //             data: {data}
+    //         }
+    //     }
+    //
+    //     axiosApi(configObj)
+    //         .then(response => {
+    //             handleClose();
+    //         })
+    //         .catch(err => {
+    //             window.alert(error.message)
+    //             console.log("Error: " + error.message)
+    //             handleClose()
+    //         })
+    //     refreshPage()
+    //     // window.location.reload()
+    // }
+    // function getData({method, url}) {
+    //     // clean up controller
+    //     let isSubscribed = true;
+    //     const user = AuthService.getCurrentUser();
+    //     AuthService.setAuthToken(user.accessToken);
+    //     axiosApi({
+    //         axiosInstance: instance,
+    //         method: method,
+    //         url: url,
+    //     }).then(() => {
+    //
+    //     }).catch(err => {
+    //         handleClose()
+    //     })        // cancel subscription to useEffect
+    //     return () => (isSubscribed = false)
+    // }
 
     const onDelete = () => {
         getSelectedRow()
@@ -300,7 +300,7 @@ const MyDataGrid = ({props}) => {
     }
 
     useEffect(() => {
-        getData(props.methods.list)
+        getData(props.methods.list, axiosApi, handleClose)
     }, []);
 
     useEffect(() => {
@@ -327,6 +327,7 @@ const MyDataGrid = ({props}) => {
         // index: props.index,        // check if key above can be used on its own...
         // onClose: handleClose,
         handleClose: handleClose,
+        onClose: handleClose,
         // onSubmit: handleSubmit,
         open: open,
         setOpen: handleOpen,            // dummy value to test index .. props.index previous
@@ -361,35 +362,39 @@ const MyDataGrid = ({props}) => {
         )
     }
 
+    // style={{ maxWidth: 700, margin: "auto" }}
+    // className="list-wrapper"
+    // style={{ height: 600, width:1000 }}
     return (
-        !loading ? <div>
-            <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
-                <Fragment>
-                    {showPrintPreview ? <TeamsheetReport props={filteredData}/> : null}
-                    <div style={{display: "flex", justifyContent: "space-between"}}>
-                        <PrintPreviewButton {...props} gridApi={gridApi}/>
-                        <AddButton {...props}/>
-                    </div>
-                </Fragment>
+        !loading ? <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
+            <Fragment>
+                {showPrintPreview ? <TeamsheetReport props={filteredData}/> : null}
+                <div style={{display: "flex", justifyContent: "space-between"}}>
+                    <PrintPreviewButton {...props} gridApi={gridApi}/>
+                    <AddButton {...props}/>
+                </div>
+            </Fragment>
 
-                <AgGridReact  {...commonParams} {...gridParams}  />
-                <PaginationButton/>
+            <AgGridReact  {...commonParams} {...gridParams}  />
+            <PaginationButton/>
                 <FormDialog4   {...formParams}  />
 
-                {/* show delete modal when required by set/reset showModal */}
-                <ConfirmationModal
-                    showModal={showDeleteModal}
-                    setShowModal={setShowDeleteModal}
-                    setConfirmation={setConfirmation}
-                    title="Delete Item"
-                    message="Are you sure you want to delete this item?"
-                    onConfirm={handleDelete}
-                />
+            {/* show delete modal when required by set/reset showModal */}
+            <ConfirmationModal
+                showModal={showDeleteModal}
+                setShowModal={setShowDeleteModal}
+                setConfirmation={setConfirmation}
+                title="Delete Item"
+                message="Are you sure you want to delete this item?"
+                onConfirm={handleDelete}
+            />
 
-            </div>
+
             {/*<button onClick={exportData}>Export Data</button>*/}
 
+
         </div> : <p> Loading...</p>
+
     )
 };
 

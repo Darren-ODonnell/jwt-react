@@ -1,32 +1,33 @@
 import React from 'react';
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 
-
-export const LoggedInNavbar = (props) =>{
+// max-width: 700px;
+// margin: auto;
+export const LoggedInNavbar = (props) => {
     return (
         <Navbar bg="light" expand="lg">
-            <Container>
+            <Container className="navbar-container">
                 <Navbar.Brand href="/home">St Judes GAA</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                <Navbar.Collapse id = "basic-navbar-nav">
-                    <Nav className  = "me-auto">
-                        <Nav.Link href = "/home">Home</Nav.Link>
-                        <Nav.Link href = "/clubs">Clubs</Nav.Link>
-                        <Nav.Link href = "/players">Players</Nav.Link>
-                        <Nav.Link href = "/fixtures">Fixtures</Nav.Link>
-                        <Nav.Link href = "/teamsheets">Teamsheets</Nav.Link>
-                        <Nav.Link href = "/stats">Stats</Nav.Link>
-                        <NavDropdown title = "Dropdown" id = "basic-nav-dropdown">
-                            <NavDropdown.Item href = "/competitions">Competitions</NavDropdown.Item>
-                            <NavDropdown.Item href = "/statnames">Statnames</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href = "/positions">Positions</NavDropdown.Item>
-                            <NavDropdown.Item href = "/pitchgrids">Pitchgrids</NavDropdown.Item>
-                            <NavDropdown.Item href = "/lastnames">Lastnames</NavDropdown.Item>
-                            <NavDropdown.Item href = "/firstnames">Firstnames</NavDropdown.Item>
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link href="/home">Home</Nav.Link>
+                        <Nav.Link href="/clubs">Clubs</Nav.Link>
+                        <Nav.Link href="/players">Players</Nav.Link>
+                        <Nav.Link href="/fixtures">Fixtures</Nav.Link>
+                        <Nav.Link href="/teamsheets">Teamsheets</Nav.Link>
+                        <Nav.Link href="/stats">Stats</Nav.Link>
+                        <NavDropdown title="Extras" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="/competitions">Competitions</NavDropdown.Item>
+                            <NavDropdown.Item href="/statnames">Statnames</NavDropdown.Item>
+                            <NavDropdown.Divider/>
+                            <NavDropdown.Item href="/positions">Positions</NavDropdown.Item>
+                            <NavDropdown.Item href="/pitchgrids">Pitchgrids</NavDropdown.Item>
+                            <NavDropdown.Item href="/lastnames">Lastnames</NavDropdown.Item>
+                            <NavDropdown.Item href="/firstnames">Firstnames</NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title="Reports" id = "basic-nav-dropdown">
-                            <NavDropdown.Item href = "/printTeamsheet">Print Teamsheet</NavDropdown.Item>
+                        <NavDropdown title="Reports" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="/printTeamsheet">Print Teamsheet</NavDropdown.Item>
 
                         </NavDropdown>
                     </Nav>

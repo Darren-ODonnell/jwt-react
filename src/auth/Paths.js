@@ -13,17 +13,18 @@ import {positionData} from "../entities/positions";
 import {pitchgridData} from "../entities/pitchgrids";
 import {statData} from "../entities/stats";
 
-
 import AuthService from "./AuthService";
 
 import MyDataGrid from "../grid/MyDataGrid";
 import FileUpload from "../common/FileUpload";
 import UserRegistration from "./UserRegistration";
 import ChangePassword from "./ChangePassword";
+import './Paths.css'
+
 
 const Paths = () => {
     return (
-        <div className="container">
+        <div className="grid-wrapper">
             <Router>
                 <Routes>
                     <Route exact path="/lastnames" element={<MyDataGrid props={lastnameData}/>}/>

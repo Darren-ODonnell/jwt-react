@@ -50,6 +50,7 @@ const gridLoader = (data) => {
     data.forEach(row => {
 
         let pgrid = row.location ? row.location.name + " (" + row.location.id + ")" : ""
+        let location = row.location ? row.location.id : ""
 
         const newRow = {
             id: row.id,
@@ -58,8 +59,10 @@ const gridLoader = (data) => {
             statName: row.statName.name,
             success: row.success,
             half: row.half,
-            pitchgrid: pgrid,
-            timeOccurred: row.id.timeOccurred
+            pitchgrid: location,
+            timeOccurred: row.id.timeOccurred,
+            // not shown on grid
+            posnAndGrid: pgrid,
         }
         newData.push(newRow)
     })
