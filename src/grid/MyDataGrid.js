@@ -6,7 +6,7 @@ import 'ag-grid-community/styles/ag-theme-balham.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 import {Button, Grid} from "@mui/material";
 import './MyDataGrid.css'
-import {defaultColDef, refreshPage} from "../common/helper";
+import {defaultColDef, printPopup, refreshPage, showPopup} from "../common/helper";
 import {deleteData, getData, useAxios} from "../api/ApiService";
 import instance from "../api/axios";
 import AuthService from "../auth/AuthService";
@@ -25,6 +25,8 @@ import dropDownData from "../formcomponents/DropDownData";
 import FormDialog4 from "./FormDialog4";
 // import {GridOptions} from "ag-grid-community";
 import ConfirmationModal from "../common/ConfirmationModal";
+import Report from "../teamsheetComponents/Report";
+
 
 const MyDataGrid = ({props}) => {
     const [gridApi, setGridApi] = useState(null);
@@ -285,7 +287,7 @@ const MyDataGrid = ({props}) => {
         return (
             showPrintPreviewButton(props.type) ?
                 <Grid align="left">
-                    <Button onClick={(params) => HandlePrintPreview(params, filteredData)}
+                    <Button onClick={(params) => handleShowPrintPreview(params, filteredData)}
                             variant="contained"
                             color="primary"
                     >PrintPreview</Button>
@@ -295,9 +297,9 @@ const MyDataGrid = ({props}) => {
                 <div></div>
         )
     }
-    const handlePrintPreviewButton = (params) => {
-        return setShowPrintPreview(HandlePrintPreview(params))
-    }
+    // const handleShowPrintPreview = (params) => {
+    //     return setShowPrintPreview(HandlePrintPreview(params))
+    // }
 
     useEffect(() => {
         getData(props.methods.list, axiosApi, handleClose)
@@ -361,12 +363,16 @@ const MyDataGrid = ({props}) => {
             </button>
         )
     }
-
+    const handleShowPrintPreview = () => {
+        showPopup()
+        setShowPrintPreview(true);
+    };
     // style={{ maxWidth: 700, margin: "auto" }}
     // className="list-wrapper"
     // style={{ height: 600, width:1000 }}
     return (
         !loading ? <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
+            {/* Use fragment to Keep buttons on same line above grid */}
             <Fragment>
                 {showPrintPreview ? <TeamsheetReport props={filteredData}/> : null}
                 <div style={{display: "flex", justifyContent: "space-between"}}>
@@ -375,10 +381,15 @@ const MyDataGrid = ({props}) => {
                 </div>
             </Fragment>
 
+            {/* Show Grid - always shown*/}
             <AgGridReact  {...commonParams} {...gridParams}  />
+            {/* Show pagination button below grid */}
             <PaginationButton/>
-                <FormDialog4   {...formParams}  />
+            {/* show Import/Export Buttons here... */}
+            {/*<button onClick={exportData}>Export Data</button>*/}
 
+            {/* Popup form triggerd by open */}
+            <FormDialog4   {...formParams}  />
             {/* show delete modal when required by set/reset showModal */}
             <ConfirmationModal
                 showModal={showDeleteModal}
@@ -388,16 +399,20 @@ const MyDataGrid = ({props}) => {
                 message="Are you sure you want to delete this item?"
                 onConfirm={handleDelete}
             />
-
-
-            {/*<button onClick={exportData}>Export Data</button>*/}
-
+            {/* Printing teamsheet */}
+            {showPrintPreview && (
+                <div className="popup-modal">
+                    <div className="popup-modal-content print-container">
+                        <Report data={data}/>
+                        <Button onClick={printPopup}>Print Data</Button>
+                        <Button onClick={() => setShowPrintPreview(false)}>Close Popup Modal</Button>
+                    </div>
+                </div>
+            )}
 
         </div> : <p> Loading...</p>
-
     )
 };
-
 export default MyDataGrid;
 
 

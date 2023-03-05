@@ -1,0 +1,149 @@
+.Bold {
+    font-weight: bold;
+}
+
+.TableCellStyle {
+    /*border         : 2px solid black;*/
+    border: 1px solid black;
+    border-collapse: collapse;
+    height: 18px;
+    text-align: center;
+    margin: 0;
+}
+
+.TableCellStyle .ManagerCellStyle {
+    text-align: left;
+}
+
+.TableRowHeight {
+    font-size: 1.2em;
+    height: 12px
+
+}
+
+
+.TableCellStyle .ManagerCellStyleCol {
+    text-align: left;
+    width: 180px;
+}
+
+.TableCellStyle .FirstRowDouble {
+    height: 40px;
+}
+
+.TableCellStyle .TitleTableCellStyle {
+    font-weight: bold;
+}
+
+.colNumbers {
+    width: 80px;
+}
+
+.colManagers {
+    width: 150px;
+}
+
+.footer {
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.left {
+    text-align: left;
+}
+
+.TableCellStyle .TableCellStyleNos {
+    font-weight: bold;
+    width: 80px;
+}
+
+.TitleStyle {
+    font-weight: bold;
+    text-align: center;
+}
+
+.TitleStyleUnderline {
+    font-weight: bold;
+    text-align: center;
+    text-decoration: underline;
+}
+
+
+.marginTop {
+    margin-top: 4cm;
+}
+
+.TitleStyle .TitleManagerStyle {
+    /*page-break-before: always;*/
+
+}
+
+/*.break {*/
+/*    page-break-before: always;*/
+/*}*/
+
+
+/* in Header.js*/
+.headerImage {
+    background-position: top;
+    background-repeat: no-repeat;
+    position: relative;
+    background-size: cover;
+    height: 140px;
+    width: 100%;
+    margin: 0
+}
+
+/* printer layouts */
+
+@media print {
+    .header {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: #ccc;
+        height: 50px;
+        text-align: center;
+        line-height: 50px;
+    }
+}
+
+@media print {
+    .page-break {
+        page-break-before: always;
+    }
+}
+
+@media print {
+    body {
+        margin-top: 4cm;
+        /*margin-left : 1cm;*/
+        /*margin-right : 1cm;*/
+    }
+
+    @page {
+        margin-top: 0cm;
+    }
+}
+
+@media print {
+    .printFooter {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #ccc;
+        padding: 10px;
+        text-align: center;
+    }
+}
+
+.text-block {
+    width: 80%;
+    font-size: 1.4em;
+    line-height: 1;
+
+}
