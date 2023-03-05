@@ -48,6 +48,22 @@ const gridLoader = (data) => {
             homeTeamIrishName: row.fixture.homeTeam.irishName,
             awayTeamIrishName: row.fixture.awayTeam.irishName,
             playerIrishName: row.player.firstnameI + " " + row.player.lastnameI,
+            teamsheetEntry: {
+                number: row.position.id,
+                name: row.player.lastname + ", " + row.player.firstname,
+                nameIrish: row.player.firstnameI + " " + row.player.lastnameI,
+            },
+            fixtureEntry: {
+                competitionName: row.fixture.competition.name,
+                competitionNameIrish: row.fixture.competition.irishName,
+                homeTeamName: row.fixture.homeTeam.name,
+                homeTeamNameIrish: row.fixture.homeTeam.irishName,
+                awayTeamName: row.awayTeam,
+                awayTeamNameIrish: row.fixture.awayTeam.irishName,
+                club: 'Naomh Jude',
+                county: 'Dublin',
+                fixtureDate: row.fixture.fixtureDate,
+            }
         }
         newData.push(newRow)
     })

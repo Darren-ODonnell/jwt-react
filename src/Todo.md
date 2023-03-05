@@ -25,13 +25,17 @@ Current Tasks - with comments on progress
     E51: 
     E52: 
 
+todo
+Build set of data for report
+and then set data = {data built}
+
 # Refactoring
+
     R13: 
     R14: 
     R15: 
 
 # Investigations
-
 
     I7: 
     I8: 

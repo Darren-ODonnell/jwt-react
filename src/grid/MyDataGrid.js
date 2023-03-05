@@ -363,7 +363,14 @@ const MyDataGrid = ({props}) => {
             </button>
         )
     }
+    const buildDataBlock = (rows) => {
+
+    }
+
+
     const handleShowPrintPreview = () => {
+        const selectedNodes = gridApi.getModel().rowsToDisplay
+        const reportData = buildDataBlock(selectedNodes)
         showPopup()
         setShowPrintPreview(true);
     };
