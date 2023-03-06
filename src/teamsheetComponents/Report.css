@@ -1,5 +1,12 @@
+.Table {
+    color: black;
+}
+
+
 .Bold {
     font-weight: bold;
+    color: black;
+
 }
 
 .TableCellStyle {
@@ -9,44 +16,53 @@
     height: 18px;
     text-align: center;
     margin: 0;
+    color: black;
+
 }
 
 .TableCellStyle .ManagerCellStyle {
     text-align: left;
+    color: black;
 }
 
 .TableRowHeight {
     font-size: 1.2em;
-    height: 12px
-
+    height: 12px;
+    color: black;
 }
 
 
 .TableCellStyle .ManagerCellStyleCol {
     text-align: left;
     width: 180px;
+    color: black;
 }
 
 .TableCellStyle .FirstRowDouble {
     height: 40px;
+    color: black;
 }
 
 .TableCellStyle .TitleTableCellStyle {
     font-weight: bold;
+    color: black;
 }
 
 .colNumbers {
     width: 80px;
+    color: black;
 }
 
 .colManagers {
     width: 150px;
+    color: black;
 }
 
 .footer {
     font-size: 13px;
     font-weight: bold;
     text-align: center;
+    color: black;
 }
 
 .left {
@@ -56,17 +72,20 @@
 .TableCellStyle .TableCellStyleNos {
     font-weight: bold;
     width: 80px;
+    color: black;
 }
 
 .TitleStyle {
     font-weight: bold;
     text-align: center;
+    color: black;
 }
 
 .TitleStyleUnderline {
     font-weight: bold;
     text-align: center;
     text-decoration: underline;
+    color: black;
 }
 
 
@@ -76,6 +95,7 @@
 
 .TitleStyle .TitleManagerStyle {
     /*page-break-before: always;*/
+    color: black;
 
 }
 
@@ -145,5 +165,5 @@
     width: 80%;
     font-size: 1.4em;
     line-height: 1;
-
+    color: black;
 }
