@@ -14,7 +14,7 @@ import {Position} from '../entities/positions'
 import {Pitchgrid} from '../entities/pitchgrids'
 
 import {GRID_ROW_DELETE, REPORT_PRINT_PREVIEW} from "../common/globals";
-import {Teamsheet} from "../entities/teamsheets";
+import { loadDataForTeamsheet, Teamsheet } from "../entities/teamsheets";
 // import HandlePrintPreview from "../teamsheetComponents/HandlePrintPreview"
 // import usePrintPreview from '../teamsheetComponents/usePrintPreview'
 
@@ -59,6 +59,7 @@ const MyDataGrid = ({props}) => {
     // // import data hook
     // const importData = useImportData(gridOptions.api);
     // delete confirm hook
+    const [reportData, setReportData] = useState({})
 
     let message = "";
     let model = [];
@@ -106,7 +107,40 @@ const MyDataGrid = ({props}) => {
         }
     }, [deleteNode, selectedRow]);
 
+    const loadDataForTeamsheet =  useCallback( (filteredData) => {
+        if(filteredData) {
+            let header = {}
+            let team = []
+            let subs = []
+            let footer = {}
 
+            header = { ...filteredData[ 0 ].fixtureEntry }
+
+            filteredData.map( player => {
+                if ( player.positionNumber <= 15 )
+                    team.push( player )
+                else
+                    subs.push( player )
+            } )
+
+            footer = [
+                { role: 'Manager', name: "Doni Fox", nameIrish: "Dónal Mac Saoir" },
+                { role: 'Assistant Manager', name: "Marion O'Donnell", nameIrish: "Máirín Ní Dhomhnaill" },
+                { role: 'Assistant Manager', name: "Pio McCarthy", nameIrish: "Pío Mac Carthaigh" },
+                { role: 'Assistant Manager', name: "Ger McManus", nameIrish: "Gearóid Mac Mánus" },
+                { role: 'Assistant Manager', name: "Podge Griffin", nameIrish: "Pádraig Criomhthann" },
+
+            ]
+
+            const data = {
+                header: header,
+                team: team,
+                subs: subs,
+                footer: footer,
+            }
+            return data
+        }
+    },[])
     const onChange = useCallback((e) => {
         const {value, id} = e.target;
         setRowData({...rowData, [id]: value});
@@ -134,8 +168,9 @@ const MyDataGrid = ({props}) => {
             return m.data
         })
         setFilteredData(newFilteredData)
+
         console.log("FilteredData-: " + filteredData);
-    }, [gridApi]);
+    }, [gridApi, filteredData]);
 
     const handleDelete = useCallback((itemId) => {
         getSelectedRow()
@@ -369,8 +404,8 @@ const MyDataGrid = ({props}) => {
 
 
     const handleShowPrintPreview = () => {
-        const selectedNodes = gridApi.getModel().rowsToDisplay
-        const reportData = buildDataBlock(selectedNodes)
+        setReportData( loadDataForTeamsheet(filteredData) )
+        // const reportData = buildDataBlock(selectedNodes)
         showPopup()
         setShowPrintPreview(true);
     };
@@ -410,7 +445,7 @@ const MyDataGrid = ({props}) => {
             {showPrintPreview && (
                 <div className="popup-modal">
                     <div className="popup-modal-content print-container">
-                        <Report data={data}/>
+                        <Report data={reportData}/>
                         <Button onClick={printPopup}>Print Data</Button>
                         <Button onClick={() => setShowPrintPreview(false)}>Close Popup Modal</Button>
                     </div>

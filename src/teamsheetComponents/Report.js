@@ -18,7 +18,7 @@ import {
     TEAM_LIST_REFEREE_ENGLISH, TEAM_LIST_INSTRUCTIONS_IRISH,
     TEAM_LIST_INSTRUCTIONS_ENGLISH, TEAM_LIST_FOOTER,
 } from "../common/globals";
-// import './TeamsheetReport.css'
+import './TeamsheetReport.css'
 import './Report.css'
 import Header from "./Header";
 
@@ -86,9 +86,9 @@ const Report = ({data}) => {
                 <TableBody>
                     {data.team.map(row => (
                         <TableRow key={num += 1} className="TableRowHeight">
-                            <td className="TableCellStyle">{row.number}</td>
-                            <td className="TableCellStyle">{row.name}</td>
-                            <td className="TableCellStyle">{row.nameIrish}</td>
+                            <td className="TableCellStyle">{row.positionNumber}</td>
+                            <td className="TableCellStyle">{row.playerName}</td>
+                            <td className="TableCellStyle">{row.playerNameIrish}</td>
                         </TableRow>
                     ))}
                 </TableBody>

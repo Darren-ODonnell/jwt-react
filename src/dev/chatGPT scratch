@@ -1,34 +1,73 @@
-
-The handleFormSubmit function receives an object as its argument and
-deconstructs it. However, when calling the function, an object is not passed,
-and the function should be called with an object that contains the formValues,
-methods, setOpen, and error properties.
-
-The AddData and UpdateData functions are not defined in the provided code,
-which will cause errors.
-
-There are some variables and functions that are not defined in the code,
-such as TIME_FORMAT, ErrorMessage, refreshPage(), and getUniqueId().
-These should be defined or removed.
-
-In the CancelButton component, the onCancel function should be passed
-as a prop to the Button component, instead of passing the props object
-to the onCancel function.
-
-In the SubmitButton component, the handleFormSubmit function should be
-passed as a prop to the Button component, instead of passing the props
-object to the handleFormSubmit function.
-
-The handleDialogEnter function is defined but not used in the code,
-and it can be removed.
-
-The DialogContent component is used, but it is not clear what content
-is rendered in this component, as the code does not provide any information
-about the props passed to this component.
-
-In the FormDialog component, the Cancel and Submit buttons are hard-coded
-and not customizable, which limits the flexibility of the component. It would
-be better to make these buttons customizable by passing them as props to the component.
+Report.js:47 Uncaught TypeError: Cannot read properties of undefined (reading 'competitionNameIrish')
 
 
 
+const loadDataForTeamsheet = useCallback(filteredData) => {
+    let header
+    let team
+    let subs
+    let footer
+
+    header = {...filteredData[0].fixtureEntry}
+
+    filteredData.map(player => {
+        if(player.positionNumber <= 15)
+            players.add(player)
+        else
+            subs.add(player)
+    })
+
+    const footer = [
+        {role: 'Manager'          , name: "Doni Fox"        , nameIrish: "Dónal Mac Saoir"      },
+        {role: 'Assistant Manager', name: "Marion O'Donnell", nameIrish: "Máirín Ní Dhomhnaill" },
+        {role: 'Assistant Manager', name: "Pio McCarthy"    , nameIrish: "Pío Mac Carthaigh"    },
+        {role: 'Assistant Manager', name: "Ger McManus"     , nameIrish: "Gearóid Mac Mánus"    },
+        {role: 'Assistant Manager', name: "Podge Griffin"   , nameIrish: "Pádraig Criomhthann"    },
+
+    ]
+
+    const data = {
+        header: header,
+        team: team,
+        subs: subs,
+        footer: footer,
+    }
+    return data
+},[data]}
+
+        const newRow = {
+            id: row.id,
+            competitionName: row.fixture.competition.name,
+            fixtureDate: row.fixture.fixtureDate,
+            homeTeamName: row.fixture.homeTeam.name,
+            awayTeamName: row.fixture.awayTeam.name,
+            playerName: row.player.lastname + ", " + row.player.firstname,
+            position: row.position.name,
+            positionNumber: row.position.id,
+            // not used in teamsheetColumnDefs so not displayed in grid but used later when updating/printing changes in teamsheet.
+            firstnameLastname: row.player.firstname + ", " + row.player.lastname,
+            competition: row.competition,
+            homeTeam: row.homeTeam,
+            awayTeam: row.awayTeam,
+            getPlayers: row.player,
+            competitionIrishName: row.fixture.competition.irishName,
+            homeTeamIrishName: row.fixture.homeTeam.irishName,
+            awayTeamIrishName: row.fixture.awayTeam.irishName,
+            playerIrishName: row.player.firstnameI + " " + row.player.lastnameI,
+            teamsheetEntry: {
+                number: row.position.id,
+                name: row.player.lastname + ", " + row.player.firstname,
+                nameIrish: row.player.firstnameI + " " + row.player.lastnameI,
+            },
+            fixtureEntry: {
+                competitionName: row.fixture.competition.name,
+                competitionNameIrish: row.fixture.competition.irishName,
+                homeTeamName: row.fixture.homeTeam.name,
+                homeTeamNameIrish: row.fixture.homeTeam.irishName,
+                awayTeamName: row.awayTeam,
+                awayTeamNameIrish: row.fixture.awayTeam.irishName,
+                club: 'Naomh Jude',
+                county: 'Dublin',
+                fixtureDate: row.fixture.fixtureDate,
+            }
+        }
