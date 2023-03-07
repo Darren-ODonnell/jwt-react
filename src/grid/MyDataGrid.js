@@ -17,7 +17,7 @@ import {GRID_ROW_DELETE, REPORT_PRINT_PREVIEW} from "../common/globals";
 import { loadDataForTeamsheet, Teamsheet } from "../entities/teamsheets";
 // import HandlePrintPreview from "../teamsheetComponents/HandlePrintPreview"
 // import usePrintPreview from '../teamsheetComponents/usePrintPreview'
-
+import PopupMessage from '../common/PopupMessage'
 import TeamsheetReport from "../teamsheetComponents/TeamsheetReport";
 import useConfirm from "../common/useConfirm";
 import HandlePrintPreview from "../teamsheetComponents/HandlePrintPreview";
@@ -26,6 +26,7 @@ import FormDialog4 from "./FormDialog4";
 // import {GridOptions} from "ag-grid-community";
 import ConfirmationModal from "../common/ConfirmationModal";
 import Report from "../teamsheetComponents/Report";
+import ReportModal from "../teamsheetComponents/ReportModal";
 
 
 const MyDataGrid = ({props}) => {
@@ -60,7 +61,10 @@ const MyDataGrid = ({props}) => {
     // const importData = useImportData(gridOptions.api);
     // delete confirm hook
     const [reportData, setReportData] = useState({})
-
+    // open/close reportModal for printing
+    const [modalOpen, setModalOpen] = useState(false);
+    // show popup error message as required
+    const [showPopup, setShowPopup] = useState(false);
     let message = "";
     let model = [];
 
@@ -100,46 +104,7 @@ const MyDataGrid = ({props}) => {
         }
     }, [gridApi]);
 
-    useEffect(() => {
-        if (deleteNode) {
-            deleteData(selectedRow);
-            setDeleteNode(false);
-        }
-    }, [deleteNode, selectedRow]);
 
-    const loadDataForTeamsheet =  useCallback( (filteredData) => {
-        if(filteredData) {
-            let header = {}
-            let team = []
-            let subs = []
-            let footer = {}
-
-            header = { ...filteredData[ 0 ].fixtureEntry }
-
-            filteredData.map( player => {
-                if ( player.positionNumber <= 15 )
-                    team.push( player )
-                else
-                    subs.push( player )
-            } )
-
-            footer = [
-                { role: 'Manager', name: "Doni Fox", nameIrish: "Dónal Mac Saoir" },
-                { role: 'Assistant Manager', name: "Marion O'Donnell", nameIrish: "Máirín Ní Dhomhnaill" },
-                { role: 'Assistant Manager', name: "Pio McCarthy", nameIrish: "Pío Mac Carthaigh" },
-                { role: 'Assistant Manager', name: "Ger McManus", nameIrish: "Gearóid Mac Mánus" },
-                { role: 'Assistant Manager', name: "Podge Griffin", nameIrish: "Pádraig Criomhthann" },
-            ]
-
-            const data = {
-                header: header,
-                team: team,
-                subs: subs,
-                footer: footer,
-            }
-            return data
-        }
-    },[])
     const onChange = useCallback((e) => {
         const {value, id} = e.target;
         setRowData({...rowData, [id]: value});
@@ -159,8 +124,14 @@ const MyDataGrid = ({props}) => {
         handleOpen();
     }, [getSelectedRow, handleOpen]);
 
+    function showErrorMessage() {
+
+        setShowPopup(true);
+    }
+
+
     // returned the filtered data
-    const handleFilterChanged = useCallback(() => {
+    const handleFilterChanged = useCallback(() => { // capture the data when a filter is set on the grid
         // model = gridApi
         model = gridApi.getModel().rowsToDisplay;
         let newFilteredData = model.map(function (m) {
@@ -249,6 +220,10 @@ const MyDataGrid = ({props}) => {
         setShowDeleteModal(true)
     }
 
+    const handleCloseModal = () => {
+        setModalOpen(false);
+    };
+
 
     // in grid
     const EditButton = (params) => {
@@ -313,22 +288,23 @@ const MyDataGrid = ({props}) => {
     const showDeleteButton = (type) => {
         return !(type === Position || type === Pitchgrid)
     }
-    const showPrintPreviewButton = (type) => {
+    const showPrintPreviewButton = (type) => { // only show button if showing Teamsheet data
         return (type === Teamsheet)
     }
     const PrintPreviewButton = (params) => {
-        {  message = REPORT_PRINT_PREVIEW }
+        {
+            message = REPORT_PRINT_PREVIEW
+        }
         return (
-            showPrintPreviewButton(props.type) ?
+            showPrintPreviewButton(props.type) && (
                 <Grid align="left">
-                    <Button onClick={(params) => handleShowPrintPreview(params, filteredData)}
+                    <Button onClick={(params) => handlePrintModal(params, filteredData)}
                             variant="contained"
                             color="primary"
                     >PrintPreview</Button>
                     };
                 </Grid>
-                :
-                <div></div>
+            )
         )
     }
     // const handleShowPrintPreview = (params) => {
@@ -338,7 +314,12 @@ const MyDataGrid = ({props}) => {
     useEffect(() => {
         getData(props.methods.list, axiosApi, handleClose)
     }, []);
-
+    useEffect(() => {
+        if (deleteNode) {
+            deleteData(selectedRow);
+            setDeleteNode(false);
+        }
+    }, [deleteNode, selectedRow]);
     useEffect(() => {
         setRowData(data);
     }, [data]);
@@ -392,21 +373,31 @@ const MyDataGrid = ({props}) => {
     };
     const PaginationButton = () => {
         return (
-            <button onClick={togglePagination}>
+            <Button onClick={togglePagination}>
                 {paginationEnabled ? 'Disable Pagination' : 'Enable Pagination'}
-            </button>
+            </Button>
         )
     }
-    const buildDataBlock = (rows) => {
 
-    }
+    const handlePrintModal = () => { // display the report modal if a filter has been applied
+        if (filteredData === [] || filteredData.length == 0) {
+            console.log("Filtered Data is Empty")
+            message = "Filter Teamsheet to a specific Fixture Date using Grid"
+            setShowPopup(true)
+            setModalOpen(false);
+        } else {
+            if (filteredData.length <= 30) {
+                setShowPopup(false)
+                setReportData(loadDataForTeamsheet(filteredData))
+                setModalOpen(true);
+            } else {
+                message = "Filter Teamsheet to a specific Fixture Date using Grid"
+                setShowPopup(true)
+                setModalOpen(false);
+            }
+        }
 
 
-    const handleShowPrintPreview = () => {
-        setReportData( loadDataForTeamsheet(filteredData) )
-        // const reportData = buildDataBlock(selectedNodes)
-        showPopup()
-        setShowPrintPreview(true);
     };
     // style={{ maxWidth: 700, margin: "auto" }}
     // className="list-wrapper"
@@ -440,16 +431,21 @@ const MyDataGrid = ({props}) => {
                 message="Are you sure you want to delete this item?"
                 onConfirm={handleDelete}
             />
+
             {/* Printing teamsheet */}
-            {showPrintPreview && (
-                <div className="popup-modal">
-                    <div className="popup-modal-content print-container">
-                        <Report data={reportData}/>
-                        <Button onClick={printPopup}>Print Data</Button>
-                        <Button onClick={() => setShowPrintPreview(false)}>Close Popup Modal</Button>
-                    </div>
-                </div>
-            )}
+
+            <ReportModal open={modalOpen} onClose={handleCloseModal} data={reportData}/>
+
+            {showPopup && <PopupMessage message={message}/>}
+            <ConfirmationModal
+                showModal={showDeleteModal}
+                setShowModal={setShowDeleteModal}
+                setConfirmation={setConfirmation}
+                title="Delete Item"
+                message="Are you sure you want to delete this item?"
+                onConfirm={handleDelete}
+            />
+
 
         </div> : <p> Loading...</p>
     )

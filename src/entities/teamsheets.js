@@ -108,4 +108,34 @@ export const teamsheetData = {
     gridLoader: gridLoader
 };
 
+export const loadDataForTeamsheet = (filteredData) => {
+    let header = {}
+    let team = []
+    let subs = []
+    let footer = {}
 
+    header = {...filteredData[0].fixtureEntry}
+
+    filteredData.map(player => {
+        if (player.positionNumber <= 15)
+            team.push(player)
+        else
+            subs.push(player)
+    })
+
+    footer = [
+        {role: 'Manager', name: "Doni Fox", nameIrish: "Dónal Mac Saoir"},
+        {role: 'Assistant Manager', name: "Marion O'Donnell", nameIrish: "Máirín Ní Dhomhnaill"},
+        {role: 'Assistant Manager', name: "Pio McCarthy", nameIrish: "Pío Mac Carthaigh"},
+        {role: 'Assistant Manager', name: "Ger McManus", nameIrish: "Gearóid Mac Mánus"},
+        {role: 'Assistant Manager', name: "Podge Griffin", nameIrish: "Pádraig Criomhthann"},
+    ]
+
+    const data = {
+        header: header,
+        team: team,
+        subs: subs,
+        footer: footer,
+    }
+    return data
+}

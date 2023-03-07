@@ -36,7 +36,7 @@
 }
 
 .footer {
-    font-size: 13px;
+    font-size: 11px;
     font-weight: bold;
     text-align: center;
 }
@@ -132,6 +132,13 @@
         text-align: center;
     }
 }
+
+@media print {
+    .print-hide {
+        display: none;
+    }
+}
+
 
 .text-block {
     width: 80%;

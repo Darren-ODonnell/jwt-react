@@ -9,21 +9,18 @@ As elements are finished - move below Completed
 
 Current Tasks - with comments on progress
 =========================================
-1. Get Teamsheet to display for printing -
-2. Get teamsheet to print. -
 7. Start work on import/export -
 
 # Errors
 
-    E40: FormDialog popup shows todays date and time - should show the values from the grid/form
     E41: App does not logout after token has timed out.
          after timeout - delete old token - logout user - switch to loggedOutrNavbar
     E44: Should not be able to login as a User - only Admin allowed.
-    E47: Fix teamsheet display
-        add code to usePrintPreview from MyDataGrid
-
-    E51: 
-    E52: 
+    E51: Add Entity on wrong side of each grid table
+    E52: PrintPreview does nothing if data not filtered
+    E53: Add Entity not working
+    E54: Edit Entity not working
+    E55: Delete Entity not working
 
 todo
 Build set of data for report
@@ -57,10 +54,6 @@ and then set data = {data built}
 
     C11l: Create dropdown for playing time - allowing only minutes to be entered between 1 and 60.
  
-    C12: Create Teamsheet for a specific fixture - suitable to be printed out - as per GAA standard Teamsheet form.
-        Ammend Navbar to include new entry for printTeamsheet - done
-        Update Routes with Endpoint /printTimesheet - done
-    C13 Add buttons to Teamsheet view <PrintTeamsheet> <TeamsheetPitchLayout>
 
     C15: Add Import/Export capability
     C16: 
@@ -383,3 +376,11 @@ and then set data = {data built}
         - Events - incomplete - need data to test.
     xx After testing the above updates, Pin the version of each module to the
     latest in the package.json file - done
+    C12: Create Teamsheet for a specific fixture - suitable to be printed out - as per GAA standard Teamsheet form.
+        Ammend Navbar to include new entry for printTeamsheet - done
+        Update Routes with Endpoint /printTimesheet - done
+    C13 Add buttons to Teamsheet view <PrintTeamsheet> <TeamsheetPitchLayout> - done
+    E47: Fix teamsheet display
+        add code to usePrintPreview from MyDataGrid - fixed
+    E40: FormDialog popup shows todays date and time - should show the values from the grid/form - fixed
+    E56: Close popup modal does not work - fixed

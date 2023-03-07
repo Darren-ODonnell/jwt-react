@@ -47,7 +47,8 @@ const Report = ({data}) => {
                         <td className="TableCellStyle">{data.header.competitionIrishName}</td>
                         <td className="TableCellStyle">{TEAM_LIST_HEADER_TEAMS_IRISH}</td>
                         <td className="TableCellStyle">{data.header.homeTeamIrishName}</td>
-                        <td className="TableCellStyle">{TEAM_LIST_HEADER_TEAMS_SEPARATOR}</td>
+                        <td className="TableCellStyle"
+                            style={{whiteSpace: 'nowrap'}}>{TEAM_LIST_HEADER_TEAMS_SEPARATOR}</td>
                         <td className="TableCellStyle">{data.header.awayTeamIrishName}</td>
                     </TableRow>
 
@@ -111,10 +112,10 @@ const Report = ({data}) => {
             <br/>
             <br/>
             <div className="text-block">
-                <p>{TEAM_LIST_OFFICIAL_IRISH}_____________________________________________________________________ {TEAM_LIST_DATE_IRISH}__________________<br/>
-                    {TEAM_LIST_OFFICIAL_ENGLISH}</p>
-                <p>{TEAM_LIST_REFEREE_IRISH}_____________________________________________________________________<br/>
-                    {TEAM_LIST_REFEREE_ENGLISH}</p>
+                <p>{TEAM_LIST_OFFICIAL_IRISH}_______________________________ {TEAM_LIST_DATE_IRISH}__________</p>
+                <p style={{lineHeight: '.1', marginBottom: '1.5em'}}>{TEAM_LIST_OFFICIAL_ENGLISH}</p>
+                <p>{TEAM_LIST_REFEREE_IRISH}________________________________</p>
+                <p style={{lineHeight: '.1'}}>{TEAM_LIST_REFEREE_ENGLISH}</p>
             </div>
 
         </div>
