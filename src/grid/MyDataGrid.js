@@ -129,7 +129,6 @@ const MyDataGrid = ({props}) => {
                 { role: 'Assistant Manager', name: "Pio McCarthy", nameIrish: "Pío Mac Carthaigh" },
                 { role: 'Assistant Manager', name: "Ger McManus", nameIrish: "Gearóid Mac Mánus" },
                 { role: 'Assistant Manager', name: "Podge Griffin", nameIrish: "Pádraig Criomhthann" },
-
             ]
 
             const data = {

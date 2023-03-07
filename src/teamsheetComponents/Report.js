@@ -44,11 +44,11 @@ const Report = ({data}) => {
                 <TableHead>
                     <TableRow key={num += 1} className="FirstRowDouble">
                         <td className="TableCellStyle">{TEAM_LIST_HEADER_COMPETITION_IRISH}</td>
-                        <td className="TableCellStyle">{data.header.competitionNameIrish}</td>
+                        <td className="TableCellStyle">{data.header.competitionIrishName}</td>
                         <td className="TableCellStyle">{TEAM_LIST_HEADER_TEAMS_IRISH}</td>
-                        <td className="TableCellStyle">{data.header.homeTeamNameIrish}</td>
+                        <td className="TableCellStyle">{data.header.homeTeamIrishName}</td>
                         <td className="TableCellStyle">{TEAM_LIST_HEADER_TEAMS_SEPARATOR}</td>
-                        <td className="TableCellStyle">{data.header.awayTeamNameIrish}</td>
+                        <td className="TableCellStyle">{data.header.awayTeamIrishName}</td>
                     </TableRow>
 
                     <TableRow key={num += 1}>
@@ -57,7 +57,8 @@ const Report = ({data}) => {
                         <td className="TitleTableCellStyle">{TEAM_LIST_HEADER_TEAMS_ENGLISH}</td>
                         <td className="TableCellStyle">{data.header.homeTeamName}</td>
                         <td className="TableCellStyle"></td>
-                        <td> {data.header.awayTeamName}</td>
+                        <td className="TableCellStyle">{data.header.awayTeamName}</td>
+
                     </TableRow>
                 </TableHead>
             </Table>
@@ -87,8 +88,8 @@ const Report = ({data}) => {
                     {data.team.map(row => (
                         <TableRow key={num += 1} className="TableRowHeight">
                             <td className="TableCellStyle">{row.positionNumber}</td>
+                            <td className="TableCellStyle">{row.playerIrishName}</td>
                             <td className="TableCellStyle">{row.playerName}</td>
-                            <td className="TableCellStyle">{row.playerNameIrish}</td>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -99,19 +100,20 @@ const Report = ({data}) => {
                 <TableBody>
                     {data.subs.map(row => (
                         <TableRow key={num += 1} className="TableRowHeight">
-                            <td className="TableCellStyle colNumbers">{row.number}</td>
-                            <td className="TableCellStyle">{row.name}</td>
-                            <td className="TableCellStyle">{row.nameIrish}</td>
+                            <td className="TableCellStyle colNumbers">{row.positionNumber}</td>
+                            <td className="TableCellStyle">{row.playerIrishName}</td>
+                            <td className="TableCellStyle">{row.playerName}</td>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
             {/*Signatures */}
-
+            <br/>
+            <br/>
             <div className="text-block">
-                <p>{TEAM_LIST_OFFICIAL_IRISH}_________________________________________ {TEAM_LIST_DATE_IRISH}__________________<br/>
+                <p>{TEAM_LIST_OFFICIAL_IRISH}_____________________________________________________________________ {TEAM_LIST_DATE_IRISH}__________________<br/>
                     {TEAM_LIST_OFFICIAL_ENGLISH}</p>
-                <p>{TEAM_LIST_REFEREE_IRISH}__________________________________________<br/>
+                <p>{TEAM_LIST_REFEREE_IRISH}_____________________________________________________________________<br/>
                     {TEAM_LIST_REFEREE_ENGLISH}</p>
             </div>
 
