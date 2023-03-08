@@ -2,6 +2,7 @@ import  { useEffect, useState } from 'react';
 import instance  from './axios';
 import {API_AUTH_URLS} from "../common/globals";
 import AuthService from "../auth/AuthService";
+import { refreshPage } from "../common/helper";
 
 export const useAxios = () => {
     const [data      , setData]       = useState([]);
@@ -83,6 +84,7 @@ export const deleteData = (data, error, props, axiosApi, handleClose) => {
     const user = AuthService.getCurrentUser();
     AuthService.setAuthToken(user.accessToken);
 
+
     const configObj = {
         axiosInstance: instance,
         ...props.methods.delete,
@@ -96,10 +98,11 @@ export const deleteData = (data, error, props, axiosApi, handleClose) => {
             handleClose();
         })
         .catch(err => {
-            window.alert(error.message)
-            console.log("Error: " + error.message)
+            // window.alert(error.message)
+            // console.log("Error: " + error.message)
             handleClose()
         })
+
 }
 
 export const getData = ({method, url}, axiosApi, handleClose) => {
@@ -132,15 +135,16 @@ export const UpdateData = ({methods, axiosApi, rowData, error, formValues}) => {
     };
 
     return axiosApi(configObj)
-        .then(response => {
-            rowData = response.data;
-            console.log("Update: ", rowData);
-            return rowData;
+        .then(() => {
+            // rowData = data;
+            // console.log("Update: ", rowData);
+            // return rowData;
         })
         .catch(err => {
-            window.alert(error.message);
-            console.log("Error: " + error.message);
-            return null;
+            // window.alert(err.message);
+            // console.log("Error: " + err .message);
+            // error = err.message
+            // return null;
         });
 };
 
@@ -158,13 +162,14 @@ export const AddData = ({methods, axiosApi, rowData, error, formValues}) => {
 
     return axiosApi(configObj)
         .then(response => {
-            rowData = response.data;
+            // rowData = response.data;
             console.log("Add: ", response.data);
-            return rowData;
+            // return rowData;
         })
         .catch(err => {
-            console.log("Error: " + error.message);
-            return null;
+            error = err.message
+            console.log("Error: " + err.message);
+            // return null;
         });
 };
 

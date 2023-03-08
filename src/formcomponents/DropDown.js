@@ -4,7 +4,7 @@ import {getUniqueId, handleBooleanValues} from "../common/helper";
 import {useState} from "react";
 import './dropdown.css'
 
-const DropDown = ({formValues, field, headerName, options, value, required}) => {
+const DropDown = ({formValues, field, headerName, options, value, required, onUpdate}) => {
     const [data, setData] = useState(formValues[field])
 
     let defaultValue = (formValues[field]) ? (formValues[field]) : ""
@@ -12,6 +12,8 @@ const DropDown = ({formValues, field, headerName, options, value, required}) => 
     const onSelectChange = (e, field) => {
         let value = handleBooleanValues(e.target.value)
         setData(value)
+        onUpdate(value)
+
     }
     useEffect(() => {
         setData(formValues[field])
@@ -25,7 +27,7 @@ const DropDown = ({formValues, field, headerName, options, value, required}) => 
                         key={field}
                         id="demo-simple-select"
                         placeholder={"Enter " + headerName}
-                        value={value}
+                        value={data}
                         required={required}
                         variant={"outlined"}
                         onChange={e => onSelectChange(e, field)}

@@ -20,20 +20,21 @@ const FormDialog4 = ({
                          initialValue, error, setOpen, methods, setRowData, axiosApi, entity, validate, location
                      }) => {
     const [formValues, setFormValues] = useState({initialValue})
-    const [valid, setValid] = useState(false)
 
     let dropDownData = DropDownData()
 
     const handleFormSubmit = ({formValues, error}) => {
-        setValid(validate(formValues));
+        let valid =  validate(formValues);
 
         console.log("FormValues: ", formValues);
+
         const request = {...methods.add, data: formValues};
         if (valid) {
             if (formValues.id) {
                 setOpen(false);
                 const request = methods.update;
-                UpdateData({methods, axiosApi, rowData, error, formValues, request}).then(res => {
+                UpdateData({methods, axiosApi, rowData, error, formValues, request})
+                    .then(res => {
                     if (res) setRowData(res);
                     if (error !== null) {
                         return handleError(error.message);
@@ -49,6 +50,7 @@ const FormDialog4 = ({
                 });
             }
         }
+        refreshPage()
     };
 
     // const handleFormSubmit = ({formValues, error}) => {
@@ -193,6 +195,7 @@ const FormDialog4 = ({
                             field: prop.field,
                             onChange: handleChange2,
                             key: prop.field,
+                            onUpdate: (value) => handleChange2(prop.field, value),
                         }
                         switch (prop.field) {
                             case "playerName" :

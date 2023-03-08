@@ -1,73 +1,15 @@
-Report.js:47 Uncaught TypeError: Cannot read properties of undefined (reading 'competitionNameIrish')
+Problems;
 
+Club - all good
+Player - Registered - has no entry - and cant set it (Boolean)
+Fixture - ok
+Teamsheet - player name entry - check fn/ln or ln/fn
+Stat - Success is empty - can not set it - bool value
+Competition - ok
+Statname - ok
+Position - ok
+Pitchgrid - ok
+lastname - ok
+firstname - ok
 
-
-const loadDataForTeamsheet = useCallback(filteredData) => {
-    let header
-    let team
-    let subs
-    let footer
-
-    header = {...filteredData[0].fixtureEntry}
-
-    filteredData.map(player => {
-        if(player.positionNumber <= 15)
-            players.add(player)
-        else
-            subs.add(player)
-    })
-
-    const footer = [
-        {role: 'Manager'          , name: "Doni Fox"        , nameIrish: "Dónal Mac Saoir"      },
-        {role: 'Assistant Manager', name: "Marion O'Donnell", nameIrish: "Máirín Ní Dhomhnaill" },
-        {role: 'Assistant Manager', name: "Pio McCarthy"    , nameIrish: "Pío Mac Carthaigh"    },
-        {role: 'Assistant Manager', name: "Ger McManus"     , nameIrish: "Gearóid Mac Mánus"    },
-        {role: 'Assistant Manager', name: "Podge Griffin"   , nameIrish: "Pádraig Criomhthann"    },
-
-    ]
-
-    const data = {
-        header: header,
-        team: team,
-        subs: subs,
-        footer: footer,
-    }
-    return data
-},[data]}
-
-        const newRow = {
-            id: row.id,
-            competitionName: row.fixture.competition.name,
-            fixtureDate: row.fixture.fixtureDate,
-            homeTeamName: row.fixture.homeTeam.name,
-            awayTeamName: row.fixture.awayTeam.name,
-            playerName: row.player.lastname + ", " + row.player.firstname,
-            position: row.position.name,
-            positionNumber: row.position.id,
-            // not used in teamsheetColumnDefs so not displayed in grid but used later when updating/printing changes in teamsheet.
-            firstnameLastname: row.player.firstname + ", " + row.player.lastname,
-            competition: row.competition,
-            homeTeam: row.homeTeam,
-            awayTeam: row.awayTeam,
-            getPlayers: row.player,
-            competitionIrishName: row.fixture.competition.irishName,
-            homeTeamIrishName: row.fixture.homeTeam.irishName,
-            awayTeamIrishName: row.fixture.awayTeam.irishName,
-            playerIrishName: row.player.firstnameI + " " + row.player.lastnameI,
-            teamsheetEntry: {
-                number: row.position.id,
-                name: row.player.lastname + ", " + row.player.firstname,
-                nameIrish: row.player.firstnameI + " " + row.player.lastnameI,
-            },
-            fixtureEntry: {
-                competitionName: row.fixture.competition.name,
-                competitionNameIrish: row.fixture.competition.irishName,
-                homeTeamName: row.fixture.homeTeam.name,
-                homeTeamNameIrish: row.fixture.homeTeam.irishName,
-                awayTeamName: row.awayTeam,
-                awayTeamNameIrish: row.fixture.awayTeam.irishName,
-                club: 'Naomh Jude',
-                county: 'Dublin',
-                fixtureDate: row.fixture.fixtureDate,
-            }
-        }
+cannot add new lastname?

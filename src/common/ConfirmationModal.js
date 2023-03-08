@@ -1,22 +1,35 @@
-import React, {useState} from 'react';
+import React, { useCallback, useState } from 'react';
 import {Button, Modal} from 'react-bootstrap';
 
-function ConfirmationModal({showModal, setShowModal, message, title, onConfirm, setConfirmation, handleDelete}) {
+function ConfirmationModal({showModal, setShowModal, message, title, onConfirm, setDeleteConfirmation, type}) {
 
-    const handleClose = () => {
-        console.log("ConfirmationModal - HandleClose")
-        setShowModal(false);
-        setConfirmation(false);
-    }
+
 
     const handleConfirm = () => {
-        console.log("ConfirmationModal - HandleConfirm")
-        onConfirm();
-        setConfirmation(true)
-        handleClose();
+        let bool = true
+        console.log("setDeleteConfirmation: " + setDeleteConfirmation(bool) + bool)
+        setDeleteConfirmation(true)
+        // onConfirm()
+        handleClose()
     };
 
-    console.log("ShowModal: " + showModal)
+    const handleClose = () => {
+        setShowModal(false);
+        setDeleteConfirmation(false);
+    }
+
+    const showDeleteElements = useCallback(() => {
+        switch(type) {
+            case "Delete" :  return true;
+            case "Filter" :  return false;
+        }
+    },[type])
+    const showFilterElements = useCallback(() => {
+        switch(type) {
+            case "Delete" :  return false;
+            case "Filter" :  return true;
+        }
+    },[type])
 
     return (
         <>
@@ -25,14 +38,13 @@ function ConfirmationModal({showModal, setShowModal, message, title, onConfirm, 
                     <Modal.Title>{title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>{message}</Modal.Body>
+
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Cancel
-                    </Button>
-                    <Button variant="primary" onClick={handleConfirm}>
-                        Confirm
-                    </Button>
+                    {showDeleteElements() && <Button variant = "secondary" onClick = { handleClose }>   Cancel  </Button> }
+                    {showDeleteElements() && <Button variant = "primary"   onClick = { handleConfirm }> Confirm </Button> }
+                    {showFilterElements() && <Button variant = "primary"   onClick = { handleClose }>   OK      </Button> }
                 </Modal.Footer>
+
             </Modal>
         </>
     );
