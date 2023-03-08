@@ -202,21 +202,21 @@ const FormDialog4 = ({
                             case "playerName" :
                                 return <DropDown
                                     {...commonProps}
-                                    // value={formValues ? formValues[prop.field] : ""}
+
                                     headerName={"Player Name"}
                                     defaultValue={"Corcoran, Laura"}
                                     options={dropDownData.players}/>
                             case "awayTeamName" :
                                 return <DropDown
                                     {...commonProps}
-                                    // value={formValues ? formValues[prop.field] : ""}
+
                                     headerName={"Away Team Name"}
                                     defaultValue={"St Judes"}
                                     options={dropDownData.clubs}/>
                             case "homeTeamName" :
                                 return <DropDown
                                     {...commonProps}
-                                    // value={formValues ? formValues[prop.field] : ""}
+
                                     headerName={"Home Team Name"}
                                     defaultValue={"St Judes"}
                                     options={dropDownData.clubs}/>
@@ -229,35 +229,35 @@ const FormDialog4 = ({
                             case "round":
                                 return <DropDown
                                     {...commonProps}
-                                    // value={formValues ? formValues[prop.field] : ""}
+
                                     headerName={"Round"}
                                     defaultValue={dropDownData.rounds[0]}
                                     options={dropDownData.rounds}/>
                             case "season":
                                 return <DropDown
                                     {...commonProps}
-                                    // value={formValues ? formValues[prop.field] : ""}
+
                                     headerName={"Season"}
                                     defaultValue={new Date().getFullYear()}
                                     options={getSeasons()}/>
                             case "position":
                                 return <DropDown
                                     {...commonProps}
-                                    // value={formValues ? formValues[prop.field] : ""}
+
                                     headerName={"Position"}
                                     defaultValue={"Select Position Name"}
                                     options={dropDownData.positions}/>
                             case "positionNumber":
                                 return <DropDown
                                     {...commonProps}
-                                    // value={formValues ? formValues[prop.field] : ""}
+
                                     headerName={"Position Number"}
                                     defaultValue={"Select Position Number"}
                                     options={dropDownData.positionNumbers}/>
                             case "competitionName":
                                 return <DropDown
                                     {...commonProps}
-                                    // value={formValues ? formValues[prop.field] : ""}
+
                                     headerName={"Competition Name"}
                                     defaultValue={dropDownData.competitions[0]}
                                     options={[...new Set(dropDownData.competitions)]}/>
@@ -267,7 +267,7 @@ const FormDialog4 = ({
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Success"}
-                                    defaultValue={"True"}
+                                    defaultValue={myValue}
                                     value={myValue}
                                     options={SUCCESS}/>
                             case "registered":
@@ -276,14 +276,14 @@ const FormDialog4 = ({
                                     {...commonProps}
                                     headerName={"Registered"}
                                     defaultValue={myValue}
-                                    value={formValues[prop.field] === true ? "True" : "False"}
+                                    value={myValue}
                                     options={REGISTERED}/>
 
                             case "grade":
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Grade"}
-                                    // value={formValues ? formValues[prop.field] : ""}
+
                                     defaultValue={GRADES[0]}
                                     options={GRADES}/>
                             case "statName":
@@ -297,14 +297,14 @@ const FormDialog4 = ({
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Availability"}
-                                    // value={formValues ? formValues[prop.field] : ""}
+
                                     defaultValue={AVAILABILITY[0]}
                                     options={AVAILABILITY}/>
                             case "half" :
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"First/Second Half"}
-                                    // value={formValues ? formValues[prop.field] : ""}
+
                                     defaultValue={HALF[0]}
                                     options={HALF}/>
                             case 'fixtureDate':
@@ -314,7 +314,6 @@ const FormDialog4 = ({
                             case 'fixtureTime':
                                 return <MyTimePicker
                                     {...commonProps}
-                                    // value={formValues ? formValues[prop.field] : ""}
                                     defaultValue={new Date().getTime()}
                                     headerName={"Time"}/>
                             default:

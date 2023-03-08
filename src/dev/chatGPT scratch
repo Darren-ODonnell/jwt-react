@@ -1,15 +1,13 @@
 Problems;
 
-Club - all good
-Player - Registered - has no entry - and cant set it (Boolean)
+Club - ok
+Player - ok
 Fixture - ok
-Teamsheet - player name entry - check fn/ln or ln/fn
-Stat - Success is empty - can not set it - bool value
+Teamsheet - ok
+Stat - cannot save any changes to this table
 Competition - ok
 Statname - ok
 Position - ok
 Pitchgrid - ok
 lastname - ok
 firstname - ok
-
-cannot add new lastname?

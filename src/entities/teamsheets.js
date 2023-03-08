@@ -5,9 +5,6 @@ import {CLUB_URLS} from "./clubs";
 import { COMPETITION_URLS } from "./competitions";
 import { PLAYER_URLS } from "./players";
 
-
-
-
 export const Teamsheet = 'Teamsheet'
 
 export const teamsheetColumnDefs = [

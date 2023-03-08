@@ -16,21 +16,16 @@ const MyTextField = ({onChange, headerName, value, field, className, defaultValu
         field: field,
         style: {margin: 8, backgroundColor: "#F2F2F2"},
         label: headerName,
-        value: value,
-        // value: value ? value : defaultValue,
+        value: value ? value : defaultValue,
         onChange: handleChange,
         variant: "outlined",
         defaultValue: defaultValue,
-
     }
     console.log("Field: " + field + " - Value: " + value)
     return (
         <TextField
             {...textFieldParams}
-            // defaultValue={defaultValue}
             className={className}
-
-            // fullWidth
         />
     )
 }

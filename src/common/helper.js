@@ -129,7 +129,7 @@ export const handleBooleanValues = (testValue) => {
             value = false
             break
         default :
-            value = testValue
+            value = testValue ? testValue : ""
     }
     return value
 }

@@ -22,7 +22,7 @@ const DropdownData = () => {
         return comp.name
     }) : []
     const players = player ? player.map(player => {
-        return player.lastname + ", " + player.firstname
+        return player.firstname + " " + player.lastname
     }) : []
     const clubs = club ? club.map(club => {
         return club.name

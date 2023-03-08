@@ -24,27 +24,26 @@ export const TIME_FORMAT_SAVE = "HH:mm:ss"; // 24 hour clock with seconds
 // any other lookup arrays are taken from the endpoint
 export const ROUNDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 export const PLAYER_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
-export const PITCH_GRIDS = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "D3", "E1", "E2", "E3"]
+// export const PITCH_GRIDS = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "D3", "E1", "E2", "E3"]
 export const GRADES = ['S1', 'S2', 'I1', 'I2', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10']
-export const REGISTERED = ['True', 'False']
+const booleans = [{value: true, label: 'True'}, {value: false, label: 'False'}]
+export const REGISTERED = booleans;
+export const SUCCESS = booleans
 export const AVAILABILITY = ["Yes", "No", "County Senior", "County Minor", "County Junior", "Injured"]
 export const HALF = [1, 2]
-export const SUCCESS = ['True', 'False']
-export const COMPETITIONS = ['League Cup', "Summer Cup", "Championship"]
-export const POSITIONS = [
-    'Goal Keeper',
-    'Left Full Back', 'Full Back', 'Right Full Back',
-    'Left Half Back', 'Centre Back', 'Right Half Back',
-    'Left Midfield', 'Right Midfield',
-    'Left Half Forward', 'Centre Forward', 'Right Half Forward',
-    'Left Full Forward', 'Full Forward', 'Right Full Forward',
-    'Substitute',
-]
+// export const COMPETITIONS = ['League Cup', "Summer Cup", "Championship"]
+// export const POSITIONS = [
+//     'Goal Keeper',
+//     'Left Full Back', 'Full Back', 'Right Full Back',
+//     'Left Half Back', 'Centre Back', 'Right Half Back',
+//     'Left Midfield', 'Right Midfield',
+//     'Left Half Forward', 'Centre Forward', 'Right Half Forward',
+//     'Left Full Forward', 'Full Forward', 'Right Full Forward',
+//     'Substitute',
+// ]
 
 export const GRID_ROW_DELETE = 'Are you sure you want to delete this item?'
 export const REPORT_PRINT_PREVIEW = "Print Preview ?"
-
-
 
 
 // auth

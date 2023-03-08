@@ -10,15 +10,19 @@ const DropDown = ({formValues, field, headerName, options, value, required, onUp
     let defaultValue = (formValues[field]) ? (formValues[field]) : ""
 
     const onSelectChange = (e, field) => {
-        const value = e.target.value === "True" ? true : false;
+        // const value = e.target.value === "True" ? true : false;
         // let value = handleBooleanValues(e.target.value)
-        setData(value)
-        onUpdate(value)
-
+        setData(e.target.value)
+        onUpdate(e.target.value)
     }
     useEffect(() => {
         setData(formValues[field])
     }, [formValues])
+
+
+    const booleanFields = () => {
+        return (field === 'registered' || field === 'success')
+    }
 
     console.log("Field-Dropdown: " + field + " - Value: " + formValues[field])
     return (options ?
@@ -36,11 +40,19 @@ const DropDown = ({formValues, field, headerName, options, value, required, onUp
                         label={headerName}
                 >
                     {options.map((entry) =>
-                        <MenuItem className="my-menu-item label"
-                                  key={entry}
-                                  variant={"outlined"}
-                                  value={entry}
-                        > {entry} </MenuItem>
+                        // boolean fields are handled differently to other fields
+                        booleanFields() ?
+                            <MenuItem className="my-menu-item label"
+                                      key={entry.value}
+                                      variant={"outlined"}
+                                      value={entry.value}
+                            > {entry.label} </MenuItem>
+                            :
+                            <MenuItem className="my-menu-item label"
+                                      key={entry}
+                                      variant={"outlined"}
+                                      value={entry}
+                            > {entry} </MenuItem>
                     )}
 
                 </Select>
