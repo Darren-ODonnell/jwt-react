@@ -10,7 +10,8 @@ const DropDown = ({formValues, field, headerName, options, value, required, onUp
     let defaultValue = (formValues[field]) ? (formValues[field]) : ""
 
     const onSelectChange = (e, field) => {
-        let value = handleBooleanValues(e.target.value)
+        const value = e.target.value === "True" ? true : false;
+        // let value = handleBooleanValues(e.target.value)
         setData(value)
         onUpdate(value)
 

@@ -197,6 +197,7 @@ const FormDialog4 = ({
                             key: prop.field,
                             onUpdate: (value) => handleChange2(prop.field, value),
                         }
+                        let myValue
                         switch (prop.field) {
                             case "playerName" :
                                 return <DropDown
@@ -260,28 +261,24 @@ const FormDialog4 = ({
                                     headerName={"Competition Name"}
                                     defaultValue={dropDownData.competitions[0]}
                                     options={[...new Set(dropDownData.competitions)]}/>
+
                             case "success":
-                                let myValue = formValues[prop.field] ? "True" : "False"
+                                myValue = formValues[prop.field] ? "True" : "False"
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Success"}
                                     defaultValue={"True"}
                                     value={myValue}
                                     options={SUCCESS}/>
-                            case "statName":
-                                return <DropDown
-                                    {...commonProps}
-
-                                    headerName={"Stat names"}
-                                    defaultValue={"Select Stat Name"}
-                                    options={dropDownData.statnames}/>
                             case "registered":
+                                myValue = formValues[prop.field] ? "True" : "False"
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Registered"}
-                                    defaultValue={"True"}
+                                    defaultValue={myValue}
                                     value={formValues[prop.field] === true ? "True" : "False"}
                                     options={REGISTERED}/>
+
                             case "grade":
                                 return <DropDown
                                     {...commonProps}
@@ -289,6 +286,13 @@ const FormDialog4 = ({
                                     // value={formValues ? formValues[prop.field] : ""}
                                     defaultValue={GRADES[0]}
                                     options={GRADES}/>
+                            case "statName":
+                                return <DropDown
+                                    {...commonProps}
+
+                                    headerName={"Stat names"}
+                                    defaultValue={"Select Stat Name"}
+                                    options={dropDownData.statnames}/>
                             case "availability":
                                 return <DropDown
                                     {...commonProps}
