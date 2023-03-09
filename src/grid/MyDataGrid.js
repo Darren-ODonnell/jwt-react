@@ -4,29 +4,20 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'ag-grid-community/styles/ag-theme-balham.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
-import {Button, Grid} from "@mui/material";
+import { Button, FormControl, Grid, MenuItem, Select } from "@mui/material";
 import './MyDataGrid.css'
-import {defaultColDef, printPopup, refreshPage, showPopup} from "../common/helper";
+import { defaultColDef } from "../common/helper";
 import {deleteData, getData, useAxios} from "../api/ApiService";
-import instance from "../api/axios";
-import AuthService from "../auth/AuthService";
 import {Position} from '../entities/positions'
 import {Pitchgrid} from '../entities/pitchgrids'
-
 import {GRID_ROW_DELETE, REPORT_PRINT_PREVIEW} from "../common/globals";
 import { loadDataForTeamsheet, Teamsheet } from "../entities/teamsheets";
-// import HandlePrintPreview from "../teamsheetComponents/HandlePrintPreview"
-// import usePrintPreview from '../teamsheetComponents/usePrintPreview'
-import PopupMessage from '../common/PopupMessage'
 import TeamsheetReport from "../teamsheetComponents/TeamsheetReport";
-import useConfirm from "../common/useConfirm";
-import HandlePrintPreview from "../teamsheetComponents/HandlePrintPreview";
-import dropDownData from "../formcomponents/DropDownData";
 import FormDialog4 from "./FormDialog4";
-// import {GridOptions} from "ag-grid-community";
 import ConfirmationModal from "../common/ConfirmationModal";
-import Report from "../teamsheetComponents/Report";
 import ReportModal from "../teamsheetComponents/ReportModal";
+import { useTheme } from '@mui/material/styles';
+import ImportExport from "../common/ImportExport";
 
 const MyDataGrid = ({props}) => {
     const [gridApi, setGridApi] = useState(null);
@@ -60,6 +51,9 @@ const MyDataGrid = ({props}) => {
     // open/close reportModal for printing
     const [modalOpen, setModalOpen] = useState(false);
 
+    const [exportType, setExportType] = useState('CSV');
+
+    const theme = useTheme();
     // export data hook
     // const exportData = useExportData(gridOptions.api);
     // // import data hook
@@ -91,7 +85,8 @@ const MyDataGrid = ({props}) => {
 
 
     // returned the filtered data
-    const handleFilterChanged = useCallback(() => { // capture the data when a filter is set on the grid
+    const handleFilterChanged = useCallback(() => {
+        // capture the data when a filter is set on the grid
         // model = gridApi
         model = gridApi.getModel().rowsToDisplay;
         let newFilteredData = model.map(function (m) {
@@ -108,7 +103,6 @@ const MyDataGrid = ({props}) => {
             setSelectedRow(selectedNodes[0]);
         }
     }, [gridApi]);
-
 
     const formActions = {
         headerName: 'Actions',
@@ -207,27 +201,10 @@ const MyDataGrid = ({props}) => {
 
         )
     }
-    // const onDelete = () => {
-    //     if(deleteConfirmation) {
-    //         getSelectedRow()
-    //         console.log("Delete: "+selectedRow)
-    //         // deleteData(selectedRow)
-    //         setShowDeleteConfirm( false )
-    //     }
-    // }
-    // const handleDelete = useCallback((itemId) => {
-    //     if(deleteConfirmation) {
-    //         getSelectedRow()
-    //         // deleteData( selectedRow, axiosApi, handleClose )
-    //         setShowConfirm( false ) // this will trigger a render which the next useEffect will catch this state change
-    //         setShowDeleteModal( false )
-    //         console.log( `Deleting item with id: ${ itemId }...` );
-    //     }
-    // }, [deleteConfirmation]);
-
 
     const handleShowDeleteModal = () => { setShowDeleteModal(true)    }
     // <Button onClick={() => handleConfirm(message, params.data)}
+
 
 
     // Add Button
@@ -376,7 +353,6 @@ const MyDataGrid = ({props}) => {
     }
 
 
-
     return (
         !loading ? <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
             {/* Use fragment to Keep buttons on same line above grid */}
@@ -384,6 +360,7 @@ const MyDataGrid = ({props}) => {
                 {showPrintPreview ? <TeamsheetReport props={filteredData}/> : null}
                 <div style={{display: "flex", justifyContent: "space-between"}}>
                     <PrintPreviewButton {...props} gridApi={gridApi}/>
+                    {exportType && setExportType && <ImportExport  exportType={exportType} setExportType={setExportType}/> }
                     <AddButton {...props}/>
                 </div>
             </Fragment>
@@ -401,18 +378,17 @@ const MyDataGrid = ({props}) => {
             <ConfirmationModal
                 showModal={showDeleteModal}
                 setShowModal={setShowDeleteModal}
-                setDeleteConfirmation={handleDeleteConfirmation}
+                setConfirmation={handleDeleteConfirmation}
                 title="Delete Item"
                 message="Are you sure you want to delete this item?"
                                                                                                                                                                                                                                                                       type ="Delete"
             />
-
-
             {/* Printing Teamsheet*/}
             {/* Filter Popup Modal - pops up if too many records selected in grid for team-sheet*/}
             <ConfirmationModal
                 showModal={showFilterModal}
                 setShowModal={setShowFilterModal}
+                setConfirmation={true}
                 title="Filter By Fixture Date"
                 message="Use Fixture Date Filter to select the teamsheet for a single fixture"
                 type ="Filter"
@@ -421,7 +397,6 @@ const MyDataGrid = ({props}) => {
             <ReportModal open={modalOpen} onClose={handleCloseModal} data={reportData}/>
             {/* Delete Record if confirmation good */}
             { deleteConfirmation && deleteData(selectedRow, error, props, axiosApi, handleClose) && setDeleteConfirmation(false) }
-
 
         </div> : <p> Loading...</p>
     )

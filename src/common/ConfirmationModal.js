@@ -1,21 +1,21 @@
 import React, { useCallback, useState } from 'react';
 import {Button, Modal} from 'react-bootstrap';
 
-function ConfirmationModal({showModal, setShowModal, message, title, onConfirm, setDeleteConfirmation, type}) {
+function ConfirmationModal({showModal, setShowModal, message, title, onConfirm, setConfirmation, type}) {
 
 
 
     const handleConfirm = () => {
         let bool = true
-        console.log("setDeleteConfirmation: " + setDeleteConfirmation(bool) + bool)
-        setDeleteConfirmation(true)
+        console.log("setDeleteConfirmation: " + setConfirmation(bool) + bool)
+        setConfirmation(true)
         // onConfirm()
         handleClose()
     };
 
     const handleClose = () => {
         setShowModal(false);
-        setDeleteConfirmation(false);
+        setConfirmation(false);
     }
 
     const showDeleteElements = useCallback(() => {

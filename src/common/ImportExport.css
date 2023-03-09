@@ -1,0 +1,24 @@
+/* In your stylesheet */
+:root {
+    --primary-color: ${theme.palette.primary.main};
+    --primary-text-color: ${theme.palette.primary.contrastText};
+    --primary-color: ${theme.palette.primary.main};
+
+    --secondary-color: ${theme.palette.primary.main};
+    --primary-text-color: ${theme.palette.primary.contrastText};
+    --secondary-color: ${theme.palette.secondary.main};
+}
+
+.export-button {
+    background: var(--secondary-color);
+    color: var(--primary-text-color);
+    height: 38px;
+    margin-eft: 10px;
+    background-color: #007bff;
+}
+
+.export-button:hover {
+    color: var(--primary-text-color);
+    background-color: #007bff;
+}
+
