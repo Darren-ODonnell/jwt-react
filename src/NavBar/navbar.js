@@ -26,10 +26,8 @@ export const LoggedInNavbar = (props) => {
                             <NavDropdown.Item href="/lastnames">Lastnames</NavDropdown.Item>
                             <NavDropdown.Item href="/firstnames">Firstnames</NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title="Reports" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/printTeamsheet">Print Teamsheet</NavDropdown.Item>
 
-                        </NavDropdown>
+
                     </Nav>
                     <NavDropdown title={"Welcome -> " + props.user.username}>
                         <NavDropdown.Item href="/logout">Logout</NavDropdown.Item>

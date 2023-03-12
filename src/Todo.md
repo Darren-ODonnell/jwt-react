@@ -9,6 +9,7 @@ As elements are finished - move below Completed
 
 Current Tasks - with comments on progress
 =========================================
+
 7. Start work on import/export -
 
 # Errors
@@ -16,11 +17,12 @@ Current Tasks - with comments on progress
     E41: App does not logout after token has timed out.
          after timeout - delete old token - logout user - switch to loggedOutrNavbar
     E44: Should not be able to login as a User - only Admin allowed.
-    E51: Add Entity on wrong side of each grid table
-    E56: 
-    E57: 
-    E58: 
 
+    E57: Fix app login to check that the token is good first.
+    E58:  
+    E59: 
+    E60: 
+    E61: 
 
 todo
 Build set of data for report
@@ -388,3 +390,5 @@ and then set data = {data built}
     E53: Add Entity not saving - fixed
     E54: Edit Entity not saving - fixed
     E55: Delete Entity not saving - fixed
+    E51: Add Entity on wrong side of each grid table - no longer a problem.
+    E56: Grid Stats - does not appear - blank screen! - fixed
