@@ -41,7 +41,7 @@ and then set data = {data built}
 
 # New Code Additions
 
-    C1: Add Plug and PLay Teamsheet selection - Cancel
+    C1: Add Plug and PLay Teamsheet selection 
     C2: Add pictures for players 
     C3: Add club logos to tables and teamsheets
     C5: Some sample Stats data required to test report displays 
