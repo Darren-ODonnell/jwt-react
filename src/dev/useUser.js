@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useToken } from "./useToken";
+import { useToken } from "../auth/useToken";
 
 export const useUser = () => {
     const { token } = useToken();
@@ -19,5 +19,7 @@ export const useUser = () => {
         } else {
             setUser( getPayloadFromToken( token ) );
         }
-    }, [user, token] )
-}
+    }, [token] );
+
+    return user;
+};

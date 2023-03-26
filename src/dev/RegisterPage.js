@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Axios from 'axios'
-import AuthService from "./AuthService";
+import AuthService from "../auth/AuthService";
 
 export const RegisterPage = () => {
     let { errorMessage, setErrorMessage } = useState( '' );

@@ -1,5 +1,5 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import {RegisterPage} from './RegisterPage'
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {RegisterPage} from '../dev/RegisterPage'
 import {LoginPage} from "./LoginPage";
 import {clubData} from "../entities/clubs";
 import { playerData } from "../entities/players";

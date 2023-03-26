@@ -54,7 +54,7 @@ const gridLoader = (data) => {
 
         const newRow = {
             id: row.id,
-            playerName: row.player.lastname + ", " + row.player.firstname,
+            playerName: row.player ? row.player.lastname + ", " + row.player.firstname : "",
             fixtureDate: row.fixture.fixtureDate,
             statName: row.statName.name,
             success: row.success,

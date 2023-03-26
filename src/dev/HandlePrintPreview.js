@@ -1,4 +1,4 @@
-import TeamsheetReport from "./TeamsheetReport";
+import TeamsheetReport from "../teamsheetComponents/TeamsheetReport";
 import { useState } from "react";
 
 const HandlePrintPreview = (props, filteredData) => {

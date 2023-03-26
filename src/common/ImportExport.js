@@ -15,53 +15,6 @@ const ImportExport = ({exportType, setExportType }) => {
         }
     }
 
-    // export const CsvExcelSelector = ( { exportType, setExportType, handleExportTypeChange } ) => {
-    //     return (
-    //         <div style={ { marginBottom: '10px' } }>
-    //             <label htmlFor="export-type">Export Type:</label>
-    //             <FormControl variant="outlined" color="primary">
-    //                 <Select id="export-type" label="Export Type" value={ exportType }
-    //                         onChange={ ( value ) => handleExportTypeChange( value ) }
-    //                         sx={ {
-    //                             background: theme.palette.primary.main,
-    //                             color: theme.palette.primary.contrastText,
-    //                             height: 38
-    //                         } }
-    //                 >
-    //                     <MenuItem value="CSV">CSV</MenuItem>
-    //                     <MenuItem value="Excel">Excel</MenuItem>
-    //                 </Select>
-    //             </FormControl>
-    //             <Button onClick={ () => handleExport( exportType ) } style={ { marginLeft: '10px' } }
-    //                     sx={ {
-    //                         background: theme.palette.secondary.main,
-    //                         color: theme.palette.primary.contrastText,
-    //                         height: 38
-    //                     } }
-    //             >Export { exportType }
-    //
-    //
-    //             </Button>
-    //         </div>
-    //     )
-    // }
-    //
-    // export const ExportActionButton = ( { exportType, setExportType, handleExportTypeChange } ) => {
-    //     return (
-    //         <>
-    //             <Button onClick={() => handleExport(exportType)}
-    //                     sx={{
-    //                         background: theme.palette.secondary.main,
-    //                         color: theme.palette.primary.contrastText,
-    //                         height: 38
-    //                     }}
-    //             >Export {exportType}
-    //
-    //             </Button>
-    //         </>
-    //     )
-    // }
-
     const exportCSV = ( gridApi ) => {
         if ( gridApi ) {
             const params = {
@@ -82,16 +35,6 @@ const ImportExport = ({exportType, setExportType }) => {
         }
     }
 
-    // const ImportExportComponents = ( exportType, setExportType ) => {
-    //     return (
-    //         <>
-    //             <CsvExcelSelector exportType={ exportType } setExportType={ setExportType } theme={ theme }
-    //                               handleExportTypeChange={ ( value ) => onChange( setExportType, value ) }/>
-    //             <ExportActionButton exportType={ exportType } setExportType={ setExportType } theme={ theme }
-    //                                 handleExportTypeChange={ ( value ) => onChange( setExportType, value ) }/>
-    //         </>
-    //     )
-    // }
 
     const ImportExportDropDown = () => {
         console.log("ImportExport Page - dropdown")
@@ -141,9 +84,3 @@ const ImportExport = ({exportType, setExportType }) => {
 
 export default ImportExport;
 
-// onClick={() => handleExport(exportType)}
-// // sx={{
-// //     background: theme.palette.secondary.main,
-// //     color: theme.palette.primary.contrastText,
-// //     height: 38
-// {/*}}*/}
