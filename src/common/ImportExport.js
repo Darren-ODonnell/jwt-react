@@ -37,7 +37,7 @@ const ImportExport = ({exportType, setExportType }) => {
 
 
     const ImportExportDropDown = () => {
-        console.log("ImportExport Page - dropdown")
+        // console.log("ImportExport Page - dropdown")
         return (
             <>
                 <FormControl variant="outlined" color="primary">
@@ -59,7 +59,7 @@ const ImportExport = ({exportType, setExportType }) => {
     }
 
     const ImportExportActionButton = () => {
-        console.log("ImportExport Page - action")
+        // console.log("ImportExport Page - action")
         return (
             <>
                 <Button className="export-button"

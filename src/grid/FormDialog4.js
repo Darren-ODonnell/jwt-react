@@ -13,7 +13,7 @@ import MyDatePicker from "../formcomponents/MyDatePicker";
 import DropDown from "../formcomponents/DropDown";
 
 import {AVAILABILITY, GRADES, HALF, REGISTERED, SUCCESS} from "../common/globals";
-import DropDownData from "../dev/DropDownData";
+import DropDownData from "../common/DropDownData";
 import {AddData, UpdateData} from "../api/ApiService";
 const FormDialog4 = ({
                          open, onClose, messages, rowData, colDefs, handleClose,

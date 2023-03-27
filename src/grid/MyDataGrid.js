@@ -7,7 +7,7 @@ import 'ag-grid-community/styles/ag-theme-material.css';
 import { Button, FormControl, Grid, MenuItem, Select } from "@mui/material";
 import './MyDataGrid.css'
 import { defaultColDef } from "../common/helper";
-import {deleteData, getData, useAxios} from "../api/ApiService";
+import { deleteData, getData, useAxios, useAxios2 } from "../api/ApiService";
 import {Position} from '../entities/positions'
 import {Pitchgrid} from '../entities/pitchgrids'
 import {GRID_ROW_DELETE, REPORT_PRINT_PREVIEW} from "../common/globals";
@@ -18,17 +18,18 @@ import ConfirmationModal from "../common/ConfirmationModal";
 import ReportModal from "../teamsheetComponents/ReportModal";
 import { useTheme } from '@mui/material/styles';
 import ImportExport from "../common/ImportExport";
+import TeamsheetDnd from "../teamsheetComponents/TeamsheetDnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
+import { PLAYER_URLS } from "../entities/players";
 
 const MyDataGrid = ({props}) => {
     const [gridApi, setGridApi] = useState(null);
     const gridRef = useRef(null);
     const [paginationEnabled, setPaginationEnabled] = useState(true);
-
     // used with delete to confirm the record is to be deleted
     const [deleteNode, setDeleteNode] = useState(false)
-
     // const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-
     const [showPrintPreview, setShowPrintPreview] = useState(false);
     // data for form
     const [selectedRow, setSelectedRow] = useState()
@@ -50,8 +51,9 @@ const MyDataGrid = ({props}) => {
     const [reportData, setReportData] = useState({})
     // open/close reportModal for printing
     const [modalOpen, setModalOpen] = useState(false);
-
     const [exportType, setExportType] = useState('CSV');
+    // enable/disable team,sheet dnd display - false by default
+    const [ teamsheetDnd, setTeamsheetDnd] = useState (false)
 
     const theme = useTheme();
     // export data hook
@@ -68,6 +70,16 @@ const MyDataGrid = ({props}) => {
     const handleOpen  = useCallback(() => {    setOpen(true);    }, []);
     const handleClose = useCallback(() => {    setOpen(false);   }, []);
     const onRowSelected = useCallback((event) => {  setSelectedRow(event.node.data);  }, []);
+    // teamsheet DnD handling
+    const handleTeamsheetSave = () => {
+        console.log("Team-sheet Save in App")
+        setTeamsheetDnd(false)
+    }
+    const handleTeamsheetCancel = () => {
+        console.log("Team-sheet Cancel in App")
+        setTeamsheetDnd(false)
+    }
+
 
     const onChange = useCallback((e) => {
         const {value, id} = e.target;
@@ -177,8 +189,12 @@ const MyDataGrid = ({props}) => {
         )
     }
     const handleEdit = useCallback(() => {
-        getSelectedRow();
-        handleOpen();
+        if(props.type==="Teamsheet") {
+            prepareTeamsheetDnd("Edit")
+        } else {
+            getSelectedRow();
+            handleOpen();
+        }
     }, [getSelectedRow, handleOpen]);
 
     // Delete Button in Grid
@@ -202,8 +218,30 @@ const MyDataGrid = ({props}) => {
         )
     }
 
-    const handleShowDeleteModal = () => { setShowDeleteModal(true)    }
-    // <Button onClick={() => handleConfirm(message, params.data)}
+    const handleShowDeleteModal = () => {
+        if ( props.type === "Teamsheet" ) {
+            setShowDeleteModal( false )
+        } else {
+            setShowDeleteModal( true )
+        }
+    }
+
+    const prepareTeamsheetDnd = (action) => {
+        // get players -> panel
+        // check if filter -> team & subs
+        // remove tea/subs players from panel
+
+
+        if(action === "Add") {
+            // get last Teamsheet
+        }
+
+
+        console.log("Teamsheet Prepare for: " + action)
+        setTeamsheetDnd(true)
+    }
+
+
 
 
 
@@ -230,8 +268,17 @@ const MyDataGrid = ({props}) => {
         );
     };
     const handleAdd = (params) => {
-        setSelectedRow({...props.initialValue})
-        handleOpen(params)
+        // check if teamsheet
+        // if teamsheet
+        // check if rows === 0 or > 30 - then set filter.
+        // get players
+        //
+        if(params.type==="Teamsheet") {
+            prepareTeamsheetDnd("Add")
+        } else {
+            setSelectedRow( { ...props.initialValue } )
+            handleOpen( params )
+        }
     }
     // when to show buttons
     const showAddButton          = (type) => { return !(type === Position || type === Pitchgrid)   }
@@ -290,17 +337,21 @@ const MyDataGrid = ({props}) => {
         return true
     }
 
-
     useEffect(() => { setRowData(data);    }, [data]);
     useEffect(() => {
         getData(props.methods.list, axiosApi, handleClose)
 
     }, []);
     useEffect(() => {
-        if (deleteNode) {
-            console.log("DeleteNode:"+selectedRow)
-            // deleteData(selectedRow);
-            setDeleteNode(false);
+        if(props.type==="Teamsheet") {
+            prepareTeamsheetDnd("Delete")
+        } else {
+
+            if ( deleteNode ) {
+                console.log( "DeleteNode:" + selectedRow )
+                // deleteData(selectedRow);
+                setDeleteNode( false );
+            }
         }
     }, [deleteNode, selectedRow, deleteConfirmation]);
 
@@ -324,34 +375,35 @@ const MyDataGrid = ({props}) => {
     const formParams = {
         // index: props.index,        // check if key above can be used on its own...
         // onClose: handleClose,
-        handleClose: handleClose,
-        onClose: handleClose,
+        handleClose : handleClose,
+        onClose     : handleClose,
         // onSubmit: handleSubmit,
-        open: open,
-        setOpen: handleOpen,            // dummy value to test index .. props.index previous
+        open        : open,
+        setOpen     : handleOpen,         // dummy value to test index .. props.index previous
         // data: selectedRow,
-        rowData: {...selectedRow},
+        rowData     : {...selectedRow},
         // values:selectedRow,
         // onChange: onChange,
-        methods: props.methods,
-        setRowData: setRowData,
-        colDefs: props.columnDefs,
-        messages: props.messages,
+        methods     : props.methods,
+        setRowData  : setRowData,
+        colDefs     : props.columnDefs,
+        messages    : props.messages,
         initialValue: props.initialValue,
-        axiosApi: axiosApi,
-        entity: props.type,
-        loading: loading,
-        error: error,
-        validate: validate,
-        // location: props.location,
-
-        // dropDownData: dropDownData,
+        axiosApi    : axiosApi,
+        entity      : props.type,
+        loading     : loading,
+        error       : error,
+        validate    : validate,
     }
 
-    const handleDeleteConfirmation = (value) => {
-        setDeleteConfirmation(true)
+    const handleDeleteConfirmation = () => {
+        if(props.type==="Teamsheet") {
+            console.log("Teamsheet Delete")
+            setDeleteConfirmation( false )
+        } else {
+            setDeleteConfirmation( true )
+        }
     }
-
 
     return (
         !loading ? <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
@@ -367,8 +419,10 @@ const MyDataGrid = ({props}) => {
 
             {/* Show Grid - always shown*/}
             <AgGridReact  {...commonParams} {...gridParams}  />
+
             {/* Show pagination button below grid */}
             <PaginationButton/>
+
             {/* show Import/Export Buttons here... */}
             {/*<button onClick={exportData}>Export Data</button>*/}
 
@@ -395,9 +449,13 @@ const MyDataGrid = ({props}) => {
             />
             {/* Show print preview of Teamsheet */}
             <ReportModal open={modalOpen} onClose={handleCloseModal} data={reportData}/>
+
             {/* Delete Record if confirmation good */}
             { deleteConfirmation && deleteData(selectedRow, error, props, axiosApi, handleClose) && setDeleteConfirmation(false) }
-
+            {/* Bring up Teamsheet Drag n Drop */}
+            <DndProvider backend={HTML5Backend}>
+                <TeamsheetDnd team={[]} panel={[]}  subs={[]} handleSave={handleTeamsheetSave} handleCancel={handleTeamsheetCancel} />
+            </DndProvider>
         </div> : <p> Loading...</p>
     )
 };

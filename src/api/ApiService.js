@@ -80,10 +80,10 @@ const ApiService = {
 
 
 export const deleteData = (data, error, props, axiosApi, handleClose) => {
+
     console.log("deleting data with id: " + data)
     const user = AuthService.getCurrentUser();
     AuthService.setAuthToken(user.accessToken);
-
 
     const configObj = {
         axiosInstance: instance,
