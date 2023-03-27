@@ -5,23 +5,23 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'ag-grid-community/styles/ag-theme-balham.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 import { Button, FormControl, Grid, MenuItem, Select } from "@mui/material";
-import './MyDataGrid.css'
 import { defaultColDef } from "../common/helper";
 import { deleteData, getData, useAxios, useAxios2 } from "../api/ApiService";
 import {Position} from '../entities/positions'
 import {Pitchgrid} from '../entities/pitchgrids'
 import {GRID_ROW_DELETE, REPORT_PRINT_PREVIEW} from "../common/globals";
-import { loadDataForTeamsheet, Teamsheet } from "../entities/teamsheets";
+import {loadDataForTeamsheet, Teamsheet} from "../entities/teamsheets";
 import TeamsheetReport from "../teamsheetComponents/TeamsheetReport";
 import FormDialog4 from "./FormDialog4";
 import ConfirmationModal from "../common/ConfirmationModal";
 import ReportModal from "../teamsheetComponents/ReportModal";
-import { useTheme } from '@mui/material/styles';
+import {useTheme} from '@mui/material/styles';
 import ImportExport from "../common/ImportExport";
 import TeamsheetDnd from "../teamsheetComponents/TeamsheetDnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { DndProvider } from "react-dnd";
-import { PLAYER_URLS } from "../entities/players";
+import {HTML5Backend} from "react-dnd-html5-backend";
+import {DndProvider} from "react-dnd";
+import {PLAYER_URLS, playerData} from "../entities/players";
+import DropDownData from "../common/DropDownData";
 
 const MyDataGrid = ({props}) => {
     const [gridApi, setGridApi] = useState(null);
@@ -53,7 +53,10 @@ const MyDataGrid = ({props}) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [exportType, setExportType] = useState('CSV');
     // enable/disable team,sheet dnd display - false by default
-    const [ teamsheetDnd, setTeamsheetDnd] = useState (false)
+    const [teamsheetDnd, setTeamsheetDnd] = useState(false)
+
+
+    const [dropDownData, setDropDownData] = useState()
 
     const theme = useTheme();
     // export data hook
@@ -61,8 +64,6 @@ const MyDataGrid = ({props}) => {
     // // import data hook
     // const importData = useImportData(gridOptions.api);
     // delete confirm hook
-
-
 
     let message = "";
     let model = [];
@@ -80,12 +81,10 @@ const MyDataGrid = ({props}) => {
         setTeamsheetDnd(false)
     }
 
-
     const onChange = useCallback((e) => {
         const {value, id} = e.target;
         setRowData({...rowData, [id]: value});
     }, [rowData]);
-
     const onGridReady = useCallback((params) => {
         setGridApi(params.api);
         const gridApi = params.api;
@@ -94,7 +93,6 @@ const MyDataGrid = ({props}) => {
             setSelectedRow(selectedRows[0]);
         });
     }, []);
-
 
     // returned the filtered data
     const handleFilterChanged = useCallback(() => {
@@ -108,14 +106,12 @@ const MyDataGrid = ({props}) => {
 
         console.log("FilteredData-: " + filteredData);
     }, [gridApi, filteredData]);
-
     const getSelectedRow = useCallback(() => {
         const selectedNodes = gridApi.getSelectedRows();
         if (selectedNodes.length === 1) {
             setSelectedRow(selectedNodes[0]);
         }
     }, [gridApi]);
-
     const formActions = {
         headerName: 'Actions',
         field: 'id',
@@ -217,7 +213,6 @@ const MyDataGrid = ({props}) => {
 
         )
     }
-
     const handleShowDeleteModal = () => {
         if ( props.type === "Teamsheet" ) {
             setShowDeleteModal( false )
@@ -225,25 +220,20 @@ const MyDataGrid = ({props}) => {
             setShowDeleteModal( true )
         }
     }
-
     const prepareTeamsheetDnd = (action) => {
-        // get players -> panel
-        // check if filter -> team & subs
-        // remove tea/subs players from panel
 
-
-        if(action === "Add") {
+        if (action === "Add") {
             // get last Teamsheet
-        }
 
+        } else {
+            // check for filtered data != 0 and <= 30
+
+        }
+// create team suns and updated panel
 
         console.log("Teamsheet Prepare for: " + action)
         setTeamsheetDnd(true)
     }
-
-
-
-
 
     // Add Button
     const AddButton = (params) => {
@@ -340,7 +330,7 @@ const MyDataGrid = ({props}) => {
     useEffect(() => { setRowData(data);    }, [data]);
     useEffect(() => {
         getData(props.methods.list, axiosApi, handleClose)
-
+        // setDropDownData(DropDownData())
     }, []);
     useEffect(() => {
         if(props.type==="Teamsheet") {
