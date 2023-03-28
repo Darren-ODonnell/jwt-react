@@ -444,7 +444,7 @@ const MyDataGrid = ({props}) => {
             { deleteConfirmation && deleteData(selectedRow, error, props, axiosApi, handleClose) && setDeleteConfirmation(false) }
             {/* Bring up Teamsheet Drag n Drop */}
             <DndProvider backend={HTML5Backend}>
-                <TeamsheetDnd team={[]} panel={[]}  subs={[]} handleSave={handleTeamsheetSave} handleCancel={handleTeamsheetCancel} />
+                <TeamsheetDnd team={[]} panel={[]}  subs={[]} handleSave={handleTeamsheetSave} handleCancel={handleTeamsheetCancel} methods={props.methods} />
             </DndProvider>
         </div> : <p> Loading...</p>
     )

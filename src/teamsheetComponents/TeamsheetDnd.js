@@ -1,16 +1,27 @@
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import TeamsheetContainer from "./TeamsheetContainers";
 import { DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import {v4} from 'uuid';
+import { PLAYER_URLS } from "../entities/players";
+import { getData, useAxios } from "../api/ApiService";
+
 
 
 // export const showList = ( m,v ) => { console.log(m + v.map(m => {return "("+m.key+")(" + m.id + ") "+ m.name + " "}))}
 
-const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel}) =>{
+const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, methods}) =>{
     const [panel, setPanel] = useState( myPanel );
     const [subs , setSubs]  = useState( mySubs );
     const [team , setTeam]  = useState( myTeam );
+    const [data, error, loading, axiosApi] = useAxios();
+
+    useEffect(() => {
+        getData(methods.list, axiosApi, handleCancel)
+        setPanel(data)
+    }, [data]);
+
+
 
     const findPlayer = (id) => {
         const idx1 = panel.findIndex(p => p.id === id)
