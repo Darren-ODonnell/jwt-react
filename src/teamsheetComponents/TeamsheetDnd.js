@@ -6,8 +6,6 @@ import {v4} from 'uuid';
 import { PLAYER_URLS } from "../entities/players";
 import { getData, useAxios } from "../api/ApiService";
 
-
-
 // export const showList = ( m,v ) => { console.log(m + v.map(m => {return "("+m.key+")(" + m.id + ") "+ m.name + " "}))}
 
 const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, methods}) =>{
@@ -19,9 +17,7 @@ const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, method
     useEffect(() => {
         getData(methods.list, axiosApi, handleCancel)
         setPanel(data)
-    }, [data]);
-
-
+    }, []);
 
     const findPlayer = (id) => {
         const idx1 = panel.findIndex(p => p.id === id)
@@ -76,7 +72,6 @@ const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, method
         const tempSource = { ...sourcePlayer };
         let destPlayer = {...dest[destIdx]};
         const tempDest = { ...destPlayer };
-
 
         // don't copy players onto same container
         if(sourcePlayer.name === destPlayer.name) return

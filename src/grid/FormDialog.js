@@ -11,15 +11,17 @@ import {ErrorMessage} from "../common/ErrorMessage";
 import MyTimePicker from "../formcomponents/MyTimePicker";
 import MyDatePicker from "../formcomponents/MyDatePicker";
 import DropDown from "../formcomponents/DropDown";
+import qs from 'qs';
 
 import {AVAILABILITY, GRADES, HALF, REGISTERED, SUCCESS} from "../common/globals";
 import DropDownData from "../common/DropDownData";
-import {AddData, UpdateData} from "../api/ApiService";
-const FormDialog4 = ({
+// import {AddData, UpdateData} from "../api/ApiService";
+const FormDialog = ( {
                          open, onClose, messages, rowData, colDefs, handleClose,
                          initialValue, error, setOpen, methods, setRowData, axiosApi, entity, validate, location
                      }) => {
-    const [formValues, setFormValues] = useState({initialValue})
+    // const [formValues, setFormValues] = useState({...initialValue})
+    const [formValues, setFormValues] = useState([])
 
     let dropDownData = DropDownData()
 
@@ -100,58 +102,67 @@ const FormDialog4 = ({
     if (Object.keys(formValues).length === 0) {
         return <div>Loading...</div>
     }
-    // const UpdateData = ({rowData, error, formValues}) => {
-    //     const user = AuthService.getCurrentUser();
-    //     AuthService.setAuthToken(user.accessToken);
-    //
-    //     const configObj = {
-    //         axiosInstance: instance,
-    //         ...methods.update,
-    //         requestConfig: {
-    //             data: formValues
-    //         }
-    //     }
-    //
-    //     axiosApi(configObj)
-    //         .then(response => {
-    //             rowData = response.data
-    //             console.log("Update: ", rowData)
-    //         })
-    //         .catch(err => {
-    //             window.alert(error.message)
-    //             console.log("Error: " + error.message)
-    //             handleClose()
-    //         })
-    //     // refresh grid
-    //     refreshPage()
-    // }
-    // const AddData = ({data, loading, error, formValues}) => {
-    //     const user = AuthService.getCurrentUser();
-    //     AuthService.setAuthToken(user.accessToken);
-    //
-    //     const configObj = {
-    //         axiosInstance: instance,
-    //         ...methods.add,
-    //         requestConfig: {
-    //             data: {...formValues}
-    //         }
-    //     }
-    //     // console.log('Before axiosApi call-Data:'+ data);
-    //
-    //     axiosApi(configObj)
-    //         .then(response => {
-    //             handleClose()
-    //             rowData = response.data
-    //             console.log("Add: ", response.data)
-    //             setRowData(response.data)
-    //         })
-    //         .catch(err => {
-    //             console.log("Error: " + error.message)
-    //             handleClose()
-    //         })
-    // refresh grid
-    // refreshPage()
-    // }
+    const UpdateData = ({rowData, error, formValues}) => {
+        const user = AuthService.getCurrentUser();
+        AuthService.setAuthToken(user.accessToken);
+
+        const configObj = {
+            axiosInstance: instance,
+            ...methods.update,
+            requestConfig: {
+                data: formValues
+            }
+        }
+
+        axiosApi(configObj)
+            .then(response => {
+                rowData = response.data
+                console.log("Update: ", rowData)
+            })
+            .catch(err => {
+                window.alert(error.message)
+                console.log("Error: " + error.message)
+                handleClose()
+            })
+        // refresh grid
+        refreshPage()
+    }
+
+    const formData = new FormData();
+
+    const AddData = ({data, loading, error, formValues}) => {
+        const user = AuthService.getCurrentUser();
+        AuthService.setAuthToken(user.accessToken);
+
+        const configObj = {
+            axiosInstance: instance,
+            ...methods.add,
+            requestConfig: {
+                data: JSON.stringify(formValues),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+            // requestConfig: {
+            //     data: {...formValues}
+            // }
+        }
+        // console.log('Before axiosApi call-Data:'+ data);
+
+        axiosApi(configObj)
+            .then(response => {
+                handleClose()
+                rowData = response.data
+                console.log("Add: ", response.data)
+                setRowData(response.data)
+            })
+            .catch(err => {
+                console.log("Error: " + error.message)
+                handleClose()
+            })
+        // refresh grid
+        refreshPage()
+    }
 
     const CancelButton = () => {
         return (
@@ -202,21 +213,18 @@ const FormDialog4 = ({
                             case "playerName" :
                                 return <DropDown
                                     {...commonProps}
-
                                     headerName={"Player Name"}
                                     defaultValue={"Corcoran, Laura"}
                                     options={dropDownData.players}/>
                             case "awayTeamName" :
                                 return <DropDown
                                     {...commonProps}
-
                                     headerName={"Away Team Name"}
                                     defaultValue={"St Judes"}
                                     options={dropDownData.clubs}/>
                             case "homeTeamName" :
                                 return <DropDown
                                     {...commonProps}
-
                                     headerName={"Home Team Name"}
                                     defaultValue={"St Judes"}
                                     options={dropDownData.clubs}/>
@@ -229,39 +237,33 @@ const FormDialog4 = ({
                             case "round":
                                 return <DropDown
                                     {...commonProps}
-
                                     headerName={"Round"}
                                     defaultValue={dropDownData.rounds[0]}
                                     options={dropDownData.rounds}/>
                             case "season":
                                 return <DropDown
                                     {...commonProps}
-
                                     headerName={"Season"}
                                     defaultValue={new Date().getFullYear()}
                                     options={getSeasons()}/>
                             case "position":
                                 return <DropDown
                                     {...commonProps}
-
                                     headerName={"Position"}
                                     defaultValue={"Select Position Name"}
                                     options={dropDownData.positions}/>
                             case "positionNumber":
                                 return <DropDown
                                     {...commonProps}
-
                                     headerName={"Position Number"}
                                     defaultValue={"Select Position Number"}
                                     options={dropDownData.positionNumbers}/>
                             case "competitionName":
                                 return <DropDown
                                     {...commonProps}
-
                                     headerName={"Competition Name"}
                                     defaultValue={dropDownData.competitions[0]}
                                     options={[...new Set(dropDownData.competitions)]}/>
-
                             case "success":
                                 myValue = formValues[prop.field] ? "True" : "False"
                                 return <DropDown
@@ -283,13 +285,11 @@ const FormDialog4 = ({
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Grade"}
-
                                     defaultValue={GRADES[0]}
                                     options={GRADES}/>
                             case "statName":
                                 return <DropDown
                                     {...commonProps}
-
                                     headerName={"Stat names"}
                                     defaultValue={"Select Stat Name"}
                                     options={dropDownData.statnames}/>
@@ -297,7 +297,6 @@ const FormDialog4 = ({
                                 return <DropDown
                                     {...commonProps}
                                     headerName={"Availability"}
-
                                     defaultValue={AVAILABILITY[0]}
                                     options={AVAILABILITY}/>
                             case "half" :
@@ -319,7 +318,6 @@ const FormDialog4 = ({
                             default:
                                 return <MyTextField
                                     {...commonProps}
-
                                     value={formValues ? formValues[prop.field] : " "}
                                     className="myTextField"
                                     headerName={prop.headerName}
@@ -348,4 +346,4 @@ const FormDialog4 = ({
             </Dialog>
     );
 }
-export default FormDialog4;
+export default FormDialog;

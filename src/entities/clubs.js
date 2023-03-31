@@ -11,32 +11,35 @@ export const clubColumnDefs = [
     {headerName: 'Contact Phone', field: 'contactPhone', width: 150,},
     {headerName: 'Pitches', field: 'pitches', width: 150,},
     {headerName: 'Colours', field: 'colours', width: 150,},
+    {headerName: 'Abbreviation', field: 'abbrev', width: 100,},
 ];
 
 const clubDropDown = false;
 
 export const clubInitialValue = {
-    name: "",
-    irishName: "",
-    contactName: "",
+    name        : "",
+    irishName   : "",
+    contactName : "",
     contactEmail: "",
     contactPhone: "",
-    pitches: "",
-    colours: ""
+    pitches     : "",
+    colours     : "",
+    abbrev      : "",
 }
 
 const gridLoader = (data) => {
     let newData = [];
     data.forEach(row => {
         const newRow = {
-            id: row.id,
-            name: row.name,
-            irishName: row.irishName,
-            contactName: row.contactName,
+            id          : row.id,
+            name        : row.name,
+            irishName   : row.irishName,
+            contactName : row.contactName,
             contactEmail: row.contactEmail,
             contactPhone: row.contactPhone,
-            pitches: row.pitches,
-            colours: row.colours,
+            pitches     : row.pitches,
+            colours     : row.colours,
+            abbrev      : row.abbrev,
         }
         newData.push(newRow)
     })
@@ -54,12 +57,12 @@ const CLUB_UPDATE     = "/club/update";
 export const HOME_PAGE = CLUB_LIST;
 
 export const CLUB_URLS = {
-    add: CLUB_ADD,
-    delete: CLUB_DELETE,
-    findById: CLUB_FINDBYID,
+    add       : CLUB_ADD,
+    delete    : CLUB_DELETE,
+    findById  : CLUB_FINDBYID,
     findByName: CLUB_FINDBYNAME,
-    list: CLUB_LIST,
-    update: CLUB_UPDATE
+    list      : CLUB_LIST,
+    update    : CLUB_UPDATE
 }
 const apiRequests = {
     list      : { method: METHODS.GET   , url: CLUB_URLS.list},
@@ -71,13 +74,13 @@ const apiRequests = {
 }
 
 export const clubData = {
-    messages: addMessage(Club),
-    type: Club,
+    messages    : addMessage(Club),
+    type        : Club,
     initialValue: clubInitialValue,
-    columnDefs: clubColumnDefs,
-    methods: apiRequests,
-    dropDown: clubDropDown,
-    homePage: HOME_PAGE,
-    gridLoader: gridLoader
+    columnDefs  : clubColumnDefs,
+    methods     : apiRequests,
+    dropDown    : clubDropDown,
+    homePage    : HOME_PAGE,
+    gridLoader  : gridLoader
 };
 

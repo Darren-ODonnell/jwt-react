@@ -5,14 +5,14 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'ag-grid-community/styles/ag-theme-balham.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 import { Button, FormControl, Grid, MenuItem, Select } from "@mui/material";
-import { defaultColDef } from "../common/helper";
+import { defaultColDef, refreshPage } from "../common/helper";
 import { deleteData, getData, useAxios, useAxios2 } from "../api/ApiService";
 import {Position} from '../entities/positions'
 import {Pitchgrid} from '../entities/pitchgrids'
 import {GRID_ROW_DELETE, REPORT_PRINT_PREVIEW} from "../common/globals";
 import {loadDataForTeamsheet, Teamsheet} from "../entities/teamsheets";
 import TeamsheetReport from "../teamsheetComponents/TeamsheetReport";
-import FormDialog4 from "./FormDialog4";
+import FormDialog from "./FormDialog";
 import ConfirmationModal from "../common/ConfirmationModal";
 import ReportModal from "../teamsheetComponents/ReportModal";
 import {useTheme} from '@mui/material/styles';
@@ -22,6 +22,8 @@ import {HTML5Backend} from "react-dnd-html5-backend";
 import {DndProvider} from "react-dnd";
 import {PLAYER_URLS, playerData} from "../entities/players";
 import DropDownData from "../common/DropDownData";
+import AuthService from "../auth/AuthService";
+import instance from "../api/axios";
 
 const MyDataGrid = ({props}) => {
     const [gridApi, setGridApi] = useState(null);
@@ -229,7 +231,7 @@ const MyDataGrid = ({props}) => {
             // check for filtered data != 0 and <= 30
 
         }
-// create team suns and updated panel
+        // create team subs and updated panel
 
         console.log("Teamsheet Prepare for: " + action)
         setTeamsheetDnd(true)
@@ -270,11 +272,11 @@ const MyDataGrid = ({props}) => {
             handleOpen( params )
         }
     }
-    // when to show buttons
+    // // when to show buttons
     const showAddButton          = (type) => { return !(type === Position || type === Pitchgrid)   }
     const showDeleteButton       = (type) => { return !(type === Position || type === Pitchgrid)   }
     const showPrintPreviewButton = (type) => { return  (type === Teamsheet) }
-
+    //
     // print preview
     const PrintPreviewButton = (params) => {
         message = REPORT_PRINT_PREVIEW
@@ -307,7 +309,7 @@ const MyDataGrid = ({props}) => {
             }
         }
     };
-
+    //
     // Pagination
     const togglePagination = () => {
         const pageSize = paginationEnabled ? 1000 : 10;
@@ -384,6 +386,7 @@ const MyDataGrid = ({props}) => {
         loading     : loading,
         error       : error,
         validate    : validate,
+
     }
 
     const handleDeleteConfirmation = () => {
@@ -417,7 +420,7 @@ const MyDataGrid = ({props}) => {
             {/*<button onClick={exportData}>Export Data</button>*/}
 
             {/* Popup form triggerd by open */}
-            <FormDialog4   {...formParams}  />
+            <FormDialog   {...formParams}  />
             {/* show delete modal when required by set/reset showModal */}
             <ConfirmationModal
                 showModal={showDeleteModal}
@@ -443,9 +446,11 @@ const MyDataGrid = ({props}) => {
             {/* Delete Record if confirmation good */}
             { deleteConfirmation && deleteData(selectedRow, error, props, axiosApi, handleClose) && setDeleteConfirmation(false) }
             {/* Bring up Teamsheet Drag n Drop */}
-            <DndProvider backend={HTML5Backend}>
-                <TeamsheetDnd team={[]} panel={[]}  subs={[]} handleSave={handleTeamsheetSave} handleCancel={handleTeamsheetCancel} methods={props.methods} />
-            </DndProvider>
+            {teamsheetDnd && (
+                <DndProvider backend={HTML5Backend}>
+                    <TeamsheetDnd team={[]} panel={[]}  subs={[]} handleSave={handleTeamsheetSave} handleCancel={handleTeamsheetCancel} methods={props.methods} />
+                </DndProvider>
+            )}
         </div> : <p> Loading...</p>
     )
 };
