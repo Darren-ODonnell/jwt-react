@@ -105,7 +105,6 @@ const MyDataGrid = ({props}) => {
             return m.data
         })
         setFilteredData(newFilteredData)
-
         console.log("FilteredData-: " + filteredData);
     }, [gridApi, filteredData]);
     const getSelectedRow = useCallback(() => {

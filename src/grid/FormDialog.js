@@ -16,17 +16,17 @@ import qs from 'qs';
 import {AVAILABILITY, GRADES, HALF, REGISTERED, SUCCESS} from "../common/globals";
 import DropDownData from "../common/DropDownData";
 // import {AddData, UpdateData} from "../api/ApiService";
-const FormDialog = ( {
-                         open, onClose, messages, rowData, colDefs, handleClose,
-                         initialValue, error, setOpen, methods, setRowData, axiosApi, entity, validate, location
-                     }) => {
+const FormDialog = ({
+                        open, onClose, messages, rowData, colDefs, handleClose,
+                        initialValue, error, setOpen, methods, setRowData, axiosApi, entity, validate, location
+                    }) => {
     // const [formValues, setFormValues] = useState({...initialValue})
     const [formValues, setFormValues] = useState([])
 
     let dropDownData = DropDownData()
 
     const handleFormSubmit = ({formValues, error}) => {
-        let valid =  validate(formValues);
+        let valid = validate(formValues);
 
         console.log("FormValues: ", formValues);
 
@@ -37,11 +37,11 @@ const FormDialog = ( {
                 const request = methods.update;
                 UpdateData({methods, axiosApi, rowData, error, formValues, request})
                     .then(res => {
-                    if (res) setRowData(res);
-                    if (error !== null) {
-                        return handleError(error.message);
-                    }
-                });
+                        if (res) setRowData(res);
+                        if (error !== null) {
+                            return handleError(error.message);
+                        }
+                    });
             } else {
                 setOpen(false);
                 AddData({methods, axiosApi, rowData, error, formValues, setOpen, setRowData, request}).then(res => {
@@ -87,11 +87,9 @@ const FormDialog = ( {
         }));
     };
 
-
     const handleError = (message) => {
         return <ErrorMessage message={message}/>;
     }
-
 
     useEffect(() => {
         // dropDownData = DropDownData()
@@ -128,7 +126,7 @@ const FormDialog = ( {
         refreshPage()
     }
 
-    const formData = new FormData();
+
 
     const AddData = ({data, loading, error, formValues}) => {
         const user = AuthService.getCurrentUser();
@@ -138,14 +136,8 @@ const FormDialog = ( {
             axiosInstance: instance,
             ...methods.add,
             requestConfig: {
-                data: JSON.stringify(formValues),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                data: formValues,
             }
-            // requestConfig: {
-            //     data: {...formValues}
-            // }
         }
         // console.log('Before axiosApi call-Data:'+ data);
 
