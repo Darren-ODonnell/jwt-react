@@ -9,15 +9,15 @@ import { getData, useAxios } from "../api/ApiService";
 // export const showList = ( m,v ) => { console.log(m + v.map(m => {return "("+m.key+")(" + m.id + ") "+ m.name + " "}))}
 
 const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, methods}) =>{
-    const [panel, setPanel] = useState( myPanel );
-    const [subs , setSubs]  = useState( mySubs );
-    const [team , setTeam]  = useState( myTeam );
+    const [panel, setPanel] = useState(myPanel);
+    const [subs, setSubs] = useState(mySubs);
+    const [team, setTeam] = useState(myTeam);
     const [data, error, loading, axiosApi] = useAxios();
 
-    useEffect(() => {
-        getData(methods.list, axiosApi, handleCancel)
-        setPanel(data)
-    }, []);
+    // useEffect(() => {
+    //     getData(methods.list, axiosApi, handleCancel)
+    //     setPanel(data)
+    // }, []);
 
     const findPlayer = (id) => {
         const idx1 = panel.findIndex(p => p.id === id)
@@ -25,7 +25,7 @@ const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, method
         const idx3 = team.findIndex(p => p.id === id)
 
         if (idx1 >= 0) {
-            console.log("id: "+id+" | Found in Panel at index: "+idx1)
+            console.log("id: " + id + " | Found in Panel at index: " + idx1)
             return [idx1, setPanel, panel[idx1], 'panel', panel];
         }
         if (idx2 >= 0) {
@@ -318,10 +318,12 @@ const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, method
             if (source === team)  swapPositions( sourceIdx,destIdx,   setTeam,setTeam,   sourcePlayer.id,destId, team, team  )
         }
     }
+    console.log("Just before TeamsheetContainer")
     return (
     <div className="App">
         <DndProvider backend={HTML5Backend}>
-            {/*<TeamsheetContainer panel={panel} team={team} subs={subs} onDrop={onDrop} onDropContainer={onDropContainer}  handleSave={handleSave} handleCancel={handleCancel}/>*/}
+            <TeamsheetContainer panel={panel} team={team} subs={subs} onDrop={onDrop} onDropContainer={onDropContainer}
+                                handleSave={handleSave} handleCancel={handleCancel}/>
         </DndProvider>
     </div>
   );

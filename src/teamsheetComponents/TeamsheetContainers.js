@@ -19,15 +19,14 @@ export const findId = (id, array) => {
     return array.findIndex(p => p.id === id)
 }
 
-
 const TeamsheetContainer = ({panel, team, subs, onDrop,onDropContainer, handleSave, handleCancel}) => {
-
+    console.log("Panel-Container: ", JSON.stringify(panel))
     return (
-        <Container className="teamsheet-container container mx-auto" style={{height:'800px'}}>
-            <PanelContainer   panel={panel} onDrop={onDrop} onDropContainer={onDropContainer}/>
-            <TeamContainer    team ={team}  onDrop={onDrop} />
-            <SubsContainer    subs ={subs}  onDrop={onDrop} onDropContainer={onDropContainer}/>
-            <ActionContainer  handleCancel={handleCancel} handleSave={handleSave}            />
+        <Container className="teamsheet-container container-common mx-auto" style={{height: '800px'}}>
+            <PanelContainer panel={panel} onDrop={onDrop} onDropContainer={onDropContainer}/>
+            {/*<TeamContainer    team ={team}  onDrop={onDrop} />*/}
+            {/*<SubsContainer    subs ={subs}  onDrop={onDrop} onDropContainer={onDropContainer}/>*/}
+            <ActionContainer handleCancel={handleCancel} handleSave={handleSave}/>
         </Container>
     )
 }
@@ -58,22 +57,22 @@ const PanelContainer = ({ panel, onDrop,onDropContainer }) => {
     }));
 
 
-    // showList("Panel-Container: " , panel)
+    console.log("Panel-Container: ", JSON.stringify(panel))
     return (
         <>
         <Container className="panel-heading">Panel</Container>
 
-        <Container className="panel-container" onDragOver={handleDragOver} ref={drop}>
+            <Container className="panel-container" onDragOver={handleDragOver} ref={drop}>
 
-            { panel.map(( member, index ) => {
-                const top = nextRow;
-                nextRow += 60; // Increment nextRow by 60 for the next iteration
-                console.log("Index: "+index+ ", id: "+member.id+", name: " +member.name)
-                return (
-                    <Box
-                        index   = {index}
-                        key     = {index}
-                        id      = {member.id}
+                {panel.map((member, index) => {
+                    const top = nextRow;
+                    nextRow += 60; // Increment nextRow by 60 for the next iteration
+                    console.log("Index: " + index + ", id: " + member.id + ", name: " + member.name)
+                    return (
+                        <Box
+                            index={index}
+                            key={index}
+                            id={member.id}
                         player  = {member}
                         width   = {150}
                         height  = {50}
