@@ -6,6 +6,17 @@ import {POSITION_URLS} from "../entities/positions";
 import {PITCH_GRID_URLS} from "../entities/pitchgrids";
 import {STAT_NAME_URLS} from "../entities/statnames";
 import {useAxios2} from "../api/ApiService";
+import {TEAMSHEET_URLS} from "../entities/teamsheets";
+
+export const Players = () => {
+    const players = useAxios2(PLAYER_URLS.list);
+    return players
+}
+
+export const LastTeamsheet = () => {
+    const teamsheets = useAxios2(TEAMSHEET_URLS.last);
+    return teamsheets
+}
 
 const DropdownData = () => {
     const competition = useAxios2(COMPETITION_URLS.list);

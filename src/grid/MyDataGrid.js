@@ -21,11 +21,10 @@ import TeamsheetDnd from "../teamsheetComponents/TeamsheetDnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import {DndProvider} from "react-dnd";
 import {PLAYER_URLS, playerData} from "../entities/players";
-import DropDownData from "../common/DropDownData";
+import DropDownData, {LastTeamsheet, Players} from "../common/DropDownData";
 import AuthService from "../auth/AuthService";
 import instance from "../api/axios";
 import {v4} from 'uuid'
-
 
 let myTeam = [
     {key: 1, id: 1, name: "John Doe", position: 1},
@@ -89,7 +88,6 @@ let mySubs = [
     // { key: 43, id: 43, name: "Ian Wilson"    , position: 0},
 ]
 
-
 const MyDataGrid = ({props}) => {
     const [gridApi, setGridApi] = useState(null);
     const gridRef = useRef(null);
@@ -121,11 +119,14 @@ const MyDataGrid = ({props}) => {
     const [exportType, setExportType] = useState('CSV');
     // enable/disable team,sheet dnd display - false by default
     const [teamsheetDnd, setTeamsheetDnd] = useState(false)
-
-
-    const [dropDownData, setDropDownData] = useState()
+    const [panel, setPanel] = useState()
+    const [team, setTeam] = useState()
+    const [subs, setSubs] = useState()
+    const lastTeamsheet = LastTeamsheet()
+    const players = Players();
 
     const theme = useTheme();
+
     // export data hook
     // const exportData = useExportData(gridOptions.api);
     // // import data hook
@@ -147,7 +148,6 @@ const MyDataGrid = ({props}) => {
         console.log("Team-sheet Cancel in App")
         setTeamsheetDnd(false)
     }
-
     const onChange = useCallback((e) => {
         const {value, id} = e.target;
         setRowData({...rowData, [id]: value});
@@ -160,7 +160,6 @@ const MyDataGrid = ({props}) => {
             setSelectedRow(selectedRows[0]);
         });
     }, []);
-
     // returned the filtered data
     const handleFilterChanged = useCallback(() => {
         // capture the data when a filter is set on the grid
@@ -196,51 +195,7 @@ const MyDataGrid = ({props}) => {
             )
         }
     };
-
-    // const deleteData = (data, error) => {
-    //     console.log("deleting data with id: " + data)
-    //     const user = AuthService.getCurrentUser();
-    //     AuthService.setAuthToken(user.accessToken);
-    //
-    //     const configObj = {
-    //         axiosInstance: instance,
-    //         ...props.methods.delete,
-    //         requestConfig: {
-    //             data: {data}
-    //         }
-    //     }
-    //
-    //     axiosApi(configObj)
-    //         .then(response => {
-    //             handleClose();
-    //         })
-    //         .catch(err => {
-    //             window.alert(error.message)
-    //             console.log("Error: " + error.message)
-    //             handleClose()
-    //         })
-    //     refreshPage()
-    //     // window.location.reload()
-    // }
-    // function getData({method, url}) {
-    //     // clean up controller
-    //     let isSubscribed = true;
-    //     const user = AuthService.getCurrentUser();
-    //     AuthService.setAuthToken(user.accessToken);
-    //     axiosApi({
-    //         axiosInstance: instance,
-    //         method: method,
-    //         url: url,
-    //     }).then(() => {
-    //
-    //     }).catch(err => {
-    //         handleClose()
-    //     })        // cancel subscription to useEffect
-    //     return () => (isSubscribed = false)
-    // }
-
     const handleCloseModal      = () => { setModalOpen(false);    };
-
     // Add button in grid
     const EditButton = (params) => {
         return (
@@ -258,7 +213,6 @@ const MyDataGrid = ({props}) => {
             handleOpen();
         }
     }, [getSelectedRow, handleOpen]);
-
     // Delete Button in Grid
     const DeleteButton = (params) => {
         message = GRID_ROW_DELETE;
@@ -276,7 +230,6 @@ const MyDataGrid = ({props}) => {
                             color="secondary"
                     >NO Delete </Button>
                 </div>
-
         )
     }
     const handleShowDeleteModal = () => {
@@ -287,19 +240,25 @@ const MyDataGrid = ({props}) => {
         }
     }
     const prepareTeamsheetDnd = (action) => {
-
-        if (action === "Add") {
-            // get last Teamsheet
-
-        } else {
-            // check for filtered data != 0 and <= 30
-
-        }
         // create team subs and updated panel
+        const newTeam = (action === "Add")
+            ? lastTeamsheet
+            : filteredData
 
-        console.log("Teamsheet Prepare for: " + action)
+        let newSubs = newTeam.filter(s => s.position.id > 15)
+
+        console.log("LastTeamsheet: " + JSON.stringify(lastTeamsheet))
+
+        setPanel(players)
+        setTeam(newTeam)
+        setSubs(newSubs)
         setTeamsheetDnd(true)
     }
+
+    useEffect(() => {
+        console.log("Team: " + JSON.stringify(team))
+    }, [team])
+
 
     // Add Button
     const AddButton = (params) => {
@@ -331,10 +290,12 @@ const MyDataGrid = ({props}) => {
         //
         if(params.type==="Teamsheet") {
             prepareTeamsheetDnd("Add")
+
         } else {
             setSelectedRow( { ...props.initialValue } )
             handleOpen( params )
         }
+
     }
     // // when to show buttons
     const showAddButton          = (type) => { return !(type === Position || type === Pitchgrid)   }
@@ -393,23 +354,26 @@ const MyDataGrid = ({props}) => {
         return true
     }
 
-    useEffect(() => { setRowData(data);    }, [data]);
+    useEffect(() => {
+        setRowData(data);
+    }, [data]);
     useEffect(() => {
         getData(props.methods.list, axiosApi, handleClose)
+        // setPanel(Players())
+        // setTeam(LastTeamsheet())
         // setDropDownData(DropDownData())
     }, []);
-    useEffect(() => {
-        if(props.type==="Teamsheet") {
-            prepareTeamsheetDnd("Delete")
-        } else {
-
-            if ( deleteNode ) {
-                console.log( "DeleteNode:" + selectedRow )
-                // deleteData(selectedRow);
-                setDeleteNode( false );
-            }
-        }
-    }, [deleteNode, selectedRow, deleteConfirmation]);
+    // useEffect(() => {
+    //     if(props.type==="Teamsheet") {
+    //         prepareTeamsheetDnd("Delete")
+    //     } else {
+    //         if ( deleteNode ) {
+    //             console.log( "DeleteNode:" + selectedRow )
+    //             // deleteData(selectedRow);
+    //             setDeleteNode( false );
+    //         }
+    //     }
+    // }, [deleteNode, selectedRow, deleteConfirmation]);
 
     // render parameters
     const commonParams = {}
@@ -450,19 +414,19 @@ const MyDataGrid = ({props}) => {
         loading     : loading,
         error       : error,
         validate    : validate,
-
     }
-
     const handleDeleteConfirmation = () => {
-        if(props.type==="Teamsheet") {
+        if (props.type === "Teamsheet") {
             console.log("Teamsheet Delete")
-            setDeleteConfirmation( false )
+            setDeleteConfirmation(false)
         } else {
-            setDeleteConfirmation( true )
+            setDeleteConfirmation(true)
         }
     }
 
-    console.log("teamsheetDnd: " + teamsheetDnd)
+    if (teamsheetDnd)
+        console.log("MyDataGrid-Team: " + JSON.stringify(team))
+
     return (
         !loading ? <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
             {/* Use fragment to Keep buttons on same line above grid */}
@@ -470,7 +434,8 @@ const MyDataGrid = ({props}) => {
                 {showPrintPreview ? <TeamsheetReport props={filteredData}/> : null}
                 <div style={{display: "flex", justifyContent: "space-between"}}>
                     <PrintPreviewButton {...props} gridApi={gridApi}/>
-                    {exportType && setExportType && <ImportExport  exportType={exportType} setExportType={setExportType}/> }
+                    {exportType && setExportType &&
+                        <ImportExport exportType={exportType} setExportType={setExportType}/>}
                     <AddButton {...props}/>
                 </div>
             </Fragment>
@@ -503,23 +468,27 @@ const MyDataGrid = ({props}) => {
                 setConfirmation={true}
                 title="Filter By Fixture Date"
                 message="Use Fixture Date Filter to select the teamsheet for a single fixture"
-                type ="Filter"
+                type="Filter"
             />
             {/* Show print preview of Teamsheet */}
             <ReportModal open={modalOpen} onClose={handleCloseModal} data={reportData}/>
 
             {/* Delete Record if confirmation good */}
-            { deleteConfirmation && deleteData(selectedRow, error, props, axiosApi, handleClose) && setDeleteConfirmation(false) }
+            {deleteConfirmation && deleteData(selectedRow, error, props, axiosApi, handleClose) && setDeleteConfirmation(false)}
             {/* Bring up Teamsheet Drag n Drop */}
+
             {teamsheetDnd && (
                 <DndProvider backend={HTML5Backend}>
-                    <TeamsheetDnd team={myTeam} panel={myPanel} subs={mySubs} handleSave={handleTeamsheetSave}
-                                  handleCancel={handleTeamsheetCancel} methods={props.methods}/>
+                    <TeamsheetDnd
+                        myTeam={team}
+                        myPanel={panel}
+                        mySubs={subs}
+                        handleSave={handleTeamsheetSave}
+                        handleCancel={handleTeamsheetCancel}
+                        methods={props.methods}/>
                 </DndProvider>
             )}
         </div> : <p> Loading...</p>
     )
 };
 export default MyDataGrid;
-
-

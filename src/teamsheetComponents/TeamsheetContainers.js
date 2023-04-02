@@ -20,11 +20,13 @@ export const findId = (id, array) => {
 }
 
 const TeamsheetContainer = ({panel, team, subs, onDrop,onDropContainer, handleSave, handleCancel}) => {
-    console.log("Panel-Container: ", JSON.stringify(panel))
+
+    // console.log("Team-Container-Team: "+JSON.stringify(team))
+
     return (
         <Container className="teamsheet-container container-common mx-auto" style={{height: '800px'}}>
             <PanelContainer panel={panel} onDrop={onDrop} onDropContainer={onDropContainer}/>
-            {/*<TeamContainer    team ={team}  onDrop={onDrop} />*/}
+            <TeamContainer team={team} onDrop={onDrop}/>
             {/*<SubsContainer    subs ={subs}  onDrop={onDrop} onDropContainer={onDropContainer}/>*/}
             <ActionContainer handleCancel={handleCancel} handleSave={handleSave}/>
         </Container>
@@ -37,6 +39,7 @@ const PanelContainer = ({ panel, onDrop,onDropContainer }) => {
     let nextRow = 0
     let index = 0;
     let id
+
 
     const handleDragOver = (event) => {
         event.preventDefault();
@@ -90,15 +93,18 @@ const PanelContainer = ({ panel, onDrop,onDropContainer }) => {
 
 const TeamContainer   = ({ team, onDrop}) => {
 
+    console.log("Team-Container: ", JSON.stringify(team))
+
+
     let index = 0
     const keeper = {
         boxY: 0,
         middle: {
             key: 1,
             name: team[index].name,
-            position: index+1,
+            position: index + 1,
             positionName: "Keeper",
-            id: team[ index ].id,
+            id: team[index].id,
         }
     }
     index+=1
@@ -347,10 +353,12 @@ const TeamContainer   = ({ team, onDrop}) => {
     )
 }
 const SubsContainer  = ({ subs, onDrop, onDropContainer }) => {
-    const container="subs"
+    const container = "subs"
     let nextRow = 0
     let index = 0;
     let id
+    console.log("Subs-Container: ", JSON.stringify(subs))
+
 
     const handleDragOver = (event) => {
         event.preventDefault();

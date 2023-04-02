@@ -8,11 +8,15 @@ import { getData, useAxios } from "../api/ApiService";
 
 // export const showList = ( m,v ) => { console.log(m + v.map(m => {return "("+m.key+")(" + m.id + ") "+ m.name + " "}))}
 
-const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, methods}) =>{
+const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, methods}) => {
     const [panel, setPanel] = useState(myPanel);
     const [subs, setSubs] = useState(mySubs);
     const [team, setTeam] = useState(myTeam);
     const [data, error, loading, axiosApi] = useAxios();
+
+    console.log("Teamsheet-DnD-Team: " + JSON.stringify(team))
+
+    console.log("Teamsheet-Dnd-Panel: " + JSON.stringify(panel))
 
     // useEffect(() => {
     //     getData(methods.list, axiosApi, handleCancel)

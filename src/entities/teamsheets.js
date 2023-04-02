@@ -75,14 +75,16 @@ const TEAMSHEET_ADD      = "/teamsheet/add";
 const TEAMSHEET_DELETE   = "/teamsheet/delete/";
 const TEAMSHEET_FINDBYID = "/teamsheet/findById/";
 const TEAMSHEET_LIST     = "/teamsheet/list";
-const TEAMSHEET_UPDATE   = "/teamsheet/update";
+const TEAMSHEET_UPDATE = "/teamsheet/update";
+const TEAMSHEET_LAST = "/teamsheet/last";
 
 export const TEAMSHEET_URLS = {
-    add     : TEAMSHEET_ADD,
-    delete  : TEAMSHEET_DELETE,
+    add: TEAMSHEET_ADD,
+    delete: TEAMSHEET_DELETE,
     findById: TEAMSHEET_FINDBYID,
-    list    : TEAMSHEET_LIST,
-    update  : TEAMSHEET_UPDATE,
+    list: TEAMSHEET_LIST,
+    update: TEAMSHEET_UPDATE,
+    last: TEAMSHEET_LAST,
 }
 
 const apiRequests = {
@@ -94,6 +96,7 @@ const apiRequests = {
     getCompetitions: {method: METHODS.GET, url: COMPETITION_URLS.list},
     getClubs: {method: METHODS.GET, url: CLUB_URLS.list},
     getPlayers: {method: METHODS.GET, url: PLAYER_URLS.list},
+    getLastTeamsheet: {method: METHODS.GET, url: TEAMSHEET_URLS.last},
 }
 
 export const teamsheetData = {
