@@ -10,13 +10,51 @@ import {TEAMSHEET_URLS} from "../entities/teamsheets";
 
 export const Players = () => {
     const players = useAxios2(PLAYER_URLS.list);
-    return players
+    return useMemo(() => players, []);
 }
+export const usePlayers = () => {
+    const players = useAxios2(PLAYER_URLS.list);
+    return players;
+};
+
+
+export const Teamsheets = () => {
+    const teamsheets = useAxios2(TEAMSHEET_URLS.list);
+    return useMemo(() => teamsheets, []);
+}
+
+export const useTeamsheets = () => {
+    const teamsheets = useAxios2(TEAMSHEET_URLS.list);
+    return teamsheets;
+};
 
 export const LastTeamsheet = () => {
     const teamsheets = useAxios2(TEAMSHEET_URLS.last);
     return teamsheets
 }
+
+export const GetTeamsheetByFixtureId = (id) => {
+    const teamsheets = useAxios2(TEAMSHEET_URLS.list)
+    const filtered = teamsheets.filter(t => t.fixture.id === id)
+    return filtered
+}
+
+export const LoadData = () => {
+    const players = useAxios2(PLAYER_URLS.list);
+    const teamsheets = useAxios2(TEAMSHEET_URLS.list)
+    const lastTeamsheet = useAxios2(TEAMSHEET_URLS.last);
+
+    const loadedData = useMemo(() => {
+        return [
+            teamsheets,
+            players,
+            lastTeamsheet,
+        ];
+    }, [teamsheets, players, lastTeamsheet]);
+    return loadedData
+}
+
+
 
 const DropdownData = () => {
     const competition = useAxios2(COMPETITION_URLS.list);
@@ -45,6 +83,7 @@ const DropdownData = () => {
     const statnames = statname ? statname.map(stat => {
         return stat.name
     }) : []
+
     const rounds = Array.from({length: 10}, (_, index) => index + 1);
 
     const dropDownData = useMemo(() => {

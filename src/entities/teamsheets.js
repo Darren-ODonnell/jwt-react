@@ -74,6 +74,7 @@ const gridLoader = (data) => {
 const TEAMSHEET_ADD      = "/teamsheet/add";
 const TEAMSHEET_DELETE   = "/teamsheet/delete/";
 const TEAMSHEET_FINDBYID = "/teamsheet/findById/";
+const TEAMSHEET_FINDBYFIXTUREID = "/teamsheet/findByFixtureId/";
 const TEAMSHEET_LIST     = "/teamsheet/list";
 const TEAMSHEET_UPDATE = "/teamsheet/update";
 const TEAMSHEET_LAST = "/teamsheet/last";
@@ -82,6 +83,7 @@ export const TEAMSHEET_URLS = {
     add: TEAMSHEET_ADD,
     delete: TEAMSHEET_DELETE,
     findById: TEAMSHEET_FINDBYID,
+    findByFixtureId: TEAMSHEET_FINDBYFIXTUREID,
     list: TEAMSHEET_LIST,
     update: TEAMSHEET_UPDATE,
     last: TEAMSHEET_LAST,
@@ -90,6 +92,7 @@ export const TEAMSHEET_URLS = {
 const apiRequests = {
     list: {method: METHODS.GET, url: TEAMSHEET_URLS.list},
     findById: {method: METHODS.GET, url: TEAMSHEET_URLS.findById},
+    findByFixtureIdId: {method: METHODS.GET, url: TEAMSHEET_URLS.findByFixtureId},
     update: {method: METHODS.POST, url: TEAMSHEET_URLS.update},
     add: {method: METHODS.PUT, url: TEAMSHEET_URLS.add},
     delete: {method: METHODS.DELETE, url: TEAMSHEET_URLS.delete},

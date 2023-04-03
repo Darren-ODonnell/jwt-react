@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, Dialog, DialogContent, TextField } from "@mui/material";
 import Box from "./Box";
 import { Container } from 'react-bootstrap';
 import { useDrop } from "react-dnd";
@@ -7,17 +7,22 @@ import './teamsheetContainers.scss'
 // import {showList} from "./TeamsheetDnd";
 
 const boxWidth         = 150
+
 const boxHeight        = 55
 const teamWidth        = 640
 const boxWidthPercent  = boxWidth / teamWidth
+
 const gapWidth4        = (teamWidth - boxWidth * 3) / 4
 const gapWidth3        = (teamWidth - boxWidth * 2) / 3
+
 const gapWidthPercent4 = gapWidth4 / teamWidth
 const gapWidthPercent3 = gapWidth3 / teamWidth
 
 export const findId = (id, array) => {
     return array.findIndex(p => p.id === id)
 }
+
+
 
 const TeamsheetContainer = ({panel, team, subs, onDrop,onDropContainer, handleSave, handleCancel}) => {
 
@@ -27,7 +32,7 @@ const TeamsheetContainer = ({panel, team, subs, onDrop,onDropContainer, handleSa
         <Container className="teamsheet-container container-common mx-auto" style={{height: '800px'}}>
             <PanelContainer panel={panel} onDrop={onDrop} onDropContainer={onDropContainer}/>
             <TeamContainer team={team} onDrop={onDrop}/>
-            {/*<SubsContainer    subs ={subs}  onDrop={onDrop} onDropContainer={onDropContainer}/>*/}
+            <SubsContainer    subs ={subs}  onDrop={onDrop} onDropContainer={onDropContainer}/>
             <ActionContainer handleCancel={handleCancel} handleSave={handleSave}/>
         </Container>
     )

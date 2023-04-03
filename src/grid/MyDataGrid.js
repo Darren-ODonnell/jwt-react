@@ -1,10 +1,10 @@
-import React, {useEffect, useState, useRef, Fragment, useCallback} from 'react';
+import React, { useEffect, useState, useRef, Fragment, useCallback, useMemo } from 'react';
 import {AgGridReact} from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'ag-grid-community/styles/ag-theme-balham.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
-import { Button, FormControl, Grid, MenuItem, Select } from "@mui/material";
+import { Button, Dialog, DialogContent, FormControl, Grid, MenuItem, Select } from "@mui/material";
 import { defaultColDef, refreshPage } from "../common/helper";
 import { deleteData, getData, useAxios, useAxios2 } from "../api/ApiService";
 import {Position} from '../entities/positions'
@@ -21,7 +21,15 @@ import TeamsheetDnd from "../teamsheetComponents/TeamsheetDnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import {DndProvider} from "react-dnd";
 import {PLAYER_URLS, playerData} from "../entities/players";
-import DropDownData, {LastTeamsheet, Players} from "../common/DropDownData";
+import'../App.css'
+
+import DropDownData, {
+    GetTeamsheetByFixtureId,
+    LastTeamsheet, LoadData,
+    Players,
+    Teamsheets, usePlayers,
+    useTeamsheets
+} from "../common/DropDownData";
 import AuthService from "../auth/AuthService";
 import instance from "../api/axios";
 import {v4} from 'uuid'
@@ -122,8 +130,11 @@ const MyDataGrid = ({props}) => {
     const [panel, setPanel] = useState()
     const [team, setTeam] = useState()
     const [subs, setSubs] = useState()
-    const lastTeamsheet = LastTeamsheet()
-    const players = Players();
+    const [teamsheets, players, lastTeamsheet] = LoadData();
+    // const players = usePlayers()
+    // const teamsheets = useTeamsheets()
+    // const lastTeamsheet = LastTeamsheet()
+
 
     const theme = useTheme();
 
@@ -205,9 +216,9 @@ const MyDataGrid = ({props}) => {
             > Edit </Button>
         )
     }
-    const handleEdit = useCallback(() => {
+    const handleEdit = useCallback((params) => {
         if(props.type==="Teamsheet") {
-            prepareTeamsheetDnd("Edit")
+            prepareTeamsheetDnd("Edit", params.data.id.fixtureId)
         } else {
             getSelectedRow();
             handleOpen();
@@ -239,11 +250,12 @@ const MyDataGrid = ({props}) => {
             setShowDeleteModal( true )
         }
     }
-    const prepareTeamsheetDnd = (action) => {
+    const prepareTeamsheetDnd = (action,id) => {
         // create team subs and updated panel
+
         const newTeam = (action === "Add")
             ? lastTeamsheet
-            : filteredData
+            : teamsheets.filter(t => t.id.fixtureId === id)
 
         let newSubs = newTeam.filter(s => s.position.id > 15)
 
@@ -378,6 +390,7 @@ const MyDataGrid = ({props}) => {
     // render parameters
     const commonParams = {}
     const gridParams = {
+
         ref: gridRef,
         gridApi: gridApi,
         onGridReady: onGridReady,
@@ -441,7 +454,7 @@ const MyDataGrid = ({props}) => {
             </Fragment>
 
             {/* Show Grid - always shown*/}
-            <AgGridReact  {...commonParams} {...gridParams}  />
+            <AgGridReact  {...commonParams} {...gridParams} style={{zIndex:1}} />
 
             {/* Show pagination button below grid */}
             <PaginationButton/>
@@ -478,17 +491,32 @@ const MyDataGrid = ({props}) => {
             {/* Bring up Teamsheet Drag n Drop */}
 
             {teamsheetDnd && (
-                <DndProvider backend={HTML5Backend}>
-                    <TeamsheetDnd
-                        myTeam={team}
-                        myPanel={panel}
-                        mySubs={subs}
-                        handleSave={handleTeamsheetSave}
-                        handleCancel={handleTeamsheetCancel}
-                        methods={props.methods}/>
-                </DndProvider>
+                <Dialog open={teamsheetDnd} onClose={handleTeamsheetCancel} maxWidth="lg" fullWidth>
+                    <DialogContent style={dialogContentStyle}>
+                        <DndProvider backend={HTML5Backend}>
+                            <TeamsheetDnd
+                                myTeam={team}
+                                myPanel={panel}
+                                mySubs={subs}
+                                handleSave={handleTeamsheetSave}
+                                handleCancel={handleTeamsheetCancel}
+                                methods={props.methods}/>
+                                teamsheetDnd={teamsheetDnd}
+                        </DndProvider>
+                    </DialogContent>
+                </Dialog>
             )}
         </div> : <p> Loading...</p>
     )
 };
 export default MyDataGrid;
+
+const dialogContentStyle = {
+    width: '1000px',
+    height: '800px',
+    overflow: 'hidden',
+    padding: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+};

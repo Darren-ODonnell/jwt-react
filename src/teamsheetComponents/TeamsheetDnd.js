@@ -327,7 +327,7 @@ const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, method
     <div className="App">
         <DndProvider backend={HTML5Backend}>
             <TeamsheetContainer panel={panel} team={team} subs={subs} onDrop={onDrop} onDropContainer={onDropContainer}
-                                handleSave={handleSave} handleCancel={handleCancel}/>
+                                handleSave={handleSave} handleCancel={handleCancel} />
         </DndProvider>
     </div>
   );
