@@ -36,56 +36,28 @@
         transform: rotate(360deg);
     }
 }
-/*.scrollbar-auto {*/
-/*    scrollbar-width: auto;*/
-/*    background-color: lightgreen;*/
-/*    height: 50px;*/
-/*    width: 200px;*/
-/*    overflow-y: scroll;*/
-/*    overflow-x: scroll;*/
-/*}*/
-
-.teamsheet-modal {
-    width: 1000px;
-    height: 800px;
-    overflow: hidden;
-    text-align: center;
-    padding: 0 !important;
-    display: flex; /* Add this line */
-    /*justify-content: center; !* Add this line *!*/
-    /*align-items: center; !* Add this line *!*/
-}
 
 
-body .teamsheet-modal {
-    width: 800px !important;
-}
-.dialogcontent {
-    width: 100%; /* Adjust the width of the dialogcontent to match the container */
-    box-sizing: border-box; /* Include padding and border in the element's dimensions */
-}
-
-
-/* Hide scrollbar for Chrome, Safari, and Opera */
-.teamsheet-modal::-webkit-scrollbar {
-    display: none;
-}
-
-/* Hide scrollbar for Firefox */
-.teamsheet-modal {
-    scrollbar-width: none;
-}
-
-/* Hide scrollbar for Internet Explorer and Edge */
-.teamsheet-modal {
-    -ms-overflow-style: none;
-}
 .custom-dialog-content {
+    /*width: 1000px;*/
+    /*height: 800px;*/
+    /*overflow: hidden !important;*/
+    /*padding: 0 !important;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+}
+
+.dialog-content-style {
     width: 1000px;
-    height: 800px;
-    overflow: hidden !important;
-    padding: 0 !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 1000px;
+    overflow-y: hidden;
+    padding: 0;
+    /*display: flex;*/
+    /*justifyContent: center;*/
+    /*alignItems: center;*/
+}
+
+body {
+    margin: 0;
 }

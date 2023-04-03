@@ -75,20 +75,19 @@ const PanelContainer = ({ panel, onDrop,onDropContainer }) => {
                 {panel.map((member, index) => {
                     const top = nextRow;
                     nextRow += 60; // Increment nextRow by 60 for the next iteration
-                    console.log("Index: " + index + ", id: " + member.id + ", name: " + member.name)
                     return (
                         <Box
                             index={index}
                             key={index}
                             id={member.id}
-                        player  = {member}
-                        width   = {150}
-                        height  = {50}
-                        x       = {0}
-                        y       = {top}
-                        onDrop  = {onDrop}
-                        style   = {{marginLeft : "5px"}}
-                    />
+                            player={member}
+                            width={150}
+                            height={50}
+                            x={0}
+                            y={top}
+                            onDrop={onDrop}
+                            style={{marginLeft: "5px"}}
+                        />
                 )
             })}
         </Container>
@@ -106,7 +105,8 @@ const TeamContainer   = ({ team, onDrop}) => {
         boxY: 0,
         middle: {
             key: 1,
-            name: team[index].name,
+            name: team[index].player.firstname + " " + team[index].player.lastname,
+            // name: team[index].name,
             position: index + 1,
             positionName: "Keeper",
             id: team[index].id,
@@ -117,24 +117,27 @@ const TeamContainer   = ({ team, onDrop}) => {
         boxY : boxHeight*2,
         left: {
             key: 2,
-            name: team[ index ].name,
-            position: index+1,
+            name: team[index].player.firstname + " " + team[index].player.lastname,
+            // name: team[ index ].name,
+            position: index + 1,
             positionName: "Left Back",
-            id: team[ index ].id,
+            id: team[index].id,
         },
         middle: {
             key: 3,
-            name: team[ index+1 ].name,
-            position: index+2,
+            name: team[index + 1].player.firstname + " " + team[index + 1].player.lastname,
+            // name: team[ index+1 ].name,
+            position: index + 2,
             positionName: "Full Back",
-            id: team[ index+1 ].id,
+            id: team[index + 1].id,
         },
         right: {
             key: 4,
-            name: team[ index+2 ].name,
-            position: index+3,
+            name: team[index + 2].player.firstname + " " + team[index + 2].player.lastname,
+            // name: team[ index+2 ].name,
+            position: index + 3,
             positionName: "Right Back",
-            id: team[ index+2 ].id,
+            id: team[index + 2].id,
         },
     }
     index +=3
@@ -142,24 +145,27 @@ const TeamContainer   = ({ team, onDrop}) => {
         boxY : boxHeight*4,
         left              : {
             key: 5,
-            id            : team[ index ].id,
-            name          : team[ index ].name,
-            position: index+1,
-            positionName  : "Left Half Back",
+            id: team[index].id,
+            name: team[index].firstname + " " + team[index].lastname,
+            // name          : team[ index ].name,
+            position: index + 1,
+            positionName: "Left Half Back",
         },
         middle            : {
             key: 6,
-            id            : team[ index+1 ].id,
-            name          : team[ index+1 ].name,
-            position: index+2,
-            positionName  : "Centre Back",
+            id: team[index + 1].id,
+            name: team[index + 1].firstname + " " + team[index + 1].lastname,
+            // name          : team[ index+1 ].name,
+            position: index + 2,
+            positionName: "Centre Back",
         },
         right             : {
             key: 7,
-            id            : team[ index+2 ].id,
-            name          : team[ index+2 ].name,
-            position: index+3,
-            positionName  : "Right Half Back",
+            id: team[index + 2].id,
+            name: team[index + 2].firstname + " " + team[index + 2].lastname,
+            // name          : team[ index+2 ].name,
+            position: index + 3,
+            positionName: "Right Half Back",
         },
     }
     index+=3
@@ -167,17 +173,19 @@ const TeamContainer   = ({ team, onDrop}) => {
         boxY : boxHeight*6,
         left: {
             key: 8,
-            id            : team[ index ].id,
-            name          : team[ index ].name,
-            position      : index+1,
-            positionName  : "Left Midfield",
+            id: team[index].id,
+            name: team[index].firstname + " " + team[index].lastname,
+            // name          : team[ index ].name,
+            position: index + 1,
+            positionName: "Left Midfield",
         },
         right: {
             key: 9,
-            id            : team[ index+1 ].id,
-            name          : team[ index+1 ].name,
-            position      : index+2,
-            positionName  : "Right Midfield",
+            id: team[index + 1].id,
+            name: team[index + 1].firstname + " " + team[index + 1].lastname,
+            // name          : team[ index+1 ].name,
+            position: index + 2,
+            positionName: "Right Midfield",
 
         },
     }
@@ -186,24 +194,27 @@ const TeamContainer   = ({ team, onDrop}) => {
         boxY : boxHeight*8,
         left              : {
             key: 10,
-            id            : team[ index ].id,
-            name          : team[ index ].name,
-            position: index+1,
-            positionName  : "Left Half Forward",
+            id: team[index].id,
+            name: team[index].firstname + " " + team[index].lastname,
+            // name          : team[ index ].name,
+            position: index + 1,
+            positionName: "Left Half Forward",
         },
         middle            : {
             key: 11,
-            id            : team[ index+1 ].id,
-            name          : team[ index+1 ].name,
-            position: index+2,
-            positionName  : "Centre Forward",
+            id: team[index + 1].id,
+            name: team[index + 1].firstname + " " + team[index + 1].lastname,
+            // name          : team[ index+1 ].name,
+            position: index + 2,
+            positionName: "Centre Forward",
         },
         right             : {
             key: 12,
-            id            : team[ index+2 ].id,
-            name          : team[ index+2 ].name,
-            position: index+3,
-            positionName  : "Right Half Forward",
+            id: team[index + 2].id,
+            name: team[index + 2].firstname + " " + team[index + 2].lastname,
+            // name          : team[ index+2 ].name,
+            position: index + 3,
+            positionName: "Right Half Forward",
         },
     }
     index+=3
@@ -211,24 +222,27 @@ const TeamContainer   = ({ team, onDrop}) => {
         boxY : boxHeight*10,
         left              : {
             key: 13,
-            id            : team[ index ].id,
-            name          : team[ index ].name,
-            position: index+1,
-            positionName  : "Left Full Forward",
+            id: team[index].id,
+            name: team[index].firstname + " " + team[index].lastname,
+            // name          : team[ index ].name,
+            position: index + 1,
+            positionName: "Left Full Forward",
         },
         middle            : {
             key: 14,
-            id            : team[ index+1 ].id,
-            name          : team[ index+1 ].name,
-            position: index+2,
-            positionName  : "Full Forward",
+            id: team[index + 1].id,
+            name: team[index + 1].firstname + " " + team[index + 1].lastname,
+            // name          : team[ index+1 ].name,
+            position: index + 2,
+            positionName: "Full Forward",
         },
         right             : {
             key: 15,
-            id            : team[ index+2 ].id,
-            name          : team[ index+2 ].name,
-            position: index+3,
-            positionName  : "Right Full Forward",
+            id: team[index + 2].id,
+            name: team[index + 2].firstname + " " + team[index + 2].lastname,
+            // name          : team[ index+2 ].name,
+            position: index + 3,
+            positionName: "Right Full Forward",
         },
     }
 

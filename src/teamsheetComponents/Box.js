@@ -84,7 +84,7 @@ const Box = ({ index, id, player, width, height, x, y, onDrop, style }) => {
         marginLeft     : '5px',
         ...style,
     };
-
+    console.log("BOX: " + player.firstname + " " + player.lastname)
     return (
         <div className="box" >
             <BoxWrapper
@@ -94,7 +94,7 @@ const Box = ({ index, id, player, width, height, x, y, onDrop, style }) => {
                 isOver={isOver}
                 onClick={() => handleClick(id)}
             >
-                {player.name}
+                {player.firstname + " " + player.lastname}
             </BoxWrapper>
         </div>
     );

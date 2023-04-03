@@ -14,9 +14,9 @@ const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, method
     const [team, setTeam] = useState(myTeam);
     const [data, error, loading, axiosApi] = useAxios();
 
-    console.log("Teamsheet-DnD-Team: " + JSON.stringify(team))
+    // console.log("Teamsheet-DnD-Team: " + JSON.stringify(team))
 
-    console.log("Teamsheet-Dnd-Panel: " + JSON.stringify(panel))
+    // console.log("Teamsheet-Dnd-Panel: " + JSON.stringify(panel))
 
     // useEffect(() => {
     //     getData(methods.list, axiosApi, handleCancel)

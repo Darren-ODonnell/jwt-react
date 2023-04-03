@@ -2,9 +2,12 @@
     width: 1000px !important;
     height: 800px;
     background-color: lightblue;
+    margin: 0;
+    padding: 0;
     position: absolute;
     // start 1% top top
-    //top: 1%;
+    top: 1%;
+    bottom: 1%;
     // center of display
     left: 50%;
     transform: translate(-50%, 0%);
@@ -97,16 +100,17 @@
     background-color: mediumpurple;
     border          : 1px solid green;
     overflow        : auto;
-    display         : flex;
-    position        : absolute;
+    display: flex;
+    position: absolute;
     font-family: Arial, Helvetica, sans-serif;
-    bottom     : 0;
-    width      : 63% !important;
-    height     : 10%;
-    left : 19%;
+    bottom: 0;
+    width: 63% !important;
+    height: 10%;
+    left: 19%;
     right: 19%;
-    max-height : 10%;
-    max-width  : 63%;
+    max-height: 10%;
+    max-width: 63%;
+    justify-content: center;
 }
 .btn {
     width           : 150px;

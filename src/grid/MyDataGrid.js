@@ -267,9 +267,9 @@ const MyDataGrid = ({props}) => {
         setTeamsheetDnd(true)
     }
 
-    useEffect(() => {
-        console.log("Team: " + JSON.stringify(team))
-    }, [team])
+    // useEffect(() => {
+    // console.log("Team: " + JSON.stringify(team))
+    // }, [team])
 
 
     // Add Button
@@ -437,8 +437,12 @@ const MyDataGrid = ({props}) => {
         }
     }
 
-    if (teamsheetDnd)
-        console.log("MyDataGrid-Team: " + JSON.stringify(team))
+    const dialogPaperStyle = {
+        maxWidth: '1600px',
+    };
+
+    // if (teamsheetDnd)
+    // console.log("MyDataGrid-Team: " + JSON.stringify(team))
 
     return (
         !loading ? <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
@@ -490,7 +494,8 @@ const MyDataGrid = ({props}) => {
             {deleteConfirmation && deleteData(selectedRow, error, props, axiosApi, handleClose) && setDeleteConfirmation(false)}
             {/* Bring up Teamsheet Drag n Drop */}
 
-            {teamsheetDnd && (
+
+            {(
                 <Dialog open={teamsheetDnd} onClose={handleTeamsheetCancel} maxWidth="lg" fullWidth>
                     <DialogContent style={dialogContentStyle}>
                         <DndProvider backend={HTML5Backend}>
@@ -500,8 +505,8 @@ const MyDataGrid = ({props}) => {
                                 mySubs={subs}
                                 handleSave={handleTeamsheetSave}
                                 handleCancel={handleTeamsheetCancel}
-                                methods={props.methods}/>
-                                teamsheetDnd={teamsheetDnd}
+                                methods={props.methods}
+                                teamsheetDnd={teamsheetDnd}/>
                         </DndProvider>
                     </DialogContent>
                 </Dialog>
@@ -512,11 +517,10 @@ const MyDataGrid = ({props}) => {
 export default MyDataGrid;
 
 const dialogContentStyle = {
-    width: '1000px',
-    height: '800px',
+    width: 'auto',
+    height: '820px',
     overflow: 'hidden',
     padding: 0,
-    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
 };
