@@ -50,13 +50,16 @@ const Export = ({exportType, setExportType, gridApi }) => {
     const exportExcel =  (columnsToInclude, gridApi) => {
 
         const params = {
-            // suppressQuotes: true,
-            fileName: 'data.xlsx',
-            sheetName: 'Sheet1',
-            columnKeys: columnsToInclude.map( ( column ) => column.getColId() ),
-                    };
-
-        gridApi.exportDataAsExcel( params );
+            suppressQuotes: true,
+            fileName: 'data.csv',
+            columnSeparator: ',',
+            columnKeys: columnsToInclude.map((column) => column.getColId()),
+            processCellCallback: (params) => {
+                return params.value;
+            },
+        };
+        const csvData = gridApi.getDataAsCsv(params);
+        downloadExcelFromCSV(csvData,)
 
     }
 
@@ -96,12 +99,26 @@ const Export = ({exportType, setExportType, gridApi }) => {
         )
     }
     return (
-        <div style={{ marginBottom: '10px' }}>
+        <div style={{marginBottom: '10px'}}>
             <ExportDropDown/>
             <ExportActionButton/>
         </div>
     );
 }
+
+function downloadExcelFromCSV(csv, filename) {
+    // Convert CSV string to an array of arrays
+    const data = csv.split('\n').map(row => row.split(','));
+
+    // Create a new workbook and add a new sheet with the data
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.aoa_to_sheet(data);
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+    // Export the workbook to XLSX format and trigger the download
+    XLSX.writeFile(workbook, filename);
+}
+
 
 export default Export;
 
