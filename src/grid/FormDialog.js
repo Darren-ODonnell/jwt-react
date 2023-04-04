@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import './FormDialog.css'
 import '../formcomponents/textfield.css'
 
 import MyTextField from "../formcomponents/MyTextField";
-import {getSeasons, refreshPage} from "../common/helper";
+import { getSeasons, handleClickAway, refreshPage } from "../common/helper";
 import AuthService from "../auth/AuthService";
 import instance from "../api/axios";
 import {ErrorMessage} from "../common/ErrorMessage";
@@ -187,6 +187,7 @@ const FormDialog = ({
             onClose={() => onClose(false)}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
+            onClose={handleClickAway}
         >
             <DialogTitle id="alert-dialog-title"> {formValues.id ? messages.update : messages.create}</DialogTitle>
             <DialogContent>

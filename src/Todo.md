@@ -57,7 +57,7 @@ and then set data = {data built}
     C11l: Create dropdown for playing time - allowing only minutes to be entered between 1 and 60.
  
 
-    C15: Add Import/Export capability
+    C15: Add Export capability
     C16: 
     C17: 
 

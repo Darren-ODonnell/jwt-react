@@ -15,6 +15,11 @@ export function getUniqueId(): string {
     return id++ + '';
 }
 
+// ignore when users click away from modal
+export const handleClickAway = () => {
+    return
+}
+
 export function getSeasons() { return [new Date().getFullYear()-1, new Date().getFullYear(), new Date().getFullYear()+1] }
 
 export const addMessage = (  entityName ) => {
