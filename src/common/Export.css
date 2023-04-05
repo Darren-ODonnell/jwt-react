@@ -19,6 +19,6 @@
 
 .export-button:hover {
     color: var(--primary-text-color);
-    background-color: #007bff;
+    background-color: green !important;
 }
 

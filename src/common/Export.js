@@ -4,18 +4,15 @@ import { useTheme } from "@mui/material/styles";
 import './Export.css'
 import * as FileSaver from 'file-saver'
 import * as XLSX from "xlsx";
-import { ModuleRegistry } from 'ag-grid-community/core';
-import { ExcelExportModule } from 'ag-grid-community/excel-export';
+
 
 const Export = ({exportType, setExportType, gridApi }) => {
 
     const [exportFormat, setExportFormat] = useState(exportType)
     const theme = useTheme()
 
-    const handleExport = ( exportType ) => {
+    const handleExport = async ( exportType ) => {
         const columnApi = gridApi.gridOptionsService.columnApi
-
-
         if ( gridApi && columnApi ) {
             // Get an array of all displayed columns in the grid
             const displayedColumns = columnApi.getAllDisplayedColumns();
@@ -29,41 +26,55 @@ const Export = ({exportType, setExportType, gridApi }) => {
                 : exportExcel( columnsToInclude, gridApi)
         }
     }
-    const exportCSV = ( columnsToInclude, gridApi ) => {
+    const exportCSV = async ( columnsToInclude, gridApi ) => {
 
+        // params for csv conversion
         const params = {
             suppressQuotes: true,
-            fileName: 'data.csv',
             columnSeparator: ',',
             columnKeys: columnsToInclude.map( ( column ) => column.getColId() ),
-            processCellCallback: (params) => {
+            processCellCallback: ( params ) => {
                 return params.value;
             },
         };
 
         const csvData = gridApi.getDataAsCsv( params );
-        const blob = new Blob( [ csvData ], { type: "text/csv;charset=utf-8" } );
-        FileSaver.saveAs( blob, params.filename );
+        const csvFile = new Blob( [ csvData ], { type: "text/csv;charset=utf-8" } );
 
+        // get filename from user
+        const options = { types: [ { description: 'CSV File', accept: { 'text/plain': [ '.csv' ] }, } ], }
+        const fileHandle = await window.showSaveFilePicker( options );
+
+        // save to csv
+        FileSaver.saveAs( csvFile, fileHandle.name );
     }
 
-    const exportExcel =  (columnsToInclude, gridApi) => {
+    const exportExcel =  async (columnsToInclude, gridApi) => {
 
+        // params for
         const params = {
             suppressQuotes: true,
-            fileName: 'data.csv',
             columnSeparator: ',',
             columnKeys: columnsToInclude.map((column) => column.getColId()),
             processCellCallback: (params) => {
                 return params.value;
             },
         };
+        // convert to csv first
         const csvData = gridApi.getDataAsCsv(params);
-        downloadExcelFromCSV(csvData,)
+
+
+        // get filename from user
+        const options = { types: [
+            { description: 'Excel Workbook', accept: { 'text/plain': [ '.xlsx' ] }, },
+            { description: 'XML Data'      , accept: { 'text/plain': [ '.xml'  ] }, }, ],
+        };
+        const fileHandle = await window.showSaveFilePicker( options );
+
+        // now convert and save to excel
+        downloadExcelFromCSV(csvData, fileHandle.name)
 
     }
-
-
 
     const ExportDropDown = () => {
         // console.log("Export Page - dropdown")
@@ -71,12 +82,12 @@ const Export = ({exportType, setExportType, gridApi }) => {
             <>
                 <FormControl variant="outlined" color="primary">
                     <Select  value={ exportType } defaultValue={exportType}
-                            onChange={ ( event ) => setExportType(event.target.value) }
-                            sx={{
-                                background: theme.palette.primary.main,
-                                color: theme.palette.primary.contrastText,
-                                height: 38
-                            }}
+                        onChange={ ( event ) => setExportType(event.target.value) }
+                        sx={{
+                            background: theme.palette.primary.main,
+                            color: theme.palette.primary.contrastText,
+                            height: 38
+                        }}
                     >
                         <MenuItem value="CSV">CSV</MenuItem>
                         <MenuItem value="Excel">Excel</MenuItem>
@@ -106,17 +117,18 @@ const Export = ({exportType, setExportType, gridApi }) => {
     );
 }
 
-function downloadExcelFromCSV(csv, filename) {
+function downloadExcelFromCSV( csv, filename ) {
+    // the community version of aggrid does not have an ExportDataAsExcel function - this is reserved for the Enterprise version
     // Convert CSV string to an array of arrays
-    const data = csv.split('\n').map(row => row.split(','));
+    const data = csv.split( '\n' ).map( row => row.split( ',' ) );
 
-    // Create a new workbook and add a new sheet with the data
+    // Create a new workbook and add a new sheet and add the data
     const workbook = XLSX.utils.book_new();
-    const worksheet = XLSX.utils.aoa_to_sheet(data);
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    const worksheet = XLSX.utils.aoa_to_sheet( data );
+    XLSX.utils.book_append_sheet( workbook, worksheet, 'Sheet1' );
 
     // Export the workbook to XLSX format and trigger the download
-    XLSX.writeFile(workbook, filename);
+    XLSX.writeFile( workbook, filename );
 }
 
 
