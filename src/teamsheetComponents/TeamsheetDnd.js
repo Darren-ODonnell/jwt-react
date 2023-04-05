@@ -25,15 +25,15 @@ const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, method
 
     const findPlayer = (id) => {
         const idx1 = panel.findIndex(p => p.id === id)
-        const idx2 = subs.findIndex(p => p.id === id)
-        const idx3 = team.findIndex(p => p.id === id)
+        const idx2 = subs.findIndex(p => p.player.id === id)
+        const idx3 = team.findIndex(p => p.player.id === id)
 
         if (idx1 >= 0) {
             console.log("id: " + id + " | Found in Panel at index: " + idx1)
             return [idx1, setPanel, panel[idx1], 'panel', panel];
         }
         if (idx2 >= 0) {
-            console.log("id: "+id+" | Found in Subs at index: "+idx2)
+            console.log("id: " + id + " | Found in Subs at index: " + idx2)
             return [idx2, setSubs, subs[idx2], 'subs', subs];
         }
         if (idx3 >= 0) {

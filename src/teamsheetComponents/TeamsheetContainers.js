@@ -22,12 +22,9 @@ export const findId = (id, array) => {
     return array.findIndex(p => p.id === id)
 }
 
-
-
 const TeamsheetContainer = ({panel, team, subs, onDrop,onDropContainer, handleSave, handleCancel}) => {
 
     // console.log("Team-Container-Team: "+JSON.stringify(team))
-
 
     return (
         <Container className="teamsheet-container container-common mx-auto" style={{height: '800px'}}>

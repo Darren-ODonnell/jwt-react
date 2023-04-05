@@ -200,9 +200,10 @@ const MyDataGrid = ({props}) => {
 
         // subs are numbered 16 and higher
         const newSubs = newTeam.filter(s => s.position.id > 15)
+        const filteredTeam = newTeam.filter(s => s.position.id <= 15)
 
         setPanel(playersNotOnTeamSorted)
-        setTeam(newTeam)
+        setTeam(filteredTeam)
         setSubs(newSubs)
         setTeamsheetDnd(true)
     }
