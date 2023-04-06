@@ -61,53 +61,53 @@ const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, method
     const swapPositions = (sourceIdx, destIdx, setSource, setDest, sourceId, destId, source2, dest2) => {
 
         // showList("Panel: " , panel)
-        const idxS1 = panel.findIndex(p=>p.id === sourceId)
-        const idxS2 = subs.findIndex(p=>p.id === sourceId)
-        const idxS3 = team.findIndex(p=>p.id === sourceId)
+        const idxS1 = panel.findIndex(p=>p.id === sourceId.playerId)
+        const idxS2 = subs.findIndex(p=>p.player.id === sourceId.playerId)
+        const idxS3 = team.findIndex(p=>p.player.id === sourceId.playerId)
 
         const idxD1 = panel.findIndex(p=>p.id === destId)
-        const idxD2 = subs.findIndex(p=>p.id === destId)
-        const idxD3 = team.findIndex(p=>p.id === destId)
+        const idxD2 = subs.findIndex(p=>p.player.id === destId)
+        const idxD3 = team.findIndex(p=>p.player.id === destId)
 
         const source = idxS1 >= 0 ? panel : (idxS2 >= 0 ? subs : team)
         const dest = idxD1 >= 0 ? panel : (idxD2 >= 0 ? subs : team)
 
-        let sourcePlayer = {...source[sourceIdx]};
-        const tempSource = { ...sourcePlayer };
-        let destPlayer = {...dest[destIdx]};
-        const tempDest = { ...destPlayer };
+        let sourcePlayer = {...source[sourceIdx].player};
+        let destPlayer = {...dest[destIdx].player};
 
-        // don't copy players onto same container
-        if(sourcePlayer.name === destPlayer.name) return
+        // ignore attempt to move a empty box to another location
+        if(sourcePlayer.id=-1) return
+
+        // don't copy players onto same player
+        if(sourcePlayer.id === destPlayer.id) return
 
         // showList("Source: " , source)
 
-        console.log("SourceIdx: " +sourceIdx+ " SourceId: " + sourceId)
+        console.log("SourceIdx: " +sourceIdx+ " SourceId: " + sourceId.playerId)
         console.log("DestIdx: " +destIdx+ " DestId: " + destId)
-
-        sourcePlayer.key          = destPlayer.key;
-        sourcePlayer.id           = destPlayer.id;
-        sourcePlayer.position     = destPlayer.position;
-        sourcePlayer.positionName = destPlayer.positionName;
-        sourcePlayer.name         = destPlayer.name;
-
-        // copy data from sourcePlayer to destPlayer
-        destPlayer.key            = tempSource.key;
-        destPlayer.id             = tempSource.id;
-        destPlayer.position       = tempSource.position;
-        destPlayer.positionName   = tempSource.positionName;
-        destPlayer.name           = tempSource.name;
 
         // create copies of the source and dest arrays to avoid modifying them directly
         const newSource = [...source];
+        const newDest = [...source];
 
-        // swap the players in their respective arrays
-        newSource[sourceIdx] = tempDest;
-        newSource[destIdx] = tempSource;
 
-        // update the state with the new arrays
-        // showList("NewSource: " , newSource)
-        setSource(newSource);
+
+
+
+        if(source === dest) {
+            // swap the players in their respective arrays
+            newSource[sourceIdx].player = {...destPlayer}
+            newSource[destIdx].player = {...sourcePlayer}
+
+            // update the state with the new array
+            setSource(newSource);
+        } else {
+            newSource[sourceIdx].player = {...destPlayer}
+            newDest[destIdx].player = {...sourcePlayer}
+            // update the state with the new arrays
+            setSource([...newSource]);
+            setDest([...newDest]);
+        }
     };
 
     const resetPlayer = (player,source) => {
@@ -234,6 +234,11 @@ const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, method
         });
     };
     // Team-Panel or Team-Subs
+
+    const removePlayer = ( sourceIdx,destIdx, setSource,setDest, sourceId,destId, source,dest) => {
+
+    }
+
     const moveTeamPlayer = ( sourceIdx,destIdx, setSource,setDest, sourceId,destId, source,dest) => {
 
         // don't copy if already exists in this list
@@ -281,7 +286,7 @@ const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, method
         if (source === dest) return
 
         // don't move around empty objects
-        if (source[sourceIdx].name === undefined || source[sourceIdx].name === "") return
+        if (checkPlayer(source[sourceIdx]) === undefined) return
 
         if(container==="panel") {
             moveTeamPlayer( sourceIdx,-1, setSource,setPanel, droppedBoxId,-1, source,panel)
@@ -291,6 +296,21 @@ const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, method
         }
 
     }
+
+    const checkPlayer = (source) => {
+        let name = undefined
+        name = source.player
+
+        if(source.player) {
+            name = source.player.firstname
+        } else if(source.firstname) {
+            name = source.firstname
+        }
+
+        return name
+    }
+
+
     // process drop onto player rather than into a container
     const onDrop = (box , destId, item , sourceIndex)  => {
         const sourceId = item.player.id
@@ -301,25 +321,25 @@ const TeamsheetDnd = ({myTeam, myPanel, mySubs, handleSave, handleCancel, method
         let dest     = destType   === 'panel' ? panel: (destType   === 'subs' ? subs: team);
 
         // don't move around empty objects
-        if (sourcePlayer.name === undefined || sourcePlayer.name === "") return
+        if (checkPlayer(source[sourceIdx]) === undefined) return
 
         console.log('dest:', dest);
         console.log('dest2:', dest2);
 
         if (dest === subs) {
-            if (source === panel) movePlayer(    sourceIdx,destIdx,   setPanel,setSubs,  sourcePlayer.id,destId, panel,subs )
-            if (source === subs)  swapPositions( sourceIndex,destIdx, setSubs,setSubs,   sourcePlayer.id,destId, subs, subs  )
-            if (source === team)  moveTeamPlayer(sourceIdx,destIdx,   setTeam,setSubs,   sourcePlayer.id,destId, team, subs  )
+            if (source === panel) removePlayer( sourceIdx,destIdx,   setPanel,setSubs,  sourcePlayer.id,destId, panel,subs )
+            if (source === subs)  swapPositions(sourceIndex,destIdx, setSubs,setSubs,   sourcePlayer.id,destId, subs, subs  )
+            if (source === team)  swapPositions(sourceIdx,destIdx,   setTeam,setSubs,   sourcePlayer.id,destId, team, subs  )
 
         } else if (dest === panel) {
-            if (source === panel) swapPositions( sourceIndex,destIdx, setPanel,setPanel, sourcePlayer.id,destId, panel,panel )
-            if (source === subs)  movePlayer(    sourceIdx,destIdx,   setSubs,setPanel,  sourcePlayer.id,destId, subs, panel )
-            if (source === team)  moveTeamPlayer(sourceIdx,destIdx,   setTeam,setPanel,  sourcePlayer.id,destId, team, panel )
+            if (source === panel) movePlayer( sourceIndex,destIdx,   setPanel,setPanel, sourcePlayer.id,destId, panel,panel )
+            if (source === subs)  swapPlayers(sourceIdx,destIdx,     setSubs,setPanel,  sourcePlayer.id,destId, subs, panel )
+            if (source === team)  swapPlayers(sourceIdx,destIdx,     setTeam,setPanel,  sourcePlayer.id,destId, team, panel )
 
         } else if (dest === team) {
-            if (source === panel) swapPlayers(   sourceIdx,destIdx,   setPanel,setTeam,  sourcePlayer.id,destId, panel,team  )
-            if (source === subs)  swapPlayers(   sourceIdx,destIdx,   setSubs,setTeam,   sourcePlayer.id,destId, subs, team  )
-            if (source === team)  swapPositions( sourceIdx,destIdx,   setTeam,setTeam,   sourcePlayer.id,destId, team, team  )
+            if (source === panel) removePlayer(  sourceIdx,destIdx,  setPanel,setTeam,  sourcePlayer.id,destId, panel,team  )
+            if (source === subs)  swapPositions( sourceIdx,destIdx,  setSubs,setTeam,   sourcePlayer.id,destId, subs, team  )
+            if (source === team)  swapPositions( sourceIdx,destIdx,  setTeam,setTeam,   sourcePlayer.id,destId, team, team  )
         }
     }
     console.log("Just before TeamsheetContainer")

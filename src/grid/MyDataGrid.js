@@ -69,11 +69,7 @@ const MyDataGrid = ({props}) => {
     const [panel, setPanel] = useState()
     const [team, setTeam] = useState()
     const [subs, setSubs] = useState()
-    const [teamsheets, players, lastTeamsheet] = LoadData();
-    // const players = usePlayers()
-    // const teamsheets = useTeamsheets()
-    // const lastTeamsheet = LastTeamsheet()
-
+    const [teamsheets, players, lastTeamsheet, positions, fixtures] = LoadData();
 
     const theme = useTheme();
 
@@ -89,11 +85,11 @@ const MyDataGrid = ({props}) => {
     const onRowSelected = useCallback((event) => {  setSelectedRow(event.node.data);  }, []);
     // teamsheet DnD handling
     const handleTeamsheetSave = () => {
-        console.log("Team-sheet Save in App")
+        // console.log("Team-sheet Save in App")
         setTeamsheetDnd(false)
     }
     const handleTeamsheetCancel = () => {
-        console.log("Team-sheet Cancel in App")
+        // console.log("Team-sheet Cancel in App")
         setTeamsheetDnd(false)
     }
     const onChange = useCallback((e) => {
@@ -188,11 +184,14 @@ const MyDataGrid = ({props}) => {
     }
     const prepareTeamsheetDnd = (action,id) => {
         // create team subs and updated panel
-
         const newTeam = (action === "Add")
             ? lastTeamsheet
             : teamsheets.filter(t => t.id.fixtureId === id)
                         .sort((a, b) => a.position.id - b.position.id)
+
+        let fixtureId = (id)
+                ? id
+                : getFixtureId(newTeam)
 
         // Panel = Players - Team
         const playersNotOnTeamSorted = players.filter(player => !newTeam.some(teamPlayer => teamPlayer.player.id === player.id))
@@ -201,12 +200,34 @@ const MyDataGrid = ({props}) => {
         // subs are numbered 16 and higher
         const newSubs = newTeam.filter(s => s.position.id > 15)
         const filteredTeam = newTeam.filter(s => s.position.id <= 15)
+        const fillInBlanksTeam = fillEmptyPositions(filteredTeam, fixtureId)
 
         setPanel(playersNotOnTeamSorted)
-        setTeam(filteredTeam)
+        setTeam(fillInBlanksTeam)
         setSubs(newSubs)
         setTeamsheetDnd(true)
     }
+    const  getFixtureId = (team) => {
+        const posn = team.find(item => {return typeof item === "object" && item !== null && Object.keys(item).length > 0})
+        return posn.id.fixtureId
+    }
+    function fillEmptyPositions(team, id) {
+        const filler = {
+            fixture : fixtures.find(f => f.id === id),
+            id: id,
+            position:{},
+            player: { id : -1, firstname: "", lastname : ""},
+        }
+
+        for (let i = 0; i < 15; i++) {
+            if (!team[i]) {
+                filler.position = positions[i+1]
+                team[i] = filler
+            }
+        }
+        return team
+    }
+
 
     // useEffect(() => {
     // console.log("Team: " + JSON.stringify(team))

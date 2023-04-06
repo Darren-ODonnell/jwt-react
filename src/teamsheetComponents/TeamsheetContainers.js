@@ -2,19 +2,16 @@ import { Button, Dialog, DialogContent, TextField } from "@mui/material";
 import Box from "./Box";
 import { Container } from 'react-bootstrap';
 import { useDrop } from "react-dnd";
-import 'bootstrap/dist/css/bootstrap.min.css'; // import Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './teamsheetContainers.scss'
 // import {showList} from "./TeamsheetDnd";
 
 const boxWidth         = 150
-
 const boxHeight        = 55
 const teamWidth        = 640
 const boxWidthPercent  = boxWidth / teamWidth
-
 const gapWidth4        = (teamWidth - boxWidth * 3) / 4
 const gapWidth3        = (teamWidth - boxWidth * 2) / 3
-
 const gapWidthPercent4 = gapWidth4 / teamWidth
 const gapWidthPercent3 = gapWidth3 / teamWidth
 
@@ -89,7 +86,7 @@ const PanelContainer = ({ panel, onDrop,onDropContainer }) => {
 };
 
 const TeamContainer   = ({ team, onDrop}) => {
-    console.log("Team-Container: ", JSON.stringify(team))
+    // console.log("Team-Container: ", JSON.stringify(team))
     let index = 0
     const keeper = {
         boxY: 0,
@@ -273,7 +270,7 @@ const TeamContainer   = ({ team, onDrop}) => {
                 />
             )
         }
-        console.log("TEAM-Container: ", JSON.stringify(team))
+        // console.log("TEAM-Container: ", JSON.stringify(team))
         return  (
             <>
                 <Left />
@@ -362,8 +359,8 @@ const SubsContainer  = ({ subs, onDrop, onDropContainer }) => {
     let nextRow = 0
     let index = 0;
     let id
-    console.log("Subs-Container: ", JSON.stringify(subs))
 
+    // console.log("Subs-Container: ", JSON.stringify(subs))
 
     const handleDragOver = (event) => {
         event.preventDefault();
@@ -410,11 +407,9 @@ const SubsContainer  = ({ subs, onDrop, onDropContainer }) => {
         );
     };
 const ActionContainer = ({handleSave, handleCancel}) => {
-
     const cancel = () => {
         handleCancel()
     }
-
     return (
         <>
         <Container className="action-container">

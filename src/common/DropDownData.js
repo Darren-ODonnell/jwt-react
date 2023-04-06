@@ -7,6 +7,7 @@ import {PITCH_GRID_URLS} from "../entities/pitchgrids";
 import {STAT_NAME_URLS} from "../entities/statnames";
 import {useAxios2} from "../api/ApiService";
 import {TEAMSHEET_URLS} from "../entities/teamsheets";
+import {FIXTURE_URLS} from "../entities/fixtures";
 
 export const Players = () => {
     const players = useAxios2(PLAYER_URLS.list);
@@ -16,7 +17,6 @@ export const usePlayers = () => {
     const players = useAxios2(PLAYER_URLS.list);
     return players;
 };
-
 
 export const Teamsheets = () => {
     const teamsheets = useAxios2(TEAMSHEET_URLS.list);
@@ -43,18 +43,20 @@ export const LoadData = () => {
     const players = useAxios2(PLAYER_URLS.list);
     const teamsheets = useAxios2(TEAMSHEET_URLS.list)
     const lastTeamsheet = useAxios2(TEAMSHEET_URLS.last);
+    const positions = useAxios2(POSITION_URLS.list);
+    const fixtures = useAxios2(FIXTURE_URLS.list);
 
     const loadedData = useMemo(() => {
         return [
             teamsheets,
             players,
             lastTeamsheet,
+            positions,
+            fixtures,
         ];
-    }, [teamsheets, players, lastTeamsheet]);
+    }, [teamsheets, players, lastTeamsheet, positions, fixtures]);
     return loadedData
 }
-
-
 
 const DropdownData = () => {
     const competition = useAxios2(COMPETITION_URLS.list);

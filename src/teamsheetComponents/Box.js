@@ -26,13 +26,13 @@ const Box = ({ index, id, player, width, height, x, y, onDrop, style }) => {
 
     const handleClick = (id) => {
         // Call the onClick callback function with the box id
-        console.log("HandleClick: " + id)
+        // console.log("HandleClick: " + id)
     };
 
     const [{ isDragging }, drag] = useDrag(() => ({
         type: "ITEM",
         item: () => {
-            console.log("HandleDragBegin: " + id);
+            // console.log("HandleDragBegin: " + id);
             return { id, player, index };
         },
         collect: (monitor) => ({
@@ -52,7 +52,7 @@ const Box = ({ index, id, player, width, height, x, y, onDrop, style }) => {
             const initialSourceClientOffset = monitor.getInitialSourceClientOffset();
             const draggedItemIndex = Math.floor(initialSourceClientOffset.y / 60);
 
-            console.log("OnDrop - id: " + id + ", item.player.id: " + item.player.id + ", player.id: " + player.id)
+            // console.log("OnDrop - id: " + id + ", item.player.id: " + item.player.id + ", player.id: " + player.id)
             onDrop(newBox, id, item, draggedItemIndex);
         },
         collect: (monitor) => ({
@@ -84,7 +84,7 @@ const Box = ({ index, id, player, width, height, x, y, onDrop, style }) => {
         marginLeft     : '5px',
         ...style,
     };
-    console.log("BOX: " + player.firstname + " " + player.lastname)
+    // console.log("BOX: " + player.firstname + " " + player.lastname)
     return (
         <div className="box" >
             <BoxWrapper

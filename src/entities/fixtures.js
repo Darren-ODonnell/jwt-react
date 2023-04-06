@@ -37,7 +37,7 @@ const FIXTURE_UPDATE           = "/fixture/update";
 
 const FIXTURE_FINDBYCOMPETITIONHOMETEAMAWAYTEAMFIXTUREDATESEASON = "/fixture/findByCompetitionHomeTeamAwayTeamFixtureDateSeason";
 
-const FIXTURE_URLS = {
+export const FIXTURE_URLS = {
     add           : FIXTURE_ADD,
     delete        : FIXTURE_DELETE,
     findByAwayClub: FIXTURE_FINDBYAWAYBYCLUB,
