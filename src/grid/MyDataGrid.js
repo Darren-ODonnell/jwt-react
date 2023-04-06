@@ -230,7 +230,7 @@ const MyDataGrid = ({props}) => {
 
 
     // useEffect(() => {
-    // console.log("Team: " + JSON.stringify(team))
+    console.log("Team: " + JSON.stringify(team))
     // }, [team])
 
 
@@ -465,6 +465,9 @@ const MyDataGrid = ({props}) => {
                                 myTeam={team}
                                 myPanel={panel}
                                 mySubs={subs}
+                                saveTeam={setTeam}
+                                savePanel={setPanel}
+                                saveSubs={setSubs}
                                 handleSave={handleTeamsheetSave}
                                 handleCancel={handleTeamsheetCancel}
                                 methods={props.methods}
