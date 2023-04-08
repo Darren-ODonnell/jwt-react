@@ -1,17 +1,20 @@
-import { Button, Dialog, DialogContent, TextField } from "@mui/material";
+import {Button, Dialog, DialogContent, TextField} from "@mui/material";
+import {Container} from 'react-bootstrap';
+import {useDrop} from "react-dnd";
+import {useContext} from "react";
+
+import {TeamsheetContext} from '../context/TeamsheetContext';
 import Box from "./Box";
-import { Container } from 'react-bootstrap';
-import { useDrop } from "react-dnd";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './teamsheetContainers.scss'
-// import {showList} from "./TeamsheetDnd";
 
-const boxWidth         = 150
-const boxHeight        = 55
-const teamWidth        = 640
-const boxWidthPercent  = boxWidth / teamWidth
-const gapWidth4        = (teamWidth - boxWidth * 3) / 4
-const gapWidth3        = (teamWidth - boxWidth * 2) / 3
+
+const boxWidth = 150
+const boxHeight = 55
+const teamWidth = 640
+const boxWidthPercent = boxWidth / teamWidth
+const gapWidth4 = (teamWidth - boxWidth * 3) / 4
+const gapWidth3 = (teamWidth - boxWidth * 2) / 3
 const gapWidthPercent4 = gapWidth4 / teamWidth
 const gapWidthPercent3 = gapWidth3 / teamWidth
 
@@ -19,22 +22,24 @@ export const findId = (id, array) => {
     return array.findIndex(p => p.id === id)
 }
 
-const TeamsheetContainer = ({panel, team, subs, onDrop,onDropContainer, handleSave, handleCancel}) => {
+const TeamsheetContainer = ({onDrop, onDropContainer, handleSave, handleCancel}) => {
+    const {team, panel, subs} = useContext(TeamsheetContext);
 
-    // console.log("Team-Container-Team: "+JSON.stringify(team))
+    console.log("TeamsheetContainer-Team/Panel: ", team[0].player, panel[0])
 
     return (
         <Container className="teamsheet-container container-common mx-auto" style={{height: '800px'}}>
-            <PanelContainer panel={panel} onDrop={onDrop} onDropContainer={onDropContainer}/>
-            <TeamContainer team={team} onDrop={onDrop}/>
-            <SubsContainer    subs ={subs}  onDrop={onDrop} onDropContainer={onDropContainer}/>
+            <PanelContainer onDrop={onDrop} onDropContainer={onDropContainer}/>
+            <TeamContainer onDrop={onDrop}/>
+            <SubsContainer onDrop={onDrop} onDropContainer={onDropContainer}/>
             <ActionContainer handleCancel={handleCancel} handleSave={handleSave}/>
         </Container>
     )
 }
 export default TeamsheetContainer;
 
-const PanelContainer = ({ panel, onDrop,onDropContainer }) => {
+const PanelContainer = ({onDrop, onDropContainer}) => {
+    const {team, panel, subs} = useContext(TeamsheetContext);
     const container = "panel"
     let nextRow = 0
     let index = 0;
@@ -85,9 +90,10 @@ const PanelContainer = ({ panel, onDrop,onDropContainer }) => {
     );
 };
 
-const TeamContainer   = ({ team, onDrop}) => {
-    // console.log("Team-Container: ", JSON.stringify(team))
+const TeamContainer = ({onDrop}) => {
+    const {team, panel, subs} = useContext(TeamsheetContext);
     let index = 0
+
     const keeper = {
         boxY: 0,
         middle: {
@@ -223,16 +229,19 @@ const TeamContainer   = ({ team, onDrop}) => {
             const boxX = teamWidth * gapWidthPercent4
             return  (
                 <Box
-                    key    = {left.index}
-                    index  = {left.index}
-                    id     = {left.player.id}
-                    player = {left.player}
-                    width  = {boxWidth}
-                    height = {boxHeight}
-                    x      = {boxX}
-                    y      = {boxY}
-                    onDrop = {onDrop}
-                    style  = {{margin   : "0px", fontWeight: "bold"}}
+                    key={left.index}
+                    index={left.index}
+                    id={left.player.id}
+                    player={left.player}
+                    width={boxWidth}
+                    height={boxHeight}
+                    source={team}
+                    dest1={panel}
+                    dest2={subs}
+                    x={boxX}
+                    y={boxY}
+                    onDrop={onDrop}
+                    style={{margin: "0px", fontWeight: "bold"}}
                 />
             )
         }
@@ -240,16 +249,19 @@ const TeamContainer   = ({ team, onDrop}) => {
             const boxX = teamWidth * (gapWidthPercent4 * 2 + boxWidthPercent)
             return  (
                 <Box
-                    key    = {middle.index}
-                    index  = {middle.index}
-                    id     = {middle.player.id}
-                    player = {middle.player}
-                    width  = {boxWidth}
-                    height = {boxHeight}
-                    x      = {boxX}
-                    y      = {boxY}
-                    onDrop = {onDrop}
-                    style  = {{margin   : "0px", fontWeight: "bold"}}
+                    key={middle.index}
+                    index={middle.index}
+                    id={middle.player.id}
+                    player={middle.player}
+                    width={boxWidth}
+                    height={boxHeight}
+                    source={team}
+                    dest1={panel}
+                    dest2={subs}
+                    x={boxX}
+                    y={boxY}
+                    onDrop={onDrop}
+                    style={{margin: "0px", fontWeight: "bold"}}
                 />
             )
         }
@@ -257,16 +269,19 @@ const TeamContainer   = ({ team, onDrop}) => {
             const boxX = teamWidth * (gapWidthPercent4 * 3 + boxWidthPercent * 2)
             return  (
                 <Box
-                    key    = {right.index}
-                    index  = {right.index}
-                    id     = {right.player.id}
-                    player = {right.player}
-                    width  = {boxWidth}
-                    height = {boxHeight}
-                    x      = {boxX}
-                    y      = {boxY}
-                    onDrop = {onDrop}
-                    style  = {{margin   : "0px", fontWeight: "bold"}}
+                    key={right.index}
+                    index={right.index}
+                    id={right.player.id}
+                    player={right.player}
+                    width={boxWidth}
+                    height={boxHeight}
+                    source={team}
+                    dest1={panel}
+                    dest2={subs}
+                    x={boxX}
+                    y={boxY}
+                    onDrop={onDrop}
+                    style={{margin: "0px", fontWeight: "bold"}}
                 />
             )
         }
@@ -344,23 +359,22 @@ const TeamContainer   = ({ team, onDrop}) => {
         return  <Middle />
     }
     return (
-        <Container className="team-container" >
-            <OneAcross   {...keeper       }/>
-            <ThreeAcross {...fullBacks    }/>
-            <ThreeAcross {...halfBacks    }/>
-            <TwoAcross   {...midfielders  }/>
-            <ThreeAcross {...halfForwards }/>
-            <ThreeAcross {...fullForwards }/>
+        <Container className="team-container">
+            <OneAcross   {...keeper}/>
+            <ThreeAcross {...fullBacks}/>
+            <ThreeAcross {...halfBacks}/>
+            <TwoAcross   {...midfielders}/>
+            <ThreeAcross {...halfForwards}/>
+            <ThreeAcross {...fullForwards}/>
         </Container>
     )
 }
-const SubsContainer  = ({ subs, onDrop, onDropContainer }) => {
+const SubsContainer = ({onDrop, onDropContainer}) => {
+    const {team, panel, subs} = useContext(TeamsheetContext);
     const container = "subs"
     let nextRow = 0
     let index = 0;
     let id
-
-    // console.log("Subs-Container: ", JSON.stringify(subs))
 
     const handleDragOver = (event) => {
         event.preventDefault();
@@ -384,21 +398,21 @@ const SubsContainer  = ({ subs, onDrop, onDropContainer }) => {
             <>
                 <Container className="subs-heading"> <div style={{color:'white'}}>Substitutes</div> </Container>
                 <Container className="subs-container" onDragOver={handleDragOver} ref={drop}>
-                    {subs.map((member, index) => {
+                    {subs.map((sub, index) => {
                         const top = nextRow;
                         nextRow += 60; // Increment nextRow by 60 for the next iteration
                         return (
                             <Box
-                                key      = {index}
-                                index    = {index}
-                                id       = {member.player.id}
-                                player   = {member.player}
-                                width    = {150}
-                                height   = {50}
-                                x        = {0}
-                                y        = {top}
-                                onDrop   = {onDrop}
-                                style    = {{marginLeft     : "13px"}}
+                                key={index}
+                                index={index}
+                                id={sub.player.id}
+                                player={sub.player}
+                                width={150}
+                                height={50}
+                                x={0}
+                                y={top}
+                                onDrop={onDrop}
+                                style={{marginLeft: "13px"}}
                             />
                         );
                     })}

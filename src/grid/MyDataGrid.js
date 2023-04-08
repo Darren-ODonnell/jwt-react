@@ -1,13 +1,18 @@
-import React, { useEffect, useState, useRef, Fragment, useCallback, useMemo } from 'react';
+import React, {useEffect, useState, useRef, Fragment, useCallback, useMemo, useContext} from 'react';
+import {TeamsheetContext} from '../context/TeamsheetContext';
 import {AgGridReact} from 'ag-grid-react';
+import {Button, Dialog, DialogContent, Grid} from "@mui/material";
+import {useTheme} from '@mui/material/styles';
+import {HTML5Backend} from "react-dnd-html5-backend";
+import {DndProvider} from "react-dnd";
+import {v4} from 'uuid'
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'ag-grid-community/styles/ag-theme-balham.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 
-import { Button, Dialog, DialogContent, FormControl, Grid, MenuItem, Select } from "@mui/material";
-import { defaultColDef, handleClickAway, refreshPage } from "../common/helper";
-import { deleteData, getData, useAxios, useAxios2 } from "../api/ApiService";
+import {defaultColDef, handleClickAway, refreshPage} from "../common/helper";
+import {deleteData, getData, useAxios, useAxios2} from "../api/ApiService";
 import {Position} from '../entities/positions'
 import {Pitchgrid} from '../entities/pitchgrids'
 import {GRID_ROW_DELETE, REPORT_PRINT_PREVIEW} from "../common/globals";
@@ -16,24 +21,11 @@ import TeamsheetReport from "../teamsheetComponents/TeamsheetReport";
 import FormDialog from "./FormDialog";
 import ConfirmationModal from "../common/ConfirmationModal";
 import ReportModal from "../teamsheetComponents/ReportModal";
-import {useTheme} from '@mui/material/styles';
 import Export from "../common/Export";
 import TeamsheetDnd from "../teamsheetComponents/TeamsheetDnd";
-import {HTML5Backend} from "react-dnd-html5-backend";
-import {DndProvider} from "react-dnd";
-import {PLAYER_URLS, playerData} from "../entities/players";
-import'../App.css'
+import {LoadData} from "../common/DropDownData";
+import '../App.css'
 
-import DropDownData, {
-    GetTeamsheetByFixtureId,
-    LastTeamsheet, LoadData,
-    Players,
-    Teamsheets, usePlayers,
-    useTeamsheets
-} from "../common/DropDownData";
-import AuthService from "../auth/AuthService";
-import instance from "../api/axios";
-import {v4} from 'uuid'
 
 const MyDataGrid = ({props}) => {
     const [gridApi, setGridApi] = useState(null);
@@ -66,24 +58,25 @@ const MyDataGrid = ({props}) => {
     const [exportType, setExportType] = useState('CSV');
     // enable/disable team,sheet dnd display - false by default
     const [teamsheetDnd, setTeamsheetDnd] = useState(false)
-    const [panel, setPanel] = useState()
-    const [team, setTeam] = useState()
-    const [subs, setSubs] = useState()
+    const {team, setTeam, panel, setPanel, subs, setSubs} = useContext(TeamsheetContext);
+    const theme = useTheme();
     const [teamsheets, players, lastTeamsheet, positions, fixtures] = LoadData();
 
-    const theme = useTheme();
-
-    // export data hook
-    // const exportData = useExportData(gridOptions.api);
-    // delete confirm hook
+    const [teamsheetPrepared, setTeamsheetPrepared] = useState(false)
 
     let message = "";
-    let model = [];
 
-    const handleOpen  = useCallback(() => {    setOpen(true);    }, []);
-    const handleClose = useCallback(() => {    setOpen(false);   }, []);
-    const onRowSelected = useCallback((event) => {  setSelectedRow(event.node.data);  }, []);
+    const handleOpen = useCallback(() => {
+        setOpen(true);
+    }, []);
+    const handleClose = useCallback(() => {
+        setOpen(false);
+    }, []);
+    const onRowSelected = useCallback((event) => {
+        setSelectedRow(event.node.data);
+    }, []);
     // teamsheet DnD handling
+
     const handleTeamsheetSave = () => {
         // console.log("Team-sheet Save in App")
         setTeamsheetDnd(false)
@@ -96,6 +89,7 @@ const MyDataGrid = ({props}) => {
         const {value, id} = e.target;
         setRowData({...rowData, [id]: value});
     }, [rowData]);
+
     const onGridReady = useCallback((params) => {
         setGridApi(params.api);
         const gridApi = params.api;
@@ -108,13 +102,14 @@ const MyDataGrid = ({props}) => {
     const handleFilterChanged = useCallback(() => {
         // capture the data when a filter is set on the grid
         // model = gridApi
-        model = gridApi.getModel().rowsToDisplay;
+        const model = gridApi.getModel().rowsToDisplay;
         let newFilteredData = model.map(function (m) {
             return m.data
         })
         setFilteredData(newFilteredData)
-        console.log("FilteredData-: " + filteredData);
+        // console.log("FilteredData-: " + filteredData);
     }, [gridApi, filteredData]);
+
     const getSelectedRow = useCallback(() => {
         const selectedNodes = gridApi.getSelectedRows();
         if (selectedNodes.length === 1) {
@@ -172,7 +167,6 @@ const MyDataGrid = ({props}) => {
                     variant="outlined"
                     color="secondary"
                 >NO Delete </Button>
-
         )
     }
     const handleShowDeleteModal = () => {
@@ -184,28 +178,31 @@ const MyDataGrid = ({props}) => {
     }
     const prepareTeamsheetDnd = (action,id) => {
         // create team subs and updated panel
-        const newTeam = (action === "Add")
-            ? lastTeamsheet
-            : teamsheets.filter(t => t.id.fixtureId === id)
-                        .sort((a, b) => a.position.id - b.position.id)
+        if (!teamsheetPrepared) {
+            const newTeam = (action === "Add")
+                ? lastTeamsheet
+                : teamsheets.filter(t => t.id.fixtureId === id)
+                    .sort((a, b) => a.position.id - b.position.id)
 
-        let fixtureId = (id)
+            let fixtureId = (id)
                 ? id
                 : getFixtureId(newTeam)
 
-        // Panel = Players - Team
-        const playersNotOnTeamSorted = players.filter(player => !newTeam.some(teamPlayer => teamPlayer.player.id === player.id))
-                                              .sort((a, b) => a.lastname.localeCompare(b.lastname))
+            // Panel = Players - Team
+            const playersNotOnTeamSorted = players.filter(player => !newTeam.some(teamPlayer => teamPlayer.player.id === player.id))
+                .sort((a, b) => a.lastname.localeCompare(b.lastname))
 
-        // subs are numbered 16 and higher
-        const newSubs = newTeam.filter(s => s.position.id > 15)
-        const filteredTeam = newTeam.filter(s => s.position.id <= 15)
-        const fillInBlanksTeam = fillEmptyPositions(filteredTeam, fixtureId)
+            // subs are numbered 16 and higher
+            const newSubs = newTeam.filter(s => s.position.id > 15)
+            const filteredTeam = newTeam.filter(s => s.position.id <= 15)
+            const fillInBlanksTeam = fillEmptyPositions(filteredTeam, fixtureId)
 
-        setPanel(playersNotOnTeamSorted)
-        setTeam(fillInBlanksTeam)
-        setSubs(newSubs)
-        setTeamsheetDnd(true)
+            setPanel(playersNotOnTeamSorted)
+            setTeam(fillInBlanksTeam)
+            setSubs(newSubs)
+            setTeamsheetDnd(true)
+            setTeamsheetPrepared(true)
+        }
     }
     const  getFixtureId = (team) => {
         const posn = team.find(item => {return typeof item === "object" && item !== null && Object.keys(item).length > 0})
@@ -228,11 +225,7 @@ const MyDataGrid = ({props}) => {
         return team
     }
 
-
-    // useEffect(() => {
-    console.log("Team: " + JSON.stringify(team))
-    // }, [team])
-
+    // console.log("Team: " + JSON.stringify(team))
 
     // Add Button
     const AddButton = (params) => {
@@ -308,7 +301,7 @@ const MyDataGrid = ({props}) => {
             }
         }
     };
-    //
+
     // Pagination
     const togglePagination = () => {
         const pageSize = paginationEnabled ? 1000 : 10;
@@ -323,36 +316,32 @@ const MyDataGrid = ({props}) => {
         )
     }
 
-    // dummy method for now - this needs to be setup in each entity file
-    const validate = (values) => {
-        return true
-    }
-
     useEffect(() => {
         setRowData(data);
     }, [data]);
+
     useEffect(() => {
         getData(props.methods.list, axiosApi, handleClose)
-        // setPanel(Players())
-        // setTeam(LastTeamsheet())
-        // setDropDownData(DropDownData())
     }, []);
+
+    useEffect(() => {
+        if (team.length > 0 && panel.length > 0 && subs.length > 0) {
+            console.log("MyDataGrid: ", team[0].player, panel[0], subs[0].player)
+        }
+    }, [team, panel, subs]);
+
+
     // useEffect(() => {
-    //     if(props.type==="Teamsheet") {
-    //         prepareTeamsheetDnd("Delete")
-    //     } else {
-    //         if ( deleteNode ) {
-    //             console.log( "DeleteNode:" + selectedRow )
-    //             // deleteData(selectedRow);
-    //             setDeleteNode( false );
-    //         }
-    //     }
-    // }, [deleteNode, selectedRow, deleteConfirmation]);
+    //     if(team && team.length)
+    //         console.log("MyDataGrid-UseEffect - Team: " , team[0].player)    }, [team]);
+    // useEffect(() => {
+    //     if(panel && panel.length)
+    //         console.log("MyDataGrid-UseEffect - Panel: ", panel[0])   }, [panel]);
+    // useEffect(() => {
+    //     if(subs && subs.length )
+    //         console.log("MyDataGrid-UseEffect - subs: " , subs[0].player)    }, [subs]);
 
-    // render parameters
-    const commonParams = {}
     const gridParams = {
-
         ref: gridRef,
         gridApi: gridApi,
         onGridReady: onGridReady,
@@ -388,7 +377,7 @@ const MyDataGrid = ({props}) => {
         entity      : props.type,
         loading     : loading,
         error       : error,
-        validate    : validate,
+        // validate    : validate,
     }
     const handleDeleteConfirmation = () => {
         if (props.type === "Teamsheet") {
@@ -399,13 +388,16 @@ const MyDataGrid = ({props}) => {
         }
     }
 
-    const dialogPaperStyle = {
-        maxWidth: '1600px',
-    };
+    // const dialogPaperStyle = {
+    //     maxWidth: '1600px',
+    // };
 
     // if (teamsheetDnd)
-    // console.log("MyDataGrid-Team: " + JSON.stringify(team))
-
+    if (team && team.length && panel && panel.length && subs && subs.length) {
+        console.log("MyDataGrid: ", team[0].player, panel[0], subs[0].player);
+    } else {
+        console.log("One or more of the arrays is empty or undefined.");
+    }
     return (
         !loading ? <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
             {/* Use fragment to Keep buttons on same line above grid */}
@@ -420,7 +412,7 @@ const MyDataGrid = ({props}) => {
             </Fragment>
 
             {/* Show Grid - always shown*/}
-            <AgGridReact  {...commonParams} {...gridParams} style={{zIndex:1}} />
+            <AgGridReact  {...gridParams}  />
 
             {/* Show pagination button below grid */}
             <PaginationButton/>
@@ -428,7 +420,7 @@ const MyDataGrid = ({props}) => {
             {/* show Export Buttons here... */}
             {/*<button onClick={exportData}>Export Data</button>*/}
 
-            {/* Popup form triggerd by open */}
+            {/* Popup form triggered by open */}
             <FormDialog   {...formParams}  />
             {/* show delete modal when required by set/reset showModal */}
             <ConfirmationModal
@@ -454,25 +446,24 @@ const MyDataGrid = ({props}) => {
 
             {/* Delete Record if confirmation good */}
             {deleteConfirmation && deleteData(selectedRow, error, props, axiosApi, handleClose) && setDeleteConfirmation(false)}
+
             {/* Bring up Teamsheet Drag n Drop */}
-
-
             {(
                 <Dialog open={teamsheetDnd} maxWidth="lg" fullWidth onClose={handleClickAway} >
                     <DialogContent style={dialogContentStyle}>
-                        <DndProvider backend={HTML5Backend}>
-                            <TeamsheetDnd
-                                myTeam={team}
-                                myPanel={panel}
-                                mySubs={subs}
-                                saveTeam={setTeam}
-                                savePanel={setPanel}
-                                saveSubs={setSubs}
-                                handleSave={handleTeamsheetSave}
-                                handleCancel={handleTeamsheetCancel}
-                                methods={props.methods}
-                                teamsheetDnd={teamsheetDnd}/>
-                        </DndProvider>
+                        <TeamsheetDnd
+                            // pass state to child component
+                            team={team}
+                            panel={panel}
+                            subs={subs}
+                            setTeam={setTeam}
+                            setPanel={setPanel}
+                            setSubs={setSubs}
+                            handleSave={handleTeamsheetSave}
+                            handleCancel={handleTeamsheetCancel}
+                            methods={props.methods}
+                            teamsheetDnd={teamsheetDnd}
+                        />
                     </DialogContent>
                 </Dialog>
             )}

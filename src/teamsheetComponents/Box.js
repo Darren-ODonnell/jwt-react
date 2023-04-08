@@ -1,6 +1,9 @@
+import React, {useRef, useEffect, useContext} from 'react';
 import {useDrag, useDrop} from "react-dnd";
 import styled from "styled-components";
-import React, { useRef, useEffect } from 'react';
+
+import {TeamsheetContext} from '../context/TeamsheetContext';
+
 
 const BoxWrapper = styled.div`
   position        : absolute;
@@ -22,12 +25,8 @@ const BoxWrapper = styled.div`
 `;
 
 const Box = ({ index, id, player, width, height, x, y, onDrop, style }) => {
+    const {team, setTeam, panel, setPanel, subs, setSubs} = useContext(TeamsheetContext);
     const ref = useRef(null);
-
-    const handleClick = (id) => {
-        // Call the onClick callback function with the box id
-        // console.log("HandleClick: " + id)
-    };
 
     const [{ isDragging }, drag] = useDrag(() => ({
         type: "ITEM",
@@ -47,13 +46,14 @@ const Box = ({ index, id, player, width, height, x, y, onDrop, style }) => {
             const delta = monitor.getDifferenceFromInitialOffset();
             const left = Math.round(x + delta.x);
             const top = Math.round(y + delta.y);
-            const newBox = { left, top, id };
+            const newBox = {left, top, id};
 
-            const initialSourceClientOffset = monitor.getInitialSourceClientOffset();
-            const draggedItemIndex = Math.floor(initialSourceClientOffset.y / 60);
+            // const initialSourceClientOffset = monitor.getInitialSourceClientOffset();
+            // const draggedItemIndex = Math.floor(initialSourceClientOffset.y / 60);
 
-            // console.log("OnDrop - id: " + id + ", item.player.id: " + item.player.id + ", player.id: " + player.id)
-            onDrop(newBox, id, item, draggedItemIndex);
+            onDrop(newBox, id, item);
+            console.log("Box-Team/Panel: ", team[0].player.id, panel[0].id)
+
         },
         collect: (monitor) => ({
             isOver: monitor.isOver(),
@@ -74,25 +74,30 @@ const Box = ({ index, id, player, width, height, x, y, onDrop, style }) => {
         left           : `${x}px`,
         backgroundColor: "lightblue",
         borderRadius   : "10px",
-        border         : "5px solid blue",
+        border: "5px solid blue",
         // display: "flex",
-        fontSize       : "16px",
+        fontSize: "16px",
         // textAlign: 'center',
-        cursor         : "move",
-        justifyContent : "center",
-        opacity        : isDragging ? 0.5: 1,
-        marginLeft     : '5px',
+        cursor: "move",
+        justifyContent: "center",
+        opacity: isDragging ? 0.5 : 1,
+        marginLeft: '5px',
         ...style,
     };
+
+    function handleClick(id) {
+
+    }
+
     // console.log("BOX: " + player.firstname + " " + player.lastname)
     return (
-        <div className="box" >
+        <div className="box">
             <BoxWrapper
-                ref        = {ref}
-                style      = {styles}
-                isDragging = {isDragging}
-                isOver     = {isOver}
-                onClick    = {() => handleClick(id)}
+                ref={ref}
+                style={styles}
+                isDragging={isDragging}
+                isOver={isOver}
+                onClick={() => handleClick(id)}
             >
                 {player.firstname + " " + player.lastname}
             </BoxWrapper>
