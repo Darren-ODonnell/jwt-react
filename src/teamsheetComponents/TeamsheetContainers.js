@@ -25,7 +25,7 @@ export const findId = (id, array) => {
 const TeamsheetContainer = ({onDrop, onDropContainer, handleSave, handleCancel}) => {
     const {team, panel, subs} = useContext(TeamsheetContext);
 
-    console.log("TeamsheetContainer-Team/Panel: ", team[0].player, panel[0])
+    console.log("9- TeamsheetContainer-Team/Panel: ", team[0].player, panel[0])
 
     return (
         <Container className="teamsheet-container container-common mx-auto" style={{height: '800px'}}>

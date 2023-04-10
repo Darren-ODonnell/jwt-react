@@ -1,6 +1,6 @@
-import { Button, FormControl, MenuItem, Select } from "@mui/material";
-import React, { useRef, useState } from "react";
-import { useTheme } from "@mui/material/styles";
+import {Button, FormControl, MenuItem, Select} from "@mui/material";
+import React, {useState} from "react";
+import {useTheme} from "@mui/material/styles";
 import './Export.css'
 import * as FileSaver from 'file-saver'
 import * as XLSX from "xlsx";
@@ -8,7 +8,6 @@ import * as XLSX from "xlsx";
 
 const Export = ({exportType, setExportType, gridApi }) => {
 
-    const [exportFormat, setExportFormat] = useState(exportType)
     const theme = useTheme()
 
     const handleExport = async ( exportType ) => {
@@ -103,7 +102,6 @@ const Export = ({exportType, setExportType, gridApi }) => {
             <>
                 <Button className="export-button"
                         onClick={() => handleExport(exportType)}
-
                 >Export { exportType }
                 </Button>
             </>

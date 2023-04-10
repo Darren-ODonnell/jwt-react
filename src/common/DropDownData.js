@@ -45,6 +45,7 @@ export const LoadData = () => {
     const lastTeamsheet = useAxios2(TEAMSHEET_URLS.last);
     const positions = useAxios2(POSITION_URLS.list);
     const fixtures = useAxios2(FIXTURE_URLS.list);
+    const fixturesWithNoTeamsheets = useAxios2(FIXTURE_URLS.withNoTeamsheet);
 
     const loadedData = useMemo(() => {
         return [
@@ -53,6 +54,7 @@ export const LoadData = () => {
             lastTeamsheet,
             positions,
             fixtures,
+            fixturesWithNoTeamsheets,
         ];
     }, [teamsheets, players, lastTeamsheet, positions, fixtures]);
     return loadedData

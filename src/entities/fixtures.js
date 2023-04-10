@@ -33,38 +33,41 @@ const FIXTURE_FINDBYHOMEBYCLUB = "/fixture/findByHomeByClub/";
 const FIXTURE_FINDBYID         = "/fixture/findById/";
 const FIXTURE_FINDNEXTBYCLUB   = "/fixture/findNextByClub/";
 const FIXTURE_LIST             = "/fixture/list";
-const FIXTURE_UPDATE           = "/fixture/update";
+const FIXTURE_UPDATE = "/fixture/update";
+const FIXTURE_WITHNOTEAMSHEET = "/fixture/listWithNoTeamsheet";
 
 const FIXTURE_FINDBYCOMPETITIONHOMETEAMAWAYTEAMFIXTUREDATESEASON = "/fixture/findByCompetitionHomeTeamAwayTeamFixtureDateSeason";
 
 export const FIXTURE_URLS = {
-    add           : FIXTURE_ADD,
-    delete        : FIXTURE_DELETE,
+    add: FIXTURE_ADD,
+    delete: FIXTURE_DELETE,
     findByAwayClub: FIXTURE_FINDBYAWAYBYCLUB,
     findByHomeClub: FIXTURE_FINDBYHOMEBYCLUB,
-    findById      : FIXTURE_FINDBYID,
-    findByClub    : FIXTURE_FINDBYCLUB,
-    list          : FIXTURE_LIST,
-    update        : FIXTURE_UPDATE,
-    nextByClub    : FIXTURE_FINDNEXTBYCLUB,
+    findById: FIXTURE_FINDBYID,
+    findByClub: FIXTURE_FINDBYCLUB,
+    list: FIXTURE_LIST,
+    update: FIXTURE_UPDATE,
+    nextByClub: FIXTURE_FINDNEXTBYCLUB,
+    withNoTeamsheet: FIXTURE_WITHNOTEAMSHEET,
 
     findByCompetitionHomeTeamAwayTeamFixtureDateSeason: FIXTURE_FINDBYCOMPETITIONHOMETEAMAWAYTEAMFIXTUREDATESEASON,
 }
 const apiRequests = {
-    list          : {method: METHODS.GET, url: FIXTURE_URLS.list},
-    findById      : {method: METHODS.GET, url: FIXTURE_URLS.findById},
-    findByClub    : {method: METHODS.GET, url: FIXTURE_URLS.findByClub},
+    list: {method: METHODS.GET, url: FIXTURE_URLS.list},
+    findById: {method: METHODS.GET, url: FIXTURE_URLS.findById},
+    findByClub: {method: METHODS.GET, url: FIXTURE_URLS.findByClub},
     findByHomeClub: {method: METHODS.GET, url: FIXTURE_URLS.findByHomeClub},
     findByAwayClub: {method: METHODS.GET, url: FIXTURE_URLS.findByAwayClub},
-    nextByClub    : {method: METHODS.GET, url: FIXTURE_URLS.nextByClub},
+    nextByClub: {method: METHODS.GET, url: FIXTURE_URLS.nextByClub},
+    withNoTeamsheet: {method: METHODS.GET, url: FIXTURE_URLS.withNoTeamsheet},
 
     findByCompetitionHomeTeamAwayTeamFixtureDateSeason: {
         method: METHODS.GET,
-        url   : FIXTURE_URLS.findByCompetitionHomeTeamAwayTeamFixtureDateSeason
+        url: FIXTURE_URLS.findByCompetitionHomeTeamAwayTeamFixtureDateSeason
     },
 
-    update: {method: METHODS.POST  , url: FIXTURE_URLS.update},
-    add   : {method: METHODS.PUT   , url: FIXTURE_URLS.add},
+    update: {method: METHODS.POST, url: FIXTURE_URLS.update},
+    add: {method: METHODS.PUT, url: FIXTURE_URLS.add},
     delete: {method: METHODS.DELETE, url: FIXTURE_URLS.delete}
 }
 

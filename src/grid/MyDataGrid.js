@@ -2,17 +2,14 @@ import React, {useEffect, useState, useRef, Fragment, useCallback, useMemo, useC
 import {TeamsheetContext} from '../context/TeamsheetContext';
 import {AgGridReact} from 'ag-grid-react';
 import {Button, Dialog, DialogContent, Grid} from "@mui/material";
-import {useTheme} from '@mui/material/styles';
-import {HTML5Backend} from "react-dnd-html5-backend";
-import {DndProvider} from "react-dnd";
-import {v4} from 'uuid'
+
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'ag-grid-community/styles/ag-theme-balham.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 
-import {defaultColDef, handleClickAway, refreshPage} from "../common/helper";
-import {deleteData, getData, useAxios, useAxios2} from "../api/ApiService";
+import {defaultColDef, handleClickAway} from "../common/helper";
+import {deleteData, getData, useAxios} from "../api/ApiService";
 import {Position} from '../entities/positions'
 import {Pitchgrid} from '../entities/pitchgrids'
 import {GRID_ROW_DELETE, REPORT_PRINT_PREVIEW} from "../common/globals";
@@ -25,15 +22,13 @@ import Export from "../common/Export";
 import TeamsheetDnd from "../teamsheetComponents/TeamsheetDnd";
 import {LoadData} from "../common/DropDownData";
 import '../App.css'
+import FixtureSelect from "../common/FixtureSelect";
 
 
 const MyDataGrid = ({props}) => {
     const [gridApi, setGridApi] = useState(null);
     const gridRef = useRef(null);
     const [paginationEnabled, setPaginationEnabled] = useState(true);
-    // used with delete to confirm the record is to be deleted
-    const [deleteNode, setDeleteNode] = useState(false)
-    // const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [showPrintPreview, setShowPrintPreview] = useState(false);
     // data for form
     const [selectedRow, setSelectedRow] = useState()
@@ -59,8 +54,11 @@ const MyDataGrid = ({props}) => {
     // enable/disable team,sheet dnd display - false by default
     const [teamsheetDnd, setTeamsheetDnd] = useState(false)
     const {team, setTeam, panel, setPanel, subs, setSubs} = useContext(TeamsheetContext);
-    const theme = useTheme();
-    const [teamsheets, players, lastTeamsheet, positions, fixtures] = LoadData();
+    const [fixture, setFixture] = useState({})
+    // const theme = useTheme();
+    const [lastTeamsheets, setLastTeamsheets] = useState([])
+
+    const [teamsheets, players, lastTeamsheet, positions, fixtures, fixturesWithNoTeamsheets] = LoadData();
 
     const [teamsheetPrepared, setTeamsheetPrepared] = useState(false)
 
@@ -85,10 +83,10 @@ const MyDataGrid = ({props}) => {
         // console.log("Team-sheet Cancel in App")
         setTeamsheetDnd(false)
     }
-    const onChange = useCallback((e) => {
-        const {value, id} = e.target;
-        setRowData({...rowData, [id]: value});
-    }, [rowData]);
+    // const onChange = useCallback((e) => {
+    //     const {value, id} = e.target;
+    //     setRowData({...rowData, [id]: value});
+    // }, [rowData]);
 
     const onGridReady = useCallback((params) => {
         setGridApi(params.api);
@@ -108,12 +106,14 @@ const MyDataGrid = ({props}) => {
         })
         setFilteredData(newFilteredData)
         // console.log("FilteredData-: " + filteredData);
-    }, [gridApi, filteredData]);
+    }, [gridApi]);
 
     const getSelectedRow = useCallback(() => {
-        const selectedNodes = gridApi.getSelectedRows();
-        if (selectedNodes.length === 1) {
-            setSelectedRow(selectedNodes[0]);
+        if (gridApi) {
+            const selectedNodes = gridApi.getSelectedRows();
+            if (selectedNodes.length === 1) {
+                setSelectedRow(selectedNodes[0]);
+            }
         }
     }, [gridApi]);
     const formActions = {
@@ -145,13 +145,13 @@ const MyDataGrid = ({props}) => {
         )
     }
     const handleEdit = useCallback((params) => {
-        if(props.type==="Teamsheet") {
+        if (props.type === Teamsheet) {
             prepareTeamsheetDnd("Edit", params.data.id.fixtureId)
         } else {
             getSelectedRow();
             handleOpen();
         }
-    }, [getSelectedRow, handleOpen]);
+    }, [getSelectedRow(), handleOpen]);
     // Delete Button in Grid
     const DeleteButton = (params) => {
         message = GRID_ROW_DELETE;
@@ -170,10 +170,10 @@ const MyDataGrid = ({props}) => {
         )
     }
     const handleShowDeleteModal = () => {
-        if ( props.type === "Teamsheet" ) {
-            setShowDeleteModal( false )
+        if (props.type === Teamsheet) {
+            setShowDeleteModal(false)
         } else {
-            setShowDeleteModal( true )
+            setShowDeleteModal(true)
         }
     }
     const prepareTeamsheetDnd = (action,id) => {
@@ -218,7 +218,7 @@ const MyDataGrid = ({props}) => {
 
         for (let i = 0; i < 15; i++) {
             if (!team[i]) {
-                filler.position = positions[i+1]
+                filler.position = positions[i + 1]
                 team[i] = filler
             }
         }
@@ -228,44 +228,51 @@ const MyDataGrid = ({props}) => {
     // console.log("Team: " + JSON.stringify(team))
 
     // Add Button
-    const AddButton = (params) => {
-        return (
-            // positions and pitchgrids are reference data and dont need add/delete operations
-            showAddButton(params.type) ?
-                <Grid align="right">
-                    <Button onClick={() => handleAdd(params)}
-                            variant="contained"
-                            color="primary"
-                    >{props.messages.add}</Button>
-                </Grid>
-                :
-                <Grid align="right">
-                    <Button disabled={true} onClick={() => handleOpen(params)}
-                            variant="contained"
-                            color="primary"
-                    >NO ADDITION</Button>
-
-                </Grid>
-
-        );
+    const AddButton = (params, messages) => {
+        switch (params.type) {
+            case Pitchgrid:
+            case Position:
+                return (
+                    <Grid align="right">
+                        <Button disabled={true} onClick={() => handleOpen(params)}
+                                variant="contained"
+                                color="primary"
+                        >NO ADDITION</Button>
+                    </Grid>
+                )
+            case Teamsheet:
+                return lastTeamsheet && (
+                    <FixtureSelect
+                        messages={props.messages}
+                        fixtures={fixturesWithNoTeamsheets}
+                        handleAdd={handleAdd}
+                        params={params}
+                        fixture={fixture}
+                        setFixture={setFixture}
+                        lastTeamsheets={lastTeamsheet}
+                        setLastTeamsheets={setLastTeamsheets}
+                    />
+                )
+            default:
+                return (
+                    <Grid align="right">
+                        <Button onClick={() => handleAdd(params)}
+                                variant="contained"
+                                color="primary"
+                        >{props.messages.add}</Button>
+                    </Grid>
+                )
+        }
     };
     const handleAdd = (params) => {
-        // check if teamsheet
-        // if teamsheet
-        // check if rows === 0 or > 30 - then set filter.
-        // get players
-        //
-        if(params.type==="Teamsheet") {
+        if (params.type === Teamsheet) {
             prepareTeamsheetDnd("Add")
-
         } else {
-            setSelectedRow( { ...props.initialValue } )
-            handleOpen( params )
+            setSelectedRow({...props.initialValue})
+            handleOpen(params)
         }
-
     }
     // // when to show buttons
-    const showAddButton          = (type) => { return !(type === Position || type === Pitchgrid)   }
     const showDeleteButton       = (type) => { return !(type === Position || type === Pitchgrid)   }
     const showPrintPreviewButton = (type) => { return  (type === Teamsheet) }
     //
@@ -285,7 +292,7 @@ const MyDataGrid = ({props}) => {
         )
     }
     const handlePrintModal = () => { // display the report modal if a filter has been applied
-        if (filteredData === [] || filteredData.length == 0) {
+        if (filteredData === [] || filteredData.length === 0) {
             console.log("Filtered Data is Empty")
             message = "Filter Teamsheet to a specific Fixture Date using Grid"
             setShowFilterModal(true)
@@ -319,14 +326,12 @@ const MyDataGrid = ({props}) => {
     useEffect(() => {
         setRowData(data);
     }, [data]);
-
     useEffect(() => {
         getData(props.methods.list, axiosApi, handleClose)
     }, []);
-
     useEffect(() => {
         if (team.length > 0 && panel.length > 0 && subs.length > 0) {
-            console.log("MyDataGrid: ", team[0].player, panel[0], subs[0].player)
+            console.log("000-MyDataGrid: ", team[0].player, panel[0], subs[0].player)
         }
     }, [team, panel, subs]);
 
@@ -392,12 +397,6 @@ const MyDataGrid = ({props}) => {
     //     maxWidth: '1600px',
     // };
 
-    // if (teamsheetDnd)
-    if (team && team.length && panel && panel.length && subs && subs.length) {
-        console.log("MyDataGrid: ", team[0].player, panel[0], subs[0].player);
-    } else {
-        console.log("One or more of the arrays is empty or undefined.");
-    }
     return (
         !loading ? <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">
             {/* Use fragment to Keep buttons on same line above grid */}
@@ -407,7 +406,7 @@ const MyDataGrid = ({props}) => {
                     <PrintPreviewButton {...props} gridApi={gridApi}/>
                     {exportType && setExportType &&
                         <Export exportType={exportType} setExportType={setExportType} gridApi={gridApi}/>}
-                    <AddButton {...props}/>
+                    <AddButton {...props}  />
                 </div>
             </Fragment>
 

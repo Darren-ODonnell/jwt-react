@@ -10,15 +10,9 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
 
     const [data, error, loading, axiosApi] = useAxios();
 
-    useEffect(() => {
-        console.log("TeamnsheetDnd-UseEffect - Team: ", team[0].player)
-    }, [team]);
-    useEffect(() => {
-        console.log("TeamnsheetDnd-UseEffect - Panel: ", panel[0])
-    }, [panel]);
-    useEffect(() => {
-        console.log("TeamnsheetDnd-UseEffect - subs: ", subs[0].player)
-    }, [subs]);
+    // useEffect(() => { console.log("001-TeamnsheetDnd-UseEffect - Team: ", team[0].player) },[team]);
+    // useEffect(() => { console.log("001-TeamnsheetDnd-UseEffect - Panel: ", panel[0])    }  ,[panel]);
+    // useEffect(() => { console.log("001-TeamnsheetDnd-UseEffect - subs: ", subs[0].player) },[subs]);
 
     const findPlayer = (id) => {
         const idx1 = panel.findIndex(p => p.id === id)
@@ -81,6 +75,7 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
     }
     // process drop onto the panel or subs container rather than onto a player
     const onDropContainer = (droppedBoxId, droppedBoxIndex, droppedBoxType, container) => {
+
         const [sourceIdx, setSource, sourcePlayer, arrayStr] = findPlayer(droppedBoxId)
         const dest = container === "panel" ? panel : container === "subs" ? subs : team
         const setDest = dest === panel ? setPanel : dest === subs ? setSubs : setTeam
@@ -89,14 +84,40 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
         // skip over any attempt to move onto same container
         if (source === dest) return
 
-        return
-        // don't move around empty objects
-        if (checkPlayer(source[sourceIdx]) === undefined) return
 
-        if(container==="panel") {
-            moveTeamPlayer( sourceIdx,-1, setSource,setPanel, droppedBoxId,-1, source,panel)
+        // check for empty player
+        if (container === "panel") if (source[sourceIdx].player.id === -1) return
+        if (container === "subs") if (source[sourceIdx].player.id === -1) return
+        if (container === "team") if (source[sourceIdx].id === -1) return
+
+        // move team to panel
+        // move team to subs
+        // move subs to panel
+        // move panel to subs
+
+        if (source === panel) {
+            if (source[sourceIdx].id === -1) return
+            // handle subs move
+
+        } else if (source === subs) {
+            if (source[sourceIdx].player.id === -1) return
+            // handle panel move
+
+        } else if (source === team) {
+            if (source[sourceIdx].player.id === -1) return
+            if (dest === subs) {
+
+            }
+            if (dest === panel) {
+
+            }
+        }
+
+
+        if (container === "panel") {
+            moveTeamPlayer(sourceIdx, -1, setSource, setPanel, droppedBoxId, -1, source, panel)
         } else { // must be "subs"
-            moveTeamPlayer( sourceIdx,-1, setSource,setSubs, droppedBoxId,-1, source, subs)
+            moveTeamPlayer(sourceIdx, -1, setSource, setSubs, droppedBoxId, -1, source, subs)
         }
     }
     const checkPlayer = (source) => {
@@ -131,17 +152,15 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
         const sourcePlayer = {...team[sourceIdx].player};
         const destPlayer = {...panel[destIdx]};
 
-        console.log("SwapTeamWithPanel-BeforeStateChange - Team/Panel: ", team[0].player, panel[0])
+        console.log(sourcePlayer === team[sourceIdx].player
+            ? "source players in same memory"
+            : "sourcep players NOT in same memory")
+
+
+        console.log("5-SwapTeamWithPanel-BeforeStateChange - Team/Panel: ", team[0].player, panel[0])
 
         // Don't move an empty position
         if (sourceId === -1) return;
-
-        setTeam((prevTeam) => {
-            const newTeam = [...prevTeam]
-            // Update the player in the new array
-            newTeam[sourceIdx].player = destPlayer //{ ...destPlayer, id: destPlayer.id };
-            return newTeam;
-        });
 
         setPanel((prevPanel) => {
             // Create a new array without directly modifying the previous state
@@ -150,7 +169,16 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
             newPanel[destIdx] = sourcePlayer //  { ...sourcePlayer, id: sourcePlayer.id };
             return newPanel;
         });
-        console.log("SwapTeamWithPanel-AfterStateChange - Team/Panel: ", team[0].player, panel[0])
+
+        setTeam((prevTeam) => {
+            const newTeam = [...prevTeam]
+            // Update the player in the new array
+            newTeam[sourceIdx].player = destPlayer //{ ...destPlayer, id: destPlayer.id };
+            return newTeam;
+        });
+
+
+        console.log("6-SwapTeamWithPanel-AfterStateChange - Team/Panel: ", team[0].player, panel[0])
 
     };
 
@@ -164,6 +192,11 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
 
         // don't move an empty position
         if (sourceId === -1) return
+
+        // copy onto empty area of container
+        if (destId === -1) {
+            // if subs and is empty - setup
+        }
 
         saveTeam(sourceIdx, destPlayer)
         saveSubs(destIdx, sourcePlayer)
@@ -232,8 +265,25 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
         const sourcePlayer = {...panel[sourceIdx]}
         const destPlayer = {}
 
-        savePanel(sourceIdx, destPlayer)
-        saveTeam(destIdx, sourcePlayer)
+        setPanel(prevPanel => {
+            const array = [...prevPanel]
+            if (destPlayer) {
+                array.splice(sourceIdx, 1)
+            } else {
+                array[sourceIdx] = {...destPlayer, id: destPlayer.id}
+            }
+            return array
+        })
+
+        setTeam(prevTeam => {
+            const array = [...prevTeam]
+            array[destIdx].player = {...sourcePlayer, id: sourcePlayer.id}
+            return array
+        })
+
+
+        // savePanel(sourceIdx, destPlayer)
+        // saveTeam(destIdx, sourcePlayer)
     }
     const saveSubs = (idx, player) => {
         setSubs(prevSubs => {
@@ -280,16 +330,8 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
         const sourcePlayer = {...panel[sourceIdx]}
         const destPlayer = {...team[destIdx].player}
 
-        setPanel(prevPanel => {
-            const array = [...prevPanel]
-            array[sourceIdx] = {...destPlayer, id: destPlayer.id}
-            return array
-        })
-
-
-        // savePanel(sourceIdx, destPlayer)
-        // saveTeam(destIdx, sourcePlayer)
-
+        savePanel(sourceIdx, destPlayer)
+        saveTeam(destIdx, sourcePlayer)
     }
     const removePanelToSubs = (sourceId, destId) => {
         const sourceIdx = panel.findIndex(t => t.id === sourceId)
@@ -300,7 +342,6 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
 
         savePanel(sourceIdx, destPlayer)
         saveSubs(destIdx, sourcePlayer)
-
     }
     const swapPanelWithSubs = (sourceId, destId) => {
         const sourceIdx = panel.findIndex(t => t.id === sourceId)
@@ -316,6 +357,9 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
         const sourceIdx = panel.findIndex(t => t.id === sourceId);
         const destIdx = panel.findIndex(t => t.id === destId);
 
+        const sourcePlayer = {...panel[sourceIdx]}
+        const destPlayer = {...panel[destIdx]}
+
         setPanel(prevPanel => {
             // Create a new array without directly modifying the previous state
             const newPanel = prevPanel.map(player => ({...player}));
@@ -325,6 +369,7 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
             newPanel[sourceIdx] = newPanel[destIdx];
             newPanel[destIdx] = temp;
 
+            // save the updated array to panel
             return newPanel;
         });
     }
@@ -354,10 +399,23 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
         const destIdx = team.findIndex(t => t.player.id === destId)
 
         const sourcePlayer = {...subs[sourceIdx].player}
-        const destPlayer = {...team[destIdx].player}
+        const destPlayer = {}
 
-        saveSubs(sourceIdx, destPlayer)
-        saveTeam(destIdx, sourcePlayer)
+        setSubs(prevSubs => {
+            const array = [...prevSubs]
+            if (destPlayer) {
+                array.splice(sourceIdx, 1)
+            } else {
+                array[sourceIdx].player = {...destPlayer, id: destPlayer.id}
+            }
+            return array
+        })
+
+        setTeam(prevTeam => {
+            const array = [...prevTeam]
+            array[destIdx].player = {...sourcePlayer, id: sourcePlayer.id}
+            return array
+        })
 
     }
     const swapSubsWithTeam = (sourceId, destId) => {
@@ -383,12 +441,13 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
             newSubs[sourceIdx].player = newSubs[destIdx].player;
             newSubs[destIdx].player = temp;
 
+            // save updated array to subs
             return newSubs;
         });
     }
 
     const onDrop = (box, destId, item) => {
-        console.log("OnDrop-SourceP/DestP-beforeFindIndex - Team/Panel: ",
+        console.log("1-OnDrop-SourceP/DestP-beforeFindIndex - Team/Panel: ",
             team[0].player, panel[0])
 
         const sourceId = item.player.id;
@@ -396,14 +455,14 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
         const dest = findArray(destId);
 
         (source === team)
-            ? console.log("OnDrop-SourceP/DestP-afterFindIndex-Team: ",
+            ? console.log("2-OnDrop-SourceP/DestP-afterFindIndex-Team: ",
                 team.find(s => s.player.id === sourceId).player, dest.find(d => d.id === destId))
-            : console.log("OnDrop-SourceP/DestP-afterFindIndex-Panel: ",
+            : console.log("2-OnDrop-SourceP/DestP-afterFindIndex-Panel: ",
                 panel.find(s => s.id === sourceId), dest.find(d => d.id === destId))
 
         // console.log("OnDrop-Source/Dest: ",source,dest)
-        console.log("OnDrop-source: ", source === team ? "team" : source === panel ? "panel" : "subs")
-        console.log("OnDrop-dest: ", dest === team ? "team" : dest === panel ? "panel" : "subs")
+        console.log("3-OnDrop-source: ", source === team ? "team" : source === panel ? "panel" : "subs")
+        console.log("4-OnDrop-dest: ", dest === team ? "team" : dest === panel ? "panel" : "subs")
 
 
         if (source === team) {
@@ -427,7 +486,7 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
             if (dest === team && destId >= 0) swapSubsWithTeam(sourceId, destId)
             if (dest === subs) moveSubsToSubs(sourceId, destId)
         }
-        console.log("OnDrop-SourceP/DestP-AtEnd - Team/Panel: ", team[0].player, panel[0])
+        console.log("7-OnDrop-SourceP/DestP-AtEnd - Team/Panel: ", team[0].player, panel[0])
 
     }
 
@@ -446,7 +505,7 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
         return array
     }
 
-    console.log("Just before TeamsheetContainer")
+    console.log("8-Just before TeamsheetContainer - Team/Panel: ", team[0].player, panel[0])
     return (
         <div className="App">
             <TeamsheetContainer onDrop={onDrop} onDropContainer={onDropContainer}
