@@ -48,6 +48,8 @@ const FixtureSelect = (props) => {
                      height: 36,
                      width: 250,
                      marginTop: 0,
+                     display: 'flex',
+                     alignItems: 'center',
                      whitespace: 'normal',
                      overflowWrap: 'break-word',
                   }}
