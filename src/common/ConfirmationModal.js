@@ -25,13 +25,17 @@ function ConfirmationModal({showModal, setShowModal, message, title, onConfirm, 
     const showDeleteElements = useCallback(() => {
         switch(type) {
             case "Delete" :  return true;
-            case "Filter" :  return false;
+            case "Filter" :
+               return false;
+           default:
         }
     },[type])
     const showFilterElements = useCallback(() => {
         switch(type) {
             case "Delete" :  return false;
-            case "Filter" :  return true;
+           case "Filter" :
+              return true;
+           default:
         }
     },[type])
 

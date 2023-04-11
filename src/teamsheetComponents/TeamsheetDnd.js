@@ -494,7 +494,6 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
         console.log("FindArray-BeforeFindIndex ", team[0].player, panel[0])
         const idx1 = panel.findIndex(p => p.id === id)
         const idx2 = subs.findIndex(p => p.player.id === id)
-        const idx3 = team.findIndex(p => p.player.id === id)
 
         const array = idx1 >= 0
             ? panel

@@ -17,7 +17,7 @@ export function getUniqueId(): string {
 
 // ignore when users click away from modal
 export const handleClickAway = () => {
-    return
+
 }
 
 export function getSeasons() { return [new Date().getFullYear()-1, new Date().getFullYear(), new Date().getFullYear()+1] }
