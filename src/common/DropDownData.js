@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import {COMPETITION_URLS} from "../entities/competitions";
 import {PLAYER_URLS} from "../entities/players";
 import {CLUB_URLS} from "../entities/clubs";
@@ -67,7 +67,11 @@ const DropdownData = () => {
     const position = useAxios2(POSITION_URLS.list);
     const pitchgrid = useAxios2(PITCH_GRID_URLS.list);
     const statname = useAxios2(STAT_NAME_URLS.list);
-
+    const renderCount = useRef(0);
+    useEffect(() => {
+        renderCount.current++;
+        console.log('Render count - DropDownData:', renderCount.current);
+    });
     const pitchgrids = pitchgrid ? pitchgrid.map(pg => {
         return pg.id
     }) : []

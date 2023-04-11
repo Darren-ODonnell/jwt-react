@@ -1,5 +1,5 @@
 import {Button, FormControl, MenuItem, Select} from "@mui/material";
-import React, {useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {useTheme} from "@mui/material/styles";
 import './Export.css'
 import * as FileSaver from 'file-saver'
@@ -7,9 +7,12 @@ import * as XLSX from "xlsx";
 
 
 const Export = ({exportType, setExportType, gridApi }) => {
-
+    const renderCount = useRef(0);
+    useEffect(() => {
+        renderCount.current++;
+        console.log('Render count - Export:', renderCount.current);
+    });
     const theme = useTheme()
-
     const handleExport = async ( exportType ) => {
         const columnApi = gridApi.gridOptionsService.columnApi
         if ( gridApi && columnApi ) {
@@ -21,8 +24,8 @@ const Export = ({exportType, setExportType, gridApi }) => {
             const columnsToInclude = displayedColumns.filter( ( column ) => !columnsToExclude.includes( column.getColDef().headerName ) );
 
             exportType === 'CSV'
-                ? exportCSV( columnsToInclude, gridApi)
-                : exportExcel( columnsToInclude, gridApi)
+                ? await exportCSV( columnsToInclude, gridApi )
+                : await exportExcel( columnsToInclude, gridApi )
         }
     }
     const exportCSV = async ( columnsToInclude, gridApi ) => {
@@ -76,7 +79,7 @@ const Export = ({exportType, setExportType, gridApi }) => {
     }
 
     const ExportDropDown = () => {
-        // console.log("Export Page - dropdown")
+        console.log("Export Page - dropdown")
         return (
             <>
                 <FormControl variant="outlined" color="primary">
@@ -97,7 +100,7 @@ const Export = ({exportType, setExportType, gridApi }) => {
         )
     }
     const ExportActionButton = () => {
-        // console.log("Export Page - action")
+        console.log("Export Page - action")
         return (
             <>
                 <Button className="export-button"

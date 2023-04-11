@@ -32,16 +32,6 @@ export const REGISTERED = booleans;
 export const SUCCESS = booleans
 export const AVAILABILITY = ["Yes", "No", "County Senior", "County Minor", "County Junior", "Injured"]
 export const HALF = [1, 2]
-// export const COMPETITIONS = ['League Cup', "Summer Cup", "Championship"]
-// export const POSITIONS = [
-//     'Goal Keeper',
-//     'Left Full Back', 'Full Back', 'Right Full Back',
-//     'Left Half Back', 'Centre Back', 'Right Half Back',
-//     'Left Midfield', 'Right Midfield',
-//     'Left Half Forward', 'Centre Forward', 'Right Half Forward',
-//     'Left Full Forward', 'Full Forward', 'Right Full Forward',
-//     'Substitute',
-// ]
 
 export const GRID_ROW_DELETE = 'Are you sure you want to delete this item?'
 export const REPORT_PRINT_PREVIEW = "Print Preview ?"

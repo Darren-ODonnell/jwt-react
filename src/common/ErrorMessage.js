@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Alert, Button } from "react-bootstrap";
 import {useLocation, useNavigate, useParams,  BrowserRouter } from "react-router-dom";
 
 
 export const ErrorMessage = (props) => {
     const [show, setShow] = useState(true);
-
+    const renderCount = useRef(0);
+    useEffect(() => {
+        renderCount.current++;
+        console.log('Render count - ErrorMessage:', renderCount.current);
+    });
 
     function onClick() {
         setShow(false);

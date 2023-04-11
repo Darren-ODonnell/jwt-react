@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useReducer} from "react";
+import React, { useContext, useEffect, useReducer, useRef } from "react";
 import {v4} from "uuid";
 
 import TeamsheetContainer from "./TeamsheetContainers";
@@ -9,11 +9,11 @@ const TeamsheetDnd = ({handleSave, handleCancel, methods}) => {
     const {panel, setPanel, subs, setSubs, team, setTeam} = useContext(TeamsheetContext);
 
     const [data, error, loading, axiosApi] = useAxios();
-
-    // useEffect(() => { console.log("001-TeamnsheetDnd-UseEffect - Team: ", team[0].player) },[team]);
-    // useEffect(() => { console.log("001-TeamnsheetDnd-UseEffect - Panel: ", panel[0])    }  ,[panel]);
-    // useEffect(() => { console.log("001-TeamnsheetDnd-UseEffect - subs: ", subs[0].player) },[subs]);
-
+    const renderCount = useRef(0);
+    useEffect(() => {
+        renderCount.current++;
+        console.log('Render count - TeamsheetDnd:', renderCount.current);
+    });
     const findPlayer = (id) => {
         const idx1 = panel.findIndex(p => p.id === id)
         const idx2 = subs.findIndex(p => p.player.id === id)

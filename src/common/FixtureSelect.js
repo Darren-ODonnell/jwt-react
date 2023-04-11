@@ -1,33 +1,38 @@
 import {FormControl, MenuItem, Select} from "@mui/material";
-import React, {useEffect} from "react";
+import React, { useEffect, useRef } from "react";
 import {useTheme} from "@mui/material/styles";
 
 const FixtureSelect = (props) => {
+    const renderCount = useRef(0);
 
+    useEffect(() => {
+        renderCount.current++;
+        console.log('Render count - FixtureSelect:', renderCount.current);
+    });
     useEffect(() => {
         console.log("Fixture: ", props.fixture)
     }, [props.fixture])
 
-    if (!props.fixtures) return // no fixtures found with no teamsheets
+    if (!props.fixtures) return // no fixtures found with teamsheets
 
     const handleSelectEvent = (event) => {
         const selectedValue = event.target.value;
         const selectedFixture = props.fixtures.find((fixture) => fixture.fixtureDate === selectedValue);
         props.setFixture(selectedFixture);
 
+        // The last teamsheet will ref the last fixture
+        // fixture of last teamsheets changed to current fixture
         const updatedTeamsheets = props.lastTeamsheets.map((teamSheet) => {
-            return {
-                ...teamSheet,
-                fixture: selectedFixture,
-            };
+            return { ...teamSheet,  fixture: selectedFixture  };
         });
 
+        // update state
         props.setLastTeamsheets(updatedTeamsheets)
         console.log("Selected Fixture Date: ", selectedFixture)
     };
 
     const FixtureDropDown = (props) => {
-        // console.log("Export Page - dropdown")
+        console.log("Export Page - dropdown")
         const theme = useTheme()
 
         return (

@@ -23,12 +23,16 @@ import TeamsheetDnd from "../teamsheetComponents/TeamsheetDnd";
 import {LoadData} from "../common/DropDownData";
 import '../App.css'
 import FixtureSelect from "../common/FixtureSelect";
+import { useTheme } from "@mui/material/styles";
 
 
 const MyDataGrid = ({props}) => {
     const [gridApi, setGridApi] = useState(null);
     const gridRef = useRef(null);
     const [paginationEnabled, setPaginationEnabled] = useState(true);
+    // used with delete to confirm the record is to be deleted
+    const [deleteNode, setDeleteNode] = useState(false)
+    // const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [showPrintPreview, setShowPrintPreview] = useState(false);
     // data for form
     const [selectedRow, setSelectedRow] = useState()
@@ -62,6 +66,11 @@ const MyDataGrid = ({props}) => {
 
     const [teamsheetPrepared, setTeamsheetPrepared] = useState(false)
 
+    const renderCount = useRef(0);
+    useEffect(() => {
+        renderCount.current++;
+        console.log('Render count - MyDataGrid:', renderCount.current);
+    });
     let message = "";
 
     const handleOpen = useCallback(() => {
@@ -74,7 +83,6 @@ const MyDataGrid = ({props}) => {
         setSelectedRow(event.node.data);
     }, []);
     // teamsheet DnD handling
-
     const handleTeamsheetSave = () => {
         // console.log("Team-sheet Save in App")
         setTeamsheetDnd(false)
@@ -83,10 +91,10 @@ const MyDataGrid = ({props}) => {
         // console.log("Team-sheet Cancel in App")
         setTeamsheetDnd(false)
     }
-    // const onChange = useCallback((e) => {
-    //     const {value, id} = e.target;
-    //     setRowData({...rowData, [id]: value});
-    // }, [rowData]);
+    const onChange = useCallback((e) => {
+        const {value, id} = e.target;
+        setRowData({...rowData, [id]: value});
+    }, [rowData]);
 
     const onGridReady = useCallback((params) => {
         setGridApi(params.api);
@@ -151,7 +159,7 @@ const MyDataGrid = ({props}) => {
             getSelectedRow();
             handleOpen();
         }
-    }, [getSelectedRow(), handleOpen]);
+    }, []);
     // Delete Button in Grid
     const DeleteButton = (params) => {
         message = GRID_ROW_DELETE;
@@ -280,15 +288,15 @@ const MyDataGrid = ({props}) => {
     const PrintPreviewButton = (params) => {
         message = REPORT_PRINT_PREVIEW
         return (
-            showPrintPreviewButton(props.type) && (
-                <Grid align="left">
-                    <Button onClick={(params) => handlePrintModal(params, filteredData)}
-                            variant="contained"
-                            color="primary"
-                    >PrintPreview</Button>
-                    };
-                </Grid>
-            )
+          showPrintPreviewButton(props.type) && (
+            <Grid align="left">
+                <Button onClick={(params) => handlePrintModal(params, filteredData)}
+                        variant="contained"
+                        color="primary"
+                >PrintPreview</Button>
+                };
+            </Grid>
+        )
         )
     }
     const handlePrintModal = () => { // display the report modal if a filter has been applied
@@ -329,13 +337,13 @@ const MyDataGrid = ({props}) => {
     useEffect(() => {
         getData(props.methods.list, axiosApi, handleClose)
     }, []);
-    useEffect(() => {
-        if (team.length > 0 && panel.length > 0 && subs.length > 0) {
-            console.log("000-MyDataGrid: ", team[0].player, panel[0], subs[0].player)
-        }
-    }, [team, panel, subs]);
 
-
+    // useEffect(() => {
+    //     if (team.length > 0 && panel.length > 0 && subs.length > 0) {
+    //         console.log("000-MyDataGrid: ", team[0].player, panel[0], subs[0].player)
+    //     }
+    // }, [team, panel, subs]);
+    //
     // useEffect(() => {
     //     if(team && team.length)
     //         console.log("MyDataGrid-UseEffect - Team: " , team[0].player)    }, [team]);
@@ -358,21 +366,16 @@ const MyDataGrid = ({props}) => {
         onRowSelected: onRowSelected,
         paginationPageSize: 10,
         columnDefs: [...props.columnDefs, formActions],
-        // onSelectionChanged: handleSelectionChanged,
         rowSelection: "multiple",
     }
     const formParams = {
-        // index: props.index,        // check if key above can be used on its own...
-        // onClose: handleClose,
+
         handleClose : handleClose,
         onClose     : handleClose,
-        // onSubmit: handleSubmit,
+
         open        : open,
         setOpen     : handleOpen,         // dummy value to test index .. props.index previous
-        // data: selectedRow,
         rowData     : {...selectedRow},
-        // values:selectedRow,
-        // onChange: onChange,
         methods     : props.methods,
         setRowData  : setRowData,
         colDefs     : props.columnDefs,
@@ -382,7 +385,7 @@ const MyDataGrid = ({props}) => {
         entity      : props.type,
         loading     : loading,
         error       : error,
-        // validate    : validate,
+
     }
     const handleDeleteConfirmation = () => {
         if (props.type === "Teamsheet") {
@@ -392,10 +395,6 @@ const MyDataGrid = ({props}) => {
             setDeleteConfirmation(true)
         }
     }
-
-    // const dialogPaperStyle = {
-    //     maxWidth: '1600px',
-    // };
 
     return (
         !loading ? <div className="ag-theme-alpine-dark datagrid ag-input-field-input ag-text-field-input">

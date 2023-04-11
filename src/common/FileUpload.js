@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {useLocation} from "react-router-dom";
 import {TextField} from "@mui/material";
 import axios from "axios";
@@ -6,7 +6,11 @@ import axios from "axios";
 function FileUpload() {
     const [file, setFile] = useState(null);
     const [error, setError] = useState(null);
-
+    const renderCount = useRef(0);
+    useEffect(() => {
+        renderCount.current++;
+        console.log('Render count - FileUpload:', renderCount.current);
+    });
     const types = ["text/csv"];
     const location = useLocation();
 
