@@ -61,3 +61,22 @@
 body {
     margin: 0;
 }
+
+.grid-button {
+    background-color: #007bff;
+    color: #fff;
+    height: 38px;
+}
+
+.grid-button-hover {
+
+}
+button:hover {
+    background-color: green !important;
+    color: #fff;
+}
+/*button {*/
+/*    background-color: #007bff;*/
+/*    color: #fff;*/
+/*    height: 38px;*/
+/*}*/
