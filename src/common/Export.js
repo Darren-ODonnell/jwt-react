@@ -9,10 +9,10 @@ import './Export.css'
 
 const Export = ( { exportType, setExportType, gridApi } ) => {
    const renderCount = useRef( 0 );
-   useEffect( () => {
+   useEffect(() => {
       renderCount.current++;
-      console.log( 'Render count - Export:', renderCount.current );
-   } );
+      console.log('Render count - Export:', renderCount.current);
+   });
    const theme = useTheme()
    const handleExport = async ( exportType ) => {
       const columnApi = gridApi.gridOptionsService.columnApi
@@ -87,10 +87,13 @@ const Export = ( { exportType, setExportType, gridApi } ) => {
             <FormControl variant="outlined" color="primary">
                <Select value={ exportType } defaultValue={ exportType }
                        onChange={ ( event ) => setExportType( event.target.value ) }
-                       sx={ {
-                          background: '#007bff',
+                       sx={{
+                          background: theme.palette.primary.main,
                           color: '#fff',
-                          height: 38
+                          height: 38,
+                          '&:hover': {
+                             backgroundColor: 'green',
+                          },
                        } }
 
 

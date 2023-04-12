@@ -1,7 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useTheme } from "@mui/material/styles";
-import './fixture-select.css'
 
 const FixtureSelect = ( props ) => {
    const renderCount = useRef( 0 );
@@ -38,28 +37,33 @@ const FixtureSelect = ( props ) => {
       return (
          <>
             <FormControl variant="outlined" color="primary">
-               <InputLabel id="fixture-date-label" className="select-label">CREATE TEAMSHEET FOR DATE</InputLabel>
-               <Select  clasName="grid-button" //value={ exportType } defaultValue={exportType}
-                  onChange={ ( event ) => handleSelectEvent( event ) }
-                  defaultValue=""
-                     sx={{
-                        background: theme.palette.primary.main,
-                        height: 40, /* adjust this value to match the label height */
-                        width: 270,
-                     }}
-                     MenuProps={{
-               sx: {
-                  marginTop: '-10px',
-                  '& .MuiMenuItem-root:hover': {
-                     backgroundColor: 'green', /* replace with desired color */
-                  },
-               },
-            }}
-               >{ props.fixtures.map( ( f ) => (
-                     <MenuItem key={ f.fixtureDate } value={ f.fixtureDate }>{ f.fixtureDate }</MenuItem>
+               <InputLabel className="select-label  "> CREATE TEAMSHEET FOR DATE </InputLabel>
+
+               <Select className="custom-label"  //value={ exportType } defaultValue={exportType}
+                       onChange={(event) => handleSelectEvent(event)}
+                       defaultValue=""
+                       sx={{
+                          background: theme.palette.primary.main,
+                          height: 40, /* adjust this value to match the label height */
+                          width: 270,
+                          '&:hover': {
+                             backgroundColor: 'green',
+                          },
+                       }}
+                       MenuProps={{
+                          sx: {
+                             marginTop: '-10px',
+                             '& .MuiMenuItem-root:hover': {
+                                backgroundColor: 'green',
+                             },
+                          },
+                       }}
+               >{props.fixtures.map((f) => (
+                     <MenuItem key={f.fixtureDate} value={f.fixtureDate}>{f.fixtureDate}</MenuItem>
                   )
-               ) }
+               )}
                </Select>
+
             </FormControl>
          </>
       )

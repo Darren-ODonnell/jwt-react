@@ -62,21 +62,52 @@ body {
     margin: 0;
 }
 
-.grid-button {
-    background-color: #007bff;
-    color: #fff;
-    height: 38px;
-}
-
-.grid-button-hover {
-
-}
 button:hover {
     background-color: green !important;
     color: #fff;
 }
-/*button {*/
-/*    background-color: #007bff;*/
-/*    color: #fff;*/
-/*    height: 38px;*/
-/*}*/
+
+.select-label {
+    color: #fff !important;
+    white-space: normal;
+    word-wrap: break-word;
+    line-height: 1.2em;
+    max-height: 2.4em; /* adjust this value to your desired height */
+    overflow: hidden;
+    margin-top: -6px;
+    margin-left: -5px;
+    font-size: 16px;
+
+}
+
+.select-label:hover {
+    background-color: #00ffff !important;
+    color: #fff;
+}
+
+/* In your stylesheet */
+:root {
+    --primary-color: ${theme.palette.primary.main};
+    --primary-text-color: ${theme.palette.primary.contrastText};
+    --primary-color: ${theme.palette.primary.main};
+
+    --secondary-color: ${theme.palette.primary.main};
+    --primary-text-color: ${theme.palette.primary.contrastText};
+    --secondary-color: ${theme.palette.secondary.main};
+}
+
+/*------------Export Button---------------*/
+.export-button {
+    background: var(--secondary-color);
+    color: var(--primary-text-color);
+    height: 38px;
+    margin-left: 10px;
+}
+
+.export-button:hover {
+    color: var(--primary-text-color);
+    background-color: green !important;
+}
+
+
+

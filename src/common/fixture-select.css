@@ -12,7 +12,7 @@
     line-height: 1.2em;
     max-height: 2.4em; /* adjust this value to your desired height */
     overflow: hidden;
-    margin-top: -5px;
+    margin-top: -6px;
     margin-left: -5px;
     font-size: 16px;
 
@@ -21,36 +21,3 @@
     background-color: #00ffff !important;
     color: #fff;
 }
-
-MuiSelect-root {
-    padding: 10px 14px; /* adjust these values to match the padding of the button */
-    line-height: 1.2em; /* adjust this value to fit the selected text within the button */
-}
-
-/*.MuiSelect-root {*/
-/*    padding: 10px 14px; !* adjust these values to match the padding of the button *!*/
-/*    line-height: 1.2em; !* adjust this value to fit the selected text within the button *!*/
-/*}*/
-
-/*.MuiOutlinedInput-notchedOutline {*/
-/*    border: none;*/
-/*}*/
-
-/*.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {*/
-/*    border: none;*/
-/*}*/
-
-/*.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {*/
-/*    border: none;*/
-/*}*/
-
-/*.MuiInputBase-input {*/
-/*    padding: 0;*/
-/*    color: #fff;*/
-/*    font-weight: bold;*/
-/*    overflow: hidden;*/
-/*    text-overflow: ellipsis;*/
-/*    white-space: nowrap;*/
-/*    height: 1.2em;*/
-/*    max-width: 100%;*/
-/*}*/

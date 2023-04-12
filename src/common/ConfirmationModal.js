@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {Button, Modal} from 'react-bootstrap';
 
-function ConfirmationModal({showModal, setShowModal, message, title, onConfirm, setConfirmation, type}) {
+function ConfirmationModal({showModal, setShowModal, setConfirmation, message, title, onConfirm, type}) {
     const renderCount = useRef(0);
     useEffect(() => {
         renderCount.current++;
         console.log('Render count - ConfirmationModal:', renderCount.current);
     });
-
 
     const handleConfirm = () => {
         let bool = true
@@ -30,6 +29,7 @@ function ConfirmationModal({showModal, setShowModal, message, title, onConfirm, 
            default:
         }
     },[type])
+
     const showFilterElements = useCallback(() => {
         switch(type) {
             case "Delete" :  return false;
