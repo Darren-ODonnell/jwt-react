@@ -54,6 +54,7 @@ export const useAxios2 = (url) => {
             setData(response.data);
         };
         fetchData().then(r => {
+
         })
         // } catch (err) {
         //     setError(err.message);
@@ -99,8 +100,8 @@ export const deleteData = (data, error, props, axiosApi, handleClose) => {
             handleClose();
         })
         .catch(err => {
-            // window.alert(error.message)
-            // console.log("Error: " + error.message)
+            window.alert(error.message)
+            console.log("Error: " + error.message)
             handleClose()
         })
 
@@ -115,8 +116,8 @@ export const getData = ({method, url}, axiosApi, handleClose) => {
         axiosInstance: instance,
         method: method,
         url: url,
-    }).then(() => {
-
+    }).then((response) => {
+        return response.data
     }).catch(err => {
         handleClose()
     })        // cancel subscription to useEffect
@@ -136,17 +137,43 @@ export const UpdateData = ({methods, axiosApi, rowData, error, formValues}) => {
     };
 
     return axiosApi(configObj)
-        .then((response) => {
-            rowData = response.data;
-            // console.log("Update: ", rowData);
-            // return rowData;
-        })
-        .catch(err => {
-            window.alert(err.message);
-            // console.log("Error: " + err .message);
-            // error = err.message
-            // return null;
-        });
+       .then((response) => {
+           return response.data;
+           // console.log("Update: ", rowData);
+           // return rowData;
+       })
+       .catch(err => {
+           window.alert(err.message);
+           // console.log("Error: " + err .message);
+           // error = err.message
+           // return null;
+       });
+};
+
+export const UpdateDataAll = ({methods, axiosApi, rowData, error, formValues}) => {
+    const user = AuthService.getCurrentUser();
+    AuthService.setAuthToken(user.accessToken);
+
+    const configObj = {
+        axiosInstance: instance,
+        ...methods.updateAll,
+        requestConfig: {
+            data: formValues
+        }
+    };
+
+    return axiosApi(configObj)
+       .then((response) => {
+           return response.data;
+           // console.log("Update: ", rowData);
+           // return rowData;
+       })
+       .catch(err => {
+           window.alert(err.message);
+           // console.log("Error: " + err .message);
+           // error = err.message
+           // return null;
+       });
 };
 
 export const AddData = ({methods, axiosApi, rowData, formValues}) => {
@@ -156,8 +183,8 @@ export const AddData = ({methods, axiosApi, rowData, formValues}) => {
     const configObj = {
         axiosInstance: instance,
         ...methods.add,
-        requestConfig:{
-            data: { ...formValues }
+        requestConfig: {
+            data: {...formValues}
         }
     };
 
@@ -165,17 +192,46 @@ export const AddData = ({methods, axiosApi, rowData, formValues}) => {
     console.log('configObj:', configObj);
 
     return axiosApi(configObj)
-        .then(response => {
-            rowData = response.data;
-            console.log("Add: ", response.data);
-            return rowData;
+       .then(response => {
+           rowData = response.data;
+           console.log("Add: ", response.data);
+           return rowData;
 
-        })
-        .catch(err => {
-             console.log("Error: " + err.message);
-            return null;
+       })
+       .catch(err => {
+           console.log("Error: " + err.message);
+           return null;
 
-        });
+       });
+};
+
+export const AddDataAll = ({methods, axiosApi, rowData, formValues}) => {
+    const user = AuthService.getCurrentUser();
+    AuthService.setAuthToken(user.accessToken);
+
+    const configObj = {
+        axiosInstance: instance,
+        ...methods.addAll,
+        requestConfig: {
+            data: {...formValues}
+        }
+    };
+
+    console.log('formValues:', formValues);
+    console.log('configObj:', configObj);
+
+    return axiosApi(configObj)
+       .then(response => {
+           rowData = response.data;
+           console.log("Add: ", response.data);
+           return rowData;
+
+       })
+       .catch(err => {
+           console.log("Error: " + err.message);
+           return null;
+
+       });
 };
 
 

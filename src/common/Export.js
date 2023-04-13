@@ -8,21 +8,21 @@ import * as XLSX from "xlsx";
 
 
 const Export = ( { exportType, setExportType, gridApi } ) => {
-   const renderCount = useRef( 0 );
-   useEffect(() => {
-      renderCount.current++;
-      console.log('Render count - Export:', renderCount.current);
-   });
+   // const renderCount = useRef( 0 );
+   // useEffect(() => {
+   //    renderCount.current++;
+   //    console.log('Render count - Export:', renderCount.current);
+   // });
    const theme = useTheme()
-   const handleExport = async ( exportType ) => {
+   const handleExport = async (exportType) => {
       const columnApi = gridApi.gridOptionsService.columnApi
-      if ( gridApi && columnApi ) {
+      if (gridApi && columnApi) {
          // Get an array of all displayed columns in the grid
          const displayedColumns = columnApi.getAllDisplayedColumns();
 
          // Filter out the Actions column
-         const columnsToExclude = [ 'Actions' ];
-         const columnsToInclude = displayedColumns.filter( ( column ) => !columnsToExclude.includes( column.getColDef().headerName ) );
+         const columnsToExclude = ['Actions'];
+         const columnsToInclude = displayedColumns.filter((column) => !columnsToExclude.includes(column.getColDef().headerName));
 
          exportType === 'CSV'
             ? await exportCSV( columnsToInclude, gridApi )
@@ -81,7 +81,7 @@ const Export = ( { exportType, setExportType, gridApi } ) => {
    }
 
    const ExportDropDown = () => {
-      console.log( "Export Page - dropdown" )
+      // console.log( "Export Page - dropdown" )
       return (
          <>
             <FormControl variant="outlined" color="primary">
@@ -108,7 +108,7 @@ const Export = ( { exportType, setExportType, gridApi } ) => {
       )
    }
    const ExportActionButton = () => {
-      console.log( "Export Page - action" )
+      // console.log( "Export Page - action" )
       return (
          <>
             <Button className="export-button"

@@ -406,34 +406,34 @@ const SubsContainer = ({onDrop, onDropContainer}) => {
                         nextRow += 60; // Increment nextRow by 60 for the next iteration
                         return (
                             <Box
-                                key={index}
-                                index={index}
-                                id={sub.player.id}
-                                player={sub.player}
-                                width={150}
-                                height={50}
-                                x={0}
-                                y={top}
-                                onDrop={onDrop}
-                                style={{marginLeft: "13px"}}
+                               key={index}
+                               index={index}
+                               id={sub.player.id}
+                               player={sub.player}
+                               width={150}
+                               height={50}
+                               x={0}
+                               y={top}
+                               onDrop={onDrop}
+                               style={{marginLeft: "13px"}}
                             />
                         );
                     })}
                 </Container>
             </>
         );
-    };
-const ActionContainer = ({team, subs, save, cancel}) => {
+};
+const ActionContainer = ({team, subs, save, handleCancel}) => {
 
     return (
-        <>
-        <Container className="action-container">
-            <div className="btn-group d-flex" role="group">
-                <Button className="btn but-secondary " onClick={cancel}>Cancel</Button>
-                <Button type="submit" className="btn but-primary " onClick={save}>Save</Button>
-            </div>
-        </Container>
-        </>
+       <>
+           <Container className="action-container">
+               <div className="btn-group d-flex" role="group">
+                   <Button className="btn but-secondary " onClick={handleCancel}>Cancel</Button>
+                   <Button type="submit" className="btn but-primary " onClick={save}>Save</Button>
+               </div>
+           </Container>
+       </>
     );
 };
 

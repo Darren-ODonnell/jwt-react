@@ -68,32 +68,30 @@ const MyDataGrid = ( { props } ) => {
    let message = "";
 
    const handleOpen = useCallback( () => {
-      setOpen( true );
-   }, [] );
-   const handleClose = useCallback( () => {
-      setOpen( false );
-   }, [] );
-   const onRowSelected = useCallback( ( event ) => {
-      setSelectedRow( event.node.data );
-   }, [] );
+      setOpen(true);
+   }, []);
+   const handleClose = useCallback(() => {
+      setOpen(false);
+   }, []);
+   const onRowSelected = useCallback((event) => {
+      setSelectedRow(event.node.data);
+   }, []);
+
    // teamsheet DnD handling
-   const handleTeamsheetSave = (data) => {
-      // console.log("Team-sheet Save in App")
-
-
-
-      setTeamsheetDnd( false )
-   }
+   // const handleTeamsheetSave = (data) => {
+   //    // console.log("Team-sheet Save in App")
+   //    setTeamsheetDnd( false )
+   // }
    const handleTeamsheetCancel = () => {
-      // console.log("Team-sheet Cancel in App")
-      setTeamsheetDnd( false )
+      console.log("Team-sheet Cancel in App")
+      setTeamsheetDnd(false)
    }
-   const onChange = useCallback( ( e ) => {
-      const { value, id } = e.target;
-      setRowData( { ...rowData, [ id ]: value } );
-   }, [ rowData ] );
+   const onChange = useCallback((e) => {
+      const {value, id} = e.target;
+      setRowData({...rowData, [id]: value});
+   }, [rowData]);
 
-   const onGridReady = useCallback( ( params ) => {
+   const onGridReady = useCallback((params) => {
       setGridApi( params.api );
       const gridApi = params.api;
       gridApi.addEventListener( 'rowSelected', function( event ) {
@@ -350,32 +348,42 @@ const MyDataGrid = ( { props } ) => {
    const togglePagination = () => {
       const pageSize = paginationEnabled ? 1000 : 10;
       setPaginationEnabled( !paginationEnabled );
-      gridApi.paginationSetPageSize( pageSize );
+      gridApi.paginationSetPageSize(pageSize);
    };
    const PaginationButton = () => {
       return (
-         <Button onClick={ togglePagination } style={{boxShadow:'0 4px 8px rgba(0, 0, 0, 0.2)'}}>
-            { paginationEnabled ? 'Disable Pagination' : 'Enable Pagination' }
+         <Button onClick={togglePagination} style={{boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)'}}>
+            {paginationEnabled ? 'Disable Pagination' : 'Enable Pagination'}
          </Button>
       )
    }
 
-   useEffect( () => {
-      console.log( "Teamsheets/LastTeamsheets: ", teamsheets, lastTeamsheets )
-   }, [ teamsheets, lastTeamsheets ] )
-   useEffect( () => {
-      renderCount.current++;
-      console.log( 'Render count - MyDataGrid:', renderCount.current );
-   } );
-   useEffect( () => {  setRowData( data );  }, [ data ] );
-   useEffect( () => {  getData( props.methods.list, axiosApi, handleClose )   }, [] );
+   // useEffect( () => {
+   //    console.log( "Teamsheets/LastTeamsheets: ", teamsheets, lastTeamsheets )
+   // }, [ teamsheets, lastTeamsheets ] )
+   // useEffect( () => {
+   //    renderCount.current++;
+   //    console.log( 'Render count - MyDataGrid:', renderCount.current );
+   // } );
+   useEffect(() => {
+      setRowData(data);
+   }, [data]);
+   useEffect(() => {
+      getData(props.methods.list, axiosApi, handleClose)
+   }, []);
+
+   // dummy method for now - this needs to be setup in each entity file
+   const validate = (values) => {
+      return true
+   }
+
 
    const gridParams = {
       ref: gridRef,
       gridApi: gridApi,
       onGridReady: onGridReady,
       onFilterChanged: handleFilterChanged,
-      rowData: props.gridLoader( rowData ),
+      rowData: props.gridLoader(rowData),
       defaultColDef: defaultColDef,
       pagination: true,
       messages: props.messages,
@@ -384,14 +392,14 @@ const MyDataGrid = ( { props } ) => {
       columnDefs: [ ...props.columnDefs, formActions ],
       rowSelection: "multiple",
    }
-   const formParams = {
 
+
+   const formParams = {
       handleClose: handleClose,
       onClose: handleClose,
-
       open: open,
       setOpen: handleOpen,         // dummy value to test index .. props.index previous
-      rowData: { ...selectedRow },
+      rowData: {...selectedRow},
       methods: props.methods,
       setRowData: setRowData,
       colDefs: props.columnDefs,
@@ -401,7 +409,7 @@ const MyDataGrid = ( { props } ) => {
       entity: props.type,
       loading: loading,
       error: error,
-
+      validate: validate,
    }
    const handleDeleteConfirmation = () => {
       if ( props.type === Teamsheet ) {
@@ -475,16 +483,11 @@ const MyDataGrid = ( { props } ) => {
                <DialogContent style={ dialogContentStyle }>
                   <TeamsheetDnd
                      // pass state to child component
-                     team={ team }
-                     panel={ panel }
-                     subs={ subs }
-                     setTeam={ setTeam }
-                     setPanel={ setPanel }
-                     setSubs={ setSubs }
                      // handleSave={ handleTeamsheetSave }
-                     handleCancel={ handleTeamsheetCancel }
+                     handleCancel={handleTeamsheetCancel}
                      setRowData={setRowData}
-                     teamsheetDnd={ teamsheetDnd }
+                     methods={props.methods}
+                     teamsheetDnd={teamsheetDnd}
                   />
                </DialogContent>
             </Dialog>
@@ -493,6 +496,7 @@ const MyDataGrid = ( { props } ) => {
    )
 };
 export default MyDataGrid;
+
 
 const dialogContentStyle = {
    width: 'auto',

@@ -3,10 +3,10 @@ import {Button, Modal} from 'react-bootstrap';
 
 function ConfirmationModal({showModal, setShowModal, setConfirmation, message, title, onConfirm, type}) {
     const renderCount = useRef(0);
-    useEffect(() => {
-        renderCount.current++;
-        console.log('Render count - ConfirmationModal:', renderCount.current);
-    });
+    // useEffect(() => {
+    //     renderCount.current++;
+    //     console.log('Render count - ConfirmationModal:', renderCount.current);
+    // });
 
     const handleConfirm = () => {
         let bool = true

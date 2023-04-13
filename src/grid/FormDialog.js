@@ -26,33 +26,33 @@ const FormDialog = ({
     let dropDownData = DropDownData()
 
     const handleFormSubmit = ({formValues, error}) => {
-        let valid = validate(formValues);
 
         console.log("FormValues: ", formValues);
 
         const request = {...methods.add, data: formValues};
-        if (valid) {
-            if (formValues.id) {
-                setOpen(false);
-                const request = methods.update;
-                UpdateData({methods, axiosApi, rowData, error, formValues, request})
-                    .then(res => {
-                        if (res) setRowData(res);
-                        if (error !== null) {
-                            return handleError(error.message);
-                        }
-                    });
-            } else {
-                setOpen(false);
-                AddData({methods, axiosApi, rowData, error, formValues, setOpen, setRowData, request}).then(res => {
-                    if (res) setRowData(res);
-                    if (error !== null) {
-                        return handleError(error.message);
-                    }
-                });
-            }
+
+        if (formValues.id) {
+            setOpen(false);
+            const request = methods.update;
+            UpdateData({methods, axiosApi, rowData, error, formValues, request})
+            // refreshPage()
+            // .then(res => {
+            //     if (res) setRowData(res);
+            //     if (error !== null) {
+            //         return handleError(error.message);
+            //     }
+            // });
+        } else {
+            setOpen(false);
+            AddData({methods, axiosApi, rowData, error, formValues, setOpen, setRowData, request}).then(res => {
+                if (res) setRowData(res);
+                if (error !== null) {
+                    return handleError(error.message);
+                }
+            });
         }
-        refreshPage()
+
+        // refreshPage()
     };
 
     // const handleFormSubmit = ({formValues, error}) => {
@@ -100,6 +100,7 @@ const FormDialog = ({
     if (Object.keys(formValues).length === 0) {
         return <div>Loading...</div>
     }
+
     const UpdateData = ({rowData, error, formValues}) => {
         const user = AuthService.getCurrentUser();
         AuthService.setAuthToken(user.accessToken);
@@ -114,12 +115,13 @@ const FormDialog = ({
 
         axiosApi(configObj)
             .then(response => {
-                rowData = response.data
+                // rowData = response.data
                 console.log("Update: ", rowData)
+                // setRowData(response.data)
             })
             .catch(err => {
-                window.alert(error.message)
-                console.log("Error: " + error.message)
+                window.alert(err.message)
+                console.log("Error: " + err.message)
                 handleClose()
             })
         // refresh grid
@@ -139,17 +141,17 @@ const FormDialog = ({
                 data: formValues,
             }
         }
-        // console.log('Before axiosApi call-Data:'+ data);
 
+        // console.log('Before axiosApi call-Data:'+ data);
         axiosApi(configObj)
             .then(response => {
                 handleClose()
-                rowData = response.data
+                // rowData = response.data
                 console.log("Add: ", response.data)
                 setRowData(response.data)
             })
             .catch(err => {
-                console.log("Error: " + error.message)
+                console.log("Error: " + err.message)
                 handleClose()
             })
         // refresh grid

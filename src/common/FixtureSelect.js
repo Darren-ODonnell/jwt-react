@@ -3,19 +3,19 @@ import React, { useEffect, useRef } from "react";
 import { useTheme } from "@mui/material/styles";
 
 const FixtureSelect = ( props ) => {
-   const renderCount = useRef( 0 );
+   // const renderCount = useRef( 0 );
+   //
+   // useEffect( () => {
+   //    renderCount.current++;
+   //    console.log( 'Render count - FixtureSelect:', renderCount.current );
+   // } );
 
-   useEffect( () => {
-      renderCount.current++;
-      console.log( 'Render count - FixtureSelect:', renderCount.current );
-   } );
+   if (!props.fixtures) return // no fixtures found with teamsheets
 
-   if ( !props.fixtures ) return // no fixtures found with teamsheets
-
-   const handleSelectEvent = ( event ) => {
+   const handleSelectEvent = (event) => {
       const selectedValue = event.target.value;
-      const selectedFixture = props.fixtures.find( ( fixture ) => fixture.fixtureDate === selectedValue );
-      props.setFixture( selectedFixture );
+      const selectedFixture = props.fixtures.find((fixture) => fixture.fixtureDate === selectedValue);
+      props.setFixture(selectedFixture);
 
       // The last teamsheet will will have a reference to the that fixture
       // fixture of last teamsheets changed to current fixture
@@ -28,10 +28,11 @@ const FixtureSelect = ( props ) => {
       console.log( "Selected Fixture Date: ", selectedFixture )
       props.setTeamsheetPrepared( false )
       props.handleAdd( props )
+
    };
 
    const FixtureDropDown = ( props ) => {
-      console.log( "Export Page - dropdown" )
+      // console.log( "Export Page - dropdown" )
       const theme = useTheme()
 
       return (
