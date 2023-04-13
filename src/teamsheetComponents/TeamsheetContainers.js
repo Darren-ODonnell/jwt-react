@@ -7,6 +7,9 @@ import {TeamsheetContext} from '../context/TeamsheetContext';
 import Box from "./Box";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './teamsheetContainers.scss'
+import { refreshPage } from "../common/helper";
+import AuthService from "../auth/AuthService";
+import instance from "../api/axios";
 
 
 const boxWidth = 150
@@ -22,7 +25,7 @@ export const findId = (id, array) => {
     return array.findIndex(p => p.id === id)
 }
 
-const TeamsheetContainer = ({onDrop, onDropContainer, handleSave, handleCancel}) => {
+const TeamsheetContainer = ({onDrop, onDropContainer, save, handleCancel}) => {
     const {team, panel, subs} = useContext(TeamsheetContext);
 
     console.log("9- TeamsheetContainer-Team/Panel: ", team[0].player, panel[0])
@@ -32,7 +35,7 @@ const TeamsheetContainer = ({onDrop, onDropContainer, handleSave, handleCancel})
             <PanelContainer onDrop={onDrop} onDropContainer={onDropContainer}/>
             <TeamContainer onDrop={onDrop}/>
             <SubsContainer onDrop={onDrop} onDropContainer={onDropContainer}/>
-            <ActionContainer handleCancel={handleCancel} handleSave={handleSave}/>
+            <ActionContainer team={team} subs={subs} handleCancel={handleCancel} save={save}/>
         </Container>
     )
 }
@@ -420,19 +423,21 @@ const SubsContainer = ({onDrop, onDropContainer}) => {
             </>
         );
     };
-const ActionContainer = ({handleSave, handleCancel}) => {
-    const cancel = () => {
-        handleCancel()
-    }
+const ActionContainer = ({team, subs, save, cancel}) => {
+
     return (
         <>
         <Container className="action-container">
             <div className="btn-group d-flex" role="group">
                 <Button className="btn but-secondary " onClick={cancel}>Cancel</Button>
-                <Button type="submit" className="btn but-primary " onClick={handleSave}>Save</Button>
+                <Button type="submit" className="btn but-primary " onClick={save}>Save</Button>
             </div>
         </Container>
         </>
     );
 };
+
+
+
+
 

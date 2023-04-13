@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useReducer, useRef } from "react";
 import { v4 } from "uuid";
-
 import TeamsheetContainer from "./TeamsheetContainers";
-import { getData, useAxios } from "../api/ApiService";
+import { getData, UpdateData, AddData, useAxios } from "../api/ApiService";
 import { TeamsheetContext } from '../context/TeamsheetContext';
+import { TEAMSHEET_URLS } from "../entities/teamsheets";
 
-const TeamsheetDnd = ( { handleSave, handleCancel, methods } ) => {
+const TeamsheetDnd = ( { handleCancel, methods , setRowData} ) => {
    const { panel, setPanel, subs, setSubs, team, setTeam } = useContext( TeamsheetContext );
 
    const [ data, error, loading, axiosApi ] = useAxios();
@@ -14,6 +14,7 @@ const TeamsheetDnd = ( { handleSave, handleCancel, methods } ) => {
       renderCount.current++;
       console.log( 'Render count - TeamsheetDnd:', renderCount.current );
    } );
+
    const findPlayer = ( id ) => {
       const idx1 = panel.findIndex( p => p.id === id )
       const idx2 = subs.findIndex( p => p.player.id === id )
@@ -504,13 +505,43 @@ const TeamsheetDnd = ( { handleSave, handleCancel, methods } ) => {
       return array
    }
 
+   const save = () => {
+      const processingTeamsheets = [...team, ...subs]
+
+      let teamsheetsToAdd = []
+      let teamsheetsToUpdate = []
+
+      // Only update if a player has moved
+      // separate updates from additions
+      processingTeamsheets.forEach(t => {
+         console.log("t.id.playerId: ",t.id.playerId)
+         console.log("t.player.id: ",t.player.id)
+
+         if(t.id.playerId === -1 && t.player.id > 0) { // new entry
+            teamsheetsToAdd.push( t )
+         } else if(t.id.playerId !== t.player.id) { // implies player changed position
+               t.id.playerId = t.player.id // update the id first
+               teamsheetsToUpdate.push( t ) // change existing entries
+         }
+      })
+
+      UpdateData({methods:{...TEAMSHEET_URLS}, axiosApi, error, formValues:{...teamsheetsToUpdate}})
+      AddData({methods:{...TEAMSHEET_URLS}, axiosApi, error, formValues:{...teamsheetsToAdd}})
+
+   }
+
+
    console.log( "8-Just before TeamsheetContainer - Team/Panel: ", team[ 0 ].player, panel[ 0 ] )
    return (
       <div className="App">
          <TeamsheetContainer onDrop={ onDrop } onDropContainer={ onDropContainer }
-                             handleSave={ handleSave } handleCancel={ handleCancel }/>
+                             save={ save } cancel={ handleCancel }/>
       </div>
    );
+
+
+
+
 }
 
 export default TeamsheetDnd;

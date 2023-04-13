@@ -17,14 +17,14 @@ const FixtureSelect = ( props ) => {
       const selectedFixture = props.fixtures.find( ( fixture ) => fixture.fixtureDate === selectedValue );
       props.setFixture( selectedFixture );
 
-      // The last teamsheet will ref the last fixture
+      // The last teamsheet will will have a reference to the that fixture
       // fixture of last teamsheets changed to current fixture
       const updatedTeamsheets = props.lastTeamsheets.map( ( teamSheet ) => {
          return { ...teamSheet, fixture: selectedFixture };
       } );
 
       // update state
-      props.setLastTeamsheets( updatedTeamsheets )
+      props.setPreviousTeamsheets( updatedTeamsheets )
       console.log( "Selected Fixture Date: ", selectedFixture )
       props.setTeamsheetPrepared( false )
       props.handleAdd( props )
@@ -46,6 +46,7 @@ const FixtureSelect = ( props ) => {
                           background: theme.palette.primary.main,
                           height: 40, /* adjust this value to match the label height */
                           width: 270,
+                          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                           '&:hover': {
                              backgroundColor: 'green',
                           },
@@ -55,6 +56,7 @@ const FixtureSelect = ( props ) => {
                              marginTop: '-10px',
                              '& .MuiMenuItem-root:hover': {
                                 backgroundColor: 'green',
+                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                              },
                           },
                        }}

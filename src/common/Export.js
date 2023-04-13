@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { useTheme } from "@mui/material/styles";
 import * as FileSaver from 'file-saver'
 import * as XLSX from "xlsx";
-import './Export.css'
+
 
 
 
@@ -90,7 +90,8 @@ const Export = ( { exportType, setExportType, gridApi } ) => {
                        sx={{
                           background: theme.palette.primary.main,
                           color: '#fff',
-                          height: 38,
+                          height: 40,
+                          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                           '&:hover': {
                              backgroundColor: 'green',
                           },
