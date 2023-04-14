@@ -20,7 +20,6 @@ const TeamsheetReport = (filteredData) => {
     const [value, setValue] = useState(null)
     // const tableRef = useRef(null);
 
-    console.log("Report: top :...")
 
     const getHeader = (filteredData) => {
         const row = filteredData[0]
@@ -137,11 +136,9 @@ const TeamsheetReport = (filteredData) => {
     //     const newWindow = window.open('', '_blank');
     // }, [tableRef]);
 
-    console.log("ReportData: ")
     return (
 
         <div>
-            {console.log("Report start")}
             {/*<Header/>*/}
             <p className="TitleStyleUnderline">{TEAM_LIST_VERSION}</p>
             <p className="TitleStyleUnderline">{TEAM_LIST_TITLE}</p>

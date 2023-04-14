@@ -24,7 +24,7 @@ const DropDown = ({formValues, field, headerName, options, value, required, onUp
         return (field === 'registered' || field === 'success')
     }
 
-    console.log("Field-Dropdown: " + field + " - Value: " + formValues[field])
+
     return (options ?
             <FormControl>
                 <InputLabel className="label" htmlFor="my-select">{headerName}</InputLabel>

@@ -22,7 +22,7 @@ const MyTextField = ({onChange, headerName, value, field, className, defaultValu
         variant: "outlined",
         defaultValue: defaultValue,
     }
-    console.log("Field: " + field + " - Value: " + value)
+
     return (
         <TextField
             {...textFieldParams}

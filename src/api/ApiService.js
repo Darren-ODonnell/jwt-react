@@ -82,8 +82,6 @@ const ApiService = {
 
 
 export const deleteData = (data, error, props, axiosApi, handleClose) => {
-
-    console.log("deleting data with id: " + data)
     const user = AuthService.getCurrentUser();
     AuthService.setAuthToken(user.accessToken);
 
@@ -101,7 +99,6 @@ export const deleteData = (data, error, props, axiosApi, handleClose) => {
         })
         .catch(err => {
             window.alert(error.message)
-            console.log("Error: " + error.message)
             handleClose()
         })
 
@@ -139,14 +136,11 @@ export const UpdateData = ({methods, axiosApi, rowData, error, formValues}) => {
     return axiosApi(configObj)
        .then((response) => {
            return response.data;
-           // console.log("Update: ", rowData);
-           // return rowData;
+
        })
        .catch(err => {
            window.alert(err.message);
-           // console.log("Error: " + err .message);
-           // error = err.message
-           // return null;
+
        });
 };
 
@@ -165,17 +159,14 @@ export const UpdateDataAll = ({methods, axiosApi, rowData, error, formValues}) =
     return axiosApi(configObj)
        .then((response) => {
            return response.data;
-           // console.log("Update: ", rowData);
-           // return rowData;
+
        })
        .catch(err => {
            window.alert(err.message);
-           // console.log("Error: " + err .message);
-           // error = err.message
-           // return null;
        });
 };
 
+// save single object
 export const AddData = ({methods, axiosApi, rowData, formValues}) => {
     const user = AuthService.getCurrentUser();
     AuthService.setAuthToken(user.accessToken);
@@ -188,51 +179,49 @@ export const AddData = ({methods, axiosApi, rowData, formValues}) => {
         }
     };
 
-    console.log('formValues:', formValues);
-    console.log('configObj:', configObj);
 
     return axiosApi(configObj)
        .then(response => {
            rowData = response.data;
-           console.log("Add: ", response.data);
+
            return rowData;
 
        })
        .catch(err => {
-           console.log("Error: " + err.message);
+
            return null;
 
        });
 };
 
+// save an array of objects
 export const AddDataAll = ({methods, axiosApi, rowData, formValues}) => {
     const user = AuthService.getCurrentUser();
     AuthService.setAuthToken(user.accessToken);
-
+    const arrayOfObjects = Object.values(formValues);
     const configObj = {
         axiosInstance: instance,
         ...methods.addAll,
         requestConfig: {
-            data: {...formValues}
+            data: formValues
         }
     };
-
-    console.log('formValues:', formValues);
-    console.log('configObj:', configObj);
+    console.log("JerseyNumber: ",formValues.map(fv=> {return fv.jerseyNumber}))
 
     return axiosApi(configObj)
        .then(response => {
            rowData = response.data;
-           console.log("Add: ", response.data);
+
            return rowData;
 
        })
        .catch(err => {
-           console.log("Error: " + err.message);
+
            return null;
 
        });
 };
+
 
 
 export default ApiService;

@@ -72,34 +72,40 @@ const gridLoader = (data) => {
 
 // teamsheets
 const TEAMSHEET_ADD      = "/teamsheet/add";
+const TEAMSHEET_ADD_ALL      = "/teamsheet/addAll";
 const TEAMSHEET_DELETE   = "/teamsheet/delete/";
 const TEAMSHEET_FINDBYID = "/teamsheet/findById/";
 const TEAMSHEET_FINDBYFIXTUREID = "/teamsheet/findByFixtureId/";
 const TEAMSHEET_LIST     = "/teamsheet/list";
 const TEAMSHEET_UPDATE = "/teamsheet/update";
+const TEAMSHEET_UPDATE_ALL = "/teamsheet/updateAll";
 const TEAMSHEET_LAST = "/teamsheet/last";
 
 export const TEAMSHEET_URLS = {
     add: TEAMSHEET_ADD,
+    addAll: TEAMSHEET_ADD_ALL,
     delete: TEAMSHEET_DELETE,
     findById: TEAMSHEET_FINDBYID,
     findByFixtureId: TEAMSHEET_FINDBYFIXTUREID,
     list: TEAMSHEET_LIST,
     update: TEAMSHEET_UPDATE,
+    updateAll: TEAMSHEET_UPDATE_ALL,
     last: TEAMSHEET_LAST,
 }
 
 const apiRequests = {
-    list: {method: METHODS.GET, url: TEAMSHEET_URLS.list},
-    findById: {method: METHODS.GET, url: TEAMSHEET_URLS.findById},
-    findByFixtureIdId: {method: METHODS.GET, url: TEAMSHEET_URLS.findByFixtureId},
-    update: {method: METHODS.POST, url: TEAMSHEET_URLS.update},
-    add: {method: METHODS.PUT, url: TEAMSHEET_URLS.add},
-    delete: {method: METHODS.DELETE, url: TEAMSHEET_URLS.delete},
-    getCompetitions: {method: METHODS.GET, url: COMPETITION_URLS.list},
-    getClubs: {method: METHODS.GET, url: CLUB_URLS.list},
-    getPlayers: {method: METHODS.GET, url: PLAYER_URLS.list},
-    getLastTeamsheet: {method: METHODS.GET, url: TEAMSHEET_URLS.last},
+    list             : {method: METHODS.GET   , url: TEAMSHEET_URLS.list},
+    findById         : {method: METHODS.GET   , url: TEAMSHEET_URLS.findById},
+    findByFixtureIdId: {method: METHODS.GET   , url: TEAMSHEET_URLS.findByFixtureId},
+    add              : {method: METHODS.PUT   , url: TEAMSHEET_URLS.add},
+    addAll           : {method: METHODS.PUT   , url: TEAMSHEET_URLS.addAll},
+    update           : {method: METHODS.POST  , url: TEAMSHEET_URLS.update},
+    updateAll        : {method: METHODS.POST  , url: TEAMSHEET_URLS.updateAll},
+    delete           : {method: METHODS.DELETE, url: TEAMSHEET_URLS.delete},
+    getCompetitions  : {method: METHODS.GET   , url: COMPETITION_URLS.list},
+    getClubs         : {method: METHODS.GET   , url: CLUB_URLS.list},
+    getPlayers       : {method: METHODS.GET   , url: PLAYER_URLS.list},
+    getLastTeamsheet : {method: METHODS.GET   , url: TEAMSHEET_URLS.last},
 }
 
 export const teamsheetData = {

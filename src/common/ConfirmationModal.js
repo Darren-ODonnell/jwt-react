@@ -10,7 +10,7 @@ function ConfirmationModal({showModal, setShowModal, setConfirmation, message, t
 
     const handleConfirm = () => {
         let bool = true
-        console.log("setDeleteConfirmation: " + setConfirmation(bool) + bool)
+
         setConfirmation(true)
         // onConfirm()
         handleClose()

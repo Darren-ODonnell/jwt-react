@@ -27,8 +27,6 @@ const FormDialog = ({
 
     const handleFormSubmit = ({formValues, error}) => {
 
-        console.log("FormValues: ", formValues);
-
         const request = {...methods.add, data: formValues};
 
         if (formValues.id) {
@@ -59,7 +57,6 @@ const FormDialog = ({
     //     setValid(validate(formValues))
     //
     //
-    //     console.log('FormValues: ', formValues)
     //     const request = {...methods.add, data: formValues};
     //     if (valid) {
     //         if (formValues.id) {// updating a record
@@ -115,13 +112,10 @@ const FormDialog = ({
 
         axiosApi(configObj)
             .then(response => {
-                // rowData = response.data
-                console.log("Update: ", rowData)
-                // setRowData(response.data)
+
             })
             .catch(err => {
                 window.alert(err.message)
-                console.log("Error: " + err.message)
                 handleClose()
             })
         // refresh grid
@@ -142,16 +136,13 @@ const FormDialog = ({
             }
         }
 
-        // console.log('Before axiosApi call-Data:'+ data);
+
         axiosApi(configObj)
             .then(response => {
                 handleClose()
-                // rowData = response.data
-                console.log("Add: ", response.data)
                 setRowData(response.data)
             })
             .catch(err => {
-                console.log("Error: " + err.message)
                 handleClose()
             })
         // refresh grid

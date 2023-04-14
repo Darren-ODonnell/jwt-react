@@ -25,7 +25,7 @@ export const LoginPage = () => {
     const handleSubmit = (event) => {
         //Prevent page reload
         event.preventDefault();
-        console.log("HandleSubmit: " + event)
+
         loginModel.username = usernameValue;
         loginModel.password = passwordValue;
 

@@ -15,19 +15,19 @@ const FixtureSelect = ( props ) => {
    const handleSelectEvent = (event) => {
       const selectedValue = event.target.value;
       const selectedFixture = props.fixtures.find((fixture) => fixture.fixtureDate === selectedValue);
-      props.setFixture(selectedFixture);
 
-      // The last teamsheet will will have a reference to the that fixture
-      // fixture of last teamsheets changed to current fixture
+      // The last teamsheet will have a reference to the original fixture
+      // fixture of last teamsheets must be changed to current fixture
       const updatedTeamsheets = props.lastTeamsheets.map( ( teamSheet ) => {
-         return { ...teamSheet, fixture: selectedFixture };
+         return { ...teamSheet, fixture: {...selectedFixture} };
       } );
 
       // update state
-      props.setPreviousTeamsheets( updatedTeamsheets )
-      console.log( "Selected Fixture Date: ", selectedFixture )
+      props.setFixture(selectedFixture);
+      props.setFixtureSelected(true)
+      props.setPreviousTeamsheets( [...updatedTeamsheets] )
       props.setTeamsheetPrepared( false )
-      props.handleAdd( props )
+      props.handleAdd( {...props , updatedTeamsheets})
 
    };
 

@@ -16,7 +16,11 @@ Current Tasks - with comments on progress
     E44: Should not be able to login as a User - only Admin allowed.
     E57: Fix app login to check that the token is good first.
     E61: Cannot save teamsheet changes from new GUI
-    E63: 
+    E65: 
+    E66:
+    E67:
+    E68: 
+
 
 # Refactoring
     R13: 
@@ -352,6 +356,7 @@ Current Tasks - with comments on progress
     E59: Export CSV button is slightly smaller than the other two - fixed
          css files export.css and FixtureSelect.css combined into app.css and then deleted 
     E62: Cancel does not work on dnb - fixed
-
+    E63: Pagination button smaller than the others - fixed
+    E64: Pagination and dropdown action text smaller than the others - fixed
 
 

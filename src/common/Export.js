@@ -81,7 +81,7 @@ const Export = ( { exportType, setExportType, gridApi } ) => {
    }
 
    const ExportDropDown = () => {
-      // console.log( "Export Page - dropdown" )
+
       return (
          <>
             <FormControl variant="outlined" color="primary">
@@ -108,11 +108,17 @@ const Export = ( { exportType, setExportType, gridApi } ) => {
       )
    }
    const ExportActionButton = () => {
-      // console.log( "Export Page - action" )
+
       return (
          <>
             <Button className="export-button"
                     onClick={ () => handleExport( exportType ) }
+                    sx={{
+                       height: '40px',
+                       fontSize: '16px',
+                       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+
+                    }}
             >Export { exportType }
             </Button>
          </>

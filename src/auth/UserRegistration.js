@@ -26,7 +26,7 @@ const UserRegistration = () => {
 
         try {
             // res.setHeader('Access-Control-Allow-Origin', '*');
-            console.log(registerData)
+
             response = await Axios.post(registerUrl, registerData);
             const {token} = response.data;
             AuthService.setAuthToken(token);
@@ -34,7 +34,7 @@ const UserRegistration = () => {
         } catch (e) {
             setErrorMessage(e)
             errorMessage = e;
-            console.log(e)
+
         }
     }
 

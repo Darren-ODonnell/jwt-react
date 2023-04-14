@@ -29,18 +29,15 @@ function FileUpload() {
     const handleUpload = async () => {
         const formData = new FormData();
         formData.append("file", file);
-
         try {
             const res = await axios.post("/server/upload", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             });
-
-            console.log(res.data);
             window.location.pathname = "/file-upload-success";
         } catch (err) {
-            console.error(err);
+
             setError("Error uploading file. Please try again.");
         }
     };

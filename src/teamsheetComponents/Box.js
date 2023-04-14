@@ -31,7 +31,6 @@ const Box = ({ index, id, player, width, height, x, y, onDrop, style }) => {
     const [{ isDragging }, drag] = useDrag(() => ({
         type: "ITEM",
         item: () => {
-            // console.log("HandleDragBegin: " + id);
             return { id, player, index };
         },
         collect: (monitor) => ({
@@ -52,7 +51,6 @@ const Box = ({ index, id, player, width, height, x, y, onDrop, style }) => {
             // const draggedItemIndex = Math.floor(initialSourceClientOffset.y / 60);
 
             onDrop(newBox, id, item);
-            console.log("Box-Team/Panel: ", team[0].player.id, panel[0].id)
 
         },
         collect: (monitor) => ({
@@ -89,7 +87,7 @@ const Box = ({ index, id, player, width, height, x, y, onDrop, style }) => {
 
     }
 
-    // console.log("BOX: " + player.firstname + " " + player.lastname)
+
     return (
         <div className="box">
             <BoxWrapper

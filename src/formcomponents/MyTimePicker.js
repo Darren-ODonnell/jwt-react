@@ -19,14 +19,13 @@ const MyTimePicker = ({formValues, field, headerName}) => {
         // update field with data from user
         // data updated here first, then screen is updated
         let timeMs = moment(value.$d, TIME_FORMAT)
-        console.log("Time: " + timeMs + " - " + id)
-        console.log(timeMs)
+
         formValues[field] = timeMs.format(TIME_FORMAT_SAVE)
         // formValues = ({...formValues, [id]: timeMs.format(TIME_FORMAT_SAVE)})
         setTimeValue(timeMs)
     }
     useEffect(() => {
-        console.log(formValues[field])
+
         setTimeValue(formValues[field])
     }, [formValues])
     return (

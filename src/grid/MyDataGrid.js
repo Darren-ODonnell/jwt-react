@@ -61,7 +61,7 @@ const MyDataGrid = ( { props } ) => {
    // const theme = useTheme();
    const [ previousTeamsheets, setPreviousTeamsheets ] = useState( [] )
    const [ teamsheetPrepared, setTeamsheetPrepared ] = useState( false )
-
+   const [ fixtureSelected, setFixtureSelected] = useState(false)
    const [ players, teamsheets, lastTeamsheets, positions, fixtures, fixturesWithNoTeamsheets ] = LoadData();
    const renderCount = useRef( 0 );
 
@@ -79,11 +79,9 @@ const MyDataGrid = ( { props } ) => {
 
    // teamsheet DnD handling
    // const handleTeamsheetSave = (data) => {
-   //    // console.log("Team-sheet Save in App")
    //    setTeamsheetDnd( false )
    // }
    const handleTeamsheetCancel = () => {
-      console.log("Team-sheet Cancel in App")
       setTeamsheetDnd(false)
    }
    const onChange = useCallback((e) => {
@@ -108,7 +106,6 @@ const MyDataGrid = ( { props } ) => {
          return m.data
       } )
       setFilteredData( newFilteredData )
-      // console.log("FilteredData-: " + filteredData);
    }, [ gridApi ] );
 
    const getSelectedRow = useCallback( () => {
@@ -179,20 +176,22 @@ const MyDataGrid = ( { props } ) => {
    const handleShowDeleteModal = () => {
       setShowDeleteModal( props.type === Teamsheet ? false : true )
    }
-   const prepareTeamsheetDnd = ( action, id ) => {
+   const prepareTeamsheetDnd = ( action, id, props ) => {
       // create team subs and updated panel
       let newTeam = []
       if ( !teamsheetPrepared ) {
 
-         if ( teamsheets ) {
-            if ( action === "Add" ) {
-               lastTeamsheets.forEach(lt => {
-                  lt.id.playerId = -1
-                  newTeam.push(lt)
-               })
-            } else { // must be Edit or Delete
-               newTeam = teamsheets.filter( t => t.fixture.id === id )
-                  .sort( ( a, b ) => a.position.id - b.position.id )
+         if ( props.updatedTeamsheets ) {
+            switch (action) {
+               case "Add":
+                  props.updatedTeamsheets.forEach(ut => {
+                     ut.id.playerId = -1
+                     newTeam.push(ut)
+                  })
+                  break
+               default:
+                  newTeam = props.updatedTeamsheets.filter( t => t.fixture.id === id )
+                     .sort( ( a, b ) => a.position.id - b.position.id )
             }
 
             let fixtureId = ( id )
@@ -247,8 +246,6 @@ const MyDataGrid = ( { props } ) => {
       return team
    }
 
-   // console.log("Team: " + JSON.stringify(team))
-
    // Add Button
    const AddButton = ( params, messages ) => {
       switch ( params.type ) {
@@ -266,16 +263,17 @@ const MyDataGrid = ( { props } ) => {
             return lastTeamsheets && (
                <FixtureSelect
                   { ...params }
-                  messages={ props.messages }
-                  fixtures={ fixturesWithNoTeamsheets }
-                  handleAdd={ handleAdd }
-                  params={ params }
-                  fixture={ fixture }
-                  setFixture={ setFixture }
-                  lastTeamsheets={ lastTeamsheets }
-                  setPreviousTeamsheets={ setPreviousTeamsheets }
-                  handleEdit={ handleEdit }
-                  setTeamsheetPrepared={ setTeamsheetPrepared }
+                  messages              = { props.messages }
+                  fixtures              = { fixturesWithNoTeamsheets }
+                  handleAdd             = { handleAdd }
+                  params                = { params }
+                  fixture               = { fixture }
+                  setFixture            = { setFixture }
+                  setFixtureSelected    = { setFixtureSelected}
+                  lastTeamsheets        = { lastTeamsheets }
+                  setPreviousTeamsheets = { setPreviousTeamsheets }
+                  handleEdit            = { handleEdit }
+                  setTeamsheetPrepared  = { setTeamsheetPrepared }
                />
             )
          default:
@@ -292,7 +290,7 @@ const MyDataGrid = ( { props } ) => {
    };
    const handleAdd = ( params ) => {
       if ( params.type === Teamsheet ) {
-         prepareTeamsheetDnd( "Add" )
+         prepareTeamsheetDnd( "Add" , params)
       } else {
          setSelectedRow( { ...props.initialValue } )
          handleOpen( params )
@@ -327,7 +325,7 @@ const MyDataGrid = ( { props } ) => {
    }
    const handlePrintModal = () => { // display the report modal if a filter has been applied
       if ( filteredData === [] || filteredData.length === 0 ) {
-         console.log( "Filtered Data is Empty" )
+
          message = "Filter Teamsheet to a specific Fixture Date using Grid"
          setShowFilterModal( true )
          setModalOpen( false );
@@ -352,15 +350,20 @@ const MyDataGrid = ( { props } ) => {
    };
    const PaginationButton = () => {
       return (
-         <Button onClick={togglePagination} style={{boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)'}}>
+         <Button onClick={togglePagination}
+         sx={{
+            height: '40px',
+            fontSize: '16px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+
+         }}
+
+         >
             {paginationEnabled ? 'Disable Pagination' : 'Enable Pagination'}
          </Button>
       )
    }
 
-   // useEffect( () => {
-   //    console.log( "Teamsheets/LastTeamsheets: ", teamsheets, lastTeamsheets )
-   // }, [ teamsheets, lastTeamsheets ] )
    // useEffect( () => {
    //    renderCount.current++;
    //    console.log( 'Render count - MyDataGrid:', renderCount.current );
@@ -413,7 +416,7 @@ const MyDataGrid = ( { props } ) => {
    }
    const handleDeleteConfirmation = () => {
       if ( props.type === Teamsheet ) {
-         console.log( "Teamsheet Delete" )
+
          setDeleteConfirmation( false )
       } else {
          setDeleteConfirmation( true )
@@ -421,7 +424,7 @@ const MyDataGrid = ( { props } ) => {
    }
    const handleFilterConfirmation = () => {
       if ( props.type === Teamsheet ) {
-         console.log( "Teamsheet Filtered" )
+
          setDeleteConfirmation( false )
       } else {
          setDeleteConfirmation( true )
@@ -484,10 +487,12 @@ const MyDataGrid = ( { props } ) => {
                   <TeamsheetDnd
                      // pass state to child component
                      // handleSave={ handleTeamsheetSave }
-                     handleCancel={handleTeamsheetCancel}
-                     setRowData={setRowData}
-                     methods={props.methods}
-                     teamsheetDnd={teamsheetDnd}
+                     handleCancel         = {handleTeamsheetCancel}
+                     setRowData           = {setRowData}
+                     methods              = {props.methods}
+                     teamsheetDnd         = {teamsheetDnd}
+                     setFixtureSelected   = {setFixtureSelected}
+                     setTeamsheetPrepared = {setTeamsheetPrepared}
                   />
                </DialogContent>
             </Dialog>

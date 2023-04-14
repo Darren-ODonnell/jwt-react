@@ -7,7 +7,6 @@ const usePrintPreview = (data, filterField) => {
     const handlePrintModal = () => {
         // display the report modal if a filter has been applied
         if (filteredData === [] || filteredData.length === 0) {
-            console.log("Filtered Data is Empty");
             message = "Filter Teamsheet to a specific Fixture Date using Grid";
             setShowFilterModal(true);
             setModalOpen(false);

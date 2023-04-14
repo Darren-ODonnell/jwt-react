@@ -5,7 +5,7 @@ import {getData, UpdateData, AddData, useAxios, UpdateDataAll, AddDataAll} from 
 import {TeamsheetContext} from '../context/TeamsheetContext';
 import { TEAMSHEET_URLS } from "../entities/teamsheets";
 
-const TeamsheetDnd = ({handleCancel, setRowData, methods, teamsheetDnd}) => {
+const TeamsheetDnd = ({handleCancel, setRowData, methods, teamsheetDnd, setFixtureSelected, setTeamsheetPrepared}) => {
    const {panel, setPanel, subs, setSubs, team, setTeam} = useContext(TeamsheetContext);
 
    const [data, error, loading, axiosApi] = useAxios();
@@ -153,13 +153,6 @@ const TeamsheetDnd = ({handleCancel, setRowData, methods, teamsheetDnd}) => {
       const sourcePlayer = {...team[sourceIdx].player};
       const destPlayer = {...panel[destIdx]};
 
-      console.log(sourcePlayer === team[sourceIdx].player
-         ? "source players in same memory"
-         : "sourcep players NOT in same memory")
-
-
-      console.log("5-SwapTeamWithPanel-BeforeStateChange - Team/Panel: ", team[0].player, panel[0])
-
       // Don't move an empty position
       if (sourceId === -1) return;
 
@@ -177,9 +170,6 @@ const TeamsheetDnd = ({handleCancel, setRowData, methods, teamsheetDnd}) => {
          newTeam[sourceIdx].player = destPlayer //{ ...destPlayer, id: destPlayer.id };
          return newTeam;
       });
-
-
-      console.log("6-SwapTeamWithPanel-AfterStateChange - Team/Panel: ", team[0].player, panel[0])
 
    };
 
@@ -448,23 +438,11 @@ const TeamsheetDnd = ({handleCancel, setRowData, methods, teamsheetDnd}) => {
    }
 
    const onDrop = (box, destId, item) => {
-      console.log("1-OnDrop-SourceP/DestP-beforeFindIndex - Team/Panel: ",
-         team[0].player, panel[0])
+
 
       const sourceId = item.player.id;
       const source = findArray(sourceId);
       const dest = findArray(destId);
-
-      (source === team)
-         ? console.log("2-OnDrop-SourceP/DestP-afterFindIndex-Team: ",
-            team.find(s => s.player.id === sourceId).player, dest.find(d => d.id === destId))
-         : console.log("2-OnDrop-SourceP/DestP-afterFindIndex-Panel: ",
-            panel.find(s => s.id === sourceId), dest.find(d => d.id === destId))
-
-      // console.log("OnDrop-Source/Dest: ",source,dest)
-      console.log("3-OnDrop-source: ", source === team ? "team" : source === panel ? "panel" : "subs")
-      console.log("4-OnDrop-dest: ", dest === team ? "team" : dest === panel ? "panel" : "subs")
-
 
       if (source === team) {
          if (dest === panel && destId === -1) removeTeamToPanel(sourceId, destId)
@@ -487,12 +465,10 @@ const TeamsheetDnd = ({handleCancel, setRowData, methods, teamsheetDnd}) => {
          if (dest === team && destId >= 0) swapSubsWithTeam(sourceId, destId)
          if (dest === subs) moveSubsToSubs(sourceId, destId)
       }
-      console.log("7-OnDrop-SourceP/DestP-AtEnd - Team/Panel: ", team[0].player, panel[0])
-
    }
 
    function findArray(id) {
-      console.log("FindArray-BeforeFindIndex ", team[0].player, panel[0])
+
       const idx1 = panel.findIndex(p => p.id === id)
       const idx2 = subs.findIndex(p => p.player.id === id)
 
@@ -514,8 +490,6 @@ const TeamsheetDnd = ({handleCancel, setRowData, methods, teamsheetDnd}) => {
       // Only update if a player has moved
       // separate updates from additions
       processingTeamsheets.forEach(t => {
-         console.log("t.id.playerId: ", t.id.playerId)
-         console.log("t.player.id: ", t.player.id)
 
          if (t.id.playerId === -1 && t.player.id > 0) { // new entry
             teamsheetsToAdd.push(t)
@@ -527,26 +501,29 @@ const TeamsheetDnd = ({handleCancel, setRowData, methods, teamsheetDnd}) => {
 
       if (teamsheetsToUpdate.length > 0) {
          if (Array.isArray(teamsheetsToUpdate))
-            UpdateDataAll({methods, axiosApi, error, formValues: {...teamsheetsToUpdate}})
+            UpdateDataAll({methods, axiosApi, error, formValues: [...teamsheetsToUpdate]})
          else
-            UpdateData({methods, axiosApi, formValues: {...teamsheetsToAdd}})
+            UpdateData({methods, axiosApi, formValues: {...teamsheetsToUpdate}})
       }
       if (teamsheetsToAdd.length > 0) {
-         if (Array.isArray(teamsheetsToUpdate))
-            AddDataAll({methods, axiosApi, error, formValues: {...teamsheetsToUpdate}})
-         else
-            AddData({methods, axiosApi, formValues: {...teamsheetsToAdd}})
+         if (Array.isArray(teamsheetsToUpdate)) {
+            AddDataAll( { methods, axiosApi, error, formValues: [...teamsheetsToAdd ] } )
+         } else {
+            AddData( { methods, axiosApi, formValues: { ...teamsheetsToAdd } } )
+         }
       }
+      setTeamsheetPrepared(false)
+      setFixtureSelected(false)
    }
 
    const cancel = () => {
-      console.log("TeamsheetDnd-Cancel")
+      setTeamsheetPrepared(false)
+      setFixtureSelected(false)
       handleCancel()
-
    }
 
 
-   console.log("8-Just before TeamsheetContainer - Team/Panel: ", team[0].player, panel[0])
+
    return (
       <div className="App">
          <TeamsheetContainer onDrop={onDrop} onDropContainer={onDropContainer}
