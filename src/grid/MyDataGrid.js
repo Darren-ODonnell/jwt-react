@@ -22,7 +22,7 @@ import Export from "../common/Export";
 import TeamsheetDnd from "../teamsheetComponents/TeamsheetDnd";
 import { LoadData, useTeamsheets } from "../common/DropDownData";
 import '../App.css'
-import FixtureSelect from "../common/FixtureSelect";
+import FixtureSelect from "../teamsheetComponents/FixtureSelect";
 
 
 const MyDataGrid = ( { props } ) => {
@@ -149,7 +149,7 @@ const MyDataGrid = ( { props } ) => {
    const handleEdit = useCallback( ( params ) => {
       if ( teamsheets ) {
          if ( props.type === Teamsheet ) {
-            prepareTeamsheetDnd( "Edit", params.data.id.fixtureId )
+            prepareTeamsheetDnd({action: "Edit", id: params.data.id.fixtureId})
          } else {
             getSelectedRow();
             handleOpen();
@@ -174,15 +174,15 @@ const MyDataGrid = ( { props } ) => {
       )
    }
    const handleShowDeleteModal = () => {
-      setShowDeleteModal( props.type === Teamsheet ? false : true )
+      setShowDeleteModal(props.type === Teamsheet ? false : true)
    }
-   const prepareTeamsheetDnd = ( action, id, props ) => {
+   const prepareTeamsheetDnd = (props) => {
       // create team subs and updated panel
       let newTeam = []
-      if ( !teamsheetPrepared ) {
+      if (!teamsheetPrepared) {
 
-         if ( props.updatedTeamsheets ) {
-            switch (action) {
+         if (props.updatedTeamsheets) {
+            switch (props.action) {
                case "Add":
                   props.updatedTeamsheets.forEach(ut => {
                      ut.id.playerId = -1
@@ -190,22 +190,22 @@ const MyDataGrid = ( { props } ) => {
                   })
                   break
                default:
-                  newTeam = props.updatedTeamsheets.filter( t => t.fixture.id === id )
-                     .sort( ( a, b ) => a.position.id - b.position.id )
+                  newTeam = props.updatedTeamsheets.filter(t => t.fixture.id === props.id)
+                     .sort((a, b) => a.position.id - b.position.id)
             }
 
-            let fixtureId = ( id )
-               ? id
-               : getFixtureId( newTeam )
+            let fixtureId = (props.id)
+               ? props.id
+               : getFixtureId(newTeam)
 
             // Panel = Players - Team
-            const playersNotOnTeamSorted = players.filter( player => !newTeam.some( teamPlayer => teamPlayer.player.id === player.id ) )
-               .sort( ( a, b ) => a.lastname.localeCompare( b.lastname ) )
+            const playersNotOnTeamSorted = players.filter(player => !newTeam.some(teamPlayer => teamPlayer.player.id === player.id))
+               .sort((a, b) => a.lastname.localeCompare(b.lastname))
 
             // subs are numbered 16 and higher
-            const newSubs = newTeam.filter( s => s.position.id > 15 )
-            const filteredTeam = newTeam.filter( s => s.position.id <= 15 )
-            const fillInBlanksTeam = fillEmptyPositions( filteredTeam, fixtureId )
+            const newSubs = newTeam.filter(s => s.position.id > 15)
+            const filteredTeam = newTeam.filter(s => s.position.id <= 15)
+            const fillInBlanksTeam = fillEmptyPositions(filteredTeam, fixtureId)
 
             setPanel( playersNotOnTeamSorted )
             setTeam( fillInBlanksTeam.sort((a,b) => a.position.id - b.position.id) )
@@ -290,7 +290,7 @@ const MyDataGrid = ( { props } ) => {
    };
    const handleAdd = ( params ) => {
       if ( params.type === Teamsheet ) {
-         prepareTeamsheetDnd( "Add" , params)
+         prepareTeamsheetDnd({action: "Add", ...params})
       } else {
          setSelectedRow( { ...props.initialValue } )
          handleOpen( params )
@@ -492,7 +492,8 @@ const MyDataGrid = ( { props } ) => {
                      methods              = {props.methods}
                      teamsheetDnd         = {teamsheetDnd}
                      setFixtureSelected   = {setFixtureSelected}
-                     setTeamsheetPrepared = {setTeamsheetPrepared}
+                     setTeamsheetPrepared={setTeamsheetPrepared}
+                     setTeamsheetDnd={setTeamsheetDnd}
                   />
                </DialogContent>
             </Dialog>

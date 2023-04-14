@@ -2,7 +2,7 @@ Ex: indicate problems found.
 Cx: New Code additions (new features)
 Rx: Refactoring
 Ix: Investigations
-Ux: Files currently UnUsed - 
+Ux: Files currently UnUsed -
 Ig: Ignored for now
 
 As elements are finished - move below Completed
@@ -10,12 +10,18 @@ As elements are finished - move below Completed
 Current Tasks - with comments on progress
 =========================================
 
+Teamsheet DnD
+: Check that a player can be moved from Panel to subs
+: Add save teamsheets where updates are tested
+: 
+
 # Errors
+
     E41: App does not logout after token has timed out.
          after timeout - delete old token - logout user - switch to loggedOutrNavbar
     E44: Should not be able to login as a User - only Admin allowed.
     E57: Fix app login to check that the token is good first.
-    E61: Cannot save teamsheet changes from new GUI
+
     E65: 
     E66:
     E67:
@@ -358,5 +364,5 @@ Current Tasks - with comments on progress
     E62: Cancel does not work on dnb - fixed
     E63: Pagination button smaller than the others - fixed
     E64: Pagination and dropdown action text smaller than the others - fixed
-
+    E61: Cannot save teamsheet changes from new GUI - add Teamsheet working
 

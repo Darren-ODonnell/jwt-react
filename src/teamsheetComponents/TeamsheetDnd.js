@@ -5,7 +5,15 @@ import {getData, UpdateData, AddData, useAxios, UpdateDataAll, AddDataAll} from 
 import {TeamsheetContext} from '../context/TeamsheetContext';
 import { TEAMSHEET_URLS } from "../entities/teamsheets";
 
-const TeamsheetDnd = ({handleCancel, setRowData, methods, teamsheetDnd, setFixtureSelected, setTeamsheetPrepared}) => {
+const TeamsheetDnd = ({
+                         handleCancel,
+                         setRowData,
+                         methods,
+                         teamsheetDnd,
+                         setFixtureSelected,
+                         setTeamsheetPrepared,
+                         setTeamsheetDnd
+                      }) => {
    const {panel, setPanel, subs, setSubs, team, setTeam} = useContext(TeamsheetContext);
 
    const [data, error, loading, axiosApi] = useAxios();
@@ -468,16 +476,11 @@ const TeamsheetDnd = ({handleCancel, setRowData, methods, teamsheetDnd, setFixtu
    }
 
    function findArray(id) {
-
       const idx1 = panel.findIndex(p => p.id === id)
       const idx2 = subs.findIndex(p => p.player.id === id)
-
       const array = idx1 >= 0
-         ? panel
-         : idx2 >= 0
-            ? subs
-            : team
-
+         ? panel : idx2 >= 0
+            ? subs : team
       return array
    }
 
@@ -499,6 +502,9 @@ const TeamsheetDnd = ({handleCancel, setRowData, methods, teamsheetDnd, setFixtu
          }
       })
 
+      // teamsheetId.playerId === -1 (add new teamsheet)
+      // teamsheetId.playerId >= 0 (update if player is moved, add if player is new to teamsheet)
+
       if (teamsheetsToUpdate.length > 0) {
          if (Array.isArray(teamsheetsToUpdate))
             UpdateDataAll({methods, axiosApi, error, formValues: [...teamsheetsToUpdate]})
@@ -506,12 +512,17 @@ const TeamsheetDnd = ({handleCancel, setRowData, methods, teamsheetDnd, setFixtu
             UpdateData({methods, axiosApi, formValues: {...teamsheetsToUpdate}})
       }
       if (teamsheetsToAdd.length > 0) {
-         if (Array.isArray(teamsheetsToUpdate)) {
-            AddDataAll( { methods, axiosApi, error, formValues: [...teamsheetsToAdd ] } )
+         if (Array.isArray(teamsheetsToAdd)) {
+
+            const updatedTeamsheets = teamsheetsToAdd.map(tadd => (
+               {...tadd, id: {fixtureId: tadd.fixture.id, playerId: tadd.player.id}}
+            ))
+            AddDataAll({methods, axiosApi, error, formValues: [...updatedTeamsheets]})
          } else {
-            AddData( { methods, axiosApi, formValues: { ...teamsheetsToAdd } } )
+            AddData({methods, axiosApi, formValues: {...teamsheetsToAdd}})
          }
       }
+      setTeamsheetDnd(false)
       setTeamsheetPrepared(false)
       setFixtureSelected(false)
    }
@@ -521,8 +532,6 @@ const TeamsheetDnd = ({handleCancel, setRowData, methods, teamsheetDnd, setFixtu
       setFixtureSelected(false)
       handleCancel()
    }
-
-
 
    return (
       <div className="App">
