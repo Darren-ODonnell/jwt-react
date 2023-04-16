@@ -11,16 +11,13 @@ import {ErrorMessage} from "../common/ErrorMessage";
 import MyTimePicker from "../formcomponents/MyTimePicker";
 import MyDatePicker from "../formcomponents/MyDatePicker";
 import DropDown from "../formcomponents/DropDown";
-import qs from 'qs';
-
 import {AVAILABILITY, GRADES, HALF, REGISTERED, SUCCESS} from "../common/globals";
 import DropDownData from "../common/DropDownData";
-// import {AddData, UpdateData} from "../api/ApiService";
+
 const FormDialog = ({
                         open, onClose, messages, rowData, colDefs, handleClose,
-                        initialValue, error, setOpen, methods, setRowData, axiosApi, entity, validate, location
+                        error, setOpen, methods, setRowData, axiosApi, entity
                     }) => {
-    // const [formValues, setFormValues] = useState({...initialValue})
     const [formValues, setFormValues] = useState([])
 
     let dropDownData = DropDownData()
@@ -33,13 +30,7 @@ const FormDialog = ({
             setOpen(false);
             const request = methods.update;
             UpdateData({methods, axiosApi, rowData, error, formValues, request})
-            // refreshPage()
-            // .then(res => {
-            //     if (res) setRowData(res);
-            //     if (error !== null) {
-            //         return handleError(error.message);
-            //     }
-            // });
+
         } else {
             setOpen(false);
             AddData({methods, axiosApi, rowData, error, formValues, setOpen, setRowData, request}).then(res => {
@@ -49,35 +40,8 @@ const FormDialog = ({
                 }
             });
         }
-
-        // refreshPage()
     };
 
-    // const handleFormSubmit = ({formValues, error}) => {
-    //     setValid(validate(formValues))
-    //
-    //
-    //     const request = {...methods.add, data: formValues};
-    //     if (valid) {
-    //         if (formValues.id) {// updating a record
-    //             // const confirm = window.confirm("Are you sure, you want to update this row ?")
-    //             // confirm && actions.update(formData.id, formData)
-    //             setOpen(false)
-    //             const request = methods.update;
-    //             UpdateData({methods, axiosApi, rowData, error, formValues, request});
-    //             if (error !== null) {
-    //                 return handleError(error.message);
-    //             }
-    //
-    //         } else { // adding new record
-    //             setOpen(false)
-    //             AddData({methods, axiosApi, rowData, error, formValues, setOpen, setRowData, request});
-    //             if (error !== null) {
-    //                 return handleError(error.message);
-    //             }
-    //         }
-    //     }
-    // }
     const handleChange2 = (field, value) => {
         setFormValues((prevState) => ({
             ...prevState, [field]: value,
@@ -89,7 +53,6 @@ const FormDialog = ({
     }
 
     useEffect(() => {
-        // dropDownData = DropDownData()
         setFormValues(rowData);
     }, [rowData]);
 
@@ -98,7 +61,7 @@ const FormDialog = ({
         return <div>Loading...</div>
     }
 
-    const UpdateData = ({rowData, error, formValues}) => {
+    const UpdateData = ({formValues}) => {
         const user = AuthService.getCurrentUser();
         AuthService.setAuthToken(user.accessToken);
 
@@ -111,9 +74,9 @@ const FormDialog = ({
         }
 
         axiosApi(configObj)
-            .then(response => {
+           .then(() => {
 
-            })
+           })
             .catch(err => {
                 window.alert(err.message)
                 handleClose()
@@ -123,8 +86,7 @@ const FormDialog = ({
     }
 
 
-
-    const AddData = ({data, loading, error, formValues}) => {
+    const AddData = ({formValues}) => {
         const user = AuthService.getCurrentUser();
         AuthService.setAuthToken(user.accessToken);
 
@@ -138,13 +100,13 @@ const FormDialog = ({
 
 
         axiosApi(configObj)
-            .then(response => {
-                handleClose()
-                setRowData(response.data)
-            })
-            .catch(err => {
-                handleClose()
-            })
+           .then(response => {
+               handleClose()
+               setRowData(response.data)
+           })
+           .catch(() => {
+               handleClose()
+           })
         // refresh grid
         refreshPage()
     }
@@ -177,7 +139,6 @@ const FormDialog = ({
         <Dialog
             className="scroll"
             open={open}
-            onClose={() => onClose(false)}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             onClose={handleClickAway}
@@ -313,21 +274,17 @@ const FormDialog = ({
                     }
                 </DialogContent>
                 <DialogActions>
-                    <CancelButton
-                        // setOpen={setOpen}
-                        // initialValue={initialValue}
-                        // setFormValues={setFormValues}
-                    />
+                    <CancelButton/>
                     <SubmitButton
-                        setRowData={setRowData}
-                        axiosApi={axiosApi}
-                        rowData={rowData}
-                        entity={entity}
+                       setRowData={setRowData}
+                       axiosApi={axiosApi}
+                       rowData={rowData}
+                       entity={entity}
 
-                        formValues={formValues}
-                        methods={methods}
-                        setOpen={setOpen}
-                        error={error}/>
+                       formValues={formValues}
+                       methods={methods}
+                       setOpen={setOpen}
+                       error={error}/>
                 </DialogActions>
             </Dialog>
     );

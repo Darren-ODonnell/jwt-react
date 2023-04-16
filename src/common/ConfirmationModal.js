@@ -1,29 +1,27 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {useCallback} from 'react';
 import {Button, Modal} from 'react-bootstrap';
 
-function ConfirmationModal({showModal, setShowModal, setConfirmation, message, title, onConfirm, type}) {
+function ConfirmationModal({showModal, setShowModal, setConfirmation, message, title, type}) {
 
-    const handleConfirm = () => {
-        let bool = true
+   const handleConfirm = () => {
+      setConfirmation(true)
+      handleClose()
+   };
 
-        setConfirmation(true)
-        // onConfirm()
-        handleClose()
-    };
+   const handleClose = () => {
+      setShowModal(false);
+      setConfirmation(false);
+   }
 
-    const handleClose = () => {
-        setShowModal(false);
-        setConfirmation(false);
-    }
-
-    const showDeleteElements = useCallback(() => {
-        switch(type) {
-            case "Delete" :  return true;
-            case "Filter" :
-               return false;
-           default:
-        }
-    },[type])
+   const showDeleteElements = useCallback(() => {
+      switch (type) {
+         case "Delete" :
+            return true;
+         case "Filter" :
+            return false;
+         default:
+      }
+   }, [type])
 
     const showFilterElements = useCallback(() => {
         switch(type) {

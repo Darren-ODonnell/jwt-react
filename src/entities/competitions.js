@@ -1,6 +1,5 @@
 import {METHODS} from '../common/globals'
 import {addMessage} from "../common/helper";
-import {forEach} from "react-bootstrap/ElementChildren";
 
 export const Competition = 'Competition'
 const location = "/competition"

@@ -6,15 +6,14 @@ import {HTML5Backend} from "react-dnd-html5-backend";
 import {DndProvider} from "react-dnd";
 
 const App = () => {
-    return (
+   return (
+      <div>
+         <DndProvider backend={HTML5Backend}>
+            <NavbarSelect/>
+            <Paths/>
+         </DndProvider>
+      </div>
 
-        <div>
-            <DndProvider backend={HTML5Backend}>
-                <NavbarSelect/>
-                <Paths/>
-            </DndProvider>
-        </div>
-
-    )
+   )
 }
 export default App;

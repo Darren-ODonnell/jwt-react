@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useRef} from "react";
+import {useMemo} from "react";
 import {COMPETITION_URLS} from "../entities/competitions";
 import {PLAYER_URLS} from "../entities/players";
 import {CLUB_URLS} from "../entities/clubs";
@@ -13,10 +13,6 @@ export const Players = () => {
    const players = useAxios2(PLAYER_URLS.list);
    return useMemo(() => players, []);
 }
-// export const usePlayers = () => {
-//     const players = useAxios2(PLAYER_URLS.list);
-//     return players;
-// };
 
 export const Teamsheets = () => {
    const teamsheets = useAxios2(TEAMSHEET_URLS.list);
@@ -25,12 +21,12 @@ export const Teamsheets = () => {
 
 export const useTeamsheets = () => {
    const teamsheets = useAxios2(TEAMSHEET_URLS.list);
-   return teamsheets;
+   return useMemo(() => teamsheets, []);
 };
 
 export const LastTeamsheet = () => {
    const teamsheets = useAxios2(TEAMSHEET_URLS.last);
-   return teamsheets
+   return useMemo(() => teamsheets, []);
 }
 
 export const GetTeamsheetByFixtureId = (id) => {
@@ -42,10 +38,8 @@ export const GetTeamsheetByFixtureId = (id) => {
 export const LoadData = () => {
    const players = useAxios2(PLAYER_URLS.list);
    const positions = useAxios2(POSITION_URLS.list);
-
    const teamsheets = useAxios2(TEAMSHEET_URLS.list)
    const lastTeamsheet = useAxios2(TEAMSHEET_URLS.last);
-
    const fixtures = useAxios2(FIXTURE_URLS.list);
    const fixturesWithNoTeamsheets = useAxios2(FIXTURE_URLS.withNoTeamsheet);
 

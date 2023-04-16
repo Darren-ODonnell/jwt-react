@@ -1,26 +1,26 @@
-import React, { Fragment, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { TeamsheetContext } from '../context/TeamsheetContext';
-import { AgGridReact } from 'ag-grid-react';
-import { Button, Dialog, DialogContent, Grid } from "@mui/material";
+import React, {Fragment, useCallback, useContext, useEffect, useRef, useState} from 'react';
+import {TeamsheetContext} from '../context/TeamsheetContext';
+import {AgGridReact} from 'ag-grid-react';
+import {Button, Dialog, DialogContent, Grid} from "@mui/material";
 
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'ag-grid-community/styles/ag-theme-balham.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 
-import { defaultColDef, handleClickAway } from "../common/helper";
-import { deleteData, getData, useAxios } from "../api/ApiService";
-import { Position } from '../entities/positions'
-import { Pitchgrid } from '../entities/pitchgrids'
-import { GRID_ROW_DELETE, REPORT_PRINT_PREVIEW } from "../common/globals";
-import { loadDataForTeamsheet, Teamsheet, TEAMSHEET_URLS } from "../entities/teamsheets";
-import TeamsheetReport from "../teamsheetComponents/TeamsheetReport";
+import {defaultColDef, handleClickAway} from "../common/helper";
+import {deleteData, getData, useAxios} from "../api/ApiService";
+import {Position} from '../entities/positions'
+import {Pitchgrid} from '../entities/pitchgrids'
+import {GRID_ROW_DELETE, REPORT_PRINT_PREVIEW} from "../common/globals";
+import {loadDataForTeamsheet, Teamsheet} from "../entities/teamsheets";
+
 import FormDialog from "./FormDialog";
 import ConfirmationModal from "../common/ConfirmationModal";
 import ReportModal from "../teamsheetComponents/ReportModal";
 import Export from "../common/Export";
 import TeamsheetDnd from "../teamsheetComponents/TeamsheetDnd";
-import { LoadData, useTeamsheets } from "../common/DropDownData";
+import {LoadData} from "../common/DropDownData";
 import '../App.css'
 import FixtureSelect from "../teamsheetComponents/FixtureSelect";
 
@@ -28,10 +28,6 @@ const MyDataGrid = ( { props } ) => {
    const [ gridApi, setGridApi ] = useState( null );
    const gridRef = useRef( null );
    const [ paginationEnabled, setPaginationEnabled ] = useState( true );
-   // used with delete to confirm the record is to be deleted
-   const [ deleteNode, setDeleteNode ] = useState( false )
-   // const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-   const [ showPrintPreview, setShowPrintPreview ] = useState( false );
    // data for form
    const [ selectedRow, setSelectedRow ] = useState()
    // grid data
@@ -57,12 +53,11 @@ const MyDataGrid = ( { props } ) => {
    const [ teamsheetDnd, setTeamsheetDnd ] = useState( false )
    const { team, setTeam, panel, setPanel, subs, setSubs } = useContext( TeamsheetContext );
    const [ fixture, setFixture ] = useState( {} )
-   // const theme = useTheme();
+
    const [ previousTeamsheets, setPreviousTeamsheets ] = useState( [] )
    const [ teamsheetPrepared, setTeamsheetPrepared ] = useState( false )
    const [ fixtureSelected, setFixtureSelected] = useState(false)
    const [ players, teamsheets, lastTeamsheets, positions, fixtures, fixturesWithNoTeamsheets ] = LoadData();
-   const renderCount = useRef( 0 );
 
    let message = "";
 
@@ -76,17 +71,9 @@ const MyDataGrid = ( { props } ) => {
       setSelectedRow(event.node.data);
    }, []);
 
-   // teamsheet DnD handling
-   // const handleTeamsheetSave = (data) => {
-   //    setTeamsheetDnd( false )
-   // }
    const handleTeamsheetCancel = () => {
       setTeamsheetDnd(false)
    }
-   const onChange = useCallback((e) => {
-      const {value, id} = e.target;
-      setRowData({...rowData, [id]: value});
-   }, [rowData]);
 
    const onGridReady = useCallback((params) => {
       setGridApi( params.api );
@@ -156,17 +143,17 @@ const MyDataGrid = ( { props } ) => {
       }
    }, [ teamsheets ] );
    // Delete Button in Grid
-   const DeleteButton = ( params ) => {
+   const DeleteButton = () => {
       message = GRID_ROW_DELETE;
       return (
          // positions and pitchgrids are reference data and dont need add/delete operations
-         showDeleteButton( props.type ) ?
-            <Button onClick={ handleShowDeleteModal }
+         showDeleteButton(props.type) ?
+            <Button onClick={handleShowDeleteModal}
                     variant="outlined"
                     color="secondary"
             > Delete </Button>
             :
-            <Button disabled={ true }
+            <Button disabled={true}
                     variant="outlined"
                     color="secondary"
             >NO Delete </Button>
@@ -214,15 +201,8 @@ const MyDataGrid = ( { props } ) => {
       // enable dnd gui
       setTeamsheetDnd(true)
    }
-   const getFixtureId = ( team ) => {
-      const posn = team.find( item => {
-         return typeof item === "object" && item !== null && Object.keys( item ).length > 0
-      } )
-      return posn.id.fixtureId
-   }
 
    function fillEmptyPositions( team, id ) {
-      let newTeam = [...team]
       const teamsheetId = {
          fixtureId: id,
          playerId: -1,
@@ -248,13 +228,13 @@ const MyDataGrid = ( { props } ) => {
    }
 
    // Add Button
-   const AddButton = ( params, messages ) => {
-      switch ( params.type ) {
+   const AddButton = (params) => {
+      switch (params.type) {
          case Pitchgrid:
          case Position:
             return (
                <Grid align="right">
-                  <Button disabled={ true } onClick={ () => handleOpen( params ) }
+                  <Button disabled={true} onClick={() => handleOpen(params)}
                           variant="contained"
                           color="primary"
                   >NO ADDITION</Button>
@@ -306,12 +286,12 @@ const MyDataGrid = ( { props } ) => {
    }
    //
    // print preview
-   const PrintPreviewButton = ( params ) => {
+   const PrintPreviewButton = () => {
       message = REPORT_PRINT_PREVIEW
       return (
-         showPrintPreviewButton( props.type ) && (
+         showPrintPreviewButton(props.type) && (
             <Grid align="left">
-               <Button className="grid-button" onClick={ ( params ) => handlePrintModal( params, filteredData ) }
+               <Button className="grid-button" onClick={(params) => handlePrintModal(params, filteredData)}
                        variant="contained"
                        color="primary"
                        sx={{
@@ -373,7 +353,7 @@ const MyDataGrid = ( { props } ) => {
    }, []);
 
    // dummy method for now - this needs to be setup in each entity file
-   const validate = (values) => {
+   const validate = () => {
       return true
    }
 
@@ -413,7 +393,6 @@ const MyDataGrid = ( { props } ) => {
    }
    const handleDeleteConfirmation = () => {
       if ( props.type === Teamsheet ) {
-
          setDeleteConfirmation( false )
       } else {
          setDeleteConfirmation( true )
@@ -482,13 +461,11 @@ const MyDataGrid = ( { props } ) => {
             <Dialog open={ teamsheetDnd } maxWidth="lg" fullWidth onClose={ handleClickAway }>
                <DialogContent style={ dialogContentStyle }>
                   <TeamsheetDnd
-                     // pass state to child component
-                     // handleSave={ handleTeamsheetSave }
-                     handleCancel         = {handleTeamsheetCancel}
-                     setRowData           = {setRowData}
-                     methods              = {props.methods}
-                     teamsheetDnd         = {teamsheetDnd}
-                     setFixtureSelected   = {setFixtureSelected}
+                     handleCancel={handleTeamsheetCancel}
+                     setRowData={setRowData}
+                     methods={props.methods}
+                     teamsheetDnd={teamsheetDnd}
+                     setFixtureSelected={setFixtureSelected}
                      setTeamsheetPrepared={setTeamsheetPrepared}
                      setTeamsheetDnd={setTeamsheetDnd}
                      positions={positions}

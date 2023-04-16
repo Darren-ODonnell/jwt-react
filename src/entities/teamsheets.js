@@ -1,5 +1,4 @@
 import {METHODS} from "../common/globals";
-import {useCallback} from 'react'
 import {addMessage} from "../common/helper";
 import {CLUB_URLS} from "./clubs";
 import { COMPETITION_URLS } from "./competitions";
@@ -71,12 +70,12 @@ const gridLoader = (data) => {
 }
 
 // teamsheets
-const TEAMSHEET_ADD      = "/teamsheet/add";
-const TEAMSHEET_ADD_ALL      = "/teamsheet/addAll";
-const TEAMSHEET_DELETE   = "/teamsheet/delete/";
+const TEAMSHEET_ADD = "/teamsheet/add";
+const TEAMSHEET_ADD_ALL = "/teamsheet/addAll";
+const TEAMSHEET_DELETE = "/teamsheet/delete/";
 const TEAMSHEET_FINDBYID = "/teamsheet/findById/";
 const TEAMSHEET_FINDBYFIXTUREID = "/teamsheet/findByFixtureId/";
-const TEAMSHEET_LIST     = "/teamsheet/list";
+const TEAMSHEET_LIST = "/teamsheet/list";
 const TEAMSHEET_UPDATE = "/teamsheet/update";
 const TEAMSHEET_UPDATE_ALL = "/teamsheet/updateAll";
 const TEAMSHEET_LAST = "/teamsheet/last";
@@ -118,10 +117,10 @@ export const teamsheetData = {
 };
 
 export const loadDataForTeamsheet = (filteredData) => {
-    let header = {}
+    let header
     let team = []
     let subs = []
-    let footer = {}
+    let footer
 
     header = {...filteredData[0].fixtureEntry}
 

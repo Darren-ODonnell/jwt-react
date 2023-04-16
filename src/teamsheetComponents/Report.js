@@ -1,20 +1,19 @@
-import React, { useRef, useEffect } from 'react';
-import { Table, TableBody, TableHead, TableRow } from '@mui/material';
+import React from 'react';
+import {Table, TableBody, TableHead, TableRow} from '@mui/material';
 import {
    TEAM_LIST_HEADER_COMPETITION_ENGLISH, TEAM_LIST_HEADER_COMPETITION_IRISH,
    TEAM_LIST_HEADER_TEAMS_ENGLISH, TEAM_LIST_HEADER_TEAMS_IRISH,
-   TEAM_LIST_VERSION, TEAM_LIST_TITLE,
+   TEAM_LIST_TITLE,
    TEAM_LIST_HEADER_TEAMS_SEPARATOR, TEAM_LIST_SUBS_TITLE,
    TEAM_LIST_HEADER_CLUB, TEAM_LIST_HEADER_CLUB_NAME,
    TEAM_LIST_HEADER_COUNTY, TEAM_LIST_HEADER_COUNTY_NAME,
    TEAM_LIST_TEAM_ENGLISH, TEAM_LIST_TEAM_IRISH,
-   TEAM_LIST_TEAM_NOS, TEAM_LIST_MANAGERS_ROLE,
-   TEAM_LIST_MANAGERS_TITLE, TEAM_LIST_MANAGERS_NAME_IRISH,
-   TEAM_LIST_MANAGERS_NAME_ENGLISH,
+   TEAM_LIST_TEAM_NOS,
+
    TEAM_LIST_OFFICIAL_IRISH, TEAM_LIST_DATE_IRISH,
    TEAM_LIST_OFFICIAL_ENGLISH, TEAM_LIST_REFEREE_IRISH,
-   TEAM_LIST_REFEREE_ENGLISH, TEAM_LIST_INSTRUCTIONS_IRISH,
-   TEAM_LIST_INSTRUCTIONS_ENGLISH, TEAM_LIST_FOOTER,
+   TEAM_LIST_REFEREE_ENGLISH,
+
 } from "../common/globals";
 import './TeamsheetReport.css'
 import './Report.css'
@@ -23,13 +22,6 @@ import Header from "./Header";
 
 const Report = ( { data } ) => {
    let num = 0
-   const tableRef = useRef( null );
-   useEffect( () => {
-      const tableElement = tableRef.current;
-
-      // const newWindow = document.write('', '_blank');
-
-   }, [ tableRef ] );
 
    return (
       <div>

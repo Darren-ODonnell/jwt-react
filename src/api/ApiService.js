@@ -2,7 +2,7 @@ import  { useEffect, useState } from 'react';
 import instance  from './axios';
 import {API_AUTH_URLS} from "../common/globals";
 import AuthService from "../auth/AuthService";
-import { refreshPage } from "../common/helper";
+
 
 export const useAxios = () => {
     const [data      , setData]       = useState([]);
@@ -53,7 +53,7 @@ export const useAxios2 = (url) => {
             const response = await instance.get(url);
             setData(response.data);
         };
-        fetchData().then(r => {
+        fetchData().then(() => {
 
         })
         // } catch (err) {
@@ -94,11 +94,11 @@ export const deleteData = (data, error, props, axiosApi, handleClose) => {
     }
 
     return axiosApi(configObj)
-        .then(response => {
-            handleClose();
-        })
+       .then(() => {
+           handleClose();
+       })
         .catch(err => {
-            window.alert(error.message)
+            window.alert(err.message)
             handleClose()
         })
 
@@ -115,13 +115,13 @@ export const getData = ({method, url}, axiosApi, handleClose) => {
         url: url,
     }).then((response) => {
         return response.data
-    }).catch(err => {
+    }).catch(() => {
         handleClose()
     })        // cancel subscription to useEffect
     return () => (isSubscribed = false)
 }
 
-export const UpdateData = ({methods, axiosApi, rowData, error, formValues}) => {
+export const UpdateData = ({methods, axiosApi, formValues}) => {
     const user = AuthService.getCurrentUser();
     AuthService.setAuthToken(user.accessToken);
 
@@ -144,7 +144,7 @@ export const UpdateData = ({methods, axiosApi, rowData, error, formValues}) => {
        });
 };
 
-export const UpdateDataAll = ({methods, axiosApi, rowData, error, formValues}) => {
+export const UpdateDataAll = ({methods, axiosApi, formValues}) => {
     const user = AuthService.getCurrentUser();
     AuthService.setAuthToken(user.accessToken);
 
@@ -183,14 +183,10 @@ export const AddData = ({methods, axiosApi, rowData, formValues}) => {
     return axiosApi(configObj)
        .then(response => {
            rowData = response.data;
-
            return rowData;
-
        })
-       .catch(err => {
-
+       .catch(() => {
            return null;
-
        });
 };
 
@@ -198,7 +194,6 @@ export const AddData = ({methods, axiosApi, rowData, formValues}) => {
 export const AddDataAll = ({methods, axiosApi, rowData, formValues}) => {
     const user = AuthService.getCurrentUser();
     AuthService.setAuthToken(user.accessToken);
-    const arrayOfObjects = Object.values(formValues);
     const configObj = {
         axiosInstance: instance,
         ...methods.addAll,
@@ -209,14 +204,10 @@ export const AddDataAll = ({methods, axiosApi, rowData, formValues}) => {
     return axiosApi(configObj)
        .then(response => {
            rowData = response.data;
-
            return rowData;
-
        })
-       .catch(err => {
-
+       .catch(() => {
            return null;
-
        });
 };
 

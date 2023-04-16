@@ -1,6 +1,5 @@
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import {TeamsheetProvider} from "../context/TeamsheetContext";
-import {RegisterPage} from '../dev/RegisterPage'
 import {LoginPage} from "./LoginPage";
 import {clubData} from "../entities/clubs";
 import { playerData } from "../entities/players";
@@ -21,8 +20,6 @@ import FileUpload from "../common/FileUpload";
 import UserRegistration from "./UserRegistration";
 import ChangePassword from "./ChangePassword";
 import './Paths.css'
-
-
 
 const Paths = () => {
     return (

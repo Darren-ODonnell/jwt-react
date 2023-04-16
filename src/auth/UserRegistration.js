@@ -25,8 +25,6 @@ const UserRegistration = () => {
         }
 
         try {
-            // res.setHeader('Access-Control-Allow-Origin', '*');
-
             response = await Axios.post(registerUrl, registerData);
             const {token} = response.data;
             AuthService.setAuthToken(token);
@@ -34,7 +32,6 @@ const UserRegistration = () => {
         } catch (e) {
             setErrorMessage(e)
             errorMessage = e;
-
         }
     }
 
@@ -78,9 +75,6 @@ const UserRegistration = () => {
                 onClick={() => navigate('/login')}>Already have an account
             </Button>
         </form>
-
-
     );
 };
-
 export default UserRegistration;

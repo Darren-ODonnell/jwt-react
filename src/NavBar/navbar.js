@@ -1,8 +1,6 @@
 import React from 'react';
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
-// max-width: 700px;
-// margin: auto;
 export const LoggedInNavbar = ( props ) => {
    return (
       <Navbar bg="light" expand="lg">
