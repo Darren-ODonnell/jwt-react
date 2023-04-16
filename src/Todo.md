@@ -10,10 +10,11 @@ As elements are finished - move below Completed
 Current Tasks - with comments on progress
 =========================================
 
-Teamsheet DnD
-: Check that a player can be moved from Panel to subs
-: Add save teamsheets where updates are tested
-: 
+todo:
+
++ Get login/logout functionality working correctly
++ Admin and Coach should be able to login to desktop app.
++ Verify app works in Work,
 
 # Errors
 
@@ -42,12 +43,7 @@ Teamsheet DnD
     C17: 
 
 # Unused Files
-    U1: auth/useUser
-    U2: auth/PrivateRoute
-    U3: auth/user.service
-    Ù13: grid/FormEditDialog
 
-    U16: All <Entity>List.js/css components can be removed
     U17:
     U18:
     U19:
@@ -365,4 +361,8 @@ Teamsheet DnD
     E63: Pagination button smaller than the others - fixed
     E64: Pagination and dropdown action text smaller than the others - fixed
     E61: Cannot save teamsheet changes from new GUI - add Teamsheet working
-
+    U1: auth/useUser
+    U2: auth/PrivateRoute
+    U3: auth/user.service
+    Ù13: grid/FormEditDialog
+    U16: All <Entity>List.js/css components can be removed
