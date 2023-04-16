@@ -31,7 +31,7 @@ const Box = ({index, id, player, position, width, height, x, y, onDrop, style, c
     const [{isDragging}, drag] = useDrag(() => ({
         type: "ITEM",
         item: () => {
-            return {id, player, index};
+            return {id, player, index, container};
         },
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
@@ -46,9 +46,6 @@ const Box = ({index, id, player, position, width, height, x, y, onDrop, style, c
             const left = Math.round(x + delta.x);
             const top = Math.round(y + delta.y);
             const newBox = {left, top, id};
-
-            // const initialSourceClientOffset = monitor.getInitialSourceClientOffset();
-            // const draggedItemIndex = Math.floor(initialSourceClientOffset.y / 60);
 
             onDrop(newBox, id, item, event, position, container);
 

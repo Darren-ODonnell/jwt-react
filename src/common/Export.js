@@ -8,11 +8,7 @@ import * as XLSX from "xlsx";
 
 
 const Export = ( { exportType, setExportType, gridApi } ) => {
-   // const renderCount = useRef( 0 );
-   // useEffect(() => {
-   //    renderCount.current++;
-   //    console.log('Render count - Export:', renderCount.current);
-   // });
+
    const theme = useTheme()
    const handleExport = async (exportType) => {
       const columnApi = gridApi.gridOptionsService.columnApi

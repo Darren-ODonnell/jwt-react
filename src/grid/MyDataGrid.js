@@ -365,10 +365,6 @@ const MyDataGrid = ( { props } ) => {
       )
    }
 
-   // useEffect( () => {
-   //    renderCount.current++;
-   //    console.log( 'Render count - MyDataGrid:', renderCount.current );
-   // } );
    useEffect(() => {
       setRowData(data);
    }, [data]);

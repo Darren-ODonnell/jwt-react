@@ -15,9 +15,6 @@ export const NavbarSelect = () => {
       return <LoggedOutNavbar/>;
    }
 
-   // checking how often this code runs
-   countRef.current++;
-   console.log( countRef.current )
 
    return ( <div className="App"><LoggedInNavbar user={ user }/></div> )
 }

@@ -6,11 +6,7 @@ import axios from "axios";
 function FileUpload() {
     const [file, setFile] = useState(null);
     const [error, setError] = useState(null);
-    const renderCount = useRef(0);
-    useEffect(() => {
-        renderCount.current++;
-        console.log('Render count - FileUpload:', renderCount.current);
-    });
+
     const types = ["text/csv"];
     const location = useLocation();
 

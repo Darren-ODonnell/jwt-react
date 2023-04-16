@@ -70,11 +70,6 @@ const DropdownData = () => {
    const pitchgrid = useAxios2(PITCH_GRID_URLS.list);
    const statname = useAxios2(STAT_NAME_URLS.list);
 
-   // const renderCount = useRef(0);
-   // useEffect(() => {
-   //    renderCount.current++;
-   //    console.log('Render count - DropDownData:', renderCount.current);
-   // });
    const pitchgrids = pitchgrid ? pitchgrid.map(pg => {
       return pg.id
    }) : []

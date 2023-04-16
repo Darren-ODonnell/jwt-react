@@ -5,11 +5,6 @@ import {useLocation, useNavigate, useParams,  BrowserRouter } from "react-router
 
 export const ErrorMessage = (props) => {
     const [show, setShow] = useState(true);
-    const renderCount = useRef(0);
-    useEffect(() => {
-        renderCount.current++;
-        console.log('Render count - ErrorMessage:', renderCount.current);
-    });
 
     function onClick() {
         setShow(false);

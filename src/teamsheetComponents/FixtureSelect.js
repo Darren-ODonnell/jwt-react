@@ -12,7 +12,7 @@ const FixtureSelect = (props) => {
    };
 
    const FixtureDropDown = (props) => {
-      // console.log( "Export Page - dropdown" )
+
       const theme = useTheme()
       return (
          <>

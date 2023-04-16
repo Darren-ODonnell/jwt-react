@@ -206,8 +206,6 @@ export const AddDataAll = ({methods, axiosApi, rowData, formValues}) => {
             data: formValues
         }
     };
-    console.log("JerseyNumber: ",formValues.map(fv=> {return fv.jerseyNumber}))
-
     return axiosApi(configObj)
        .then(response => {
            rowData = response.data;
