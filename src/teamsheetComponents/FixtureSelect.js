@@ -1,44 +1,19 @@
-import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import React, { useEffect, useRef } from "react";
-import { useTheme } from "@mui/material/styles";
-
-const FixtureSelect = ( props ) => {
-   // const renderCount = useRef( 0 );
-   //
-   // useEffect( () => {
-   //    renderCount.current++;
-   //    console.log( 'Render count - FixtureSelect:', renderCount.current );
-   // } );
-
+import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
+import React from "react";
+import {useTheme} from "@mui/material/styles";
+// dropdown menu to select from fixtures date that have no teamsheets yet.
+const FixtureSelect = (props) => {
    if (!props.fixtures) return // no fixtures found with teamsheets
 
    const handleSelectEvent = (event) => {
       const selectedValue = event.target.value;
       const selectedFixture = props.fixtures.find((fixture) => fixture.fixtureDate === selectedValue);
-
-      // The last teamsheet will have a reference to the original fixture
-      // fixture of last teamsheets must be changed to current fixture
-      const addFixtureToTeamsheets = props.lastTeamsheets.map((teamSheet) => {
-         return {...teamSheet, fixture: {...selectedFixture}};
-      });
-
-      const updatedTeamsheets = addFixtureToTeamsheets.map(teamsheet => (
-         {...teamsheet, id: {fixtureId: teamsheet.fixture.id}}
-      ));
-
-      // update state
-      props.setFixture(selectedFixture);
-      props.setFixtureSelected(true)
-      props.setPreviousTeamsheets([...updatedTeamsheets])
-      props.setTeamsheetPrepared(false)
-      props.handleAdd({...props, updatedTeamsheets})
-
+      props.handleAdd({...props, id: selectedFixture.id, selectedFixture})
    };
 
-   const FixtureDropDown = ( props ) => {
+   const FixtureDropDown = (props) => {
       // console.log( "Export Page - dropdown" )
       const theme = useTheme()
-
       return (
          <>
             <FormControl variant="outlined" color="primary">
@@ -70,14 +45,13 @@ const FixtureSelect = ( props ) => {
                   )
                )}
                </Select>
-
             </FormControl>
          </>
       )
    }
    return (
-      <div style={ { marginBottom: '10px' } }>
-         <FixtureDropDown { ...props }/>
+      <div style={{marginBottom: '10px'}}>
+         <FixtureDropDown {...props}/>
       </div>
    )
 }

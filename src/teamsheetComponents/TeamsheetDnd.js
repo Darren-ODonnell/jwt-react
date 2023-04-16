@@ -12,7 +12,9 @@ const TeamsheetDnd = ({
                          teamsheetDnd,
                          setFixtureSelected,
                          setTeamsheetPrepared,
-                         setTeamsheetDnd
+                         setTeamsheetDnd,
+                         positions
+
                       }) => {
    const {panel, setPanel, subs, setSubs, team, setTeam} = useContext(TeamsheetContext);
 
@@ -22,6 +24,15 @@ const TeamsheetDnd = ({
    //    renderCount.current++;
    //    console.log('Render count - TeamsheetDnd:', renderCount.current);
    // });
+
+   // useEffect(() => {
+   //    console.log('subs updated:', subs);
+   // }, [subs]);
+   //
+   // useEffect(() => {
+   //    console.log('team updated:', team);
+   // }, [team]);
+
 
    const findPlayer = (id) => {
       const idx1 = panel.findIndex(p => p.id === id)
@@ -34,6 +45,145 @@ const TeamsheetDnd = ({
 
       return [undefined, undefined, undefined, undefined];
    }
+
+   const moveTeamToSubsContainer = (sourceIdx, setSource, setDest, source, dest) => {
+      // don't copy from Team if already exists in Subs list
+      const sourcePlayerId = source[sourceIdx].player.id;
+      const exists = dest.find(p => p.player.id === sourcePlayerId)
+      if (exists) return
+
+      // make a deep copy so attribs in player do not get changed by the setTeam(...) block
+      const player = JSON.parse(JSON.stringify(source[sourceIdx]));
+
+      setTeam(prevTeam => {
+         const array = [...prevTeam]
+         array[sourceIdx].id.playerId = -1
+         array[sourceIdx].player = clearPlayer()
+         array[sourceIdx].player.firstname = ""
+         array[sourceIdx].player.lastname = ""
+         return array
+      })
+
+      const newSubsObject = JSON.parse(JSON.stringify(createSubsMember(player)))
+
+      setSubs(prevSubs => [...prevSubs, newSubsObject]);
+      //
+      // setSubs(prevSubs=> {
+      //    const array = [...prevSubs]
+      //    array.push(newSubsObject)
+      //    return array
+      // })
+
+   }
+   const clearPlayer = () => {
+      return {
+         address: "",
+         availability: "Yes",
+         email: "",
+         fellowType: "Player",
+         firstname: "",
+         firstnameI: "",
+         grade: "J1",
+         id: -1,
+         lastname: "",
+         lastnameI: "",
+         panelMember: "",
+         phone: "",
+         phoneIce: "",
+         registered: true,
+         yob: 0,
+      }
+   }
+
+   const moveTeamToPanelContainer = (sourceIdx, setSource, setDest, source, dest) => {
+      // don't copy from Team if already exists in Panel
+      const sourcePlayerId = source[sourceIdx].player.id;
+      const exists = dest.some(p => p.id === sourcePlayerId)
+      if (exists) return
+
+      // make a deep copy so attribs in player do not get changed by the setTeam(...) block
+      const player = JSON.parse(JSON.stringify(source[sourceIdx]));
+
+      setTeam(prevTeam => {
+         const array = [...prevTeam]
+         array[sourceIdx].id.playerId = -1
+         array[sourceIdx].player.id = -1
+         array[sourceIdx].player.firstname = ""
+         array[sourceIdx].player.lastname = ""
+         return array
+      })
+
+      const newPanelObject = createPanelMember(player.player)
+      setPanel(prevPanel => {
+         const array = [...prevPanel]
+         array.push(newPanelObject)
+         return array
+      })
+
+   }
+   const createSubsMember = (player) => {
+      const posn = 15 + subs.length + 1
+      const position = positions[posn]
+
+      const newSubsMember = {...player, position: position, jerseyNumber: posn}
+
+      return newSubsMember
+   }
+   const createPanelMember = (player) => {
+      const size = panel.length
+      const position = {}
+
+      const newPanelMember = JSON.parse(JSON.stringify(player))
+
+      return newPanelMember
+   }
+   const moveSubsToPanelContainer = (sourceIdx, setSource, setDest, source, dest) => {
+      // don't copy if already exists in this list
+      const sourcePlayerId = source[sourceIdx].player.id;
+      const exists = dest.find(p => p.id === sourcePlayerId)
+      if (exists) return
+
+      // make a deep copy so attribs in player do not get changed
+      const player = JSON.parse(JSON.stringify(source[sourceIdx]));
+
+      const newPanelObject = createPanelMember(player)
+      setPanel(prevPanel => {
+         const array = [...prevPanel]
+         array.push(newPanelObject.player)
+         return array
+      })
+
+      setSubs(prevSubs => {
+         const array = [...prevSubs]
+         const filteredArray = array.filter(a => a.player.id !== player.player.id)
+         return filteredArray
+      })
+   }
+   const movePanelToSubsContainer = (sourceIdx, setSource, setDest, source, dest) => {
+      // don't copy if already exists in this list
+      const sourcePlayerId = source[sourceIdx].id;
+      const exists = dest.find(p => p.player.id === sourcePlayerId)
+      if (exists) return
+
+      // make a deep copy so attribs in player do not get changed
+      const player = JSON.parse(JSON.stringify(source[sourceIdx]));
+
+      const newSubsObject = JSON.parse(JSON.stringify(team[0]));
+      newSubsObject.player = JSON.parse(JSON.stringify(player));
+
+      setPanel(prevPanel => {
+         const array = [...prevPanel]
+         const filteredArray = array.filter(a => a.id !== player.id)
+         return filteredArray
+      })
+
+      setSubs(prevSubs => {
+         const array = [...prevSubs]
+         array.push(newSubsObject)
+         return array
+      })
+   }
+
    const moveTeamPlayer = (sourceIdx, destIdx, setSource, setDest, sourceId, destId, source, dest) => {
       // don't copy if already exists in this list
       const exists = dest.find(p => p.name === source[sourceIdx].name)
@@ -93,12 +243,6 @@ const TeamsheetDnd = ({
       // skip over any attempt to move onto same container
       if (source === dest) return
 
-
-      // check for empty player
-      if (container === "panel") if (source[sourceIdx].player.id === -1) return
-      if (container === "subs") if (source[sourceIdx].player.id === -1) return
-      if (container === "team") if (source[sourceIdx].id === -1) return
-
       // move team to panel
       // move team to subs
       // move subs to panel
@@ -106,28 +250,32 @@ const TeamsheetDnd = ({
 
       if (source === panel) {
          if (source[sourceIdx].id === -1) return
-         // handle subs move
+         if (dest === subs) {
+            movePanelToSubsContainer(sourceIdx, setSource, setDest, source, dest)
+         }
 
       } else if (source === subs) {
          if (source[sourceIdx].player.id === -1) return
-         // handle panel move
+         if (dest === panel) {
+            moveSubsToPanelContainer(sourceIdx, setSource, setDest, source, dest)
+         }
 
       } else if (source === team) {
          if (source[sourceIdx].player.id === -1) return
          if (dest === subs) {
-
+            moveTeamToSubsContainer(sourceIdx, setSource, setDest, source, dest)
          }
          if (dest === panel) {
-
+            moveTeamToPanelContainer(sourceIdx, setSource, setDest, source, dest)
          }
       }
 
-
-      if (container === "panel") {
-         moveTeamPlayer(sourceIdx, -1, setSource, setPanel, droppedBoxId, -1, source, panel)
-      } else { // must be "subs"
-         moveTeamPlayer(sourceIdx, -1, setSource, setSubs, droppedBoxId, -1, source, subs)
-      }
+      //
+      // if (container === "panel") {
+      //    moveTeamPlayer(sourceIdx, -1, setSource, setPanel, droppedBoxId, -1, source, panel)
+      // } else { // must be "subs"
+      //    moveTeamPlayer(sourceIdx, -1, setSource, setSubs, droppedBoxId, -1, source, subs)
+      // }
    }
    const checkPlayer = (source) => {
       let name = undefined
@@ -144,8 +292,8 @@ const TeamsheetDnd = ({
       const sourceIdx = team.findIndex(t => t.player.id === sourceId)
       const destIdx = team.findIndex(t => t.player.id === destId)
 
-      const sourcePlayer = {...team[sourceIdx].player}
-      const destPlayer = {...team[destIdx].player}
+      const sourcePlayer = JSON.parse(JSON.stringify(team[sourceIdx].player))
+      const destPlayer = JSON.parse(JSON.stringify(team[destIdx].player))
 
       // don't move an empty position
       if (sourceId === -1) return
@@ -158,36 +306,33 @@ const TeamsheetDnd = ({
       const sourceIdx = team.findIndex(t => t.player.id === sourceId);
       const destIdx = panel.findIndex(t => t.id === destId);
 
-      const sourcePlayer = {...team[sourceIdx].player};
-      const destPlayer = {...panel[destIdx]};
+      const sourcePlayer = JSON.parse(JSON.stringify(createSubsMember(team[sourceIdx].player)));
+      const destPlayer = JSON.parse(JSON.stringify(createSubsMember(panel[destIdx])));
 
-      // Don't move an empty position
-      if (sourceId === -1) return;
-
-      setPanel((prevPanel) => {
-         // Create a new array without directly modifying the previous state
-         const newPanel = [...prevPanel];
-         // Update the player in the new array
-         newPanel[destIdx] = sourcePlayer //  { ...sourcePlayer, id: sourcePlayer.id };
-         return newPanel;
+      setTeam(prevTeam => {
+         let array = [...prevTeam];
+         array[sourceIdx].player = destPlayer;
+         console.log("team updated:", array);
+         return array;
       });
 
-      setTeam((prevTeam) => {
-         const newTeam = [...prevTeam]
-         // Update the player in the new array
-         newTeam[sourceIdx].player = destPlayer //{ ...destPlayer, id: destPlayer.id };
-         return newTeam;
+      setPanel(prevPanel => {
+         let array = [...prevPanel];
+         array[destIdx] = sourcePlayer;
+         console.log("subs updated:", array);
+         return array;
       });
+
 
    };
 
    // cant test yet
-   const removeTeamToSubs = (sourceId, destId) => {
+   const removeTeamToSubs = (sourceId, destId, position) => {
       const sourceIdx = team.findIndex(t => t.player.id === sourceId)
       const destIdx = subs.findIndex(t => t.player.id === destId)
 
-      const sourcePlayer = {...team[sourceIdx].player}
-      const destPlayer = {...subs[destIdx].player}
+      const sourcePlayer = JSON.parse(JSON.stringify(team[sourceIdx].player))
+      const destPlayer = JSON.parse(JSON.stringify(subs[destIdx].player))
 
       // don't move an empty position
       if (sourceId === -1) return
@@ -212,41 +357,36 @@ const TeamsheetDnd = ({
       //     return array
       // })
    }
-   const swapTeamWithSubs = (sourceId, destId) => {
-      // AW - MN
-      // MN - AW - nothing happens
-      const sourceIdx = team.findIndex(t => t.player.id === sourceId)
-      const destIdx = subs.findIndex(t => t.player.id === destId)
+   const swapTeamWithSubs = (sourceId, destId, position) => {
+      const sourceIdx = team.findIndex(t => t.player.id === sourceId);
+      const destIdx = subs.findIndex(t => t.player.id === destId);
 
-      const sourcePlayer = {...team[sourceIdx].player}
-      const destPlayer = {...subs[destIdx].player}
-
-      // don't move an empty position
-      if (sourceId === -1) return
-
-      // saveTeam(sourceIdx, destPlayer)
-      // saveSubs(destIdx, sourcePlayer)
+      const sourcePlayer = JSON.parse(JSON.stringify(createSubsMember(team[sourceIdx].player)));
+      const destPlayer = JSON.parse(JSON.stringify(createSubsMember(subs[destIdx].player)));
 
       setTeam(prevTeam => {
-         let array = [...prevTeam]
-         array[sourceIdx].player = {...destPlayer, id: destPlayer.id}
-         return array
-      })
+         let array = [...prevTeam];
+         array[sourceIdx].player = destPlayer;
+         console.log("team updated:", array);
+         return array;
+      });
 
       setSubs(prevSubs => {
-         let array = [...prevSubs]
-         array[destIdx].player = {...sourcePlayer, id: sourcePlayer.id}
-         return array
-      })
+         let array = [...prevSubs];
+         array[destIdx].player = sourcePlayer;
+         console.log("subs updated:", array);
+         return array;
+      });
 
-   }
+   };
+
    // cant test yet
-   const removeTeamToPanel = (sourceId, destId) => {
+   const removeTeamToPanel = (sourceId, destId, position) => {
       const sourceIdx = team.findIndex(t => t.player.id === sourceId)
       const destIdx = panel.findIndex(t => t.id === destId)
 
-      const sourcePlayer = {...team[sourceIdx].player}
-      const destPlayer = {...panel[destIdx]}
+      const sourcePlayer = JSON.parse(JSON.stringify(team[sourceIdx].player))
+      const destPlayer = JSON.parse(JSON.stringify(panel[destIdx]))
 
       // don't move an empty position
       if (sourceId === -1) return
@@ -256,12 +396,12 @@ const TeamsheetDnd = ({
 
 
    }
-   const removePanelToTeam = (sourceId, destId) => {
+   const removePanelToTeam = (sourceId, destId, position) => {
       // destination is empty
       const sourceIdx = panel.findIndex(t => t.id === sourceId)
       const destIdx = team.findIndex(t => t.player.id === destId)
 
-      const sourcePlayer = {...panel[sourceIdx]}
+      const sourcePlayer = JSON.parse(JSON.stringify(panel[sourceIdx]))
       const destPlayer = {}
 
       setPanel(prevPanel => {
@@ -321,83 +461,90 @@ const TeamsheetDnd = ({
       })
 
    }
-   const swapPanelWithTeam = (sourceId, destId) => {
+   const swapPanelWithTeam = (sourceId, destId, position) => {
       // both panel and team have existing players
       const sourceIdx = panel.findIndex(t => t.id === sourceId)
       const destIdx = team.findIndex(t => t.player.id === destId)
 
-      const sourcePlayer = {...panel[sourceIdx]}
-      const destPlayer = {...team[destIdx].player}
+      const sourcePlayer = JSON.parse(JSON.stringify(panel[sourceIdx]))
+      const destPlayer = JSON.parse(JSON.stringify(team[destIdx].player))
 
       savePanel(sourceIdx, destPlayer)
       saveTeam(destIdx, sourcePlayer)
    }
-   const removePanelToSubs = (sourceId, destId) => {
+   const removePanelToSubs = (sourceId, destId, position) => {
       const sourceIdx = panel.findIndex(t => t.id === sourceId)
       const destIdx = subs.findIndex(t => t.player.id === destId)
 
-      const sourcePlayer = {...panel[sourceIdx]}
-      const destPlayer = {...subs[destIdx].player}
+      const sourcePlayer = JSON.parse(JSON.stringify(panel[sourceIdx]))
+      const destPlayer = JSON.parse(JSON.stringify(subs[destIdx].player))
 
       savePanel(sourceIdx, destPlayer)
       saveSubs(destIdx, sourcePlayer)
    }
-   const swapPanelWithSubs = (sourceId, destId) => {
+   const swapPanelWithSubs = (sourceId, destId, position) => {
       const sourceIdx = panel.findIndex(t => t.id === sourceId)
       const destIdx = subs.findIndex(t => t.player.id === destId)
 
-      const sourcePlayer = {...panel[sourceIdx]}
-      const destPlayer = {...subs[destIdx].player}
+      const sourcePlayer = JSON.parse(JSON.stringify(panel[sourceIdx]))
+      const destPlayer = JSON.parse(JSON.stringify(subs[destIdx].player))
 
       savePanel(sourceIdx, destPlayer)
       saveSubs(destIdx, sourcePlayer)
    }
    const movePanelToPanel = (sourceId, destId) => {
-      const sourceIdx = panel.findIndex(t => t.id === sourceId);
-      const destIdx = panel.findIndex(t => t.id === destId);
+      // Find the source and destination indices using the current panel state
+      const sourceIdx = panel.findIndex(player => player.id === sourceId);
+      const destIdx = panel.findIndex(player => player.id === destId);
 
-      const sourcePlayer = {...panel[sourceIdx]}
-      const destPlayer = {...panel[destIdx]}
+      if (sourceIdx === -1 || destIdx === -1) {
+         console.error('Source or destination player not found');
+         return;
+      }
 
-      setPanel(prevPanel => {
-         // Create a new array without directly modifying the previous state
-         const newPanel = prevPanel.map(player => ({...player}));
+      // Create a new array without directly modifying the previous state
+      const newPanel = JSON.parse(JSON.stringify(panel));
 
-         // Swap the elements in the new array
-         const temp = newPanel[sourceIdx];
-         newPanel[sourceIdx] = newPanel[destIdx];
-         newPanel[destIdx] = temp;
+      // Swap the elements in the new array
+      const temp = newPanel[sourceIdx];
+      newPanel[sourceIdx] = newPanel[destIdx]
+      newPanel[destIdx] = temp
 
-         // save the updated array to panel
-         return newPanel;
-      });
-   }
-   const removeSubsToPanel = (sourceId, destId) => {
+      // Save the updated array to panel
+      setPanel(newPanel);
+
+      console.log('sourceIdx:', sourceIdx, 'destIdx:', destIdx);
+      console.log('Before swap panel:', panel);
+      console.log('After swap panel:', newPanel);
+
+   };
+
+   const removeSubsToPanel = (sourceId, destId, position) => {
       const sourceIdx = subs.findIndex(t => t.player.id === sourceId)
       const destIdx = panel.findIndex(t => t.id === destId)
 
-      const sourcePlayer = {...subs[sourceIdx].player}
-      const destPlayer = {...panel[destIdx]}
+      const sourcePlayer = JSON.parse(JSON.stringify(subs[sourceIdx].player))
+      const destPlayer = JSON.parse(JSON.stringify(panel[destIdx]))
 
       saveSubs(sourceIdx, destPlayer)
       savePanel(destIdx, sourcePlayer)
 
    }
-   const swapSubsWithPanel = (sourceId, destId) => {
+   const swapSubsWithPanel = (sourceId, destId, position) => {
       const sourceIdx = subs.findIndex(t => t.player.id === sourceId)
       const destIdx = panel.findIndex(t => t.id === destId)
 
-      const sourcePlayer = {...subs[sourceIdx].player}
-      const destPlayer = {...panel[destIdx]}
+      const sourcePlayer = JSON.parse(JSON.stringify(subs[sourceIdx].player))
+      const destPlayer = JSON.parse(JSON.stringify(panel[destIdx]))
 
       saveSubs(sourceIdx, destPlayer)
       savePanel(destIdx, sourcePlayer)
    }
-   const removeSubsToTeam = (sourceId, destId) => {
+   const removeSubsToTeam = (sourceId, destId, position) => {
       const sourceIdx = subs.findIndex(t => t.player.id === sourceId)
       const destIdx = team.findIndex(t => t.player.id === destId)
 
-      const sourcePlayer = {...subs[sourceIdx].player}
+      const sourcePlayer = JSON.parse(JSON.stringify(createSubsMember(subs[sourceIdx].player)))
       const destPlayer = {}
 
       setSubs(prevSubs => {
@@ -412,7 +559,7 @@ const TeamsheetDnd = ({
 
       setTeam(prevTeam => {
          const array = [...prevTeam]
-         array[destIdx].player = {...sourcePlayer, id: sourcePlayer.id}
+         array[position - 1].player = {...sourcePlayer, id: sourcePlayer.id}
          return array
       })
 
@@ -421,8 +568,8 @@ const TeamsheetDnd = ({
       const sourceIdx = subs.findIndex(t => t.player.id === sourceId)
       const destIdx = team.findIndex(t => t.player.id === destId)
 
-      const sourcePlayer = {...subs[sourceIdx].player}
-      const destPlayer = {...team[destIdx].player}
+      const sourcePlayer = JSON.parse(JSON.stringify(subs[sourceIdx].player))
+      const destPlayer = JSON.parse(JSON.stringify(team[destIdx].player))
 
       saveSubs(sourceIdx, destPlayer)
       saveTeam(destIdx, sourcePlayer)
@@ -445,44 +592,72 @@ const TeamsheetDnd = ({
       });
    }
 
-   const onDrop = (box, destId, item) => {
-
+   const onDrop = (box, destId, item, event, position, container) => {
+      if (event) {
+         event.preventDefault();
+         event.stopPropagation(); // stop the event from propagating up the component tree
+      }
 
       const sourceId = item.player.id;
-      const source = findArray(sourceId);
-      const dest = findArray(destId);
+      const source = findArrayByName(container);
+      const dest = findArrayById(destId);
 
-      if (source === team) {
-         if (dest === panel && destId === -1) removeTeamToPanel(sourceId, destId)
-         if (dest === panel && destId >= 0) swapTeamWithPanel(sourceId, destId)
-         if (dest === subs && destId === -1) removeTeamToSubs(sourceId, destId)
-         if (dest === subs && destId >= 0) swapTeamWithSubs(sourceId, destId)
-         if (dest === team) moveTeamToTeam(sourceId, destId)
+      console.log('source:', source, 'dest:', dest, 'sourceId:', sourceId, 'destId:', destId);
+      console.log('source array:', source);
+      console.log('dest array:', dest);
+      console.log('panel array:', panel);
+      console.log('team array:', team);
+      console.log('subs array:', subs);
 
-      } else if (source === panel) {
-         if (dest === team && destId === -1) removePanelToTeam(sourceId, destId)
-         if (dest === team && destId >= 0) swapPanelWithTeam(sourceId, destId)
-         if (dest === subs && destId === -1) removePanelToSubs(sourceId, destId)
-         if (dest === subs && destId >= 0) swapPanelWithSubs(sourceId, destId)
-         if (dest === panel) movePanelToPanel(sourceId, destId)
+      const sourceIsTeam = team.some((player, index) => player === source[index]);
+      const sourceIsPanel = panel.some((player, index) => player === source[index]);
+      const sourceIsSubs = subs.some((player, index) => player === source[index]);
 
-      } else if (source === subs) {
-         if (dest === panel && destId === -1) removeSubsToPanel(sourceId, destId)
-         if (dest === panel && destId >= 0) swapSubsWithPanel(sourceId, destId)
-         if (dest === team && destId === -1) removeSubsToTeam(sourceId, destId)
-         if (dest === team && destId >= 0) swapSubsWithTeam(sourceId, destId)
-         if (dest === subs) moveSubsToSubs(sourceId, destId)
+      const destIsPanel = panel.some((player, index) => {
+         if (dest[index] !== null && dest[index] !== undefined) {
+            return player === dest[index];
+         } else {
+            return false;
+         }
+      });
+      const destIsSubs = subs.some((teamsheet, index) => teamsheet === dest[index]);
+      const destIsTeam = team.some((teamsheet, index) => teamsheet === dest[index]);
+
+      if (sourceIsTeam) {
+         console.log('source is team');
+         if (destIsPanel && destId === -1) removeTeamToPanel(sourceId, destId, position);
+         if (destIsPanel && destId >= 0) swapTeamWithPanel(sourceId, destId, position);
+         if (destIsSubs && destId === -1) removeTeamToSubs(sourceId, destId, position);
+         if (destIsSubs && destId >= 0) swapTeamWithSubs(sourceId, destId, position);
+         if (destIsTeam) moveTeamToTeam(sourceId, destId, position);
+      } else if (sourceIsPanel) {
+         console.log('source is panel');
+         if (destIsTeam && destId === -1) removePanelToTeam(sourceId, destId, position);
+         if (destIsTeam && destId >= 0) swapPanelWithTeam(sourceId, destId, position);
+         if (destIsSubs && destId === -1) removePanelToSubs(sourceId, destId, position);
+         if (destIsSubs && destId >= 0) swapPanelWithSubs(sourceId, destId, position);
+         if (destIsPanel) movePanelToPanel(sourceId, destId, position);
+      } else if (sourceIsSubs) {
+         console.log('source is subs');
+         if (destIsPanel && destId === -1) removeSubsToPanel(sourceId, destId, position);
+         if (destIsPanel && destId >= 0) swapSubsWithPanel(sourceId, destId, position);
+         if (destIsTeam && destId === -1) removeSubsToTeam(sourceId, destId, position);
+         if (destIsTeam && destId >= 0) swapSubsWithTeam(sourceId, destId, position);
+         if (destIsSubs) moveSubsToSubs(sourceId, destId, position);
       }
-   }
+   };
 
-   function findArray(id) {
-      const idx1 = panel.findIndex(p => p.id === id)
-      const idx2 = subs.findIndex(p => p.player.id === id)
-      const array = idx1 >= 0
-         ? panel : idx2 >= 0
-            ? subs : team
-      return array
-   }
+   const findArrayByName = (container) => {
+      return container === "panel" ? [...panel] : container == "subs" ? [...subs] : [...team]
+   };
+   const findArrayById = (id) => {
+      const idx1 = subs.findIndex(p => p.player.id === id)
+      const idx2 = team.findIndex(p => p.player.id === id)
+      const idx3 = panel.findIndex(p => p.id === id)
+
+      return idx1 >= 0 ? subs : idx2 >= 0 ? team : panel
+   };
+
 
    const save = () => {
       const processingTeamsheets = [...team, ...subs]
@@ -526,7 +701,6 @@ const TeamsheetDnd = ({
       setTeamsheetPrepared(false)
       setFixtureSelected(false)
    }
-
    const cancel = () => {
       setTeamsheetPrepared(false)
       setFixtureSelected(false)

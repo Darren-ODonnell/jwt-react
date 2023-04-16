@@ -26,11 +26,11 @@ const TeamsheetContainer = ( { onDrop, onDropContainer, save, handleCancel } ) =
    const { team, panel, subs } = useContext( TeamsheetContext );
 
    return (
-      <Container className="teamsheet-container container-common mx-auto" style={ { height: '800px' } }>
-         <PanelContainer onDrop={ onDrop } onDropContainer={ onDropContainer }/>
-         <TeamContainer onDrop={ onDrop }/>
-         <SubsContainer onDrop={ onDrop } onDropContainer={ onDropContainer }/>
-         <ActionContainer team={ team } subs={ subs } handleCancel={ handleCancel } save={ save }/>
+      <Container className="teamsheet-container container-common mx-auto" style={{height: '800px'}}>
+         <PanelContainer onDrop={onDrop} onDropContainer={onDropContainer}/>
+         <TeamContainer onDrop={onDrop}/>
+         <SubsContainer onDrop={onDrop} onDropContainer={onDropContainer}/>
+         <ActionContainer team={team} subs={subs} handleCancel={handleCancel} save={save}/>
       </Container>
    )
 }
@@ -54,9 +54,10 @@ const PanelContainer = ( { onDrop, onDropContainer } ) => {
       accept: "ITEM",
       drop: ( item, monitor ) => {
          const droppedBoxId = item.id;
-
-         // Call the onDropContainer function with the dropped box information
-         onDropContainer( droppedBoxId, item.index, "box", container );
+         if (!monitor.didDrop()) {
+            // Call the onDropContainer function with the dropped box information
+            onDropContainer(droppedBoxId, item.index, "box", container);
+         }
       },
    } ) );
 
@@ -68,22 +69,27 @@ const PanelContainer = ( { onDrop, onDropContainer } ) => {
                const top = nextRow;
                nextRow += 60; // Increment nextRow by 60 for the next iteration
                return (
-                  <Box
-                     key={ index }
-                     index={ index }
-                     id={ member.id }
-                     player={ member }
-                     width={ 150 }
-                     height={ 50 }
-                     x={ 0 }
-                     y={ top }
-                     onDrop={ onDrop }
-                     style={ { marginLeft: "5px" } }
-                  />
+                  <div key={member.id}>
+                     <Box
+                        // key    = { index }
+                        index={index}
+                        id={member.id}
+                        player={member}
+                        position={index}
+                        width={150}
+                        height={50}
+                        x={0}
+                        y={top}
+                        onDrop={onDrop}
+                        style={{marginLeft: "5px"}}
+                        container="panel"
+                     />
+                  </div>
                )
             } ) }
          </Container>
       </>
+
    );
 };
 
@@ -99,6 +105,7 @@ const TeamContainer = ( { onDrop } ) => {
          positionName: "Keeper",
          id: team[ index ].player.id,
          player: team[ index++ ].player,
+
       }
    }
 
@@ -167,7 +174,6 @@ const TeamContainer = ( { onDrop } ) => {
          position: index + 1,
          positionName: "Right Midfield",
          player: team[ index++ ].player,
-
       },
    }
 
@@ -225,61 +231,73 @@ const TeamContainer = ( { onDrop } ) => {
       const Left = () => {
          const boxX = teamWidth * gapWidthPercent4
          return (
-            <Box
-               key={ left.index }
-               index={ left.index }
-               id={ left.player.id }
-               player={ left.player }
-               width={ boxWidth }
-               height={ boxHeight }
-               source={ team }
-               dest1={ panel }
-               dest2={ subs }
-               x={ boxX }
-               y={ boxY }
-               onDrop={ onDrop }
-               style={ { margin: "0px", fontWeight: "bold" } }
-            />
+            <div key={left.player.id}>
+               <Box
+                  key={left.index}
+                  index={left.index}
+                  id={left.player.id}
+                  player={left.player}
+                  position={left.position}
+                  width={boxWidth}
+                  height={boxHeight}
+                  source={team}
+                  dest1={panel}
+                  dest2={subs}
+                  x={boxX}
+                  y={boxY}
+                  onDrop={onDrop}
+                  style={{margin: "0px", fontWeight: "bold"}}
+                  container="team"
+               />
+            </div>
          )
       }
       const Middle = () => {
          const boxX = teamWidth * ( gapWidthPercent4 * 2 + boxWidthPercent )
          return (
-            <Box
-               key={ middle.index }
-               index={ middle.index }
-               id={ middle.player.id }
-               player={ middle.player }
-               width={ boxWidth }
-               height={ boxHeight }
-               source={ team }
-               dest1={ panel }
-               dest2={ subs }
-               x={ boxX }
-               y={ boxY }
-               onDrop={ onDrop }
-               style={ { margin: "0px", fontWeight: "bold" } }
-            />
+            <div key={middle.player.id}>
+               <Box
+                  key={middle.index}
+                  index={middle.index}
+                  id={middle.player.id}
+                  player={middle.player}
+                  position={middle.position}
+                  width={boxWidth}
+                  height={boxHeight}
+                  source={team}
+                  dest1={panel}
+                  dest2={subs}
+                  x={boxX}
+                  y={boxY}
+                  onDrop={onDrop}
+                  style={{margin: "0px", fontWeight: "bold"}}
+                  container="team"
+               />
+            </div>
          )
       }
       const Right = () => {
          const boxX = teamWidth * ( gapWidthPercent4 * 3 + boxWidthPercent * 2 )
          return (
-            <Box
-               key={ right.index }
-               index={ right.index }
-               id={ right.player.id }
-               player={ right.player }
-               width={ boxWidth }
-               height={ boxHeight }
-               source={ team }
-               dest1={ panel }
-               dest2={ subs }
-               x={ boxX }
-               y={ boxY }
-               onDrop={ onDrop }
-               style={ { margin: "0px", fontWeight: "bold" } }
-            />
+            <div key={right.player.id}>
+               <Box
+                  key={right.index}
+                  index={right.index}
+                  id={right.player.id}
+                  player={right.player}
+                  position={right.position}
+                  width={boxWidth}
+                  height={boxHeight}
+                  source={team}
+                  dest1={panel}
+                  dest2={subs}
+                  x={boxX}
+                  y={boxY}
+                  onDrop={onDrop}
+                  style={{margin: "0px", fontWeight: "bold"}}
+                  container="team"
+               />
+            </div>
          )
       }
 
@@ -295,36 +313,44 @@ const TeamContainer = ( { onDrop } ) => {
       const Left = () => {
          const boxX = teamWidth * gapWidthPercent3
          return (
-            <Box
-               key={ index }
-               index={ index }
-               id={ left.player.id }
-               player={ left.player }
-               width={ boxWidth }
-               height={ boxHeight }
-               x={ boxX }
-               y={ boxY }
-               onDrop={ onDrop }
-               style={ { margin: "0px", fontWeight: "bold" } }
-            />
+            <div key={left.player.id}>
+               <Box
+                  key={index}
+                  index={index}
+                  id={left.player.id}
+                  player={left.player}
+                  position={left.position}
+                  width={boxWidth}
+                  height={boxHeight}
+                  x={boxX}
+                  y={boxY}
+                  onDrop={onDrop}
+                  style={{margin: "0px", fontWeight: "bold"}}
+                  container="team"
+               />
+            </div>
          )
       }
 
       const Right = () => {
          const boxX = teamWidth * ( gapWidthPercent3 * 2 + boxWidthPercent )
          return (
-            <Box
-               key={ index }
-               index={ index }
-               id={ right.player.id }
-               player={ right.player }
-               width={ boxWidth }
-               height={ boxHeight }
-               x={ boxX }
-               y={ boxY }
-               onDrop={ onDrop }
-               style={ { margin: "0px", fontWeight: "bold" } }
-            />
+            <div key={right.player.id}>
+               <Box
+                  key={index}
+                  index={index}
+                  id={right.player.id}
+                  player={right.player}
+                  position={right.position}
+                  width={boxWidth}
+                  height={boxHeight}
+                  x={boxX}
+                  y={boxY}
+                  onDrop={onDrop}
+                  style={{margin: "0px", fontWeight: "bold"}}
+                  container="team"
+               />
+            </div>
          )
       }
 
@@ -339,31 +365,37 @@ const TeamContainer = ( { onDrop } ) => {
       const Middle = () => {
          const boxX = teamWidth * ( gapWidthPercent4 * 2 + boxWidthPercent )
          return (
-            <Box
-               key={ index }
-               index={ index }
-               id={ middle.player.id }
-               player={ middle.player }
-               width={ boxWidth }
-               height={ boxHeight }
-               x={ boxX }
-               y={ boxY }
-               onDrop={ onDrop }
-               style={ { margin: "0px", fontWeight: "bold" } }
-            />
+            <div key={middle.player.id}>
+               <Box
+                  key={index}
+                  index={index}
+                  id={middle.player.id}
+                  player={middle.player}
+                  position={middle.position}
+                  width={boxWidth}
+                  height={boxHeight}
+                  x={boxX}
+                  y={boxY}
+                  onDrop={onDrop}
+                  style={{margin: "0px", fontWeight: "bold"}}
+                  container="team"
+               />
+            </div>
          )
       }
       return <Middle/>
    }
    return (
+
       <Container className="team-container">
-         <OneAcross   { ...keeper }/>
-         <ThreeAcross { ...fullBacks }/>
-         <ThreeAcross { ...halfBacks }/>
-         <TwoAcross   { ...midfielders }/>
-         <ThreeAcross { ...halfForwards }/>
-         <ThreeAcross { ...fullForwards }/>
+         <OneAcross   {...keeper}/>
+         <ThreeAcross {...fullBacks}/>
+         <ThreeAcross {...halfBacks}/>
+         <TwoAcross   {...midfielders}/>
+         <ThreeAcross {...halfForwards}/>
+         <ThreeAcross {...fullForwards}/>
       </Container>
+
    )
 }
 const SubsContainer = ( { onDrop, onDropContainer } ) => {
@@ -384,9 +416,12 @@ const SubsContainer = ( { onDrop, onDropContainer } ) => {
       accept: "ITEM",
       drop: ( item, monitor ) => {
          const droppedBoxId = item.id;
+         const {canDrop, isOver} = monitor.getItem();
+         // Only call the onDropContainer function if the player is not dropped on any Box component
+         if (!monitor.didDrop()) {
+            onDropContainer(droppedBoxId, item.index, "box", container);
+         }
 
-         // Call the onDropContainer function with the dropped box information
-         onDropContainer( droppedBoxId, item.index, "box", container );
       },
    } ) );
 
@@ -400,18 +435,22 @@ const SubsContainer = ( { onDrop, onDropContainer } ) => {
                const top = nextRow;
                nextRow += 60; // Increment nextRow by 60 for the next iteration
                return (
-                  <Box
-                     key={ index }
-                     index={ index }
-                     id={ sub.player.id }
-                     player={ sub.player }
-                     width={ 150 }
-                     height={ 50 }
-                     x={ 0 }
-                     y={ top }
-                     onDrop={ onDrop }
-                     style={ { marginLeft: "13px" } }
-                  />
+                  <div key={sub.player.id}>
+                     <Box
+                        key={index}
+                        index={index}
+                        id={sub.player.id}
+                        player={sub.player}
+                        position={index}
+                        width={150}
+                        height={50}
+                        x={0}
+                        y={top}
+                        onDrop={onDrop}
+                        style={{marginLeft: "13px"}}
+                        container="subs"
+                     />
+                  </div>
                );
             } ) }
          </Container>

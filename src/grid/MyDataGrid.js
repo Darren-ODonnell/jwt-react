@@ -24,7 +24,6 @@ import { LoadData, useTeamsheets } from "../common/DropDownData";
 import '../App.css'
 import FixtureSelect from "../teamsheetComponents/FixtureSelect";
 
-
 const MyDataGrid = ( { props } ) => {
    const [ gridApi, setGridApi ] = useState( null );
    const gridRef = useRef( null );
@@ -179,43 +178,41 @@ const MyDataGrid = ( { props } ) => {
    const prepareTeamsheetDnd = (props) => {
       // create team subs and updated panel
       let newTeam = []
-      if (!teamsheetPrepared) {
+      switch (props.action) {
+         case "Add":
+            // The Add operation  uses the fixture ID from FixtureSelect to get the Fixture
+            // It populates the teamsheets with the Teamsheets from the last game.
+            // The fixture is updated with the new fixture and the teamsheets.id.fixtureId is updated also
+            // finally the teamsheet.id.playerId is set to -1 to later trigger an Add operation rather than update.
 
-         if (props.updatedTeamsheets) {
-            switch (props.action) {
-               case "Add":
-                  props.updatedTeamsheets.forEach(ut => {
-                     ut.id.playerId = -1
-                     newTeam.push(ut)
-                  })
-                  break
-               default:
-                  newTeam = props.updatedTeamsheets.filter(t => t.fixture.id === props.id)
-                     .sort((a, b) => a.position.id - b.position.id)
-            }
-
-            let fixtureId = (props.id)
-               ? props.id
-               : getFixtureId(newTeam)
-
-            // Panel = Players - Team
-            const playersNotOnTeamSorted = players.filter(player => !newTeam.some(teamPlayer => teamPlayer.player.id === player.id))
-               .sort((a, b) => a.lastname.localeCompare(b.lastname))
-
-            // subs are numbered 16 and higher
-            const newSubs = newTeam.filter(s => s.position.id > 15)
-            const filteredTeam = newTeam.filter(s => s.position.id <= 15)
-            const fillInBlanksTeam = fillEmptyPositions(filteredTeam, fixtureId)
-
-            setPanel( playersNotOnTeamSorted )
-            setTeam( fillInBlanksTeam.sort((a,b) => a.position.id - b.position.id) )
-            setSubs( newSubs.sort((a,b) => a.position.id - b.position.id) )
-            setTeamsheetDnd( true )
-            setTeamsheetPrepared( true )
-         } else {
-            console.log( "PrepareTeamsheet-Teamsheets: Empty ", teamsheets )
-         }
+            newTeam = props.lastTeamsheets.map((ts) => {
+               return {
+                  ...ts,
+                  id: {fixtureId: props.selectedFixture.id, playerId: -1},
+                  fixture: {...props.selectedFixture}
+               };
+            });
+            break
+         default:
+            newTeam = teamsheets.filter(t => t.fixture.id === props.id)
+               .sort((a, b) => a.position.id - b.position.id)
       }
+      // Panel = Players - Team
+      const playersNotOnTeamSorted = players
+         .filter(player => !newTeam.some(teamPlayer => teamPlayer.player.id === player.id))
+         .sort((a, b) => a.lastname.localeCompare(b.lastname))
+         .slice(0, 5) // for debugging only
+
+      // subs are numbered 16 and higher
+      const newSubs = newTeam.filter(s => s.position.id > 15)
+      const filteredTeam = newTeam.filter(s => s.position.id <= 15)
+      const fillInBlanksTeam = fillEmptyPositions(filteredTeam, props.id)
+
+      setPanel(playersNotOnTeamSorted)
+      setTeam(fillInBlanksTeam.sort((a, b) => a.position.id - b.position.id))
+      setSubs(newSubs.sort((a, b) => a.position.id - b.position.id))
+      // enable dnd gui
+      setTeamsheetDnd(true)
    }
    const getFixtureId = ( team ) => {
       const posn = team.find( item => {
@@ -225,22 +222,26 @@ const MyDataGrid = ( { props } ) => {
    }
 
    function fillEmptyPositions( team, id ) {
+      let newTeam = [...team]
       const teamsheetId = {
          fixtureId: id,
          playerId: -1,
       }
-      const filler = {
-         id: teamsheetId,
-         fixture: fixtures.find( f => f.id === id ),
-         player: { id: -1, firstname: "", lastname: "" },
-         position: {abbrev: "", id: -1, name: ""},
-         jerseyNumber : 0,
+
+      // empty position inserted where a position is not in teamsheet
+      const filler = (i) => {
+         return {
+            id: teamsheetId,
+            fixture: fixtures.find(f => f.id === id),
+            player: {id: -1, firstname: "", lastname: ""},
+            position: positions[i],
+            jerseyNumber: i + 1,
+         }
       }
-      for ( let i = 0; i < 15; i++ ) {
-         if ( !team[ i ] ) {
-            filler.position = positions[ i + 1 ]
-            filler.jerseyNumber = filler.position.id
-            team[ i ] = filler
+
+      for (let i = 0; i < 15; i++) {
+         if (team[i].jerseyNumber !== i + 1) {
+            team.splice(i, 0, filler(i))
          }
       }
       return team
@@ -494,6 +495,7 @@ const MyDataGrid = ( { props } ) => {
                      setFixtureSelected   = {setFixtureSelected}
                      setTeamsheetPrepared={setTeamsheetPrepared}
                      setTeamsheetDnd={setTeamsheetDnd}
+                     positions={positions}
                   />
                </DialogContent>
             </Dialog>

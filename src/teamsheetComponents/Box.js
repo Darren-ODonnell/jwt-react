@@ -24,14 +24,14 @@ const BoxWrapper = styled.div`
   opacity         : ${(props) => (props.isDragging ? 0.5 : 1)};
 `;
 
-const Box = ({ index, id, player, width, height, x, y, onDrop, style }) => {
+const Box = ({index, id, player, position, width, height, x, y, onDrop, style, container}) => {
     const {team, setTeam, panel, setPanel, subs, setSubs} = useContext(TeamsheetContext);
     const ref = useRef(null);
 
-    const [{ isDragging }, drag] = useDrag(() => ({
+    const [{isDragging}, drag] = useDrag(() => ({
         type: "ITEM",
         item: () => {
-            return { id, player, index };
+            return {id, player, index};
         },
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
@@ -41,7 +41,7 @@ const Box = ({ index, id, player, width, height, x, y, onDrop, style }) => {
 
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: "ITEM",
-        drop: (item, monitor) => {
+        drop: (item, monitor, event) => {
             const delta = monitor.getDifferenceFromInitialOffset();
             const left = Math.round(x + delta.x);
             const top = Math.round(y + delta.y);
@@ -50,7 +50,7 @@ const Box = ({ index, id, player, width, height, x, y, onDrop, style }) => {
             // const initialSourceClientOffset = monitor.getInitialSourceClientOffset();
             // const draggedItemIndex = Math.floor(initialSourceClientOffset.y / 60);
 
-            onDrop(newBox, id, item);
+            onDrop(newBox, id, item, event, position, container);
 
         },
         collect: (monitor) => ({
