@@ -195,8 +195,7 @@ const TeamsheetDnd = ({
          if (source[sourceIdx].player.id === -1) return
          if (dest === subs) {
             moveTeamToSubsContainer(sourceIdx, setSource, setDest, source, dest)
-         }
-         if (dest === panel) {
+         } else {
             moveTeamToPanelContainer(sourceIdx, setSource, setDest, source, dest)
          }
       }
@@ -208,7 +207,6 @@ const TeamsheetDnd = ({
    const removeTeamToSubs = (sourceId, destId) => {
       const [sourceIdx, destIdx] = getIndexes(team, sourceId, subs, destId)
       const [sourcePlayer, destPlayer] = getPlayers(team[sourceIdx].player, subs[sourceIdx].player)
-
 
       // don't move an empty position
       if (sourceId === -1) return
@@ -383,18 +381,14 @@ const TeamsheetDnd = ({
       return [sourcePlayer, destPlayer]
    }
    const getIndexes = (source, sId, dest, dId) => {
-      let destIdx
-      let sourceIdx
 
-      if (source === panel)
-         sourceIdx = source.findIndex(t => t.id === sId)
-      else
-         sourceIdx = source.findIndex(t => t.player.id === sId)
+      const sourceIdx = ( source === panel )
+               ? source.findIndex(t => t.id === sId)
+               : source.findIndex(t => t.player.id === sId)
 
-      if (dest === panel)
-         destIdx = dest.findIndex(t => t.id === dId)
-      else
-         destIdx = dest.findIndex(t => t.player.id === dId)
+      const destIdx = (dest === panel)
+               ? dest.findIndex(t => t.id === dId)
+               : dest.findIndex(t => t.player.id === dId)
 
       return [sourceIdx, destIdx]
    }

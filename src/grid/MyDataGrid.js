@@ -218,14 +218,15 @@ const MyDataGrid = ( { props } ) => {
             jerseyNumber: i + 1,
          }
       }
-
+      let extraSlots = []
       for (let i = 0; i < 15; i++) {
-         if (team[i].jerseyNumber !== i + 1) {
-            team.splice(i, 0, filler(i))
-         }
+         console.log("index: ",i," id:", team[i] ? team[i].position.id : -1)
+         if (! team[i]) extraSlots.push(filler(i))
       }
-      return team
+      const updatedTeam = team.concat(extraSlots).sort((a,b) => a.position.id - b.position.id)
+      return updatedTeam
    }
+
 
    // Add Button
    const AddButton = (params) => {
