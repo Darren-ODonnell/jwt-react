@@ -203,11 +203,13 @@ const MyDataGrid = ( { props } ) => {
    }
 
    function fillEmptyPositions( team, id ) {
+      const sortedTeam = team.sort((a,b) => a.position.id - b.position.id)
+      let fillerTeam = []
+
       const teamsheetId = {
          fixtureId: id,
          playerId: -1,
       }
-
       // empty position inserted where a position is not in teamsheet
       const filler = (i) => {
          return {
@@ -218,12 +220,23 @@ const MyDataGrid = ( { props } ) => {
             jerseyNumber: i + 1,
          }
       }
-      let extraSlots = []
-      for (let i = 0; i < 15; i++) {
-         console.log("index: ",i," id:", team[i] ? team[i].position.id : -1)
-         if (! team[i]) extraSlots.push(filler(i))
+
+      for(let i=0; i<30; i++)  {
+         fillerTeam.push( filler(i) )
       }
-      const updatedTeam = team.concat(extraSlots).sort((a,b) => a.position.id - b.position.id)
+
+      team.map(t => {
+         fillerTeam[t.position.id-1] = t
+      })
+
+      // let extraSlots = []
+      // for (let i = 0; i < 15; i++) {
+      //    console.log("index: ",i," id:", sortedTeam[i] ? sortedTeam[i].position.id : -1)
+      //    if ( sortedTeam[i] && sortedTeam[i].position.id !== i+1) {
+      //       extraSlots.push( filler( i ) )
+      //    }
+      // }
+      const updatedTeam = fillerTeam.sort((a,b) => a.position.id - b.position.id)
       return updatedTeam
    }
 
