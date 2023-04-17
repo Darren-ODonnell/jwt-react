@@ -23,21 +23,20 @@ export const findId = ( id, array ) => {
 }
 
 const TeamsheetContainer = ( { onDrop, onDropContainer, save, handleCancel } ) => {
-   const { team, panel, subs } = useContext( TeamsheetContext );
 
    return (
       <Container className="teamsheet-container container-common mx-auto" style={{height: '800px'}}>
          <PanelContainer onDrop={onDrop} onDropContainer={onDropContainer}/>
          <TeamContainer onDrop={onDrop}/>
          <SubsContainer onDrop={onDrop} onDropContainer={onDropContainer}/>
-         <ActionContainer team={team} subs={subs} handleCancel={handleCancel} save={save}/>
+         <ActionContainer handleCancel={handleCancel} save={save}/>
       </Container>
    )
 }
 export default TeamsheetContainer;
 
 const PanelContainer = ( { onDrop, onDropContainer } ) => {
-   const { team, panel, subs } = useContext( TeamsheetContext );
+   const {  panel } = useContext( TeamsheetContext );
    const container = "panel"
    let nextRow = 0
    let index = 0;
@@ -94,7 +93,7 @@ const PanelContainer = ( { onDrop, onDropContainer } ) => {
 };
 
 const TeamContainer = ( { onDrop } ) => {
-   const { team, panel, subs } = useContext( TeamsheetContext );
+   const { team } = useContext( TeamsheetContext );
    let index = 0
 
    const keeper = {
@@ -240,9 +239,6 @@ const TeamContainer = ( { onDrop } ) => {
                   position={left.position}
                   width={boxWidth}
                   height={boxHeight}
-                  source={team}
-                  dest1={panel}
-                  dest2={subs}
                   x={boxX}
                   y={boxY}
                   onDrop={onDrop}
@@ -255,6 +251,7 @@ const TeamContainer = ( { onDrop } ) => {
       const Middle = () => {
          const boxX = teamWidth * ( gapWidthPercent4 * 2 + boxWidthPercent )
          return (
+
             <div key={middle.player.id}>
                <Box
                   key={middle.index}
@@ -264,9 +261,6 @@ const TeamContainer = ( { onDrop } ) => {
                   position={middle.position}
                   width={boxWidth}
                   height={boxHeight}
-                  source={team}
-                  dest1={panel}
-                  dest2={subs}
                   x={boxX}
                   y={boxY}
                   onDrop={onDrop}
@@ -288,9 +282,6 @@ const TeamContainer = ( { onDrop } ) => {
                   position={right.position}
                   width={boxWidth}
                   height={boxHeight}
-                  source={team}
-                  dest1={panel}
-                  dest2={subs}
                   x={boxX}
                   y={boxY}
                   onDrop={onDrop}
@@ -399,7 +390,7 @@ const TeamContainer = ( { onDrop } ) => {
    )
 }
 const SubsContainer = ( { onDrop, onDropContainer } ) => {
-   const { team, panel, subs } = useContext( TeamsheetContext );
+   const { subs } = useContext( TeamsheetContext );
    const container = "subs"
    let nextRow = 0
    let index = 0;
@@ -457,8 +448,7 @@ const SubsContainer = ( { onDrop, onDropContainer } ) => {
       </>
    );
 };
-const ActionContainer = ( { team, subs, save, handleCancel } ) => {
-
+const ActionContainer = ( {  save, handleCancel } ) => {
    return (
       <>
          <Container className="action-container">

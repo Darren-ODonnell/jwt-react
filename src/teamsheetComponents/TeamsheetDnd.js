@@ -6,9 +6,7 @@ import {TeamsheetContext} from '../context/TeamsheetContext';
 
 const TeamsheetDnd = ({
                          handleCancel,
-                         setRowData,
                          methods,
-                         teamsheetDnd,
                          setFixtureSelected,
                          setTeamsheetPrepared,
                          setTeamsheetDnd,
@@ -484,7 +482,7 @@ const TeamsheetDnd = ({
    };
 
    const findArrayByName = (container) => {
-      return container === "panel" ? [...panel] : container == "subs" ? [...subs] : [...team]
+      return container === "panel" ? [...panel] : container === "subs" ? [...subs] : [...team]
    };
 
    const save = () => {
